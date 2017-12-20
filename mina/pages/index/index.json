@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "首页"
+  "navigationBarTitleText": "种子设计",
+  "usingComponents": {
+    "searchbar": "../../commons/searchbar/searchbar"
+  }
 }

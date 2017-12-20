@@ -9,3 +9,35 @@
   box-sizing: border-box;
   font-weight: bold;
 }
+.entry-container
+{
+   justify-content:center;
+}
+.motto {
+  text-align: center;
+}
+.entry {
+  width: 300rpx;
+  height: 300rpx;
+  margin: 8rpx;
+  background: green;
+}
+.entry-rob-design {
+  border-top-left-radius: 10rpx;
+}
+.entry-shop {
+  border-top-right-radius: 10rpx;
+}
+.entry-vr-cases {
+  border-bottom-left-radius: 10rpx;
+}
+.entry-activity {
+  border-bottom-right-radius: 10rpx;
+}
+.entry-service {
+  width: 620rpx;
+  height: 300rpx;
+  margin: 8rpx;
+  background: green;
+  border-radius: 10rpx;
+}

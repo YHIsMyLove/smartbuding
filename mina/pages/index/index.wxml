@@ -1,4 +1,20 @@
 <!--index.wxml-->
-<view class="container">
-  首页内容
+<view>
+  <searchbar></searchbar>
+  <view class='weui-flex'>
+    <view class='weui-flex__item'>
+      <view class='motto'>春种一粒钟 秋收万担粮</view>
+    </view>
+  </view>
+  <view class='weui-flex entry-container'>
+      <navigator url='../rob_design/rob_design' class='entry entry-rob-design'>抢设计</navigator>
+      <navigator class='entry entry-shop'>种子超市</navigator>
+  </view>
+  <view class='weui-flex entry-container'>
+      <navigator class='entry entry-vr-cases'>vr案例</navigator>
+      <navigator class='entry entry-activity'>活动专区</navigator>
+  </view>
+  <view class='weui-flex entry-container'>
+      <navigator class='entry-service'>种子服务</navigator>
+  </view>
 </view>

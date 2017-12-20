@@ -2,7 +2,7 @@ const config = require('./config/config.js');
 
 App({
   onLaunch: function () {
-    this.logIn()
+    // this.logIn()
   },
   logIn: function () {
     console.log("logInloginlogin");
