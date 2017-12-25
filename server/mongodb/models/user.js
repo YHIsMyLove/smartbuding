@@ -7,14 +7,11 @@ const userSchema = new Schema({
     age: Number,
     birth: Date,
     addr: String,
-    openId: { type: String },
-    nickname: { type: String },
-    unionid: { type: String },
-    headimgurl: { type: String },
+    openId: String,
+    unionid: String,
+    headimgurl: String,
     createdAt: { type: Date, default: Date.now }
-},
-    { timestamps: true }
-)
+})
 
 userSchema.pre('save', function (next) {
     next()
@@ -41,7 +38,7 @@ userSchema.statics = {
         const criteria = options.criteria || {};
         const page = options.page || 0;
         const limit = options.limit || 30;
-        return this.find(criteria)
+        return this.find({})//criteria
             .sort({ createdAt: -1 })
             .limit(limit)
             .skip(limit * page)

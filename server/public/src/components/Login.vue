@@ -41,7 +41,7 @@
         this.$refs.ruleForm2.resetFields();
       },
       handleSubmit2(ev) {
-        var _this=this;
+        var _this = this;
         this.$refs.ruleForm2.validate((valid) => {
           if (valid) {
             //_this.$router.push('/table');
@@ -70,13 +70,13 @@
     width: 400px;
     border: 2px solid #8492A6;
   }
-  
+
   .title {
     margin: 0px auto 40px auto;
     text-align: center;
     color: #505458;
   }
-  
+
   .loginform {
     width: 350px;
     padding: 35px 35px 15px 35px;

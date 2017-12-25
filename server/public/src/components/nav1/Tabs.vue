@@ -15,14 +15,14 @@
 	</el-tabs>
 </template>
 <script>
-  export default {
-    methods: {
-      handleRemove(tab) {
-        console.log(tab);
-      },
-      handleClick(tab) {
-        console.log(tab);
-      }
-    }
-  };
+	export default {
+		methods: {
+			handleRemove(tab) {
+				console.log(tab);
+			},
+			handleClick(tab) {
+				console.log(tab);
+			}
+		}
+	};
 </script>

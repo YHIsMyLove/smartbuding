@@ -3,17 +3,15 @@ const User = mongoose.model('User');
 const { wrap: async } = require('co');
 const msg = require('../../utils/message')
 
-
 exports.load = async(function* (req, res, next, id) {
     try {
         req.user = yield User.load(id)
         if (!req.user) return next(new Error('Use not found'));
     } catch (error) {
-        return next(err);
+        return next(error);
     }
     next()
 })
-
 exports.create = async(function* (req, res) {
     let user = new User(req.body);
     try {
@@ -25,6 +23,7 @@ exports.create = async(function* (req, res) {
     }
 })
 exports.update = async(function* (req, res) {
+    console.log('开始编辑')
     try {
         let user = req.user;
         user = Object.assign(user, req.body);
@@ -36,6 +35,7 @@ exports.update = async(function* (req, res) {
     }
 })
 exports.list = async(function* (req, res) {
+    console.log('api/user')
     try {
         var query = {
             page: parseInt(req.query.page) - 1,
@@ -59,9 +59,7 @@ exports.delete = async(function* (req, res) {
         res.send(msg.genFailedMsg('删除失败'))
     }
 })
-
 /******************************************************************** */
-
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
 const config = require('../../config/config')
@@ -70,20 +68,28 @@ let generateToken = function (user) {
         expiresIn: 7200
     })
 }
-
 exports.login = async(function* (req, res) {
     const queryString = `appid=${config.appId}&secret=${config.appSecret}&js_code=${req.body.code}&grant_type=authorization_code`;
     const wxAPI = `https://api.weixin.qq.com/sns/jscode2session?${queryString}`;
+    var user_info = req.body.info
+    console.log(user_info)
     axios.get(wxAPI)
         .then(response => {
             console.log(response.data);
             User.findOne({ openId: response.data.openid }, (err, user) => {
                 if (user) {
+                    console.log('登录' + JSON.stringify(response.data))
                     return res.send(msg.genSuccessMsg('已登录', { openid: response.data.openid }))
                 } else {
                     const user = new User();
-                    user.openId = response.data.openid;
+                    console.log('登录' + JSON.stringify(response.data))
+                    user.openId = user_info.openid;
+                    user.name = user_info.nickName;
+                    user.addr = `${user_info.country}-${user_info.province}+${user_info.city}`
+                    user.headimgurl = user_info.avatarUrl;
+                    user.sex = user_info.gender
                     user.save();
+                    console.log(user_info)
                     return res.send(msg.genSuccessMsg('已登录', { openid: response.data.openid }))
                 }
             })
