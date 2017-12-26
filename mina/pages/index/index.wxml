@@ -1,20 +1,25 @@
 <!--index.wxml-->
 <view>
   <searchbar></searchbar>
-  <view class='weui-flex'>
-    <view class='weui-flex__item'>
-      <view class='motto'>春种一粒钟 秋收万担粮</view>
-    </view>
+  <view class='weui-flex user-money-container'>
+    <view class='user-money'>积分：300</view>
+    <view class='user-money'>余额：300</view>
   </view>
-  <view class='weui-flex entry-container'>
+  <view class='weui-flex motto-container'>
+    <view>春种一粒钟 秋收万担粮</view>
+  </view>
+  <view class='main-content-container'>
+    <navigator class='entry-user-info' url='../user-info/user-info'></navigator>
+    <view class='weui-flex entry-container'>
       <navigator url='../rob_design/rob_design' class='entry entry-rob-design'>抢设计</navigator>
       <navigator class='entry entry-shop'>种子超市</navigator>
-  </view>
-  <view class='weui-flex entry-container'>
+    </view>
+    <view class='weui-flex entry-container'>
       <navigator class='entry entry-vr-cases'>vr案例</navigator>
       <navigator class='entry entry-activity'>活动专区</navigator>
-  </view>
-  <view class='weui-flex entry-container'>
-      <navigator class='entry-service'>种子服务</navigator>
+    </view>
+    <view class='weui-flex entry-container'>
+      <navigator class='entry entry-service'>种子服务</navigator>
+    </view>
   </view>
 </view>

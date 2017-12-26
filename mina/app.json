@@ -1,7 +1,8 @@
 {
   "pages": [
+    "pages/rob_design/rob_design",
     "pages/index/index",
-    "pages/rob_design/rob_design"
+    "pages/user-info/user-info"
   ],
   "window": {
     "backgroundTextStyle": "light",

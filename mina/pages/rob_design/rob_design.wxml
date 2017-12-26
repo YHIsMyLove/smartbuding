@@ -1,2 +1,85 @@
 <!--pages/rob_design/rob_design.wxml-->
-<text>抢设计</text>
+<view class='page'>
+  <view>
+    <image></image>
+  </view>
+  <view class='weui-grids'>
+    <block wx:for='{{times}}' wx:key='*this'>
+      <view class='weui-grid time-cell {{item.state == 0 ? "active" : ""}}' style='width:{{timeCellWidth}}'>
+        <view>{{item.desc}}</view>
+        <view class='time-state'>{{item.state == 0 ? "正在进行" : item.state == 1 ? "即将开始" : "抢单结束"}}</view>
+      </view>
+    </block>
+  </view>
+  <view class='time-remain'>
+    剩余时间 00:00:00
+  </view>
+  <form bindsubmit="rob">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">户型图</view>
+        </view>
+        <view class="weui-cell__bd">
+          <view class='weui-flex'>
+            <view class='weui-flex__item'>
+              <image class='houseImage' src='{{houseImagePath}}'></image>
+            </view>
+            <view class='weui-flex__item'>
+              <view class='weui-vcode-btn' bindtap='chooseImage'>本地上传</view>
+              <view class='weui-vcode-btn'>从服务器选择</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">姓名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入您的姓名" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+          <view class="weui-label">手机号</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入手机号" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">地址</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入详细地址" />
+          <!-- <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+            <view class="weui-input">{{date}}</view>
+          </picker> -->
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">风格</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker value="{{styleIndex}}" bindchange="styleChanged" range="{{styles}}">
+            <view class="weui-input">{{styles[styleIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">面积</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="" value='100' />
+        </view>
+      </view>
+    </view>
+    <view class="weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="showTopTips" form-type='submit'>抢单</button>
+    </view>
+  </form>
+</view>
