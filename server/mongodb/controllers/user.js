@@ -4,6 +4,9 @@ const { wrap: async } = require('co');
 const msg = require('../../utils/message')
 
 exports.load = async(function* (req, res, next, id) {
+    if (!id) {
+        return res.send(msg.genFailedMsg('id不能为空'))
+    }
     try {
         req.user = yield User.load(id)
         if (!req.user) return next(new Error('Use not found'));
@@ -13,6 +16,10 @@ exports.load = async(function* (req, res, next, id) {
     next()
 })
 exports.create = async(function* (req, res) {
+    console.log(req.body)
+    if (Object.keys(req.body).length === 0) {
+        return res.send(msg.genFailedMsg('body不能为空'))
+    }
     let user = new User(req.body);
     try {
         yield user.updateAndSave();
@@ -23,9 +30,10 @@ exports.create = async(function* (req, res) {
     }
 })
 exports.update = async(function* (req, res) {
-    console.log('开始编辑')
+    console.log('修改')
     try {
         let user = req.user;
+        console.log(JSON.stringify(req.user))
         user = Object.assign(user, req.body);
         yield user.updateAndSave();
         res.send(msg.genSuccessMsg('保存成功'))
@@ -35,7 +43,6 @@ exports.update = async(function* (req, res) {
     }
 })
 exports.list = async(function* (req, res) {
-    console.log('api/user')
     try {
         var query = {
             page: parseInt(req.query.page) - 1,
@@ -46,7 +53,7 @@ exports.list = async(function* (req, res) {
         res.send(msg.genSuccessMsg('读取用户列表成功', list, { count: count }))
     } catch (error) {
         console.log(error);
-        res.send(msg.genFailedMsg('保存失败'))
+        res.send(msg.genFailedMsg('获取用户列表失败'))
     }
 })
 exports.delete = async(function* (req, res) {

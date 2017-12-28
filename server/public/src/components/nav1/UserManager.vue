@@ -1,91 +1,95 @@
 <template>
-    <section>
-        <!--工具条-->
-        <el-col :span="24" class="toolbar">
-            <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                <el-form-item>
-                    <el-input v-model="formInline.user" placeholder="姓名"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button @click='getUserList'>查询</el-button>
-                </el-form-item>
-                <!-- <el-form-item>
-                    <el-button @click="handleAdd">新增</el-button>
-                </el-form-item> -->
-            </el-form>
-        </el-col>
+    <el-tabs style="width:100%;">
+        <el-tab-pane label="用户管理">
+            <section>
+                <!--工具条-->
+                <el-col :span="24" class="toolbar">
+                    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                        <el-form-item>
+                            <el-input v-model="formInline.user" placeholder="姓名"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button @click='getUserList'>查询</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
 
-        <!--表格-->
-        <template>
-            <!--data按照指定数组格式传进来就会自动渲染表格数据-->
-            <!--v-loading为真时，显示loading动画-->
-            <el-table :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:500px">
-                <el-table-column type="index" width="80">
-                </el-table-column>
-                <el-table-column prop="headimgurl" label="头像" sortable width="80">
-                    <template slot-scope="scope">
-                        <img :src="scope.row.headimgurl" alt="" style="width: 50px;height: 50px">
-                    </template>
-                </el-table-column>
-                <el-table-column prop="name" label="姓名" width="180" sortable>
-                </el-table-column>
-                <el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
-                </el-table-column>
-                <el-table-column prop="age" label="年龄" width="100" sortable>
-                </el-table-column>
-                <el-table-column prop="birth" label="生日" width="180" :formatter="formatDate" sortable>
-                </el-table-column>
-                <el-table-column prop="addr" label="地址" sortable>
-                </el-table-column>
-                <el-table-column label="操作" width="100">
-                    <template scope="scope">
-                        <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </template>
+                <!--表格-->
+                <template>
+                    <!--data按照指定数组格式传进来就会自动渲染表格数据-->
+                    <!--v-loading为真时，显示loading动画-->
+                    <el-table :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:500px">
+                        <el-table-column type="index" width="80">
+                        </el-table-column>
+                        <el-table-column prop="headimgurl" label="头像" sortable width="80">
+                            <template slot-scope="scope">
+                                <img :src="scope.row.headimgurl" alt="" style="width: 50px;height: 50px">
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="name" label="姓名" width="180" sortable>
+                        </el-table-column>
+                        <el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+                        </el-table-column>
+                        <el-table-column prop="phonenum" label="手机号" width="100" sortable>
+                        </el-table-column>
+                        <el-table-column prop="age" label="年龄" width="100" sortable>
+                        </el-table-column>
+                        <el-table-column prop="birth" label="生日" width="180" :formatter="formatDate" sortable>
+                        </el-table-column>
+                        <el-table-column prop="addr" label="地址" sortable>
+                        </el-table-column>
+                        <el-table-column label="操作" width="100">
+                            <template scope="scope">
+                                <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                                <el-button type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
 
-        <!--分页-->
-        <el-col :span="24" class="toolbar" style="padding-bottom:10px;">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]"
-                :page-size="currentPageSize" layout="total, sizes, prev, pager, next, jumper" :total="tableDataLength" style="float:right">
-            </el-pagination>
-        </el-col>
+                <!--分页-->
+                <el-col :span="24" class="toolbar" style="padding-bottom:10px;">
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]"
+                        :page-size="currentPageSize" layout="total, sizes, prev, pager, next, jumper" :total="tableDataLength"
+                        style="float:right">
+                    </el-pagination>
+                </el-col>
 
-        <!--编辑模态框-->
-        <!--el-dialog的v-model绑定一个boolean值，表示显示或者隐藏-->
-        <el-dialog :title="editFormTtile" v-model="editFormVisible" :close-on-click-modal="true">
-            <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-                <!-- <el-form-item label="头像" prop="headimgurl">
-                    <img v-model="editForm.headimgurl" class="image">
-                </el-form-item> -->
-                <el-form-item label="姓名" prop="name">
-                    <el-input v-model="editForm.name" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="性别">
-                    <!--el-radio-group的v-model对应其子元素的label值-->
-                    <el-radio-group v-model="editForm.sex">
-                        <el-radio class="radio" :label="1">男</el-radio>
-                        <el-radio class="radio" :label="0">女</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="年龄">
-                    <el-input-number v-model="editForm.age" :min="0" :max="200"></el-input-number>
-                </el-form-item>
-                <el-form-item label="生日">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="editForm.birth"></el-date-picker>
-                </el-form-item>
-                <el-form-item label="地址">
-                    <el-input type="textarea" v-model="editForm.addr"></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="editFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="editSubmit" :loading="editLoading">{{btnEditText}}</el-button>
-            </div>
-        </el-dialog>
-    </section>
+                <el-dialog :title="editFormTtile" v-model="editFormVisible" :close-on-click-modal="true">
+                    <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+                        <el-form-item label="姓名" prop="name">
+                            <el-input v-model="editForm.name" auto-complete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="性别">
+                            <el-radio-group v-model="editForm.sex">
+                                <el-radio class="radio" :label="1">男</el-radio>
+                                <el-radio class="radio" :label="0">女</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="年龄">
+                            <el-input-number v-model="editForm.age" :min="0" :max="200"></el-input-number>
+                        </el-form-item>
+                        <el-form-item label="手机号">
+                            <el-input placeholder="请输入内容" v-model="editForm.phonenum">
+                                <template slot="prepend">+186</template>
+                            </el-input>
+                        </el-form-item>
+
+                        <el-form-item label="生日">
+                            <el-date-picker type="date" placeholder="选择日期" v-model="editForm.birth"></el-date-picker>
+                        </el-form-item>
+                        <el-form-item label="地址">
+                            <el-input type="textarea" v-model="editForm.addr"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="editFormVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="editSubmit" :loading="editLoading">{{btnEditText}}</el-button>
+                    </div>
+                </el-dialog>
+            </section>
+        </el-tab-pane>
+    </el-tabs>
 </template>
 
 <script>
@@ -103,13 +107,13 @@
                 editFormTtile: '编辑',//编辑界面标题
                 //编辑界面数据
                 editForm: {
-                    _id: 0,
+                    id: 0,
                     name: '',
                     sex: -1,
                     age: 0,
                     birth: '',
                     addr: '',
-                    headimgurl: ''
+                    phonenum: ''
                 },
                 editLoading: false,
                 btnEditText: '提 交',
@@ -175,6 +179,8 @@
                 this.editForm.age = row.age;
                 this.editForm.birth = row.birth;
                 this.editForm.addr = row.addr;
+                this.editForm.phonenum = row.phonenum;
+                console.log(this.editForm)
             },
             //编辑 or 新增
             editSubmit: function () {
@@ -191,10 +197,11 @@
                                 sex: _this.editForm.sex,
                                 age: _this.editForm.age,
                                 birth: _this.editForm.birth == '' ? '' : util.formatDate.format(new Date(_this.editForm.birth), 'yyyy-MM-dd'),
-                                addr: _this.editForm.addr
+                                addr: _this.editForm.addr,
+                                phonenum: _this.editForm.phonenum
                             }
-                            let url = _this.editForm.id ? '/api/user/${_this.editForm.id}' : '/api/user'
-
+                            let url = _this.editForm.id ? `/api/user/${_this.editForm.id}` : '/api/user'
+                            console.log(url)
                             axios.post(url, userData).then(function (res) {
                                 if (res.data.success) {
                                     _this.$message({

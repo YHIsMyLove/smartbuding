@@ -7,10 +7,11 @@ const userSchema = new Schema({
     age: Number,
     birth: Date,
     addr: String,
+    headimgurl: String,
+    phonenum: Number,
+    createdAt: { type: Date, default: Date.now },
     openId: String,
     unionid: String,
-    headimgurl: String,
-    createdAt: { type: Date, default: Date.now }
 })
 
 userSchema.pre('save', function (next) {
