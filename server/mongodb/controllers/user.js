@@ -49,6 +49,7 @@ exports.list = async(function* (req, res) {
             limit: parseInt(req.query.limit)
         }
         var list = yield User.list(query);
+        console.log(list)
         var count = yield User.count();
         res.send(msg.genSuccessMsg('读取用户列表成功', list, { count: count }))
     } catch (error) {

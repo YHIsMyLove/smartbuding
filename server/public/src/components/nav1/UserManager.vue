@@ -71,7 +71,7 @@
                         </el-form-item>
                         <el-form-item label="手机号">
                             <el-input placeholder="请输入内容" v-model="editForm.phonenum">
-                                <template slot="prepend">+186</template>
+                                <template slot="prepend">+86</template>
                             </el-input>
                         </el-form-item>
 
