@@ -5,7 +5,7 @@ const msg = require('../../utils/message')
 
 
 /**
- * 分页获取内容信息列表
+ * 分页获取内容信息列表 
  */
 exports.GetSysField = async(function* (req, res) {
     try {
