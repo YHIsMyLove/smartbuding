@@ -36,7 +36,6 @@
                 </el-col>
             </section>
         </el-tab-pane>
-
         <el-tab-pane name="BusinessInfo" label="字段详情">
             <el-form label-width="80px">
                 <el-form-item label="表名称">
@@ -56,13 +55,17 @@
                         <el-button type="danger" @click="onDelLine(index)">删除</el-button>
                     </el-col>
                 </el-form-item>
-                <el-form-item style="float:right">
+                <el-form-item>
                     <el-button type="primary" @click="onAddLine">新增行</el-button>
                     <el-button type="primary" @click="onSubmit">提交</el-button>
                     <el-button @click="onCancel">取消</el-button>
                 </el-form-item>
+
+                <SysFieldManager_Child :Field='currentField' />
+                <!-- @FieldChange="childFieldChange(currentField)" /> -->
             </el-form>
         </el-tab-pane>
+
     </el-tabs>
 </template>
 
@@ -71,6 +74,7 @@
     import NProgress from 'nprogress'
     import axios from 'axios'
     import moment from 'moment'
+    import SysFieldManager_Child from './SysFieldManager_Child.vue'
     export default {
         data() {
             return {
@@ -98,17 +102,17 @@
                     'Title': '',
                     'Type': 'String'
                 }],
-                BusinessTitle: ''
+                BusinessTitle: '',
+                currentField: ''
             }
         },
         created: function () {
             this.getSysFieldList();
         },
         methods: {
-            //性别显示转换
-            formatDate: function (row, column) {
-                return moment(row.birth).format('YYYY-MM-DD');
-            },
+            // childFieldChange() {
+            //     console.log('父类调用')
+            // },
             //删除记录
             handleDel: function (row) {
                 var _this = this;
@@ -117,8 +121,8 @@
                 }).then(() => {
                     _this.listLoading = true;
                     NProgress.start();
-                    console.log('删除' + row._id)
-                    axios.delete(`/api/SysField/${row._id}`).then(function (res) {
+                    console.log(row._id)
+                    axios.post(`/api/SysField/DelByID`, { id: row._id }).then(function (res) {
                         if (res.data.success) {
                             _this.$message({
                                 message: '删除成功',
@@ -140,15 +144,21 @@
             },
             //显示编辑界面
             handleEdit: function (row) {
-                console.log(row)
                 this.activeName = 'BusinessInfo'
+                this.BusinessTitle = row.SysTabName
+                this.currentField = row
+                var SysFieldInfo = JSON.parse(row.SysFieldInfo)
+                this.EditLine.splice(0, this.EditLine.length)
+                Object.keys(SysFieldInfo).forEach(i => {
+                    this.EditLine.push({ Title: i, Type: SysFieldInfo[i] })
+                })
             },
             //显示新增界面
             handleAdd: function () {
-                console.log('新增')
                 this.activeName = 'BusinessInfo'
+                this.BusinessTitle = ''
             },
-            //获取用户列表
+            //获取字段列表
             getSysFieldList: function () {
                 var vm = this;
                 var params = {
@@ -158,7 +168,6 @@
                 axios.get('/api/SysField/', { params: params }).then(function (res) {
                     vm.$data.tableData = res.data.data;
                     vm.$data.tableDataLength = res.data.meta.count;
-                    //console.log(res.data.data)
                 })
             },
             handleSizeChange(val) {
@@ -178,7 +187,7 @@
                     });
                     return
                 }
-                console.log(this.EditLine.filter(i => i.Title === '').length)
+                console.log('保存时' + this.EditLine)
                 if (this.EditLine.filter(i => i.Title === '').length > 0) {
                     this.$message({
                         message: '请输入业务信息标题',
@@ -186,14 +195,28 @@
                     });
                     return
                 }
-                console.log(`标题${this.BusinessTitle}`)
                 var jsonStr = '{'
                 this.EditLine.forEach(element => {
-                    jsonStr += `'${element.Title}':'${element.Type}',`
+                    jsonStr += `"${element.Title}":"${element.Type}",`
                 });
                 jsonStr = jsonStr.substr(0, jsonStr.length - 1) + '}'
                 console.log(jsonStr)
-
+                axios.post('/api/SysField/', { SysTabName: this.BusinessTitle, SysFieldInfo: jsonStr })
+                    .then((res, err) => {
+                        if (err) {
+                            this.$message({
+                                message: `保存失败：${err}`,
+                                type: 'error'
+                            });
+                            return
+                        }
+                        this.$message({
+                            message: `保存成功`,
+                            type: 'success'
+                        });
+                    })
+                //this.currentField = { SysTabName: this.BusinessTitle, SysFieldInfo: jsonStr }
+                this.activeName = 'BusinessManager'
             },
             onAddLine() {
                 if (this.EditLine.filter(i => i.Title === '').length > 0) {
@@ -219,9 +242,13 @@
             onDelLine(index) {
                 console.log(index)
                 if (this.EditLine.length === 1) return
-                console.log(`删除${index}行${JSON.stringify(this.EditLine[index])}`)
+                //console.log(`删除${index}行${JSON.stringify(this.EditLine[index])}`)
                 this.EditLine.splice(index, 1)
+                console.log('删除后' + this.EditLine)
             }
+        },
+        components: {
+            SysFieldManager_Child
         }
     }
 </script>

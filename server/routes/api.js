@@ -20,9 +20,8 @@ router.post('/caseshow', caseshow.SaveCase)
 router.get('/SysField', SysField.GetSysField)
 router.post('/SysField/GetInfo', SysField.GetSysFieldInfoByID)
 router.post('/SysField', SysField.SaveSysFieldInfo)
-router.delete('/SysField/:id', SysField.DeleteSysFieldByID)
+router.post('/SysField/DelByID', SysField.DeleteSysFieldByID)
 
-router.delete('/a/:id', SysField.DeleteSysFieldByID)
-
+router.get('/SysField/AllFieldName', SysField.GetAllFieldName)
 /******************************************/
 module.exports = router;

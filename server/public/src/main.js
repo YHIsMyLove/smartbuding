@@ -43,7 +43,11 @@ const routes = [
             { path: '/', component: Main, name: 'Home', hidden: true },
             { path: '/UserManager', component: UserManager, name: '用户管理' },
             { path: '/ShowCaseManager', component: ShowCaseManager, name: '案例展示' },
-            { path: '/SysFieldManager', component: SysFieldManager, name: '字段管理' },
+            {
+                path: '/SysFieldManager',
+                component: SysFieldManager,
+                name: '字段管理',
+            },
             { path: '/LeaveMessageManager', component: LeaveMessageManager, name: '留言管理' },
             { path: '/ActivityManager', component: ActivityManager, name: '活动管理' },
             // { path: '/form', component: Form, name: '表单提交' },

@@ -54,11 +54,24 @@ exports.SaveSysFieldInfo = async(function* (req, res) {
 //删除字段信息
 exports.DeleteSysFieldByID = async(function* (req, res) {
     try {
-        let SysField = req.SysField;
-        yield SysField.remove()
-        res.send(msg.genSuccessMsg('删除成功', SysField))
+        let id = req.body.id;
+        if (!id) return res.send(msg.genFailedMsg('删除失败,ID不允许为空'))
+        let fieldinfo = yield SysField.load(id)
+        console.log(fieldinfo)
+        yield fieldinfo.remove()
+        res.send(msg.genSuccessMsg('删除成功'))
     } catch (error) {
         console.log(error);
         res.send(msg.genFailedMsg('删除失败'))
+    }
+})
+
+//获取所有字段信息的名称
+exports.GetAllFieldName = async(function* (req, res) {
+    try {
+        list = yield SysField.find().exec()
+        res.send(msg.genSuccessMsg('读取字段管理列表成功', list))
+    } catch (error) {
+        res.send(msg.genFailedMsg('获取字段管理列表失败', error))
     }
 })

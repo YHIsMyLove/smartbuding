@@ -24,7 +24,7 @@ SysFieldSchema.statics = {
 
     },
     load: function (id) {
-        return this.findOne({ id: id })
+        return this.findOne({ _id: id })
             .exec();
     },
     list: function (options) {
