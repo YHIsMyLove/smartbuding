@@ -37,35 +37,48 @@
             </section>
         </el-tab-pane>
         <el-tab-pane name="BusinessInfo" label="字段详情">
-            <el-form label-width="80px">
-                <el-form-item label="表名称">
-                    <el-input v-model='BusinessTitle'></el-input>
-                </el-form-item>
-                <el-form-item label="字段信息" v-for="(item,index) in EditLine" :key='index'>
-                    <el-col :span='16'>
-                        <el-input v-model='item.Title'></el-input>
-                    </el-col>
-                    <el-col :span='5'>
-                        <el-select v-model="item.Type" placeholder="请选择">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span='2'>
-                        <el-button type="danger" @click="onDelLine(index)">删除</el-button>
-                    </el-col>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onAddLine">新增行</el-button>
-                    <el-button type="primary" @click="onSubmit">提交</el-button>
-                    <el-button @click="onCancel">取消</el-button>
-                </el-form-item>
-
-                <SysFieldManager_Child :Field='currentField' />
-                <!-- @FieldChange="childFieldChange(currentField)" /> -->
-            </el-form>
+            <el-collapse>
+                <el-collapse-item title="表结构管理" name="1">
+                    <el-form label-width="80px">
+                        <el-form-item label="表名称">
+                            <el-input v-model='BusinessTitle'></el-input>
+                        </el-form-item>
+                        <el-form-item label="字段信息" v-for="(item,index) in EditLine" :key='index'>
+                            <el-col :span='7'>
+                                <el-input placeholder="字段名称" v-model='item.Title'></el-input>
+                            </el-col>
+                            <el-col :span='7'>
+                                <el-input placeholder="字段别名"></el-input>
+                            </el-col>
+                            <el-col :span='4'>
+                                <el-select v-model="item.Link" placeholder="关联字段">
+                                    <el-option v-for="item in options_Fields" :key="item.value" :label="item.label" :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col :span='4'>
+                                <el-select v-model="item.Type" placeholder="字段类型">
+                                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col :span='2'>
+                                <el-button type="danger" @click="onDelLine(index)">删除</el-button>
+                            </el-col>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="onAddLine">新增行</el-button>
+                            <el-button type="primary" @click="onSubmit">提交</el-button>
+                            <el-button @click="onCancel">取消</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-collapse-item>
+                <el-collapse-item title="表内容管理" name="2">
+                    <SysFieldManager_Child :TabelName="BusinessTitle" :Field='currentField' />
+                    <!-- @FieldChange="childFieldChange(currentField)" /> -->
+                </el-collapse-item>
+            </el-collapse>
         </el-tab-pane>
-
     </el-tabs>
 </template>
 
@@ -98,21 +111,32 @@
                     value: 'Date',
                     label: '日期类型'
                 }],
+                options_Fields: [{
+                    key: 'none',
+                    value: '空'
+                }, {
+                    key: 'UserID',
+                    value: '用户ID'
+                }, {
+                    key: 'ShowCaseID',
+                    value: '案例展示ID'
+                }],
+                currentTabelName: '',
                 EditLine: [{
                     'Title': '',
-                    'Type': 'String'
+                    'Type': 'String',
+                    'Link': 'none'
                 }],
                 BusinessTitle: '',
-                currentField: ''
+                currentField: '',
+                currentFieldNames: []
             }
         },
         created: function () {
-            this.getSysFieldList();
+            this.getSysFieldList()
+            this.getAllFieldList()
         },
         methods: {
-            // childFieldChange() {
-            //     console.log('父类调用')
-            // },
             //删除记录
             handleDel: function (row) {
                 var _this = this;
@@ -122,7 +146,7 @@
                     _this.listLoading = true;
                     NProgress.start();
                     console.log(row._id)
-                    axios.post(`/api/SysField/DelByID`, { id: row._id }).then(function (res) {
+                    axios.post(`/api/SysField/delete`, { id: row._id }).then(function (res) {
                         if (res.data.success) {
                             _this.$message({
                                 message: '删除成功',
@@ -150,8 +174,9 @@
                 var SysFieldInfo = JSON.parse(row.SysFieldInfo)
                 this.EditLine.splice(0, this.EditLine.length)
                 Object.keys(SysFieldInfo).forEach(i => {
-                    this.EditLine.push({ Title: i, Type: SysFieldInfo[i] })
+                    this.EditLine.push({ Title: i, Type: SysFieldInfo[i].type, Link: SysFieldInfo[i].link })
                 })
+                console.log("当前编辑" + JSON.stringify(this.EditLine))
             },
             //显示新增界面
             handleAdd: function () {
@@ -169,6 +194,31 @@
                     vm.$data.tableData = res.data.data;
                     vm.$data.tableDataLength = res.data.meta.count;
                 })
+                axios.get('/api/SysField/AllFieldName').then(function (res) {
+                    vm.$data.currentFieldNames = res.data.data
+                })
+            },
+            //获取所有字段名
+            getAllFieldList: function () {
+                var vm = this;
+                axios.get('/api/SysField/AllFieldName').then(function (res) {
+                    this.currentFieldNames = res.data.data
+                    this.options_Fields = [{
+                        key: 'none',
+                        value: '空'
+                    }, {
+                        key: 'User',
+                        value: '用户表'
+                    }, {
+                        key: 'ShowCase',
+                        value: '案例展示表'
+                    }]
+                    res.data.data.forEach(i => {
+                        console.log(JSON.stringify(i))
+                        this.options_Fields.push({ key: i.SysTabName, value: i.SysTabName })
+                    })
+
+                }.bind(this))
             },
             handleSizeChange(val) {
                 this.$data.currentPageSize = val;
@@ -197,11 +247,10 @@
                 }
                 var jsonStr = '{'
                 this.EditLine.forEach(element => {
-                    jsonStr += `"${element.Title}":"${element.Type}",`
+                    jsonStr += `"${element.Title}":{"type":"${element.Type}","link":"${element.Link}"},`
                 });
                 jsonStr = jsonStr.substr(0, jsonStr.length - 1) + '}'
-                console.log(jsonStr)
-                axios.post('/api/SysField/', { SysTabName: this.BusinessTitle, SysFieldInfo: jsonStr })
+                axios.post('/api/SysField/create', { SysTabName: this.BusinessTitle, SysFieldInfo: jsonStr })
                     .then((res, err) => {
                         if (err) {
                             this.$message({
@@ -215,7 +264,6 @@
                             type: 'success'
                         });
                     })
-                //this.currentField = { SysTabName: this.BusinessTitle, SysFieldInfo: jsonStr }
                 this.activeName = 'BusinessManager'
             },
             onAddLine() {
@@ -225,7 +273,7 @@
                         type: 'error'
                     });
                 } else {
-                    console.log('新增行')
+                    //console.log('新增行')
                     this.EditLine.push({ 'Title': '', 'Type': 'String' })
                 }
             },
@@ -234,17 +282,16 @@
                 this.currentid = ''
                 this.EditLine.splice(1, this.EditLine.length - 1)
                 this.EditLine[0].Title = ''
-                console.log('取消')
+                //console.log('取消')
             },
             handleClick() {
                 console.log(this.currentid === '' ? '新增' : '编辑')
             },
             onDelLine(index) {
-                console.log(index)
+                //console.log(index)
                 if (this.EditLine.length === 1) return
-                //console.log(`删除${index}行${JSON.stringify(this.EditLine[index])}`)
                 this.EditLine.splice(index, 1)
-                console.log('删除后' + this.EditLine)
+                //console.log('删除后' + this.EditLine)
             }
         },
         components: {

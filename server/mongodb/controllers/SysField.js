@@ -4,10 +4,7 @@ const { wrap: async } = require('co');
 const msg = require('../../utils/message')
 
 
-/**
- * 分页获取内容信息列表 
- */
-exports.GetSysField = async(function* (req, res) {
+exports.list = async(function* (req, res) {
     try {
         var query = {
             page: parseInt(req.query.page) - 1,
@@ -21,7 +18,7 @@ exports.GetSysField = async(function* (req, res) {
     }
 })
 //根据ID获取Content信息
-exports.GetSysFieldInfoByID = async(function* (req, res) {
+exports.getbyid = async(function* (req, res) {
     try {
         var id = req.body.id
         console.log(id)
@@ -35,7 +32,7 @@ exports.GetSysFieldInfoByID = async(function* (req, res) {
     }
 })
 //保存字段信息
-exports.SaveSysFieldInfo = async(function* (req, res) {
+exports.create = async(function* (req, res) {
     if (Object.keys(req.body).length === 0) {
         return res.send(msg.genFailedMsg('body不能为空'))
     }
@@ -52,7 +49,7 @@ exports.SaveSysFieldInfo = async(function* (req, res) {
     }
 })
 //删除字段信息
-exports.DeleteSysFieldByID = async(function* (req, res) {
+exports.delete = async(function* (req, res) {
     try {
         let id = req.body.id;
         if (!id) return res.send(msg.genFailedMsg('删除失败,ID不允许为空'))
@@ -65,11 +62,10 @@ exports.DeleteSysFieldByID = async(function* (req, res) {
         res.send(msg.genFailedMsg('删除失败'))
     }
 })
-
 //获取所有字段信息的名称
 exports.GetAllFieldName = async(function* (req, res) {
     try {
-        list = yield SysField.find().exec()
+        list = yield SysField.find().select('SysTabName').exec()
         res.send(msg.genSuccessMsg('读取字段管理列表成功', list))
     } catch (error) {
         res.send(msg.genFailedMsg('获取字段管理列表失败', error))

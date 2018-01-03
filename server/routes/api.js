@@ -3,6 +3,7 @@ var router = express.Router();
 var user = require('../mongodb/controllers/user');
 var caseshow = require('../mongodb/controllers/caseshow');
 var SysField = require('../mongodb/controllers/SysField');
+var SysTable = require('../mongodb/controllers/SysTable');
 //var login_controller = require('../controllers/login_controller')
 
 router.param('id', user.load);
@@ -17,11 +18,16 @@ router.post('/caseshow/:id', caseshow.GetCaseByUserID)
 router.delete('/caseshow/:id', caseshow.DelCaseByID)
 router.post('/caseshow', caseshow.SaveCase)
 
-router.get('/SysField', SysField.GetSysField)
-router.post('/SysField/GetInfo', SysField.GetSysFieldInfoByID)
-router.post('/SysField', SysField.SaveSysFieldInfo)
-router.post('/SysField/DelByID', SysField.DeleteSysFieldByID)
-
+router.get('/SysField', SysField.list)
+router.post('/SysField/getbyid', SysField.getbyid)
+router.post('/SysField/create', SysField.create)
+router.post('/SysField/delete', SysField.delete)
 router.get('/SysField/AllFieldName', SysField.GetAllFieldName)
+
+router.get('/SysTable', SysTable.list)
+router.post('/SysTable/getbyid', SysTable.getbyid)
+router.post('/SysTable/update', SysTable.update)
+router.post('/SysTable/create', SysTable.create)
+router.post('/SysTable/delete', SysTable.delete)
 /******************************************/
 module.exports = router;
