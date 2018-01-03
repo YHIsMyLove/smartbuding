@@ -1,0 +1,41 @@
+<!--pages/select-house-image/select-house-image.wxml-->
+<view class='page'>
+  <!-- <searchbar></searchbar> -->
+  <form bindsubmit="search">
+    <view class="weui-cells weui-cells_after-title">
+      <view class='weui-cell weui-cell_input'>
+        <view class='weui-cell__hd'>
+          <view class='weui-label'>所在地区</view>
+        </view>
+        <view class='weui-cell__bd'>
+          <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
+            <view class="weui-input">
+              {{region[0]}}，{{region[1]}}，{{region[2]}}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">所在小区</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker value="{{houseIndex}}" bindchange="houseChanged" range="{{houses}}">
+            <view class="weui-input">{{houses[houseIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+    <view class="weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="showTopTips" form-type='submit'>搜索</button>
+    </view>
+  </form>
+  <view>
+    <block wx:for="{{houseImages}}" wx:key="*this">
+      <view class="houseImageContainer" bindtap='doSelect' data-index="{{index}}">
+        <image src="{{item}}" />
+        <icon wx:if="{{selectedIndex == index}}" type='success_no_circle' size='30' style='position:absolute;top:0;'></icon>
+      </view>
+    </block>
+  </view>
+</view>

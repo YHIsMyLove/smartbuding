@@ -2,6 +2,7 @@
 <view class='page'>
   <view>
     <image></image>
+    <view>还剩10个名额</view>
   </view>
   <view class='weui-grids'>
     <block wx:for='{{times}}' wx:key='*this'>
@@ -21,17 +22,48 @@
           <view class="weui-label">户型图</view>
         </view>
         <view class="weui-cell__bd">
-          <view class='weui-flex'>
+          <view class='weui-flex houseImageContainer'>
             <view class='weui-flex__item'>
-              <image class='houseImage' src='{{houseImagePath}}'></image>
+              <view class="weui-uploader__file" bindtap="previewImage" id="{{houseImagePath}}">
+                <image class="weui-uploader__img" src="{{houseImagePath}}" mode="aspectFill" />
+              </view>
             </view>
             <view class='weui-flex__item'>
               <view class='weui-vcode-btn' bindtap='chooseImage'>本地上传</view>
-              <view class='weui-vcode-btn'>从服务器选择</view>
+              <view class='weui-vcode-btn'>
+                <navigator url='../select-house-image/select-house-image'>从服务器选择</navigator>
+              </view>
+              <view class='weui-vcode-btn'>
+                <label>
+                  <checkbox></checkbox>上门量房</label>
+              </view>
             </view>
           </view>
         </view>
       </view>
+      <view class='weui-cell weui-cell_input'>
+        <view class='weui-cell__hd'>
+          <view class='weui-label'>所在地区</view>
+        </view>
+        <view class='weui-cell__bd'>
+          <picker mode="region" bindchange="regionChange" value="{{region}}">
+            <view class="weui-input">
+              {{region[0]}}，{{region[1]}}，{{region[2]}}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">所在小区</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker value="{{houseIndex}}" bindchange="houseChanged" range="{{houses}}">
+            <view class="weui-input">{{houses[houseIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">姓名</view>
@@ -46,17 +78,6 @@
         </view>
         <view class="weui-cell__bd">
           <input class="weui-input" placeholder="请输入手机号" />
-        </view>
-      </view>
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">地址</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入详细地址" />
-          <!-- <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-            <view class="weui-input">{{date}}</view>
-          </picker> -->
         </view>
       </view>
       <view class="weui-cell weui-cell_input">

@@ -1,4 +1,5 @@
 // pages/rob_design/rob_design.js
+var app = getApp()
 Page({
 
   /**
@@ -15,7 +16,10 @@ Page({
     ],
     styles: ['北欧风格', '地中海'],
     styleIndex: 0,
+    houses: ['月亮湾', '天商城'],
+    houseIndex: 0,
     houseImagePath: "../../images/avatarIcon.svg",
+    region: ["湖北省", "黄石市", "黄石港区"]
   },
 
   rob: function (e) {
@@ -33,13 +37,34 @@ Page({
         that.setData({
           houseImagePath: res.tempFilePaths[0]
         });
+        app.globalData.selectedHouseImage = ""
       }
+    })
+  },
+
+  previewImage: function (e) {
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: [this.data.houseImagePath] // 需要预览的图片http链接列表
     })
   },
 
   styleChanged: function (e) {
     this.setData({
       styleIndex: e.detail.value
+    })
+  },
+
+  houseChanged: function (e) {
+    this.setData({
+      houseIndex: e.detail.value
+    })
+  },
+
+  regionChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      region: e.detail.value
     })
   },
 
@@ -63,7 +88,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (app.globalData.selectedHouseImage != "") {
+      this.setData({
+        houseImagePath: app.globalData.selectedHouseImage
+      })
+    }
   },
 
   /**

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "选择户型图",
+  "backgroundColor": "#cccccc",
+  "usingComponents": {
+    "searchbar": "../../commons/searchbar/searchbar"
+  }
+}

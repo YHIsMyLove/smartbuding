@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view>
+<view class='page'>
   <searchbar></searchbar>
   <view class='weui-flex user-money-container'>
     <view class='user-money'>积分：300</view>
@@ -9,7 +9,10 @@
     <view>春种一粒钟 秋收万担粮</view>
   </view>
   <view class='main-content-container'>
-    <navigator class='entry-user-info' url='../user-info/user-info'></navigator>
+    <navigator class='entry-user-info' url='../user-info/user-info'>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <!-- <text class="userinfo-nickname">{{userInfo.nickName}}</text> -->
+    </navigator>
     <view class='weui-flex entry-container'>
       <navigator url='../rob_design/rob_design' class='entry entry-rob-design'>抢设计</navigator>
       <navigator class='entry entry-shop'>种子超市</navigator>

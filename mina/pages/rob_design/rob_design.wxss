@@ -36,8 +36,12 @@
 }
 
 .houseImage {
-  width: 100rpx;
-  height: 100rpx;
+  width: 150rpx;
+  height: 150rpx;
   background: red;
-  margin: 8rpx;
+  margin: 0 auto;
+}
+
+.houseImageContainer {
+  align-items: center;
 }

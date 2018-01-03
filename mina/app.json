@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/rob_design/rob_design",
     "pages/index/index",
-    "pages/user-info/user-info"
+    "pages/select-house-image/select-house-image",
+    "pages/user-info/user-info",
+    "pages/rob_design/rob_design"
   ],
   "window": {
     "backgroundTextStyle": "light",
