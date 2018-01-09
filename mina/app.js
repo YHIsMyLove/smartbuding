@@ -1,6 +1,8 @@
+import wxValidate from 'utils/wxValidate'
 const config = require('./config/config.js');
 
 App({
+  wxValidate: (rules, messages) => new wxValidate(rules, messages),
   onLaunch: function () {
     this.logIn()
   },

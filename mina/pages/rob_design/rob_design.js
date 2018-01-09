@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showTopTips: false,
     timeCellWidth: "33.33333%",
     times: [
       { desc: "12:00", state: -1 },
@@ -14,16 +15,54 @@ Page({
       { desc: "18:00", state: 1 },
       { desc: "20:00", state: 1 }
     ],
-    styles: ['北欧风格', '地中海'],
-    styleIndex: 0,
+    houseStyles: ['北欧风格', '地中海'],
+    houseStyleIndex: 0,
     houses: ['月亮湾', '天商城'],
     houseIndex: 0,
     houseImagePath: "../../images/avatarIcon.svg",
-    region: ["湖北省", "黄石市", "黄石港区"]
+    region: ["湖北省", "黄石市", "黄石港区"],
+    isOnsiteService: false,
+    canGetVCode: true,
+    canGetVCodeRemainTime: 30,
+    validation: {
+      name: { valid: true },
+      mobile: { valid: true },
+      house: { valid: true },
+      houseStyle: { valid: true },
+      houseArea: { valid: true },
+      region: { valid: true },
+      vcode: {valid: true}
+    }
   },
 
   rob: function (e) {
     console.log("用户提交了，参数为：", e.detail.value);
+    var that = this
+    if (!this.WxValidate.checkForm(e)) {
+      var validation = {
+        name: { valid: true },
+        mobile: { valid: true },
+        house: { valid: true },
+        houseStyle: { valid: true },
+        houseArea: { valid: true },
+        region: { valid: true },
+        vcode: { valid: true }
+      }
+      this.WxValidate.errorList.map(function (item) {
+        validation[item.param].valid = false
+      })
+      this.setData({
+        validation: validation,
+        showTopTips: true
+      })
+      setTimeout(function () {
+        that.setData({
+          showTopTips: false
+        });
+      }, 3000);
+      return false
+    }
+    this.setData({ submitHidden: false })
   },
 
   chooseImage: function (e) {
@@ -43,6 +82,7 @@ Page({
   },
 
   previewImage: function (e) {
+    if (this.data.isOnsiteService) return
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: [this.data.houseImagePath] // 需要预览的图片http链接列表
@@ -61,6 +101,12 @@ Page({
     })
   },
 
+  changeOnsiteService: function (e) {
+    this.setData({
+      isOnsiteService: !this.data.isOnsiteService
+    })
+  },
+
   regionChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
@@ -68,10 +114,88 @@ Page({
     })
   },
 
+  getVCode: function (e) {
+    var that = this
+    that.setData({
+      canGetVCode: false
+    })
+    that.data.canGetVCodeRemainTime = 30
+    var handler = setInterval(function(){
+      var time = that.data.canGetVCodeRemainTime - 1
+      that.setData({
+        canGetVCodeRemainTime: time
+      })
+      if (time <= 0){
+        clearInterval(handler)
+        that.setData({
+          canGetVCode: true
+        })
+      }
+    }, 1000)
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.WxValidate = app.wxValidate(
+      {
+        name: {
+          required: true,
+          minlength: 2,
+          maxlength: 10,
+        },
+        mobile: {
+          required: true,
+          tel: true,
+        },
+        house: {
+          required: true,
+          minlength: 2,
+          maxlength: 100,
+        },
+        region: {
+          required: true,
+          minlength: 2,
+          maxlength: 100,
+        },
+        houseStyle: {
+          required: true,
+          minlength: 2,
+          maxlength: 100,
+        },
+        houseArea: {
+          required: true
+        },
+        vcode: {
+          required: true
+        }
+      }
+      , {
+        name: {
+          required: '请填写您的姓名',
+        },
+        mobile: {
+          required: '请填写您的手机号',
+        },
+        house: {
+          required: '请选择小区',
+        },
+        region: {
+          required: '请选择地区',
+        },
+        houseStyle: {
+          required: '请选择装修风格'
+        },
+        houseArea: {
+          required: '请填写房屋面积'
+        },
+        vcode: {
+          required: '请填写短信验证码'
+        }
+      }
+    )
+
     var width = 100.0 / this.data.times.length;
     console.debug("time cell width is ", width);
     this.setData({ timeCellWidth: width + "%" });

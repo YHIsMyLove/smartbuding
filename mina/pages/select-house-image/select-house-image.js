@@ -10,7 +10,7 @@ Page({
     houseIndex: 0,
     region: ["湖北省", "黄石市", "黄石港区"],
     houseImages: ["../../images/test_resources/timg.jpeg", "../../images/test_resources/timg-2.jpeg", "../../images/test_resources/timg.jpeg"],
-    selectedIndex: 0
+    selectedIndex: -1
   },
 
   houseChanged: function (e) {
