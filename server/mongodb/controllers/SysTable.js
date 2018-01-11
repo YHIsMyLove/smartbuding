@@ -6,9 +6,10 @@ const msg = require('../../utils/message')
 
 exports.getbyid = async(function* (req, res) {
     if (!id) {
-        return res.send(msg.genFailedMsg('id不能为空'))
+        return res.send(msg.genFailedMsg('id不能为空'))        
     }
     try {
+        
         res.send(msg.genSuccessMsg('读取列表成功', list, { count: count }))
     } catch (error) {
         res.send(msg.genFailedMsg('获取列表失败', error))

@@ -28,11 +28,16 @@
                 <el-col :span='20' v-if="item.Link=='空'">
                     <el-input v-model="item.Value"></el-input>
                 </el-col>
-                <el-col :span='20' v-else="item.Link=='空'">
-                    <el-select v-model="item.Value" placeholder="请选择">
-                        <el-option v-for="sitem in selectdata" :key="sitem.value" :label="sitem.label" :value="sitem.value">
-                            <span style="float: left">{{ sitem.label }}</span>
-                            <span style="float: right; color: #8492a6; font-size: 13px">{{ sitem.value }}</span>
+                <el-col :span='20' v-else="item.Link!='空'">
+                    <el-select style="width:100%" v-model="item.Value" filterable placeholder="请输入关键词" :loading="loading">
+                        <!-- :remote-method="remoteMethod" -->
+                        <el-option v-for="item2 in item.ItemLinks" :key="item2._id" :label="item2._id" :value="item2._id">
+                            <div v-for="(item3,index) in Object.keys(item2)" :key="index">
+                                <span v-if="(item3!='SysFieldID'&&item3!='_id')&&index%2==0" style="float: left;">{{ item2[item3] }}</span>
+                                <span v-else-if="(item3!='SysFieldID'&&item3!='_id')&&index%2!=0" style="float: right; color: #8492a6; ">{{ item2[item3] }}
+                                    <span v-if="index!=Object.keys(item2).length-1"> &nbsp;|&nbsp; </span>
+                                </span>
+                            </div>
                         </el-option>
                     </el-select>
                 </el-col>
@@ -58,24 +63,26 @@
                     'Title': '',
                     'Type': 'String',
                     'Link': '',
-                    'Value': ''
+                    'Value': '',
+                    'ItemLinks': []
                 }],
                 listLoading: false,
                 editFormVisible: false,
-                selectdata: [{
-                    value: 'Beijing',
-                    label: '北京'
-                }, {
-                    value: 'Shanghai',
-                    label: '上海'
-                }],
                 tableData: [],
                 tableDataLength: 0,
-                // value6: '',
-                // SaveData: []
+
+                // options4: [],
+                list: [],
+                loading: false,
+                // states: ["a", "b", "c", "d"]
             };
         },
         props: ['Field', 'TabelName'],
+        mounted() {
+            // this.list = this.states.map(item => {
+            //     return { value: item, label: item };
+            // });
+        },
         methods: {
             //获取字段数据
             getFieldInfo() {
@@ -83,14 +90,39 @@
                 var SysFieldInfo = JSON.parse(this.Field.SysFieldInfo)
                 this.EditLine.splice(0, this.EditLine.length)
                 Object.keys(SysFieldInfo).forEach(i => {
-                    this.EditLine.push({ Title: i, Type: SysFieldInfo[i].type, Link: SysFieldInfo[i].link })
+                    var line = { Title: i, Type: SysFieldInfo[i].type, Link: SysFieldInfo[i].link }
+                    this.EditLine.push(line)//
+                    if (SysFieldInfo[i].link !== '空') {
+                        switch (SysFieldInfo[i].link) {
+                            case "用户表":
+                                // axios.get().then(function (res) {
+                                // }.bind(line))
+                                break
+                            default:
+                                axios.get(`/api/SysTable?SysFieldID=${SysFieldInfo[i].link}`)
+                                    .then(function (res) {
+                                        line.ItemLinks = res.data.data
+                                        console.log(line)
+                                    }.bind(line))
+                                break
+                        }
+                    }
                 })
             },
             //获取查询框数据
-            getSelectInfo() {
-                axios.get('/api/', {}).then((req, err) => {
-
-                })
+            remoteMethod(query) {
+                if (query !== '') {
+                    this.loading = true;
+                    setTimeout(() => {
+                        this.loading = false;
+                        // this.options4 = this.list.filter(item => {
+                        //     return item.label.toLowerCase()
+                        //         .indexOf(query.toLowerCase()) > -1;
+                        // });
+                    }, 200);
+                } else {
+                    this.options4 = [];
+                }
             },
             //获取tabel的数据 api/SysTable
             getTabelData() {
@@ -102,9 +134,9 @@
                 }
                 axios.get('/api/SysTable/', { params: params }).then(function (res) {
                     vm.$data.tableData = res.data.data;
+                    //console.log('tabel数据' + JSON.stringify(res.data.data))
                     vm.$data.tableDataLength = res.data.meta.count;
                 })
-                console.log(vm.$data.tableData)
             },
             handleEdit(row) {
 
@@ -124,13 +156,10 @@
                 let savedata = `{"SysFieldID":"${this.TabelName}",`
                 let index = 0
                 this.EditLine.forEach(i => {
-                    console.log(i)
                     savedata += `"item${index}":"${i.Value}",`
                     index++
                 })
                 savedata = savedata.substr(0, savedata.length - 1) + '}'
-                // console.log(savedata)
-                // console.log(JSON.parse(savedata))
                 axios.post('/api/SysTable/create', JSON.parse(savedata)).then((req, err) => {
                     if (err) {
                         this.$message({
@@ -160,7 +189,6 @@
                 this.getFieldInfo()
             },
             TabelName(curVal, oldVal) {
-                console.log(curVal)
                 this.getTabelData()
             }
         }

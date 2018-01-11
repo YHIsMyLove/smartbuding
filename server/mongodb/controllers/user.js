@@ -67,6 +67,18 @@ exports.delete = async(function* (req, res) {
         res.send(msg.genFailedMsg('删除失败'))
     }
 })
+exports.checklogin = async(function* (req, res) {
+    if (Object.keys(req.body).length === 0) {
+        return res.send(msg.genFailedMsg('body不能为空'))
+    }
+    console.log(req.body.account)
+    console.log(req.body.checkPass)
+    if ((req.body.account && req.body.account === 'admin') &&
+        (req.body.checkPass && req.body.checkPass === 'admin')) {
+        return res.send(msg.genSuccessMsg('登录成功'))
+    }
+    return res.send(msg.genFailedMsg('登录失败'))
+})
 /******************************************************************** */
 const axios = require('axios')
 const jwt = require('jsonwebtoken')

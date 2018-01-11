@@ -145,7 +145,7 @@
                 }).then(() => {
                     _this.listLoading = true;
                     NProgress.start();
-                    console.log(row._id)
+                    //console.log(row._id)
                     axios.post(`/api/SysField/delete`, { id: row._id }).then(function (res) {
                         if (res.data.success) {
                             _this.$message({
@@ -214,7 +214,7 @@
                         value: '案例展示表'
                     }]
                     res.data.data.forEach(i => {
-                        console.log(JSON.stringify(i))
+                        //console.log(JSON.stringify(i))
                         this.options_Fields.push({ key: i.SysTabName, value: i.SysTabName })
                     })
 
@@ -237,7 +237,7 @@
                     });
                     return
                 }
-                console.log('保存时' + this.EditLine)
+                //console.log('保存时' + this.EditLine)
                 if (this.EditLine.filter(i => i.Title === '').length > 0) {
                     this.$message({
                         message: '请输入业务信息标题',
@@ -285,7 +285,7 @@
                 //console.log('取消')
             },
             handleClick() {
-                console.log(this.currentid === '' ? '新增' : '编辑')
+                //console.log(this.currentid === '' ? '新增' : '编辑')
             },
             onDelLine(index) {
                 //console.log(index)

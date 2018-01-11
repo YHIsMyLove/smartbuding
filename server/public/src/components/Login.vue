@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data() {
       return {
@@ -42,15 +43,26 @@
       },
       handleSubmit2(ev) {
         var _this = this;
-        this.$refs.ruleForm2.validate((valid) => {
-          if (valid) {
-            //_this.$router.push('/table');
-            _this.$router.replace('/table');
-          } else {
-            console.log('error submit!!');
-            return false;
+        axios.post('/api/user/checklogin', this.ruleForm2).then(function (res, err) {
+          console.log(res.data.success)
+          console.log(err)
+          if (err || !res.data.success) {
+            console.log('登录失败')
+            return false
           }
-        });
+          console.log('登录成功')
+          _this.$router.replace('/table');
+        })
+        // var _this = this;
+        // this.$refs.ruleForm2.validate((valid) => {
+        //   if (valid) {
+        //     //_this.$router.push('/table');
+        //     _this.$router.replace('/table');
+        //   } else {
+        //     console.log('error submit!!');
+        //     return false;
+        //   }
+        // });
       }
     }
   }

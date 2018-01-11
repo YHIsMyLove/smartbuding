@@ -1,13 +1,18 @@
 var moment = require('moment')
 /************************************************************************** */
 //0 代表循环中 1 结束 
-var run_loop = 0;
+var npm = 0;
+//代表第几轮
 var count = 1
+//当前系统时间
 var time_now = moment()
 // 剩余时间
 var time_diff = 0
+//结束时间
 var time_end = time_now.subtract(-0.2, "minute")
+//
 var list_user_seckill = []
+//
 var user_seckill = {}
 
 function socketVerify(info) {
@@ -24,7 +29,7 @@ var WebSocketServer = require('ws').Server,
 
 console.log('服务正在启动...')
 wss.on('connection', (ws) => {
-    console.log('client connected');
+    //console.log('client connected');
     //ws.send('你是第' + wss.clients.length + '位');
     ws.on('message', (message) => {
         if (run_loop == 1) {
@@ -32,13 +37,16 @@ wss.on('connection', (ws) => {
             return;
         }
         var client = JSON.parse(message)
-        console.log(client.name)
+        //console.log(client.name)
         user_seckill = {
             name: client.name,
             seckilled: 0,//0 未参加 1 参加未获得资格 2 参加获得资格
             seckill_num: count,
         }
-        if (client.msg == 'test') {
+        //处理抢单消息
+        if (client.msg == '[SECKILL]') {
+            //查询抢单表..看有没有记录..3个月内..
+
             var all_count = list_user_seckill.filter(i => i.seckill_num == count).length
             var findone = list_user_seckill.filter(i => i.name == user_seckill.name && i.seckilled == 2 /*&& i.seckill_num == count*/)
             if (findone.length == 0 && all_count <= 1) {

@@ -71,3 +71,4 @@ exports.GetAllFieldName = async(function* (req, res) {
         res.send(msg.genFailedMsg('获取字段管理列表失败', error))
     }
 })
+

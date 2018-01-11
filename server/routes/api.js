@@ -9,6 +9,7 @@ var SysTable = require('../mongodb/controllers/SysTable');
 router.param('id', user.load);
 router.get('/user', user.list);
 router.post('/user', user.create);
+router.post('/user/checklogin', user.checklogin);
 router.post('/user/:id', user.update);
 router.delete('/user/:id', user.delete);
 router.post('/login', user.login);
