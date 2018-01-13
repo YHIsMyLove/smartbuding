@@ -3,5 +3,7 @@
   "backgroundColor": "#cccccc",
   "usingComponents": {
     "searchbar": "../../commons/searchbar/searchbar"
-  }
+  },
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 20
 }
