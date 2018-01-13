@@ -1,4 +1,7 @@
 // pages/rob_design/rob_design.js
+var qcloud = require('../../vendor/wafer2-client-sdk/index')
+var config = require('../../config/config')
+var util = require('../../utils/util.js')
 var app = getApp()
 Page({
 
@@ -6,14 +9,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    tunnelStatus: false,
     showTopTips: false,
     timeCellWidth: "33.33333%",
     times: [
-      { desc: "12:00", state: -1 },
-      { desc: "14:00", state: 0 },
-      { desc: "16:00", state: 1 },
-      { desc: "18:00", state: 1 },
-      { desc: "20:00", state: 1 }
+      { desc: "9:00", state: 0 },
+      { desc: "14:00", state: 1 },
     ],
     houseStyles: ['北欧风格', '地中海'],
     houseStyleIndex: 0,
@@ -31,7 +32,7 @@ Page({
       houseStyle: { valid: true },
       houseArea: { valid: true },
       region: { valid: true },
-      vcode: {valid: true}
+      vcode: { valid: true }
     }
   },
 
@@ -120,12 +121,12 @@ Page({
       canGetVCode: false
     })
     that.data.canGetVCodeRemainTime = 30
-    var handler = setInterval(function(){
+    var handler = setInterval(function () {
       var time = that.data.canGetVCodeRemainTime - 1
       that.setData({
         canGetVCodeRemainTime: time
       })
-      if (time <= 0){
+      if (time <= 0) {
         clearInterval(handler)
         that.setData({
           canGetVCode: true
@@ -201,6 +202,87 @@ Page({
     this.setData({ timeCellWidth: width + "%" });
   },
 
+  // 切换信道的按钮
+  switchChange: function (e) {
+    var checked = e.detail.value
+
+    if (checked) {
+      this.openTunnel()
+    } else {
+      this.closeTunnel()
+    }
+  },
+
+  openTunnel: function () {
+    util.showBusy('信道连接中...')
+    // 创建信道，需要给定后台服务地址
+    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
+
+    // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
+    tunnel.on('connect', () => {
+      util.showSuccess('信道已连接')
+      console.log('WebSocket 信道已连接')
+      this.setData({ tunnelStatus: 'connected' })
+    })
+
+    tunnel.on('close', () => {
+      util.showSuccess('信道已断开')
+      console.log('WebSocket 信道已断开')
+      this.setData({ tunnelStatus: 'closed' })
+    })
+
+    tunnel.on('reconnecting', () => {
+      console.log('WebSocket 信道正在重连...')
+      util.showBusy('正在重连')
+    })
+
+    tunnel.on('reconnect', () => {
+      console.log('WebSocket 信道重连成功')
+      util.showSuccess('重连成功')
+    })
+
+    tunnel.on('error', error => {
+      util.showModel('信道发生错误', error)
+      console.error('信道发生错误：', error)
+    })
+
+    // 监听自定义消息（服务器进行推送）
+    tunnel.on('speak', speak => {
+      util.showModel('信道消息', speak)
+      console.log('收到说话消息：', speak)
+    })
+
+    // 打开信道
+    tunnel.open()
+
+    this.setData({ tunnelStatus: 'connecting' })
+  },
+
+  /**
+   * 点击「发送消息」按钮，测试使用信道发送消息
+   */
+  sendMessage() {
+    if (!this.data.tunnelStatus || !this.data.tunnelStatus === 'connected') return
+    // 使用 tunnel.isActive() 来检测当前信道是否处于可用状态
+    if (this.tunnel && this.tunnel.isActive()) {
+      // 使用信道给服务器推送「speak」消息
+      this.tunnel.emit('speak', {
+        'word': 'I say something at ' + new Date(),
+      });
+    }
+  },
+
+  /**
+   * 点击「关闭信道」按钮，关闭已经打开的信道
+   */
+  closeTunnel() {
+    if (this.tunnel) {
+      this.tunnel.close();
+    }
+    util.showBusy('信道连接中...')
+    this.setData({ tunnelStatus: 'closed' })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -217,13 +299,14 @@ Page({
         houseImagePath: app.globalData.selectedHouseImage
       })
     }
+    this.openTunnel();
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.closeTunnel();
   },
 
   /**
@@ -237,14 +320,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    console.log("onPullDownRefresh")
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    console.log("onReachBottom")
   },
 
   /**
