@@ -19,22 +19,22 @@
                     <!--data按照指定数组格式传进来就会自动渲染表格数据-->
                     <!--v-loading为真时，显示loading动画-->
                     <el-table :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:500px">
-                        <el-table-column type="index" width="80">
+                        <el-table-column type="index" >
                         </el-table-column>
-                        <el-table-column prop="headimgurl" label="头像" sortable width="80">
+                        <el-table-column prop="headimgurl" label="头像" sortable width="90">
                             <template slot-scope="scope">
-                                <img :src="scope.row.headimgurl" alt="" style="width: 50px;height: 50px">
+                                <img :src="scope.row.headimgurl" alt="头像" style="width:50px;height: 50px">
                             </template>
                         </el-table-column>
-                        <el-table-column prop="name" label="姓名" width="180" sortable>
+                        <el-table-column prop="name" label="姓名"sortable>
                         </el-table-column>
-                        <el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+                        <el-table-column prop="sex" label="性别" :formatter="formatSex" sortable>
                         </el-table-column>
-                        <el-table-column prop="phonenum" label="手机号" width="100" sortable>
+                        <el-table-column prop="phonenum" label="手机号"  sortable>
                         </el-table-column>
-                        <el-table-column prop="age" label="年龄" width="100" sortable>
+                        <el-table-column prop="age" label="年龄" sortable>
                         </el-table-column>
-                        <el-table-column prop="birth" label="生日" width="180" :formatter="formatDate" sortable>
+                        <el-table-column prop="birth" label="生日"  :formatter="formatDate" sortable>
                         </el-table-column>
                         <el-table-column prop="addr" label="地址" sortable>
                         </el-table-column>

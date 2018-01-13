@@ -6,7 +6,8 @@ const Order = new Schema({
     UserID: String,
     OrderNum: String,
     GoodsID: String,
-    OrderPrice: String
+    OrderPrice: String,
+    OrderType: String//标识哪种类型的订单
 })
 
 Order.pre('save', function (next) {

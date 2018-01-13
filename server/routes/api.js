@@ -4,6 +4,7 @@ var user = require('../mongodb/controllers/user');
 var caseshow = require('../mongodb/controllers/caseshow');
 var SysField = require('../mongodb/controllers/SysField');
 var SysTable = require('../mongodb/controllers/SysTable');
+var Auth = require('../mongodb/controllers/auth');
 //var login_controller = require('../controllers/login_controller')
 
 router.param('id', user.load);
@@ -30,5 +31,7 @@ router.post('/SysTable/getbyid', SysTable.getbyid)
 router.post('/SysTable/update', SysTable.update)
 router.post('/SysTable/create', SysTable.create)
 router.post('/SysTable/delete', SysTable.delete)
+
+router.post('/Auth/cos', Auth.cosauth)
 /******************************************/
 module.exports = router;
