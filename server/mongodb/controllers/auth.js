@@ -1,5 +1,5 @@
 const msg = require('../../utils/message')
-const _cos = require('../../utils/getCOSauth')
+//const _cos = require('../../utils/getCOSauth')
 exports.cosauth = function (req, res) {
     var method = _cos.getParam(req.url, 'method');
     var pathname = decodeURIComponent(getParam(req.url, 'pathname'));
