@@ -1,6 +1,8 @@
+import wxValidate from 'utils/wxValidate'
 const config = require('./config/config.js');
 
 App({
+  wxValidate: (rules, messages) => new wxValidate(rules, messages),
   onLaunch: function () {
     this.logIn()
   },
@@ -65,5 +67,25 @@ App({
       })
     })
   },
-  switch: false
+  switch: false,
+  getUserInfo: function (cb) {
+    var that = this
+    if (this.globalData.userInfo) {
+      typeof cb == "function" && cb(this.globalData.userInfo)
+    } else {
+      //调用登录接口
+      wx.getUserInfo({
+        withCredentials: false,
+        success: function (res) {
+          that.globalData.userInfo = res.userInfo
+          typeof cb == "function" && cb(that.globalData.userInfo)
+        }
+      })
+    }
+  },
+
+  globalData: {
+    userInfo: null,
+    selectedHouseImage: ''
+  }
 })
