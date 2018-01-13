@@ -1,0 +1,83 @@
+/* pages/rob_design/rob_design.wxss */
+
+.root-container {
+  background: #e9e9e9;
+}
+
+.time-cell {
+  background: #ccc;
+  text-align: center;
+}
+
+.time-state {
+  font-size: 20rpx;
+}
+
+.active {
+  background: blue;
+  color: white;
+}
+
+.time-remain {
+  font-size: 28rpx;
+  text-align: center;
+  background: #f5ebe9;
+  border-bottom: 1rpx solid #ccc;
+  padding: 8rpx;
+}
+
+.field-container {
+  margin: 8rpx 150rpx;
+}
+
+.field-container input {
+  margin: 8rpx;
+  background: #fff;
+}
+
+/* .houseImage {
+  width: 150rpx;
+  height: 150rpx;
+  background: red;
+  margin: 0 auto;
+} */
+
+.houseImageContainer {
+  align-items: center;
+}
+
+.houseImage {
+  position: relative;
+}
+
+.houseImage image {
+  width: 100%;
+}
+
+.houseImage view {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #000;
+  opacity: 47;
+}
+
+.vcode {
+  width: 200rpx;
+  text-align: center;
+  display: inline-block;
+  border-left: 1px solid #e5e5e5;
+  line-height: 2.58823529em;
+  font-size: 17px;
+  white-space: nowrap;
+}
+
+.vcode .vcode-btn {
+  color: #3cc51f;
+}
+
+.vcode-btn:active {
+  color: #52a341;
+}
