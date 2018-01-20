@@ -9,6 +9,7 @@ exports.load = async(function* (req, res, next, id) {
     }
     try {
         req.user = yield User.load(id)
+        //new Promise().then().then().catch().then()
         if (!req.user) return next(new Error('Use not found'));
     } catch (error) {
         return next(error);

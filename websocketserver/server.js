@@ -46,14 +46,13 @@ wss.on('connection', (ws) => {
         //处理抢单消息
         if (client.msg == '[SECKILL]') {
             //查询抢单表..看有没有记录..3个月内..
-
             var all_count = list_user_seckill.filter(i => i.seckill_num == count).length
             var findone = list_user_seckill.filter(i => i.name == user_seckill.name && i.seckilled == 2 /*&& i.seckill_num == count*/)
             if (findone.length == 0 && all_count <= 1) {
                 user_seckill.seckilled = 2
                 ws.send(`${user_seckill.name}:秒杀成功!`)
                 list_user_seckill.push(user_seckill)
-                //先到先得?还是什么权重
+                //先到先得?还是什么权重 
             }
             else if (findone.length == 0 && all_count > 1) {
                 user_seckill.seckilled = 1

@@ -18,7 +18,7 @@ var config = {
     requestUrl: `${host}/weapp/user`,
 
     // 测试的信道服务地址
-    tunnelUrl: `${host}/`,
+    tunnelUrl: `ws://115.159.159.37:8181?t=test`,
 
     // 上传图片接口
     uploadUrl: `${host}/weapp/upload`

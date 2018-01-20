@@ -14,7 +14,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="VR预览" prop="name">
-                    <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" limit=1>
+                    <el-upload class="upload-demo" drag action="http://localhost:3001/api/upload" limit=1>
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或
                             <em>点击上传</em>
