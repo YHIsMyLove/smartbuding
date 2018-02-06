@@ -1,11 +1,9 @@
-import config from '../config/config'
-var COS = require('cos-nodejs-sdk-v5');
-
-var cos = new COS({
+const config = require('../config/config')
+const COS = require('cos-nodejs-sdk-v5');
+const cos = new COS({
     SecretId: config.Qcos_SecretId,
     SecretKey: config.Qcos_SecretKey,
 });
-
 /******
  * 1. cos.getService 接口实现获取该用户下所有 Bucket 列表。
  * 该 API 接口需要使用 Authorization 签名认证，
@@ -20,7 +18,6 @@ var cos = new COS({
  * 7. sliceUploadFile 分片上传 params{bucket,region,key,filepath}
  * 8. deleteObject 删除实体 params{bucket,region,key} 
  */
-
 exports.UpLoad = function (key, callback) {
     cos.sliceUploadFile({
         Bucket: config.Qcos_Bucket,

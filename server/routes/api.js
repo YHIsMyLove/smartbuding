@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var user = require('../mongodb/controllers/user');
-var caseshow = require('../mongodb/controllers/caseshow');
-var SysField = require('../mongodb/controllers/SysField');
-var SysTable = require('../mongodb/controllers/SysTable');
-var Auth = require('../mongodb/controllers/auth');
-//var login_controller = require('../controllers/login_controller')
+const user = require('../mongodb/controllers/user')
+const caseshow = require('../mongodb/controllers/caseshow')
+const SysField = require('../mongodb/controllers/SysField')
+const SysTable = require('../mongodb/controllers/SysTable')
+
 
 router.param('id', user.load);
 router.get('/user', user.list);
@@ -19,6 +18,8 @@ router.get('/caseshow', caseshow.GetCase)
 router.post('/caseshow/:id', caseshow.GetCaseByUserID)
 router.delete('/caseshow/:id', caseshow.DelCaseByID)
 router.post('/caseshow', caseshow.SaveCase)
+router.post('/case/upload', caseshow.upload)
+router.post('/case/test', caseshow.test)
 
 router.get('/SysField', SysField.list)
 router.post('/SysField/getbyid', SysField.getbyid)
@@ -32,6 +33,5 @@ router.post('/SysTable/update', SysTable.update)
 router.post('/SysTable/create', SysTable.create)
 router.post('/SysTable/delete', SysTable.delete)
 
-router.post('/Auth/cos', Auth.cosauth)
 /******************************************/
 module.exports = router;

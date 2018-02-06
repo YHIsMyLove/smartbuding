@@ -14,7 +14,10 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="VR预览" prop="name">
-                    <el-upload class="upload-demo" drag action="http://localhost:3001/api/upload" limit=1>
+                    <el-upload name='file' id='file' class="file" drag 
+                    action="/api/case/upload" 
+                    limit=1 
+                    >
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或
                             <em>点击上传</em>
@@ -68,7 +71,8 @@
                 currentPageSize: 10,
                 currentDate: '',
                 CaseShowInfo: [],
-                CaseShowTitleInfo: []
+                CaseShowTitleInfo: [],
+                uploadHeaders: { "Content-Type": "multipart/form-data" }
             }
         },
         methods: {
@@ -109,8 +113,7 @@
         }
     };
 </script>
-
-<style>
+<style scoped>
     .el-carousel__item:nth-child(2n) {
         background-color: #99a9bf;
     }
