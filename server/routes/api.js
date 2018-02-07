@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const user = require('../mongodb/controllers/user')
-const caseshow = require('../mongodb/controllers/caseshow')
+const user = require('../mongodb/controllers/User')
 const SysField = require('../mongodb/controllers/SysField')
 const SysTable = require('../mongodb/controllers/SysTable')
 
@@ -12,14 +11,6 @@ router.post('/user', user.create);
 router.post('/user/checklogin', user.checklogin);
 router.post('/user/:id', user.update);
 router.delete('/user/:id', user.delete);
-router.post('/login', user.login);
-
-router.get('/caseshow', caseshow.GetCase)
-router.post('/caseshow/:id', caseshow.GetCaseByUserID)
-router.delete('/caseshow/:id', caseshow.DelCaseByID)
-router.post('/caseshow', caseshow.SaveCase)
-router.post('/case/upload', caseshow.upload)
-router.post('/case/test', caseshow.test)
 
 router.get('/SysField', SysField.list)
 router.post('/SysField/getbyid', SysField.getbyid)

@@ -4,8 +4,7 @@
 		<el-col :span="24" class="panel-top">
 			<el-col :span="20">
 				<span class="logo-txt">
-					<i>种子设计后台</i>
-					<!-- <a href="http://element.eleme.io" target="_blank">(by ElementUI)</a> -->
+					<i>智慧工地后台</i>
 				</span>
 			</el-col>
 			<el-col :span="4">

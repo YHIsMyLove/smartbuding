@@ -1,46 +1,35 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const Order = new Schema({
-    OrderID: String,
-    UserID: String,
-    OrderNum: String,
-    GoodsID: String,
-    OrderPrice: String,
-    OrderType: String//标识哪种类型的订单
+//权限表
+const permissionsSchema = new Schema({
+    RoleID: String,
+    DevID: String,
 })
 
-Order.pre('save', function (next) {
+permissionsSchema.pre('save', function (next) {
     next()
 })
-
-Order.methods = {
+permissionsSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-
-Order.statics = {
-    fetch: function () {
-
-    },
-    findById: function () {
-
-    },
+permissionsSchema.statics = {
+    fetch: function () { },
+    findById: function () { },
     load: function (id) {
-        return this.findOne({ _id: id })
-            .exec();
+        return this.findOne({ _id: id }).exec();
     },
     list: function (options) {
         const criteria = options.criteria || {};
         const page = options.page || 0;
         const limit = options.limit || 30;
-        return this.find({})//criteria
+        return this.find({})
             .sort({ createdAt: -1 })
             .limit(limit)
             .skip(limit * page)
             .exec();
     }
 }
-
-mongoose.model('Order', Order);
+mongoose.model('Permissions', permissionsSchema);

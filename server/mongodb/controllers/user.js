@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const { wrap: async } = require('co');
 const msg = require('../../utils/message')
+const SystemConfig = require('../../config/config')
 
 exports.load = async(function* (req, res, next, id) {
     if (!id) {
@@ -43,21 +44,6 @@ exports.update = async(function* (req, res) {
         res.send(msg.genFailedMsg('保存失败'))
     }
 })
-exports.list = async(function* (req, res) {
-    try {
-        var query = {
-            page: parseInt(req.query.page) - 1,
-            limit: parseInt(req.query.limit)
-        }
-        var list = yield User.list(query);
-        console.log(list)
-        var count = yield User.count();
-        res.send(msg.genSuccessMsg('读取用户列表成功', list, { count: count }))
-    } catch (error) {
-        console.log(error);
-        res.send(msg.genFailedMsg('获取用户列表失败'))
-    }
-})
 exports.delete = async(function* (req, res) {
     try {
         let user = req.user;
@@ -68,84 +54,52 @@ exports.delete = async(function* (req, res) {
         res.send(msg.genFailedMsg('删除失败'))
     }
 })
+
+//检查登录
 exports.checklogin = async(function* (req, res) {
     if (Object.keys(req.body).length === 0) {
         return res.send(msg.genFailedMsg('body不能为空'))
     }
-    console.log(req.body.account)
-    console.log(req.body.checkPass)
-    if ((req.body.account && req.body.account === 'admin') &&
-        (req.body.checkPass && req.body.checkPass === 'admin')) {
+    if ((req.body.account && req.body.account === SystemConfig.Admin_User) &&
+        (req.body.checkPass && req.body.checkPass === SystemConfig.Admin_Pwd)) {
         return res.send(msg.genSuccessMsg('登录成功'))
     }
     return res.send(msg.genFailedMsg('登录失败'))
 })
-/******************************************************************** */
-const axios = require('axios')
-const jwt = require('jsonwebtoken')
-const config = require('../../config/config')
-let generateToken = function (user) {
-    return jwt.sign(user, config.jwtSecret, {
-        expiresIn: 7200
-    })
-}
-exports.login = async(function* (req, res) {
-    const queryString = `appid=${config.appId}&secret=${config.appSecret}&js_code=${req.body.code}&grant_type=authorization_code`;
-    const wxAPI = `https://api.weixin.qq.com/sns/jscode2session?${queryString}`;
-    var user_info = req.body.info
-    console.log(user_info)
-    axios.get(wxAPI)
-        .then(response => {
-            console.log(response.data);
-            User.findOne({ openId: response.data.openid }, (err, user) => {
-                if (user) {
-                    console.log('登录' + JSON.stringify(response.data))
-                    return res.send(msg.genSuccessMsg('已登录', { openid: response.data.openid }))
-                } else {
-                    const user = new User();
-                    console.log('登录' + JSON.stringify(response.data))
-                    user.openId = user_info.openid;
-                    user.name = user_info.nickName;
-                    user.addr = `${user_info.country}-${user_info.province}+${user_info.city}`
-                    user.headimgurl = user_info.avatarUrl;
-                    user.sex = user_info.gender
-                    user.save();
-                    console.log(user_info)
-                    return res.send(msg.genSuccessMsg('已登录', { openid: response.data.openid }))
-                }
-            })
-        })
-        .catch(error => {
-            return res.send(msg.genFailedMsg(error))
-        })
-})
-exports.checkToken = async(function* (req, res) {
-    let token = req.headers.authorization;
-    console.log(token);
-    if (token) {
-        jwt.verify(token, config.jwtSecret, (err, decoded) => {
-            if (err) {
-                console.log('err');
-                if (err.name === 'TokenExpiredError') {
-                    return res.send(msg.genFailedMsg('认证码失效，请重新登录!'))
-                } else {
-                    return res.send(msg.genFailedMsg('认证失败！'))
-                }
-            } else {
-                if (decoded.openid) {
-                    req.openid = decoded.openid;
-                    // console.log('req.openid = decoded.openid;');
-                    // return res.status(200).json({ message: '已登录' });
-                    return res.send(msg.genSuccessMsg('已登录'))
-                } else {
-                    return res.send(msg.genFailedMsg('认证失败！'))
-                    // console.log('认证失败！');
-                    // res.status(401).json({ error: '认证失败！' });
-                }
-            }
-        });
-    } else {
-        return res.send(msg.genFailedMsg('请提供认证码！'))
+
+const Mock = require('mockjs')
+//分页获取人员数据
+exports.list = async(function* (req, res) {
+    // if (SystemConfig.MockData == 1) {
+    //     console.log('mock数据.........................')
+    //     var Random = Mock.Random;
+    //     var data = Mock.mock({
+    //         // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+    //         'data|20': [{
+    //             'User': {
+    //                 // 属性 id 是一个自增数，起始值为 1，每次增 1
+    //                 '_id|+1': 1,
+    //                 'UserID|+1': 1,
+    //                 'UserName': Random.string(2, 4),
+    //                 'UserSex': Random.integer(0, 1),
+    //                 'UserAge': Random.integer(20, 40),
+    //                 'UserBirth': Random.date('yyyy-mm-dd'),
+    //                 'UserAddr': Random.county(),
+    //                 'UserPhoneNum': Random.integer(0, 1),
+    //             }
+    //         }]
+    //     })
+    //     return res.send(msg.genSuccessMsg('读取用户列表成功', data, { count: 20 }))
+    // }
+    try {
+        var query = {
+            page: parseInt(req.query.page) - 1,
+            limit: parseInt(req.query.limit)
+        }
+        var list = yield User.list(query);
+        var count = yield User.count();
+        res.send(msg.genSuccessMsg('读取用户列表成功', list, { count: count }))
+    } catch (error) {
+        res.send(msg.genFailedMsg('获取用户列表失败'))
     }
 })
-

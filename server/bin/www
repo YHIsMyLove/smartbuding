@@ -5,13 +5,14 @@
  */
 
 const app = require('../app');
+const config = require('../config/config')
 const debug = require('debug')('express-app:server');
 const http = require('http');
 /**
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3001');
+const port = normalizePort(process.env.PORT || config.Server_Port);
 app.set('port', port);
 
 /**

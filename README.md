@@ -43,3 +43,7 @@ npm run build
 http://localhost:3001/admin
 ```
 
+---
+
+### 2018-2-7
+1. mock.js 使用生成调试数据

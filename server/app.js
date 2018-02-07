@@ -4,24 +4,28 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
 const mongoose = require('mongoose');
-const models = path.join(__dirname, 'mongodb/models');
+const config = require('./config/config')
 const fs = require('fs');
+
+const models = path.join(__dirname, 'mongodb/models');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/testdb', {
+/************************************************************************************* */
+/************************************************************************************* */
+/************************************************************************************* */
+//连接mongod数据库
+mongoose.connect(`mongodb://localhost:${config.MongoDB_Port}/${config.MongoDB_Path}`, {
   useMongoClient: true,
 });
-
 //注册mongoose模型
 fs.readdirSync(models)
   .filter(file => ~file.search(/^[^\.].*\.js$/))
   .forEach(file => require(path.join(models, file)));
-
-const index = require('./routes/index');
-const users = require('./routes/users');
+/************************************************************************************* */
+/************************************************************************************* */
+/************************************************************************************* */
 const admin = require('./routes/admin');
 const api = require('./routes/api');
 // view engine setup
@@ -37,8 +41,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+// app.use('/', index);
+// app.use('/users', users);
 app.use('/admin', admin);
 app.use('/api', api);
 
@@ -54,7 +58,6 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');

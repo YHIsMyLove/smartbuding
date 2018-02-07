@@ -1,29 +1,22 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-//用户表
-const userSchema = new Schema({
+//角色表
+const roleSchema = new Schema({
     UserID: String,
-    UserName: String,
-    UserSex: Number,
-    UserAge: Number,
-    UserBirth: Date,
-    UserAddr: String,
-    UserHeadImg: String,
-    UserPhoneNum: Number,
-    UserCreatedAt: { type: Date, default: Date.now },
-    UserCardID: String//rfid
+    RoleName: String,
+    RoleDesc: String,
 })
 
-userSchema.pre('save', function (next) {
+roleSchema.pre('save', function (next) {
     next()
 })
-userSchema.methods = {
+roleSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-userSchema.statics = {
+roleSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -40,4 +33,4 @@ userSchema.statics = {
             .exec();
     }
 }
-mongoose.model('User', userSchema);
+mongoose.model('Role', roleSchema);

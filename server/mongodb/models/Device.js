@@ -1,29 +1,23 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-//用户表
-const userSchema = new Schema({
-    UserID: String,
-    UserName: String,
-    UserSex: Number,
-    UserAge: Number,
-    UserBirth: Date,
-    UserAddr: String,
-    UserHeadImg: String,
-    UserPhoneNum: Number,
-    UserCreatedAt: { type: Date, default: Date.now },
-    UserCardID: String//rfid
+//设备表
+const deviceSchema = new Schema({
+    DevID: String,
+    DevName: String,
+    DevClass: String,
+    DevDesc: String,
 })
 
-userSchema.pre('save', function (next) {
+deviceSchema.pre('save', function (next) {
     next()
 })
-userSchema.methods = {
+deviceSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-userSchema.statics = {
+deviceSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -40,4 +34,4 @@ userSchema.statics = {
             .exec();
     }
 }
-mongoose.model('User', userSchema);
+mongoose.model('Device', deviceSchema);

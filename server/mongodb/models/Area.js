@@ -1,29 +1,19 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-//用户表
-const userSchema = new Schema({
-    UserID: String,
-    UserName: String,
-    UserSex: Number,
-    UserAge: Number,
-    UserBirth: Date,
-    UserAddr: String,
-    UserHeadImg: String,
-    UserPhoneNum: Number,
-    UserCreatedAt: { type: Date, default: Date.now },
-    UserCardID: String//rfid
+//设备表
+const areaSchema = new Schema({
 })
 
-userSchema.pre('save', function (next) {
+areaSchema.pre('save', function (next) {
     next()
 })
-userSchema.methods = {
+areaSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-userSchema.statics = {
+areaSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -40,4 +30,4 @@ userSchema.statics = {
             .exec();
     }
 }
-mongoose.model('User', userSchema);
+mongoose.model('Area', areaSchema);
