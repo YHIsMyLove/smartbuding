@@ -48,6 +48,14 @@
                         <el-table-column prop="UserAddr" label="地址">
                         </el-table-column>
 
+                        <el-table-column prop="UserRoles" label="用户角色组" width="200">
+                            <template slot-scope="scope">
+                                <el-tag v-for="tag in scope.row.UserRoles" :key="tag.id" :type="tag.type">
+                                    {{tag.name}}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
+
                         <el-table-column label="操作" width="100">
                             <template scope="scope">
                                 <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>

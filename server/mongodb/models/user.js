@@ -12,7 +12,9 @@ const userSchema = new Schema({
     UserHeadImg: String,
     UserPhoneNum: Number,
     UserCreatedAt: { type: Date, default: Date.now },
-    UserCardID: String//rfid
+    UserCardID: String,
+    UserAreas: String,//json数组
+    UserRoles: String,//json数组
 })
 
 userSchema.pre('save', function (next) {

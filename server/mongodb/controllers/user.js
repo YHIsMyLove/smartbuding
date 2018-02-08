@@ -90,6 +90,11 @@ exports.list = async(function* (req, res) {
                 'UserAddr': Random.city(true),
                 'UserPhoneNum|1': ['13531544954', '13632250649', '15820292420', '15999905612'],
                 'UserAge': Random.integer(20, 40),
+                'UserRoles|1-5': [{
+                    'id': Random.integer(0, 10000),
+                    'name|1': ['普通员工', '管理员', '总经理', '操作员'],
+                    'type|1': ['success', 'info', 'warning', 'danger', '']
+                }]
             })
             data.push(item)
             count--

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-//设备表
+//区域表
 const areaSchema = new Schema({
 })
 
