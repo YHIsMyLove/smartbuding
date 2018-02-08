@@ -70,34 +70,35 @@ exports.checklogin = async(function* (req, res) {
 const Mock = require('mockjs')
 //分页获取人员数据
 exports.list = async(function* (req, res) {
-    // if (SystemConfig.MockData == 1) {
-    //     console.log('mock数据.........................')
-    //     var Random = Mock.Random;
-    //     var data = Mock.mock({
-    //         // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
-    //         'data|20': [{
-    //             'User': {
-    //                 // 属性 id 是一个自增数，起始值为 1，每次增 1
-    //                 '_id|+1': 1,
-    //                 'UserID|+1': 1,
-    //                 'UserName': Random.string(2, 4),
-    //                 'UserSex': Random.integer(0, 1),
-    //                 'UserAge': Random.integer(20, 40),
-    //                 'UserBirth': Random.date('yyyy-mm-dd'),
-    //                 'UserAddr': Random.county(),
-    //                 'UserPhoneNum': Random.integer(0, 1),
-    //             }
-    //         }]
-    //     })
-    //     return res.send(msg.genSuccessMsg('读取用户列表成功', data, { count: 20 }))
-    // }
-    try {
-        var query = {
-            page: parseInt(req.query.page) - 1,
-            limit: parseInt(req.query.limit)
+    var query = {
+        page: parseInt(req.query.page) - 1,
+        limit: parseInt(req.query.limit)
+    }
+    var count = query.limit
+    if (SystemConfig.MockData == 1) {
+        var Random = Mock.Random
+        var data = []
+        while (count > 0) {
+            var item = Mock.mock({
+                'UserID|1-1000': 1,
+                'UserHeadImg|1': ['http://img.beihai365.com/bbs/upload/middle/31/484831.jpg?949',
+                    'http://cdn103.img.lizhi.fm/audio_cover/2016/06/24/29465676307388039_320x320.png',
+                    'http://cdn.lizhi.fm/audio_cover/2014/07/28/13301491710824583.jpg'],
+                'UserName': Random.cname(),
+                'UserSex': Random.integer(0, 1),
+                'UserBirth': Random.date('yyyy-MM-dd'),
+                'UserAddr': Random.city(true),
+                'UserPhoneNum|1': ['13531544954', '13632250649', '15820292420', '15999905612'],
+                'UserAge': Random.integer(20, 40),
+            })
+            data.push(item)
+            count--
         }
+        res.send(msg.genSuccessMsg('读取用户列表成功', data, { count: 2000 }))
+    }
+    try {
         var list = yield User.list(query);
-        var count = yield User.count();
+        count = yield User.count();
         res.send(msg.genSuccessMsg('读取用户列表成功', list, { count: count }))
     } catch (error) {
         res.send(msg.genFailedMsg('获取用户列表失败'))

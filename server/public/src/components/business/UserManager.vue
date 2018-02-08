@@ -17,7 +17,7 @@
                 <template>
                     <!--data按照指定数组格式传进来就会自动渲染表格数据-->
                     <!--v-loading为真时，显示loading动画-->
-                    <el-table :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:500px">
+                    <el-table :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:100%">
                         <el-table-column type="index">
                         </el-table-column>
 

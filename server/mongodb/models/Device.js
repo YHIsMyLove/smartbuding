@@ -7,6 +7,9 @@ const deviceSchema = new Schema({
     DevName: String,
     DevClass: String,
     DevDesc: String,
+    DevStatus: Number,
+    DevIp: String,
+    DevPort: Number
 })
 
 deviceSchema.pre('save', function (next) {
