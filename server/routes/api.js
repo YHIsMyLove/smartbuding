@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const user = require('../mongodb/controllers/User')
+const user = require('../mongodb/controllers/user')
 const SysField = require('../mongodb/controllers/SysField')
 const SysTable = require('../mongodb/controllers/SysTable')
 
