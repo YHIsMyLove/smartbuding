@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const user = require('../mongodb/controllers/user')
+const Device = require('../mongodb/controllers/Device')
 const SysField = require('../mongodb/controllers/SysField')
 const SysTable = require('../mongodb/controllers/SysTable')
 
@@ -11,6 +12,8 @@ router.post('/user', user.create);
 router.post('/user/checklogin', user.checklogin);
 router.post('/user/:id', user.update);
 router.delete('/user/:id', user.delete);
+
+router.get('/Device', Device.list);
 
 router.get('/SysField', SysField.list)
 router.post('/SysField/getbyid', SysField.getbyid)

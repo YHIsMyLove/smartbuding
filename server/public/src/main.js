@@ -34,7 +34,7 @@ const routes = [
         children: [
             { path: '/', component: Main, name: 'Home', hidden: true },
             { path: '/UserManager', component: UserManager, name: '用户管理' },
-            { path: '/RoleManager', component: RoleManager, name: '权限管理' },
+            { path: '/RoleManager', component: RoleManager, name: '角色管理' },
             { path: '/DeviceManager', component: DeviceManager, name: '设备管理' },
             //{ path: '/ShowCaseManager', component: ShowCaseManager, name: '案例展示' },
             {

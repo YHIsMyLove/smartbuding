@@ -3,6 +3,7 @@ const User = mongoose.model('User');
 const { wrap: async } = require('co');
 const msg = require('../../utils/message')
 const SystemConfig = require('../../config/config')
+const Mock = require('mockjs')
 
 exports.load = async(function* (req, res, next, id) {
     if (!id) {
@@ -67,7 +68,6 @@ exports.checklogin = async(function* (req, res) {
     return res.send(msg.genFailedMsg('登录失败'))
 })
 
-const Mock = require('mockjs')
 //分页获取人员数据
 exports.list = async(function* (req, res) {
     var query = {
