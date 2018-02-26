@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:EZUIKitForms;assembly=EZUIKitForms"
+    x:Class="SmartConstructionSite.OnlineMonitoring.CameraLiveStreamingPage"
+    Title="{Binding Camera.Name}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="PortraitTemplate">
+                <StackLayout Orientation="Vertical" Spacing="0">
+                    <ContentPresenter></ContentPresenter>
+                    <Grid x:Name="grid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Image="stop.png" BackgroundColor="Transparent" Command="{TemplateBinding Parent.PlayCommand}"></Button>
+                        <BoxView Grid.Column="1" WidthRequest="1" HeightRequest="10" Color="Gray"></BoxView>
+
+                        <Button Grid.Column="2" BackgroundColor="Transparent" Image="stop.png" Command="{TemplateBinding Parent.MuteCommand}"/>
+                        <BoxView Grid.Column="3" WidthRequest="1" HeightRequest="10" Color="Gray"></BoxView>
+
+                        <Button Grid.Column="4" BackgroundColor="Transparent" Image="stop.png" Command="{TemplateBinding Parent.ChangeViewCommand}"/>
+                        <BoxView Grid.Column="5" WidthRequest="1" HeightRequest="10" Color="Gray"></BoxView>
+
+                        <Button Grid.Column="6" BackgroundColor="Transparent" Text="高清" Command="{TemplateBinding Parent.ShowVideoLevelPopupCommand}"/>
+                        <BoxView Grid.Column="7" WidthRequest="1" HeightRequest="10" Color="Gray"></BoxView>
+
+                        <Button Grid.Column="8"  Command="{TemplateBinding Parent.MaximizeCommand}" BackgroundColor="Transparent" Image="stop.png"/>
+                        
+                    </Grid>
+                </StackLayout>
+            </ControlTemplate>
+            <ControlTemplate x:Key="LandscapeTemplate">
+                <Grid>
+                    <ContentPresenter></ContentPresenter>
+                    <Button x:Name="btnFullScreen" Command="{TemplateBinding Parent.MinimizeCommand}" Text="还原" HorizontalOptions="Start" VerticalOptions="Start"></Button>
+                </Grid>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentView x:Name="contentView" ControlTemplate="{DynamicResource PlayerTemplate}">
+        <StackLayout>
+            <common:EZUIPlayer x:Name="player" AppKey="443eed7d6dab47739915d6a237dcad34" AccessToken="at.9jvhglgncbw1kbfz0d20oq7j5yub29qi-9daaam9noq-0m4m8jj-e7s9iaolz"
+                Url="ezopen://open.ys7.com/131606182/1.live" AutoPlay="true" BackgroundColor="Black"></common:EZUIPlayer>
+        </StackLayout>
+    </ContentView>
+</ContentPage>
