@@ -47,6 +47,8 @@ namespace SmartConstructionSite.OnlineMonitoring
             set { SetValue(MaximizedProperty, value); }
         }
 
+        public EZUIPlayer Player { get { return player; } }
+
         protected override void OnDisappearing()
         {
             base.OnDisappearing();

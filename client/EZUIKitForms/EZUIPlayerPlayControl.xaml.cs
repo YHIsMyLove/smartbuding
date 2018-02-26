@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using EZOpenSDKForms;
 using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace EZUIKitForms
 {
@@ -30,13 +31,47 @@ namespace EZUIKitForms
             set { SetValue(VideoLevelProperty, value); }
         }
 
-        public static readonly BindableProperty MaximizedProperty =
-            BindableProperty.Create(nameof(Maximized), typeof(bool), typeof(EZUIPlayerPlayControl), false);
+        public static readonly BindableProperty MaximizeCommandProperty =
+            BindableProperty.Create(nameof(MaximizeCommand), typeof(ICommand), typeof(EZUIPlayerPlayControl), null,
+                propertyChanged:(bindable, oldValue, newValue)=> {
+                    EZUIPlayerPlayControl playControl = (EZUIPlayerPlayControl)bindable;
+                    if (oldValue != null)
+                    {
+                        playControl.RemoveEventForMaximizeCommand((ICommand)oldValue);   
+                    }
+                    if (newValue != null)
+                    {
+                        playControl.AddEventForMaximizeCommand((ICommand)newValue);
+                    }
+                });
 
-        public bool Maximized
+        public ICommand MaximizeCommand
         {
-            get;
-            set;
+            get { return (ICommand)GetValue(MaximizeCommandProperty); }
+            set { SetValue(MaximizeCommandProperty, value); }
+        }
+
+        public static readonly BindableProperty MaximizeCommandParameterProperty =
+            BindableProperty.Create(nameof(MaximizeCommandParameter), typeof(object), typeof(EZUIPlayerPlayControl), null);
+
+        public object MaximizeCommandParameter {
+            get { return GetValue(MaximizeCommandParameterProperty); }
+            set { SetValue(MaximizeCommandParameterProperty, value); }
+        }
+
+        private void AddEventForMaximizeCommand(ICommand newValue)
+        {
+            newValue.CanExecuteChanged += MaximizeCommand_CanExecuteChanged;
+        }
+
+        private void MaximizeCommand_CanExecuteChanged(object sender, EventArgs e)
+        {
+            btnFullScreen.IsEnabled = MaximizeCommand.CanExecute(MaximizeCommandParameter);
+        }
+
+        private void RemoveEventForMaximizeCommand(ICommand oldValue)
+        {
+            oldValue.CanExecuteChanged -= MaximizeCommand_CanExecuteChanged;
         }
 
         void Handle_Clicked(object sender, System.EventArgs e)
@@ -47,15 +82,27 @@ namespace EZUIKitForms
             }
             else if (sender == btnPlay)
             {
-                
+                if (Player == null) return;
+                switch (Player.Status)
+                {
+                    case VideoStatus.NotReady:
+                        break;
+                    case VideoStatus.Playing:
+                        Player.Stop();
+                        break;
+                    case VideoStatus.Stoped:
+                        Player.Play();
+                        break;
+                }
             }
             else if (sender == btnChangeView)
             {
-                
+                //todo
             }
             else if (sender == btnFullScreen)
             {
-                
+                if (MaximizeCommand == null) return;
+                MaximizeCommand.Execute(MaximizeCommandParameter);
             }
             else if (sender == btnShowVideoLevelPopup)
             {
