@@ -9,35 +9,7 @@
             <ControlTemplate x:Key="PortraitTemplate">
                 <StackLayout Orientation="Vertical" Spacing="0">
                     <ContentPresenter></ContentPresenter>
-                    <EZUIKitForms:EZUIPlayerPlayControl Player="{Binding Parent.Player}" MaximizeCommand="{Binding Parent.MaximizeCommand}"></EZUIKitForms:EZUIPlayerPlayControl>
-                    <!--<Grid x:Name="grid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-                        <Button Image="stop.png" BackgroundColor="Transparent" Command="{TemplateBinding Parent.PlayCommand}"></Button>
-                        <BoxView Grid.Column="1" WidthRequest="1" HeightRequest="10" Color="Gray"></BoxView>
-
-                        <Button Grid.Column="2" BackgroundColor="Transparent" Image="stop.png" Command="{TemplateBinding Parent.MuteCommand}"/>
-                        <BoxView Grid.Column="3" WidthRequest="1" HeightRequest="10" Color="Gray"></BoxView>
-
-                        <Button Grid.Column="4" BackgroundColor="Transparent" Image="stop.png" Command="{TemplateBinding Parent.ChangeViewCommand}"/>
-                        <BoxView Grid.Column="5" WidthRequest="1" HeightRequest="10" Color="Gray"></BoxView>
-
-                        <Button Grid.Column="6" BackgroundColor="Transparent" Text="高清" Command="{TemplateBinding Parent.ShowVideoLevelPopupCommand}"/>
-                        <BoxView Grid.Column="7" WidthRequest="1" HeightRequest="10" Color="Gray"></BoxView>
-
-                        <Button Grid.Column="8"  Command="{TemplateBinding Parent.MaximizeCommand}" BackgroundColor="Transparent" Image="stop.png"/>
-                        
-                    </Grid>-->
+                    <EZUIKitForms:EZUIPlayerPlayControl Player="{TemplateBinding Parent.Player}" MaximizeCommand="{TemplateBinding Parent.MaximizeCommand}"></EZUIKitForms:EZUIPlayerPlayControl>
                 </StackLayout>
             </ControlTemplate>
             <ControlTemplate x:Key="LandscapeTemplate">

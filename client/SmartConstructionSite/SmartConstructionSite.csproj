@@ -108,6 +108,7 @@
     <Compile Include="OnlineMonitoring\CameraLiveStreamingPage.xaml.cs">
       <DependentUpon>CameraLiveStreamingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OnlineMonitoring\CameraHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarians.MediaPlayer">

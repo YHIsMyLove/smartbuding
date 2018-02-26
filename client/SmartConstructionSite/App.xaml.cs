@@ -13,7 +13,23 @@ namespace SmartConstructionSite
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new CameraListPage());
+            //MainPage = new NavigationPage(new CameraListPage());
+            StackLayout root = new StackLayout();
+            Button button = new Button();
+            button.Text = "Click me";
+            button.Clicked += (sender, e) => { CameraHelper.ShowCameraList(); };
+            root.Children.Add(button);
+            MainPage = new ContentPage() { Content = root };
+        }
+
+        public CameraHelper CameraHelper
+        {
+            get
+            {
+                if (cameraHelper == null)
+                    cameraHelper = new CameraHelper();
+                return cameraHelper;
+            }
         }
 
         public void SetFullScreen(bool fullScreen)
@@ -49,7 +65,8 @@ namespace SmartConstructionSite
             // Handle when your app resumes
         }
 
-        bool fullScreen;
-        bool landscape;
+        private bool fullScreen;
+        private bool landscape;
+        private CameraHelper cameraHelper;
     }
 }

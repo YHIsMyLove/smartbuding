@@ -106,8 +106,38 @@ namespace EZUIKitForms
             }
             else if (sender == btnShowVideoLevelPopup)
             {
-                
+                ShowPopup();
             }
+        }
+
+        private void ShowPopup()
+        {
+            Picker picker = new Picker
+            {
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            picker.Items.Add("高清");
+            picker.Items.Add("标清");
+            picker.Items.Add("省流量");
+
+            picker.SelectedIndexChanged += (sender, args) =>
+            {
+                switch (picker.SelectedIndex)
+                {
+                    case 0:
+                        
+                        break;
+                    case 1:
+
+                        break;
+
+                    case 2:
+
+                        break;
+                }
+                btnShowVideoLevelPopup.Text = (string)picker.SelectedItem;
+            };
         }
     }
 }
