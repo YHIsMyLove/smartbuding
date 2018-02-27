@@ -1,21 +1,27 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
-//权限表
-const permissionsSchema = new Schema({
-    RoleID: String,
-    DevID: String,
+// deptid|deptname|areaid
+// --|--|--
+// 01|01部|01
+// 02|02部|01
+// 03|01部|02
+//bumen
+const deptSchema = new Schema({
+    deptid:String,
+    deptname:String,
+    areaid:String
 })
 
-permissionsSchema.pre('save', function (next) {
+deptSchema.pre('save', function (next) {
     next()
 })
-permissionsSchema.methods = {
+deptSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-permissionsSchema.statics = {
+deptSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -32,4 +38,4 @@ permissionsSchema.statics = {
             .exec();
     }
 }
-mongoose.model('Permissions', permissionsSchema);
+mongoose.model('Dept', deptSchema);

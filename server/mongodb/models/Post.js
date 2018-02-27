@@ -1,27 +1,26 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
-//设备表
-const deviceSchema = new Schema({
-    DevID: String,
-    DevName: String,
-    DevClass: String,
-    DevDesc: String,
-    DevStatus: Number,
-    DevIp: String,
-    DevPort: Number,
+// postid|postname|areaid
+// --|--|--
+// 01|部门经理|01
+// 02|造价师|02
+//zhiwei
+const postSchema = new Schema({
+    postid:String,
+    postname:String,
     areaid:String
 })
 
-deviceSchema.pre('save', function (next) {
+postSchema.pre('save', function (next) {
     next()
 })
-deviceSchema.methods = {
+postSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-deviceSchema.statics = {
+postSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -38,4 +37,4 @@ deviceSchema.statics = {
             .exec();
     }
 }
-mongoose.model('Device', deviceSchema);
+mongoose.model('Post', postSchema);

@@ -1,27 +1,27 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
-//设备表
-const deviceSchema = new Schema({
-    DevID: String,
-    DevName: String,
-    DevClass: String,
-    DevDesc: String,
-    DevStatus: Number,
-    DevIp: String,
-    DevPort: Number,
-    areaid:String
+// areaid|projid|projname
+// --|--|--
+// 01|01|XX项目
+// 02|02|xXX项目
+// 03|03|xxXX项目
+// project
+const projSchema = new Schema({
+    areaid:String,
+    projid:String,
+    projname:String
 })
 
-deviceSchema.pre('save', function (next) {
+projSchema.pre('save', function (next) {
     next()
 })
-deviceSchema.methods = {
+projSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-deviceSchema.statics = {
+projSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -38,4 +38,4 @@ deviceSchema.statics = {
             .exec();
     }
 }
-mongoose.model('Device', deviceSchema);
+mongoose.model('Proj', projSchema);

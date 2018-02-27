@@ -3,9 +3,8 @@ const Schema = mongoose.Schema;
 
 //角色表
 const roleSchema = new Schema({
-    UserID: String,
-    RoleName: String,
-    RoleDesc: String,
+    roleid:String,
+    rolename:String
 })
 
 roleSchema.pre('save', function (next) {

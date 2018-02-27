@@ -1,8 +1,16 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
+// areaid|areaname  
+// --|--  
+// 01|北京
+// 02|上海
+// 03|广州
+// 04|深圳
 //区域表
 const areaSchema = new Schema({
+    areaid:String,
+    areaname:String
 })
 
 areaSchema.pre('save', function (next) {
