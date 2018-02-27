@@ -10,7 +10,8 @@ const Schema = mongoose.Schema
 const deptSchema = new Schema({
     deptid:String,
     deptname:String,
-    areaid:String
+    areaid:String,
+    parentid:String
 })
 
 deptSchema.pre('save', function (next) {

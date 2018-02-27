@@ -10,8 +10,7 @@ exports.load = async(function* (req, res, next, id) {
         return res.send(msg.genFailedMsg('id不能为空'))
     }
     try {
-        req.user = yield User.load(id)
-        //new Promise().then().then().catch().then()
+        req.user = yield User.load(id)        
         if (!req.user) return next(new Error('Use not found'));
     } catch (error) {
         return next(error);
@@ -55,7 +54,6 @@ exports.delete = async(function* (req, res) {
         res.send(msg.genFailedMsg('删除失败'))
     }
 })
-
 //检查登录
 exports.checklogin = async(function* (req, res) {
     if (Object.keys(req.body).length === 0) {
@@ -67,7 +65,6 @@ exports.checklogin = async(function* (req, res) {
     }
     return res.send(msg.genFailedMsg('登录失败'))
 })
-
 //分页获取人员数据
 exports.list = async(function* (req, res) {
     var query = {
