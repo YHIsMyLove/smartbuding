@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EZUIKitForms.EZUIPlayerPlayControl">
+	<ContentView.Content>
+        <Grid x:Name="grid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnPlay" Image="stop.png" BackgroundColor="Transparent" Clicked="Handle_Clicked"></Button>
+            <BoxView Grid.Column="1" WidthRequest="1" HeightRequest="5" Color="Gray"></BoxView>
+
+            <Button x:Name="btnMute" Grid.Column="2" BackgroundColor="Transparent" Image="stop.png" Clicked="Handle_Clicked"/>
+            <BoxView Grid.Column="3" WidthRequest="1" HeightRequest="5" Color="Gray"></BoxView>
+
+            <Button Grid.Column="4" x:Name="btnChangeView" BackgroundColor="Transparent" Image="stop.png" Clicked="Handle_Clicked"/>
+            <BoxView Grid.Column="5" WidthRequest="1" HeightRequest="5" Color="Gray"></BoxView>
+
+            <Button Grid.Column="6" x:Name="btnShowVideoLevelPopup" BackgroundColor="Transparent" Text="高清" Clicked="Handle_Clicked"/>
+            <BoxView Grid.Column="7" WidthRequest="1" HeightRequest="5" Color="Gray"></BoxView>
+
+            <Button Grid.Column="8" x:Name="btnFullScreen" Clicked="Handle_Clicked"/>
+            
+        </Grid>
+	</ContentView.Content>
+</ContentView>
