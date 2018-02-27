@@ -8,7 +8,6 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Xamarin.Forms;
-using Com.Videogo.Openapi;
 using SmartConstructionSite.Droid.OnlineMonitoring;
 
 namespace SmartConstructionSite.Droid
@@ -25,7 +24,7 @@ namespace SmartConstructionSite.Droid
         {
             InitSDK();
 
-            EZOpenSDK.Instance.SetAccessToken(AccessTokenForTest);
+            //EZOpenSDK.Instance.SetAccessToken(AccessTokenForTest);
 
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
@@ -55,23 +54,23 @@ namespace SmartConstructionSite.Droid
 
         private void InitSDK()
         {
-            if (ezopenSDKInitilized) return;
-            /**
-             * sdk日志开关，正式发布需要去掉
-             */
-            EZOpenSDK.ShowSDKLog(true);
+            //if (ezopenSDKInitilized) return;
+            ///**
+            // * sdk日志开关，正式发布需要去掉
+            // */
+            //EZOpenSDK.ShowSDKLog(true);
 
-            /**
-             * 设置是否支持P2P取流,详见api
-             */
-            EZOpenSDK.EnableP2P(true);
+            ///**
+            // * 设置是否支持P2P取流,详见api
+            // */
+            //EZOpenSDK.EnableP2P(true);
 
-            /**
-             * APP_KEY请替换成自己申请的
-             */
-            EZOpenSDK.InitLib(Application, AppKey, "");
+            ///**
+            // * APP_KEY请替换成自己申请的
+            // */
+            //EZOpenSDK.InitLib(Application, AppKey, "");
 
-            ezopenSDKInitilized = true;
+            //ezopenSDKInitilized = true;
         }
 
         /// <summary>

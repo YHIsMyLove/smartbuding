@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Xamarin.Forms.2.5.0.121934\build\netstandard1.0\Xamarin.Forms.props" Condition="Exists('..\packages\Xamarin.Forms.2.5.0.121934\build\netstandard1.0\Xamarin.Forms.props')" />
   <PropertyGroup>
@@ -116,6 +116,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EZUIKitForms\EZUIKitForms.csproj">
+      <Project>{73b147f1-c2a1-4817-a5c4-4d1943feb7cf}</Project>
+      <Name>EZUIKitForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SmartConstructionSite\SmartConstructionSite.csproj">
       <Project>{EE35EF1E-6210-4D5D-947C-7554E728BFA8}</Project>
       <Name>SmartConstructionSite</Name>
@@ -131,6 +135,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\VideoViewRenderer.cs" />
     <Compile Include="Renderers\EZUIPlayerRenderer.cs" />
+    <Compile Include="MyApplication.cs" />
+    <Compile Include="OnlineMonitoring\TestActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -590,8 +596,9 @@
     <AndroidResource Include="Resources\drawable-xhdpi\yuntai_pressed.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\yxs_head.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Renderers\" />
+    <Folder Include="OnlineMonitoring\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Compat.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Compat.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets')" />

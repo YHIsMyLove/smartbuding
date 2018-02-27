@@ -1,6 +1,6 @@
 ﻿using System;
 using Android.App;
-using Com.Videogo.Openapi;
+//using Com.Videogo.Openapi;
 
 [assembly: Application(
     Debuggable = true,
@@ -24,20 +24,20 @@ namespace SmartConstructionSite.Droid
 
         private void InitSDK()
         {
-            /**
-             * sdk日志开关，正式发布需要去掉
-             */
-            EZOpenSDK.ShowSDKLog(true);
+            ///**
+            // * sdk日志开关，正式发布需要去掉
+            // */
+            //EZOpenSDK.ShowSDKLog(true);
 
-            /**
-             * 设置是否支持P2P取流,详见api
-             */
-            EZOpenSDK.EnableP2P(true);
+            ///**
+            // * 设置是否支持P2P取流,详见api
+            // */
+            //EZOpenSDK.EnableP2P(true);
 
-            /**
-             * APP_KEY请替换成自己申请的
-             */
-            EZOpenSDK.InitLib(this, AppKey, "");
+            ///**
+            // * APP_KEY请替换成自己申请的
+            // */
+            //EZOpenSDK.InitLib(this, AppKey, "");
         }
     }
 }
