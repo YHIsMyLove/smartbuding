@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZOpenSDKForms", "EZOpenSDK
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZUIKitForms", "EZUIKitForms\EZUIKitForms.csproj", "{73B147F1-C2A1-4817-A5C4-4D1943FEB7CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraOnline.Droid", "CameraOnline.Droid\CameraOnline.Droid.csproj", "{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,18 +110,6 @@ Global
 		{73B147F1-C2A1-4817-A5C4-4D1943FEB7CF}.Release|iPhone.Build.0 = Release|Any CPU
 		{73B147F1-C2A1-4817-A5C4-4D1943FEB7CF}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{73B147F1-C2A1-4817-A5C4-4D1943FEB7CF}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Release|iPhone.Build.0 = Release|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{57E7BBD6-BAD7-448D-9C0A-B58C8A94974A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
