@@ -1,7 +1,5 @@
 <template>
-
     <div>
-
         <el-tabs style="width:100%;">
             <el-tab-pane label="权限管理">
                 <el-card class="box-card">

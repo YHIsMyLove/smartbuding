@@ -13,8 +13,9 @@ const userSchema = new Schema({
     UserPhoneNum: Number,
     UserCreatedAt: { type: Date, default: Date.now },
     UserCardID: String,
-    UserAreaid: String,//json数组   
+    UserAreas: String,//json数组
     UserRoles: String,//json数组
+    
 })
 
 userSchema.pre('save', function (next) {

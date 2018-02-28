@@ -12,6 +12,7 @@ import Login from './components/Login.vue'
 import Home from './components/Home.vue'
 import Main from './components/Main.vue'
 import UserManager from './components/business/UserManager.vue'
+import OrganizationManager from './components/business/OrganizationManager.vue'
 import RoleManager from './components/business/RoleManager.vue'
 import DeviceManager from './components/business/DeviceManager.vue'
 import SysFieldManager from './components/nav1/SysFieldManager.vue'
@@ -36,6 +37,7 @@ const routes = [
             { path: '/UserManager', component: UserManager, name: '用户管理' },
             { path: '/RoleManager', component: RoleManager, name: '角色管理' },
             { path: '/DeviceManager', component: DeviceManager, name: '设备管理' },
+            { path: '/OrganizationManager', component: OrganizationManager, name: '组织架构管理' },
             //{ path: '/ShowCaseManager', component: ShowCaseManager, name: '案例展示' },
             {
                 path: '/SysFieldManager',
