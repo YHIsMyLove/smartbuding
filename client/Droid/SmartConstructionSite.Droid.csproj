@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SmartConstructionSite.Droid</RootNamespace>
     <AssemblyName>SmartConstructionSite.Droid</AssemblyName>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -123,9 +123,9 @@
       <Project>{EE35EF1E-6210-4D5D-947C-7554E728BFA8}</Project>
       <Name>SmartConstructionSite</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EZOpenSDK_Droid\EZOpenSDK_Droid.csproj">
+    <ProjectReference Include="..\EZOpenSDK_Droid\EZOpenSDKAndroidBinding.csproj">
       <Project>{91AE5369-90EB-4B08-958B-B35C01C00AFF}</Project>
-      <Name>EZOpenSDK_Droid</Name>
+      <Name>EZOpenSDKAndroidBinding</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

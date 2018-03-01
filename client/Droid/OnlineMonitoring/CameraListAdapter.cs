@@ -9,9 +9,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Com.Videogo.Openapi.Bean;
 using Android.Text;
 using Com.Bumptech.Glide;
+using Com.Videogo.Openapi.Bean;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {

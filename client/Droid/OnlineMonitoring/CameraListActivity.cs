@@ -10,9 +10,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Com.Videogo.Openapi;
-using Com.Videogo.Openapi.Bean;
 using System.Threading.Tasks;
+using Com.Videogo.Openapi.Bean;
 using Com.Videogo.Constant;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring

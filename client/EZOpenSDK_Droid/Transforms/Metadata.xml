@@ -13,34 +13,11 @@
     <attr path="/api/package[@name='com.google.gson.internal.bind']/class[@name='SqlDateTypeAdapter']/method[@name='write']/parameter[@name='value']" name="managedType">Java.Lang.Object</attr>
     <attr path="/api/package[@name='com.google.gson.internal.bind']/class[@name='TimeTypeAdapter']/method[@name='read']" name="managedReturn">Java.Lang.Object</attr>
     <attr path="/api/package[@name='com.google.gson.internal.bind']/class[@name='TimeTypeAdapter']/method[@name='write']/parameter[@name='value']" name="managedType">Java.Lang.Object</attr>
-<!--    <attr path="/api/package[@name='javax.jmdns.impl']/class[@name='DNSCache']/method[@name='entrySet']/parameter" name="managedType">System.Collections.ICollection</attr>-->
-<!--    <attr path="/api/package[@name='javax.jmdns.impl']/class[@name='DNSCache']/method[@name='entrySet']" name="managedReturn">System.Collections.ICollection</attr>-->
-<!--    <attr path="/api/package[@name='javax.jmdns.impl']/class[@name='DNSCache._CacheEntry']/method[@name='setValue']" name="managedReturn">Java.Lang.Object</attr>-->
-<!--    <attr path="/api/package[@name='javax.jmdns.impl']/class[@name='DNSCache._CacheEntry']/method[@name='setValue']/parameter[@name='value']" name="managedType">Java.Lang.Object</attr>-->
-<!--    <attr path="/api/package[@name='javax.jmdns.impl']/class[@name='DNSCache._CacheEntry']/method[@name='getKey']" name="managedReturn">Java.Lang.Object</attr>-->
-<!--    <attr path="/api/package[@name='javax.jmdns.impl']/class[@name='DNSCache._CacheEntry']/method[@name='getValue']" name="managedReturn">Java.Lang.Object</attr>-->
-  <!--    <attr path="/api/package[@name='com.google.gson.internal']/class[@name='LinkedTreeMap']/method[@name='entrySet']" name="managedType">System.Collections.ICollection</attr>-->
-<!--    <attr path="/api/package[@name='com.google.gson.internal']/class[@name='LinkedHashTreeMap']/method[@name='entrySet']" name="managedType">System.Collections.ICollection</attr>-->
- <!--     <attr path="/api/package[@name='com.ezvizuikit.open']/class[@name='EZUIPlayer']/method[@name='getPlayList']" name="managedType">System.Collections.IList</attr>-->
-<!--    <attr path="/api/package[@name='java.util']/class[@name='AbstractMap']/method[@name='entrySet']" name="managedReturn">System.Collections.Generic.ICollection&lt;Java.Util.IMapEntry&gt;</attr>-->
-<!--    <attr path="/api/package[@name='javax.jmdns.impl']/class[@name='JmDNSImpl.ServiceTypeEntry']/method[@name='entrySet']" name="managedReturn">System.Collections.ICollection</attr>-->
     <attr path="/api/package[@name='com.google.gson']/class[@name='JsonStreamParser']/method[@name='next']" name="managedReturn">Java.Lang.Object</attr>
     <attr path="/api/package[@name='com.videogo.device']/class[@name='DeviceInfo']/method[@name='getUpgradeStatus']" name="visibility">public</attr>
     <attr path="/api/package[@name='com.videogo.openapi.bean.resp']/class[@name='CloudPartInfoFile']/method[@name='compareTo']/parameter[@name='another']" name="managedType">Java.Lang.Object</attr>
     <add-node path="/api/package[@name='com.hikvision.audio']">
         <interface abstract="true" deprecated="not deprecated" final="false" name="AudioBaseCallBack" static="false" visibility="public">
-        </interface>
-    </add-node>
-    <add-node path="/api/package[@name='javax.jmdns.impl']">
-        <interface abstract="true" deprecated="not deprecated" final="false" name="DNSListener" static="false" visibility="public">
-            <method abstract="true" deprecated="not deprecated" final="false" name="updateRecord" native="false" return="void" static="false" synchronized="false" visibility="public">
-                <parameter name="var1" type="javax.jmdns.impl.DNSCache">
-                </parameter>
-                <parameter name="var2" type="long">
-                </parameter>
-                <parameter name="var4" type="javax.jmdns.impl.DNSEntry">
-                </parameter>
-              </method>
         </interface>
     </add-node>
     <add-node path="/api/package[@name='com.ezvizuikit.open']">
@@ -115,10 +92,4 @@
         </class>
     </add-node>
     <remove-node path="/api/package[@name='com.videogo.openapi.model']/class[@name='ApiResponse']/method[@name='paser']" />
-<!--    <remove-node path="/api/package[@name='com.google.gson.internal']/class[@name='LinkedTreeMap']/method[@name='entrySet']" />-->
-<!--    <remove-node path="/api/package[@name='com.google.gson.internal']/class[@name='LinkedHashTreeMap']/method[@name='entrySet']" />-->
-<!--    <remove-node path="/api/package[@name='javax.jmdns.impl']/class[@name='DNSCache']/method[@name='entrySet']" />-->
-<!--    <remove-node path="/api/package[@name='javax.jmdns.impl']/class[@name='JmDNSImpl.ServiceTypeEntry']/method[@name='entrySet']" />-->
-<!--    <remove-node path="/api/package[@name='javax.jmdns.impl']/class[@name='DNSCache._CacheEntry']/method[@name='getKey']" />-->
-<!--    <remove-node path="/api/package[@name='javax.jmdns.impl']/class[@name='DNSCache._CacheEntry']/method[@name='getValue']" />-->
 </metadata>

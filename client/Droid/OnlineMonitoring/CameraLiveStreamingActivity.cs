@@ -12,9 +12,9 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Com.Ezvizuikit.Open;
-using Java.Util;
 using Com.Videogo.Constant;
 using Com.Videogo.Openapi.Bean;
+using Java.Util;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
