@@ -117,15 +117,14 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.2.5.0.121934\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="EZOpenSDKAndroidBinding">
+      <HintPath>..\bin\EZOpenSDKAndroidBinding.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartConstructionSite\SmartConstructionSite.csproj">
       <Project>{EE35EF1E-6210-4D5D-947C-7554E728BFA8}</Project>
       <Name>SmartConstructionSite</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EZOpenSDK_Droid\EZOpenSDKAndroidBinding.csproj">
-      <Project>{91AE5369-90EB-4B08-958B-B35C01C00AFF}</Project>
-      <Name>EZOpenSDKAndroidBinding</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
