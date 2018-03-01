@@ -116,10 +116,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EZUIKitForms\EZUIKitForms.csproj">
-      <Project>{73b147f1-c2a1-4817-a5c4-4d1943feb7cf}</Project>
-      <Name>EZUIKitForms</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SmartConstructionSite\SmartConstructionSite.csproj">
       <Project>{EE35EF1E-6210-4D5D-947C-7554E728BFA8}</Project>
       <Name>SmartConstructionSite</Name>
@@ -136,7 +132,8 @@
     <Compile Include="Renderers\VideoViewRenderer.cs" />
     <Compile Include="Renderers\EZUIPlayerRenderer.cs" />
     <Compile Include="MyApplication.cs" />
-    <Compile Include="OnlineMonitoring\TestActivity.cs" />
+    <Compile Include="OnlineMonitoring\CameraListActivity.cs" />
+    <Compile Include="OnlineMonitoring\CameraLiveStreamingActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -595,7 +592,10 @@
     <AndroidResource Include="Resources\drawable-xhdpi\yuntai_normal.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\yuntai_pressed.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\yxs_head.png" />
+    <AndroidResource Include="Resources\layout\activity_camera_list.axml" />
+    <AndroidResource Include="Resources\layout\activity_camera_live_streaming.axml" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup>
     <Folder Include="OnlineMonitoring\" />

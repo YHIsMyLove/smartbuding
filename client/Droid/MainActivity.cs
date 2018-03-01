@@ -81,7 +81,7 @@ namespace SmartConstructionSite.Droid
         /// <param name="e">E.</param>
         void CameraHelper_ShowCameraListRequested(object sender, EventArgs e)
         {
-            StartActivity(new Intent(this, typeof(CameraLiveStreamingActivity)));
+            StartActivity(new Intent(this, typeof(CameraListActivity)));
         }
 
         void App_FullScreenRequested(object sender, bool fullScreen)
