@@ -8,4 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FF000000" />
+    <include
+        layout="@layout/real_play_control" />
 </LinearLayout>

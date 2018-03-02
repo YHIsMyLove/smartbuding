@@ -5962,8 +5962,8 @@ namespace SmartConstructionSite.Droid
 			// aapt resource value: 0x7f0800b6
 			public const int imageButton1 = 2131230902;
 			
-			// aapt resource value: 0x7f0800b7
-			public const int imageButton2 = 2131230903;
+			// aapt resource value: 0x7f0800b8
+			public const int imageButton2 = 2131230904;
 			
 			// aapt resource value: 0x7f080075
 			public const int imageViewSnapshot = 2131230837;
@@ -5995,8 +5995,8 @@ namespace SmartConstructionSite.Droid
 			// aapt resource value: 0x7f080048
 			public const int list_item = 2131230792;
 			
-			// aapt resource value: 0x7f0800bb
-			public const int masked = 2131230907;
+			// aapt resource value: 0x7f0800bc
+			public const int masked = 2131230908;
 			
 			// aapt resource value: 0x7f0800a5
 			public const int media_actions = 2131230885;
@@ -6199,8 +6199,8 @@ namespace SmartConstructionSite.Droid
 			// aapt resource value: 0x7f080017
 			public const int showTitle = 2131230743;
 			
-			// aapt resource value: 0x7f0800b8
-			public const int sliding_tabs = 2131230904;
+			// aapt resource value: 0x7f0800b9
+			public const int sliding_tabs = 2131230905;
 			
 			// aapt resource value: 0x7f080077
 			public const int smallLabel = 2131230839;
@@ -6280,8 +6280,8 @@ namespace SmartConstructionSite.Droid
 			// aapt resource value: 0x7f080057
 			public const int title_template = 2131230807;
 			
-			// aapt resource value: 0x7f0800b9
-			public const int toolbar = 2131230905;
+			// aapt resource value: 0x7f0800ba
+			public const int toolbar = 2131230906;
 			
 			// aapt resource value: 0x7f080029
 			public const int top = 2131230761;
@@ -6304,11 +6304,14 @@ namespace SmartConstructionSite.Droid
 			// aapt resource value: 0x7f080018
 			public const int useLogo = 2131230744;
 			
+			// aapt resource value: 0x7f0800b7
+			public const int view1 = 2131230903;
+			
 			// aapt resource value: 0x7f08000e
 			public const int view_offset_helper = 2131230734;
 			
-			// aapt resource value: 0x7f0800ba
-			public const int visible = 2131230906;
+			// aapt resource value: 0x7f0800bb
+			public const int visible = 2131230907;
 			
 			// aapt resource value: 0x7f080097
 			public const int volume_item_container = 2131230871;

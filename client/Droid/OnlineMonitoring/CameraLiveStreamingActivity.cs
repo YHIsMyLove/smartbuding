@@ -8,18 +8,20 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Com.Ezvizuikit.Open;
 using Com.Videogo.Constant;
 using Com.Videogo.Openapi.Bean;
+using Com.Videogo.Realplay;
 using Java.Util;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
-    [Activity(Label = "CameraLiveStreamingActivity")]
-    public class CameraLiveStreamingActivity : Activity
+    [Activity(Label = "CameraLiveStreamingActivity", Theme = "@style/FullscreenTheme", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    public class CameraLiveStreamingActivity : AppCompatActivity
     {
         class PlayerCallBack : Java.Lang.Object, EZUIPlayer.IEZUIPlayerCallBack
         {
@@ -69,7 +71,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             SetContentView(Resource.Layout.activity_camera_live_streaming);
 
             Window.AddFlags(WindowManagerFlags.KeepScreenOn);
-            Window.AddFlags(WindowManagerFlags.Fullscreen);
+            //Window.AddFlags(WindowManagerFlags.Fullscreen);
 
             device = (EZDeviceInfo)Intent.GetParcelableExtra(IntentConsts.ExtraDeviceInfo);
             camera = (EZCameraInfo)Intent.GetParcelableExtra(IntentConsts.ExtraCameraInfo);
@@ -78,8 +80,27 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             InitView();
         }
 
+        protected override void OnPause()
+        {
+            base.OnPause();
+            player.PausePlay();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            player.StartPlay();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            player.ReleasePlayer();
+        }
+
         private void InitView()
         {
+            //player
             player = (EZUIPlayer)FindViewById(Resource.Id.player);
             EZUIKit.InitWithAppKey(Application, MainActivity.AppKey);
             EZUIKit.SetAccessToken(MainActivity.AccessTokenForTest);
@@ -87,6 +108,53 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             string url = string.Format("ezopen://open.ys7.com/{0}/{1}.live", camera.DeviceSerial, camera.CameraNo);
             player.SetUrl(url);
             SetSurfaceSize();
+
+            //player control
+            btnPlay = FindViewById<ImageButton>(Resource.Id.btnPlay);
+            btnPlay.Click += (sender, e) => Play();
+            btnMute = FindViewById<ImageButton>(Resource.Id.btnMute);
+            btnPlay.Click += (sender, e) => Mute();
+            btnVideoLevel = FindViewById<Button>(Resource.Id.btnVideoLevel);
+            btnVideoLevel.Click += (sender, e) => ShowVideoLevelPopup();
+            btnMaximize = FindViewById<ImageButton>(Resource.Id.btnMaximize);
+            btnMaximize.Click += (sender, e) => Maximize();
+        }
+
+        private void Maximize()
+        {
+            if (maximized)
+            {
+                RequestedOrientation = Android.Content.PM.ScreenOrientation.Portrait;
+            }
+            else
+            {
+                RequestedOrientation = Android.Content.PM.ScreenOrientation.Landscape;
+            }
+            SetSurfaceSize();
+        }
+
+        private void ShowVideoLevelPopup()
+        {
+            
+        }
+
+        private void Mute()
+        {
+            
+        }
+
+        private void Play()
+        {
+            if (player.Status == RealPlayStatus.StatusPause)
+            {
+                player.StartPlay();
+                btnPlay.SetImageResource(Resource.Drawable.pause);
+            }
+            else if (player.Status == RealPlayStatus.StatusPlay)
+            {
+                player.PausePlay();
+                btnPlay.SetImageResource(Resource.Drawable.play_play_selector);
+            }
         }
 
         void SetSurfaceSize()
@@ -102,5 +170,10 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         private EZDeviceInfo device;
         private EZCameraInfo camera;
         private readonly string Tag = typeof(CameraLiveStreamingActivity).Name;
+        private bool maximized;
+        private ImageButton btnPlay;
+        private ImageButton btnMute;
+        private Button btnVideoLevel;
+        private ImageButton btnMaximize;
     }
 }
