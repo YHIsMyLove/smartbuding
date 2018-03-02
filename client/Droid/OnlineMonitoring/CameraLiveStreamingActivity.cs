@@ -17,10 +17,12 @@ using Com.Videogo.Constant;
 using Com.Videogo.Openapi.Bean;
 using Com.Videogo.Realplay;
 using Java.Util;
+using Com.Videogo.Openapi;
+using Com.Videogo.Util;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
-    [Activity(Label = "CameraLiveStreamingActivity", Theme = "@style/FullscreenTheme", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "CameraLiveStreamingActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class CameraLiveStreamingActivity : AppCompatActivity
     {
         class PlayerCallBack : Java.Lang.Object, EZUIPlayer.IEZUIPlayerCallBack
@@ -61,7 +63,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             public void OnVideoSizeChange(int p0, int p1)
             {
                 Log.Debug(tag, "OnVideoSizeChange.new size x: {0}, y: {1}", p0, p1);
-                owner.SetSurfaceSize();
+                owner.UpdatePlayerSurfaceSize();
             }
         }
 
@@ -107,7 +109,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             player.SetCallBack(new PlayerCallBack(this));
             string url = string.Format("ezopen://open.ys7.com/{0}/{1}.live", camera.DeviceSerial, camera.CameraNo);
             player.SetUrl(url);
-            SetSurfaceSize();
+            UpdatePlayerSurfaceSize();
 
             //player control
             btnPlay = FindViewById<ImageButton>(Resource.Id.btnPlay);
@@ -115,9 +117,11 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             btnMute = FindViewById<ImageButton>(Resource.Id.btnMute);
             btnPlay.Click += (sender, e) => Mute();
             btnVideoLevel = FindViewById<Button>(Resource.Id.btnVideoLevel);
-            btnVideoLevel.Click += (sender, e) => ShowVideoLevelPopup();
+            btnVideoLevel.Click += (sender, e) => ShowVideoLevelPopup(btnVideoLevel);
             btnMaximize = FindViewById<ImageButton>(Resource.Id.btnMaximize);
             btnMaximize.Click += (sender, e) => Maximize();
+
+            layoutToolsNormalState = FindViewById(Resource.Id.layoutToolsNormalState);
         }
 
         private void Maximize()
@@ -125,17 +129,59 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             if (maximized)
             {
                 RequestedOrientation = Android.Content.PM.ScreenOrientation.Portrait;
+                maximized = false;
+                layoutToolsNormalState.Visibility = ViewStates.Visible;
             }
             else
             {
                 RequestedOrientation = Android.Content.PM.ScreenOrientation.Landscape;
+                maximized = true;
+                layoutToolsNormalState.Visibility = ViewStates.Gone;
             }
-            SetSurfaceSize();
+            UpdatePlayerSurfaceSize();
         }
 
-        private void ShowVideoLevelPopup()
+        private void ShowVideoLevelPopup(View anchor)
         {
+            LayoutInflater layoutInflater = (LayoutInflater)GetSystemService(LayoutInflaterService);
+            ViewGroup layoutView = (ViewGroup)layoutInflater.Inflate(Resource.Layout.real_play_quality_items, null, true);
             
+            Button btnQualityHigh = layoutView.FindViewById<Button>(Resource.Id.btnQualityHigh);
+            btnQualityHigh.Enabled = camera.VideoLevel != EZConstants.EZVideoLevel.VideoLevelHd;
+            btnQualityHigh.Click += (sender, args) => SetQuality(EZConstants.EZVideoLevel.VideoLevelHd);
+
+            Button btnQualityBanlance = layoutView.FindViewById<Button>(Resource.Id.btnBalance);
+            btnQualityBanlance.Enabled = camera.VideoLevel != EZConstants.EZVideoLevel.VideoLevelBalanced;
+            btnQualityBanlance.Click += (sender, args) => SetQuality(EZConstants.EZVideoLevel.VideoLevelBalanced);
+
+            Button btnQualityFlunet = layoutView.FindViewById<Button>(Resource.Id.btnQualityFlunet);
+            btnQualityFlunet.Enabled = camera.VideoLevel != EZConstants.EZVideoLevel.VideoLevelFlunet;
+            btnQualityFlunet.Click += (sender, args) => SetQuality(EZConstants.EZVideoLevel.VideoLevelFlunet);
+
+            int height = 105;
+            height = Utils.Dip2px(this, height);
+            PopupWindow windowQuality = new PopupWindow(layoutView, ViewGroup.LayoutParams.WrapContent, height, true);
+            windowQuality.ShowAsDropDown(anchor, -Utils.Dip2px(this, 5), -(height + anchor.Height + Utils.Dip2px(this, 8)));
+        }
+
+        private async void SetQuality(EZConstants.EZVideoLevel videoLevelHd)
+        {
+            if (!ConnectionDetector.IsNetworkAvailable(this))
+            {
+                // 提示没有连接网络
+                Utils.ShowToast(this, Resource.String.realplay_set_fail_network);
+                return;
+            }
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this);
+            builder.SetCancelable(false);
+            builder.SetMessage(Resource.String.setting_video_level);
+            Android.Support.V7.App.AlertDialog dialog = builder.Show();
+            bool result = await CameraHelpers.SetVideoLevel(camera.DeviceSerial, camera.CameraNo, videoLevel);
+            dialog.Dismiss();
+
+            player.StopPlay();
+            SystemClock.Sleep(500);
+            player.StartPlay();
         }
 
         private void Mute()
@@ -157,7 +203,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             }
         }
 
-        void SetSurfaceSize()
+        void UpdatePlayerSurfaceSize()
         {
             DisplayMetrics dm = new DisplayMetrics();
             IWindowManager winMgr = Window.WindowManager;
@@ -169,11 +215,13 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         private EZUIPlayer player;
         private EZDeviceInfo device;
         private EZCameraInfo camera;
+        private EZConstants.EZVideoLevel videoLevel = EZConstants.EZVideoLevel.VideoLevelFlunet;
         private readonly string Tag = typeof(CameraLiveStreamingActivity).Name;
         private bool maximized;
         private ImageButton btnPlay;
         private ImageButton btnMute;
         private Button btnVideoLevel;
         private ImageButton btnMaximize;
+        private View layoutToolsNormalState;
     }
 }

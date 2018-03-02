@@ -23,5 +23,15 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             await Task.Run(() => { list = EZOpenSDK.Instance.GetDeviceList(page, pageSize); });
             return list;
         }
+
+        internal static async Task<bool> SetVideoLevel(string deviceSerial, int cameraNo, EZConstants.EZVideoLevel videoLevel)
+        {
+            bool result = true;
+            await Task.Run(()=>
+            {
+                result = EZOpenSDK.Instance.SetVideoLevel(deviceSerial, cameraNo, (int)videoLevel);
+            });
+            return result;
+        }
     }
 }

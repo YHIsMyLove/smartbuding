@@ -37,8 +37,8 @@
     <item name="android:footerDividersEnabled">false</item> 
   </style>  
   <style name="popwindowUpAnim"> 
-    <item name="android:windowEnterAnimation">@anim/fade_up</item>  
-    <item name="android:windowExitAnimation">@anim/fade_down</item> 
+    <!--<item name="android:windowEnterAnimation">@anim/fade_up</item>  -->
+    <!--<item name="android:windowExitAnimation">@anim/fade_down</item> -->
   </style> 
     <style name="auto_wifi_status_style_normal">
         <item name="android:gravity">center</item>
