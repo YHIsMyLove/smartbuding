@@ -80,7 +80,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             SetContentView(Resource.Layout.activity_camera_live_streaming);
 
             Window.AddFlags(WindowManagerFlags.KeepScreenOn);
-            //Window.AddFlags(WindowManagerFlags.Fullscreen);
+            Window.AddFlags(WindowManagerFlags.Fullscreen);
 
             device = (EZDeviceInfo)Intent.GetParcelableExtra(IntentConsts.ExtraDeviceInfo);
             camera = (EZCameraInfo)Intent.GetParcelableExtra(IntentConsts.ExtraCameraInfo);

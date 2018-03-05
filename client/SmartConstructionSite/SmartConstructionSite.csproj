@@ -98,6 +98,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProjectManagement\ProjectListPage.xaml.cs">
+      <DependentUpon>ProjectListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -137,6 +140,9 @@
     <Compile Include="Events\EventsMainPage.xaml.cs">
       <DependentUpon>EventsMainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="User\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarians.MediaPlayer">
@@ -158,11 +164,6 @@
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="EntranceGuard\" />
-    <Folder Include="User\" />
-    <Folder Include="ProductionManagement\" />
-    <Folder Include="SpecialTaskCheck\" />
-    <Folder Include="AssetManagement\" />
-    <Folder Include="Events\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EZUIKitForms\EZUIKitForms.csproj">
@@ -173,6 +174,18 @@
       <Project>{A43E6E91-7C78-47F3-AAC3-39366584A7C3}</Project>
       <Name>SmartConstructionServices</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="User\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProjectManagement\ProjectListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />

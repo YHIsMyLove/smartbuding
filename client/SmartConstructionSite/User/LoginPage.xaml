@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.User.LoginPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" VerticalOptions="Center">
+            <Image Source="icon.png" HorizontalOptions="Center"></Image>
+            <Entry Placeholder="用户名"></Entry>
+            <Entry Placeholder="密码" IsPassword="True"></Entry>
+            <Button Text="登录"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

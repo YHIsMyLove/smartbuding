@@ -40,7 +40,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" x:Name="btnSceneMgr" Image="icon.png" Text="现场监管" BackgroundColor="Transparent" Clicked="Handle_Clicked">
+            <Button Grid.Row="0" Grid.Column="0" x:Name="btnSceneMgr" Image="icon.png" Text="现场监管" BackgroundColor="White" Clicked="Handle_Clicked">
             </Button>
 
             <Button Grid.Row="0" Grid.Column="1" x:Name="btnPeopleMgr" Image="icon.png" Text="人员监管" Clicked="Handle_Clicked"></Button>
