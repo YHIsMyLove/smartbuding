@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using SmartConstructionServices.ProjectManagement.Services;
 
 namespace SmartConstructionServices.ProjectManagement.ViewModels
 {
@@ -16,26 +17,30 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
 
         public ProjectListViewModel()
         {
-            FindProjectCommand = new Command(execute: () => { FindProjects(); }, canExecute: () => { return RefreshFindProjectCommandCanExecute(); });
+            projectService = new ProjectService();
+            FindProjectsCommand = new Command(execute: () => { FindProjects(); }, canExecute: () => { return IsFindProjectCommandCanExecute(); });
+            FetchProvincesCommand = new Command(execute: () => { FetchProvinces(); }, canExecute: () => { return IsFetchProvincesCommandCanExecute(); });
+            FetchCitiesCommand = new Command(execute: () => { FetchCities(); }, canExecute: () => { return IsFetchCitiesCommandCanExecute(); });
         }
 
-        public string Province
+        #region Properties
+        public string SelectedProvince
         {
-            get => province;
+            get => selectedProvince;
             set
             {
-                if (province == value) return;
-                province = value;
-                DoPropertyChanged("Province");
+                if (selectedProvince == value) return;
+                selectedProvince = value;
+                DoPropertyChanged("SelectedProvince");
             }
         }
 
-        public string City {
-            get => city;
+        public string SelectedCity {
+            get => selectedCity;
             set {
-                if (city == value) return;
-                city = value;
-                DoPropertyChanged("City");
+                if (selectedCity == value) return;
+                selectedCity = value;
+                DoPropertyChanged("SelectedCity");
             }
         }
 
@@ -74,9 +79,14 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
                 DoPropertyChanged("Cities");
             }
         }
+        #endregion
 
         #region Command
-        public ICommand FindProjectCommand { private set; get; }
+        public ICommand FindProjectsCommand { private set; get; }
+
+        public ICommand FetchProvincesCommand { private set; get; }
+
+        public ICommand FetchCitiesCommand { private set; get; }
 
         #endregion
 
@@ -85,22 +95,49 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private bool RefreshFindProjectCommandCanExecute()
+        private async Task FindProjects()
         {
-            throw new NotImplementedException();
+            if (dataLoading) return;
+            Projects = await projectService.FindProjects(selectedProvince, selectedCity);
         }
 
-        private void FindProjects()
+        public async Task FetchProvinces()
         {
-            throw new NotImplementedException();
+            if (dataLoading) return;
+            Provinces = await projectService.FetchProvinces();
+            if (Provinces.Count() > 0)
+            {
+                Cities = await projectService.FetchCities(Provinces[0]);
+            }
         }
 
-        private string province;
-        private string city;
+        private async Task FetchCities()
+        {
+            if (dataLoading) return;
+            Cities = await projectService.FetchCities(selectedProvince);
+        }
+
+        private bool IsFindProjectCommandCanExecute()
+        {
+            return !dataLoading;
+        }
+
+        private bool IsFetchProvincesCommandCanExecute()
+        {
+            return !dataLoading;
+        }
+
+        private bool IsFetchCitiesCommandCanExecute()
+        {
+            return !dataLoading;
+        }
+
+        private ProjectService projectService;
+        private string selectedProvince;
+        private string selectedCity;
         private bool dataLoading;
         private List<Project> projects;
         private List<string> provinces;
         private List<string> cities;
-        private ICommand Command;
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="OnlineMonitoring\ViewModels\CameraListViewModel.cs" />
     <Compile Include="Common\ServiceContext.cs" />
     <Compile Include="OnlineMonitoring\ViewModels\CameraLiveStreamingViewModel.cs" />
+    <Compile Include="ProjectManagement\Services\ProjectService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Account\Services\" />

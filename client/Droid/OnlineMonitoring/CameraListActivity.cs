@@ -57,7 +57,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             ezopenSDKInitilized = true;
         }
 
-        private async void InitData()
+        private async Task InitData()
         {
             IList<EZDeviceInfo> list = await CameraHelpers.FetchCameraList(0, 10);
             cameraListAdapter.SetCameras(list);
