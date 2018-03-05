@@ -469,4 +469,5 @@
     <string name="serial_number_error">序列号错误</string>
     <string name="open_camera_fail">打开相机失败，请选择手动输入添加设备</string>
      -->
+    <string name="title_dev_list">设备列表</string>
 </resources>

@@ -1,26 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SmartConstructionSite;assembly=SmartConstructionSite"
     x:Class="SmartConstructionSite.MainPage">
 
-    <NavigationPage Title="门禁">
-        <x:Arguments>
-            <local:EntranceGuardMainPage></local:EntranceGuardMainPage>
-        </x:Arguments>
-    </NavigationPage>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="barItemSearch" Icon="search.png" Clicked="Handle_Clicked">
+            <!--<ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="search.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>-->
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
 
-    <NavigationPage Title="监控">
-        <x:Arguments>
-            <local:CamerasMainPage></local:CamerasMainPage>
-        </x:Arguments>
-    </NavigationPage>
+    <StackLayout Orientation="Vertical" Spacing="0">
+        <StackLayout Orientation="Vertical" HeightRequest="150">
+            <StackLayout Orientation="Horizontal" VerticalOptions="End">
+                <Label Text="工地项目助手" FontSize="24"></Label>
+                <Label Text="1.0V" VerticalOptions="End"></Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" VerticalOptions="End">
+                <Label Text="湖北省|黄石《中建八局黄石奥体中心项目》"></Label>
+                <Label Text="3/12摄氏度" HorizontalOptions="End"></Label>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" HeightRequest="20">
+            <Label Text="消息"></Label>
+        </StackLayout>
+        <Grid VerticalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-    <NavigationPage Title="我">
-        <x:Arguments>
-            <local:UserMainPage></local:UserMainPage>
-        </x:Arguments>
-    </NavigationPage>
+            <Button Grid.Row="0" Grid.Column="0" x:Name="btnSceneMgr" Image="icon.png" Text="现场监管" BackgroundColor="Transparent" Clicked="Handle_Clicked">
+            </Button>
 
-	
-</TabbedPage>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="btnPeopleMgr" Image="icon.png" Text="人员监管" Clicked="Handle_Clicked"></Button>
+
+            <Button Grid.Row="0" Grid.Column="2" x:Name="btnEnvMgr" Image="icon.png" Text="环境监管" Clicked="Handle_Clicked"></Button>
+
+            <Button Grid.Row="1" Grid.Column="0" x:Name="btnDevMgr" Image="icon.png" Text="机械设备监测" Clicked="Handle_Clicked"></Button>
+
+            <Button Grid.Row="1" Grid.Column="1" x:Name="btnEvents" Image="icon.png" Text="日历事件" Clicked="Handle_Clicked"></Button>
+
+            <Button Grid.Row="1" Grid.Column="2" x:Name="btnProductionMgr" Image="icon.png" Text="生产管理" Clicked="Handle_Clicked"></Button>
+
+            <Button Grid.Row="2" Grid.Column="0" x:Name="btnSpecialTaskCheck" Image="icon.png" Text="特种作业审批" Clicked="Handle_Clicked"></Button>
+
+            <Button Grid.Row="2" Grid.Column="1" x:Name="btnAssetMgr" Image="icon.png" Text="资产管理" Clicked="Handle_Clicked"></Button>
+
+            <Button Grid.Row="2" Grid.Column="2" x:Name="btnProjectProgress" Image="icon.png" Text="项目进度" Clicked="Handle_Clicked"></Button>
+            
+        </Grid>
+
+        <Grid HeightRequest="50" RowSpacing="0" ColumnSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Text="项目管理"></Button>
+            <Button Grid.Row="0" Grid.Column="1" Text="人员记录"></Button>
+        </Grid>
+    </StackLayout>
+</ContentPage>

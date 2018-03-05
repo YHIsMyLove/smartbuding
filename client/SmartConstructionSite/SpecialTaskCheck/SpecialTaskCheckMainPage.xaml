@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SmartConstructionSite.SpecialTaskCheck.SpecialTaskCheckMainPage"
+    Title="特种作业审批">
+	<ContentPage.Content>
+
+        <StackLayout Orientation="Vertical">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="0" Image="icon.png" Text="动火作业审批"></Button>
+                <Button Grid.Row="0" Grid.Column="1" Image="icon.png" Text="受限作业审批"></Button>
+                <Button Grid.Row="1" Grid.Column="0" Image="icon.png" Text="起重吊装作业审批"></Button>
+                <Button Grid.Row="1" Grid.Column="1" Image="icon.png" Text="高处作业审批"></Button>
+                <Button Grid.Row="2" Grid.Column="0" Image="icon.png" Text="脚手架拆卸作业审批"></Button>
+                <Button Grid.Row="2" Grid.Column="1" Image="icon.png" Text="安全防护拆除作业审批"></Button>
+                
+            </Grid>
+        </StackLayout>
+        
+	</ContentPage.Content>
+</ContentPage>

@@ -30,9 +30,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidSupportedAbis>armeabi-v7a;x86_64;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -171,6 +169,41 @@
     <AndroidResource Include="Resources\layout\real_play_quality_items.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\values\color.xml" />
+    <AndroidResource Include="Resources\drawable\play_ptz_selector.xml" />
+    <AndroidResource Include="Resources\drawable\play_talk_selector.xml" />
+    <AndroidResource Include="Resources\drawable\play_previously_selector.xml" />
+    <AndroidResource Include="Resources\drawable\play_video_selector.xml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_previously_dis.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_previously_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_previously.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_ptz_dis.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_ptz_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_ptz.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_talk_dis.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_talk_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_talk.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_video_dis.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_video_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_video.png" />
+    <AndroidResource Include="Resources\layout\camera_ctrl.axml" />
+    <AndroidResource Include="Resources\drawable\play_close_selector.xml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_close_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_close.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ptz_bg.png" />
+    <AndroidResource Include="Resources\drawable\ptz_turn_selector.xml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ptz_turn_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ptz_turn.png" />
+    <AndroidResource Include="Resources\layout\camera_talkback.axml" />
+    <AndroidResource Include="Resources\drawable\play_talkback_selector.xml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_talkback_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\play_talkback.png" />
+    <AndroidResource Include="Resources\values\dimens_new.xml" />
+    <AndroidResource Include="Resources\values\dimens.xml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ptz_up_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ptz_bottom_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ptz_left_sel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ptz_right_sel.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />

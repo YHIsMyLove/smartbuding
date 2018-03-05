@@ -13,18 +13,48 @@ using Android.Widget;
 using System.Threading.Tasks;
 using Com.Videogo.Openapi.Bean;
 using Com.Videogo.Constant;
+using Com.Videogo.Openapi;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
-    [Activity(Label = "CameraListActivity")]
+    [Activity(Label = "@string/title_dev_list")]
     public class CameraListActivity : Activity
     {
+        public const string AppKey = "443eed7d6dab47739915d6a237dcad34";
+        public const string AccessTokenForTest = "at.at971uw757e0x6njd2t6tghbcbpw4mve-2vc2k9bc1r-13uq4rh-lua3ahwpa";
+        static bool ezopenSDKInitilized;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            InitSDK();
+
+            EZOpenSDK.Instance.SetAccessToken(AccessTokenForTest);
+
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_camera_list);
             InitViews();
             InitData();
+        }
+
+        private void InitSDK()
+        {
+            if (ezopenSDKInitilized) return;
+            /**
+             * sdk日志开关，正式发布需要去掉
+             */
+            EZOpenSDK.ShowSDKLog(true);
+
+            /**
+             * 设置是否支持P2P取流,详见api
+             */
+            EZOpenSDK.EnableP2P(true);
+
+            /**
+             * APP_KEY请替换成自己申请的
+             */
+            EZOpenSDK.InitLib(Application, AppKey, "");
+
+            ezopenSDKInitilized = true;
         }
 
         private async void InitData()

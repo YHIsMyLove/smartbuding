@@ -77,6 +77,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="ProductionManagement\ProductionManagementMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpecialTaskCheck\SpecialTaskCheckMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AssetManagement\AssetListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\EventsMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -109,6 +125,18 @@
       <DependentUpon>CameraLiveStreamingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="OnlineMonitoring\CameraHelper.cs" />
+    <Compile Include="ProductionManagement\ProductionManagementMainPage.xaml.cs">
+      <DependentUpon>ProductionManagementMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SpecialTaskCheck\SpecialTaskCheckMainPage.xaml.cs">
+      <DependentUpon>SpecialTaskCheckMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AssetManagement\AssetListPage.xaml.cs">
+      <DependentUpon>AssetListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Events\EventsMainPage.xaml.cs">
+      <DependentUpon>EventsMainPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarians.MediaPlayer">
@@ -131,6 +159,10 @@
     <Folder Include="Common\" />
     <Folder Include="EntranceGuard\" />
     <Folder Include="User\" />
+    <Folder Include="ProductionManagement\" />
+    <Folder Include="SpecialTaskCheck\" />
+    <Folder Include="AssetManagement\" />
+    <Folder Include="Events\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EZUIKitForms\EZUIKitForms.csproj">

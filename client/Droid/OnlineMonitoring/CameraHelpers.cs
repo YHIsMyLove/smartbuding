@@ -29,7 +29,24 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             bool result = true;
             await Task.Run(()=>
             {
-                result = EZOpenSDK.Instance.SetVideoLevel(deviceSerial, cameraNo, (int)videoLevel);
+                try
+                {
+                    result = EZOpenSDK.Instance.SetVideoLevel(deviceSerial, cameraNo, videoLevel.Ordinal());
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.Fail(e.Message);
+                }
+            });
+            return result;
+        }
+
+        internal static async Task<bool> ControlPTZ(string deviceSerial, int cameraNo, EZConstants.EZPTZCommand cmd, EZConstants.EZPTZAction action, int ptzSpeedDefault)
+        {
+            bool result = true;
+            await Task.Run(() =>
+            {
+                result = EZOpenSDK.Instance.ControlPTZ(deviceSerial, cameraNo, cmd, action, EZConstants.PtzSpeedDefault);
             });
             return result;
         }

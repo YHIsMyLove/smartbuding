@@ -19,11 +19,15 @@ using Com.Videogo.Realplay;
 using Java.Util;
 using Com.Videogo.Openapi;
 using Com.Videogo.Util;
+using Android.Content.PM;
+using System.Threading.Tasks;
+using Com.Videogo.Widget;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
-    [Activity(Label = "CameraLiveStreamingActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
-    public class CameraLiveStreamingActivity : AppCompatActivity
+    [Activity(Label = "CameraLiveStreamingActivity", Theme = "@style/MyTheme",
+              ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    public class CameraLiveStreamingActivity : Activity
     {
         class PlayerCallBack : Java.Lang.Object, EZUIPlayer.IEZUIPlayerCallBack
         {
@@ -37,6 +41,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             public void OnPlayFail(EZUIError p0)
             {
                 Toast.MakeText(owner, "播放错误。错误描述：" + p0.ErrorString, ToastLength.Long).Show();
+                owner.UpdateViewOnStateChanged();
             }
 
             public void OnPlayFinish()
@@ -47,6 +52,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             public void OnPlaySuccess()
             {
                 Log.Debug(tag, "OnPlaySuccess");
+                owner.UpdateViewOnStateChanged();
             }
 
             public void OnPlayTime(Calendar p0)
@@ -58,6 +64,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             {
                 Log.Debug(tag, "OnPrepared");
                 owner.player.StartPlay();
+                owner.UpdateViewOnStateChanged();
             }
 
             public void OnVideoSizeChange(int p0, int p1)
@@ -94,18 +101,32 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             player.StartPlay();
         }
 
+        public override void OnBackPressed()
+        {
+            if (maximized)
+                Maximize();
+            else
+                base.OnBackPressed();
+        }
+
         protected override void OnDestroy()
         {
             base.OnDestroy();
             player.ReleasePlayer();
         }
 
+        public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+            UpdatePlayerSurfaceSize();
+        }
+
         private void InitView()
         {
             //player
             player = (EZUIPlayer)FindViewById(Resource.Id.player);
-            EZUIKit.InitWithAppKey(Application, MainActivity.AppKey);
-            EZUIKit.SetAccessToken(MainActivity.AccessTokenForTest);
+            EZUIKit.InitWithAppKey(Application, CameraListActivity.AppKey);
+            EZUIKit.SetAccessToken(CameraListActivity.AccessTokenForTest);
             player.SetCallBack(new PlayerCallBack(this));
             string url = string.Format("ezopen://open.ys7.com/{0}/{1}.live", camera.DeviceSerial, camera.CameraNo);
             player.SetUrl(url);
@@ -121,22 +142,154 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             btnMaximize = FindViewById<ImageButton>(Resource.Id.btnMaximize);
             btnMaximize.Click += (sender, e) => Maximize();
 
-            layoutToolsNormalState = FindViewById(Resource.Id.layoutToolsNormalState);
+            //camera ctrl
+            btnTalkback = FindViewById<ImageButton>(Resource.Id.btnTalkback);
+            btnTalkback.Enabled = device.IsSupportTalk() != EZConstants.EZTalkbackCapability.EZTalkbackNoSupport;
+            btnTalkback.Click += (sender, e) => ShowTalkbackWindow();
+
+            btnCtrl = FindViewById<ImageButton>(Resource.Id.btnCtrl);
+            btnCtrl.Enabled = device.IsSupportPTZ;
+            btnCtrl.Click += (sender, e) => ShowCtrlWindow();
+
+            btnCapture = FindViewById<ImageButton>(Resource.Id.btnCapture);
+            btnCapture.Click += (sender, e) => DoCapture();
+
+            btnRecord = FindViewById<ImageButton>(Resource.Id.btnRecord);
+            btnRecord.Click += (sender, e) => DoRecord();
+
+            viewToolsNormalState = FindViewById(Resource.Id.viewToolsNormalState);
+        }
+
+        /// <summary>
+        /// Record images of current camera.
+        /// </summary>
+        private void DoRecord()
+        {
+            //todo
+        }
+
+        /// <summary>
+        /// Capture the image of current camera.
+        /// </summary>
+        private void DoCapture()
+        {
+            //todo
+        }
+
+        /// <summary>
+        /// Shows the talkback window.
+        /// </summary>
+        private void ShowTalkbackWindow()
+        {
+            LayoutInflater inflater = (LayoutInflater)GetSystemService(LayoutInflaterService);
+            View view = inflater.Inflate(Resource.Layout.camera_talkback, null, true);
+            int height = FindViewById(Resource.Id.viewCameraCtrlContainer).Height;
+            PopupWindow window = new PopupWindow(view, ViewGroup.LayoutParams.MatchParent, height, true);
+            window.ShowAsDropDown((View)btnPlay.Parent);
+
+            ImageButton btnClose = view.FindViewById<ImageButton>(Resource.Id.btnClose);
+            btnClose.Touch += (sender, e) => window.Dismiss();
+
+            RingView ringView = view.FindViewById<RingView>(Resource.Id.ringView);
+            ringView.Visibility = ViewStates.Invisible;
+
+            Button btnTalk = view.FindViewById<Button>(Resource.Id.btnTalkback);
+            btnTalk.Touch += (sender, e) => {
+                switch (e.Event.Action)
+                {
+                    case MotionEventActions.Down:
+                        ringView.Visibility = ViewStates.Visible;
+                        break;
+                    case MotionEventActions.Up:
+                        ringView.Visibility = ViewStates.Invisible;
+                        break;
+                }
+            };
+
+            window.Update();
+            ringView.Post(()=>{
+                ringView.SetMinRadiusAndDistance(btnTalk.Height / 2.0f, Utils.Dip2px(this, 22));
+            });
+        }
+
+        /// <summary>
+        /// Shows the control window.
+        /// </summary>
+        private void ShowCtrlWindow()
+        {
+            LayoutInflater inflater = (LayoutInflater)GetSystemService(LayoutInflaterService);
+            View view = inflater.Inflate(Resource.Layout.camera_ctrl, null, true);
+            int height = FindViewById(Resource.Id.viewCameraCtrlContainer).Height;
+            PopupWindow window = new PopupWindow(view, ViewGroup.LayoutParams.MatchParent, height, true);
+            window.ShowAsDropDown((View)btnPlay.Parent);
+
+            View container = view.FindViewById(Resource.Id.viewCtrlToolsContainer);
+
+            ImageButton btnClose = view.FindViewById<ImageButton>(Resource.Id.btnClose);
+            btnClose.Touch += (sender, e) => window.Dismiss();
+
+            ImageButton btnUp = view.FindViewById<ImageButton>(Resource.Id.btnUp);
+            btnUp.Touch += (sender, e) => {
+                DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandUp, e.Event.Action, container);
+            };
+
+            ImageButton btnDown = view.FindViewById<ImageButton>(Resource.Id.btnDown);
+            btnDown.Touch += (sender, e) => {
+                DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandDown, e.Event.Action, container);
+            };
+
+            ImageButton btnLeft = view.FindViewById<ImageButton>(Resource.Id.btnLeft);
+            btnLeft.Touch += (sender, e) => {
+                DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandLeft, e.Event.Action, container);
+            };
+
+            ImageButton btnRight = view.FindViewById<ImageButton>(Resource.Id.btnRight);
+            btnRight.Touch += (sender, e) => {
+                DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandRight, e.Event.Action, container);
+            };
+        }
+
+        /// <summary>
+        /// Sends the command.
+        /// </summary>
+        /// <param name="cmd">the command</param>
+        /// <param name="action">Action.</param>
+        private async Task<bool> DoCtrl(EZConstants.EZPTZCommand cmd, MotionEventActions action, View container)
+        {
+            EZConstants.EZPTZAction ptzAction = EZConstants.EZPTZAction.EZPTZActionSTOP;
+            if (action == MotionEventActions.Down)
+            {
+                ptzAction = EZConstants.EZPTZAction.EZPTZActionSTART;
+                if (cmd == EZConstants.EZPTZCommand.EZPTZCommandDown)
+                    container.SetBackgroundResource(Resource.Drawable.ptz_bottom_sel);
+                else if (cmd == EZConstants.EZPTZCommand.EZPTZCommandLeft)
+                    container.SetBackgroundResource(Resource.Drawable.ptz_left_sel);
+                else if (cmd == EZConstants.EZPTZCommand.EZPTZCommandRight)
+                    container.SetBackgroundResource(Resource.Drawable.ptz_right_sel);
+                else if (cmd == EZConstants.EZPTZCommand.EZPTZCommandUp)
+                    container.SetBackgroundResource(Resource.Drawable.ptz_up_sel);
+            }
+            else if (action == MotionEventActions.Up)
+            {
+                ptzAction = EZConstants.EZPTZAction.EZPTZActionSTOP;
+                container.SetBackgroundResource(Resource.Drawable.ptz_bg);
+            }
+            return await CameraHelpers.ControlPTZ(camera.DeviceSerial, camera.CameraNo, cmd, ptzAction, EZConstants.PtzSpeedDefault);
         }
 
         private void Maximize()
         {
             if (maximized)
             {
-                RequestedOrientation = Android.Content.PM.ScreenOrientation.Portrait;
+                RequestedOrientation = ScreenOrientation.Portrait;
                 maximized = false;
-                layoutToolsNormalState.Visibility = ViewStates.Visible;
+                viewToolsNormalState.Visibility = ViewStates.Visible;
             }
             else
             {
-                RequestedOrientation = Android.Content.PM.ScreenOrientation.Landscape;
+                RequestedOrientation = ScreenOrientation.Landscape;
                 maximized = true;
-                layoutToolsNormalState.Visibility = ViewStates.Gone;
+                viewToolsNormalState.Visibility = ViewStates.Gone;
             }
             UpdatePlayerSurfaceSize();
         }
@@ -145,27 +298,29 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         {
             LayoutInflater layoutInflater = (LayoutInflater)GetSystemService(LayoutInflaterService);
             ViewGroup layoutView = (ViewGroup)layoutInflater.Inflate(Resource.Layout.real_play_quality_items, null, true);
-            
-            Button btnQualityHigh = layoutView.FindViewById<Button>(Resource.Id.btnQualityHigh);
-            btnQualityHigh.Enabled = camera.VideoLevel != EZConstants.EZVideoLevel.VideoLevelHd;
-            btnQualityHigh.Click += (sender, args) => SetQuality(EZConstants.EZVideoLevel.VideoLevelHd);
-
-            Button btnQualityBanlance = layoutView.FindViewById<Button>(Resource.Id.btnBalance);
-            btnQualityBanlance.Enabled = camera.VideoLevel != EZConstants.EZVideoLevel.VideoLevelBalanced;
-            btnQualityBanlance.Click += (sender, args) => SetQuality(EZConstants.EZVideoLevel.VideoLevelBalanced);
-
-            Button btnQualityFlunet = layoutView.FindViewById<Button>(Resource.Id.btnQualityFlunet);
-            btnQualityFlunet.Enabled = camera.VideoLevel != EZConstants.EZVideoLevel.VideoLevelFlunet;
-            btnQualityFlunet.Click += (sender, args) => SetQuality(EZConstants.EZVideoLevel.VideoLevelFlunet);
 
             int height = 105;
             height = Utils.Dip2px(this, height);
             PopupWindow windowQuality = new PopupWindow(layoutView, ViewGroup.LayoutParams.WrapContent, height, true);
+            
+            Button btnQualityHigh = layoutView.FindViewById<Button>(Resource.Id.btnQualityHigh);
+            btnQualityHigh.Enabled = camera.VideoLevel != EZConstants.EZVideoLevel.VideoLevelHd;
+            btnQualityHigh.Click += (sender, args) => SetQuality(windowQuality, EZConstants.EZVideoLevel.VideoLevelHd);
+
+            Button btnQualityBanlance = layoutView.FindViewById<Button>(Resource.Id.btnBalance);
+            btnQualityBanlance.Enabled = camera.VideoLevel != EZConstants.EZVideoLevel.VideoLevelBalanced;
+            btnQualityBanlance.Click += (sender, args) => SetQuality(windowQuality, EZConstants.EZVideoLevel.VideoLevelBalanced);
+
+            Button btnQualityFlunet = layoutView.FindViewById<Button>(Resource.Id.btnQualityFlunet);
+            btnQualityFlunet.Enabled = camera.VideoLevel != EZConstants.EZVideoLevel.VideoLevelFlunet;
+            btnQualityFlunet.Click += (sender, args) => SetQuality(windowQuality, EZConstants.EZVideoLevel.VideoLevelFlunet);
+
             windowQuality.ShowAsDropDown(anchor, -Utils.Dip2px(this, 5), -(height + anchor.Height + Utils.Dip2px(this, 8)));
         }
 
-        private async void SetQuality(EZConstants.EZVideoLevel videoLevelHd)
+        private async void SetQuality(PopupWindow window, EZConstants.EZVideoLevel level)
         {
+            window.Dismiss();
             if (!ConnectionDetector.IsNetworkAvailable(this))
             {
                 // 提示没有连接网络
@@ -176,8 +331,27 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             builder.SetCancelable(false);
             builder.SetMessage(Resource.String.setting_video_level);
             Android.Support.V7.App.AlertDialog dialog = builder.Show();
-            bool result = await CameraHelpers.SetVideoLevel(camera.DeviceSerial, camera.CameraNo, videoLevel);
+            bool result = await CameraHelpers.SetVideoLevel(camera.DeviceSerial, camera.CameraNo, level);
             dialog.Dismiss();
+
+            if (result)
+            {
+                camera.SetVideoLevel(videoLevel.Ordinal());
+                if (level == EZConstants.EZVideoLevel.VideoLevelHd)
+                {
+                    btnVideoLevel.Text = GetString(Resource.String.quality_hd);
+                }
+                else if (level == EZConstants.EZVideoLevel.VideoLevelBalanced)
+                {
+                    btnVideoLevel.Text = GetString(Resource.String.quality_balanced);
+                }
+                else if (level == EZConstants.EZVideoLevel.VideoLevelFlunet)
+                {
+                    btnVideoLevel.Text = GetString(Resource.String.quality_flunet);
+                }
+                else
+                    btnVideoLevel.Text = GetString(Resource.String.quality_flunet);
+            }
 
             player.StopPlay();
             SystemClock.Sleep(500);
@@ -189,17 +363,29 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             
         }
 
-        private void Play()
+        private void UpdateViewOnStateChanged()
         {
             if (player.Status == RealPlayStatus.StatusPause)
             {
-                player.StartPlay();
-                btnPlay.SetImageResource(Resource.Drawable.pause);
+                btnPlay.SetImageResource(Resource.Drawable.play_play_selector);
             }
             else if (player.Status == RealPlayStatus.StatusPlay)
             {
-                player.PausePlay();
-                btnPlay.SetImageResource(Resource.Drawable.play_play_selector);
+                btnPlay.SetImageResource(Resource.Drawable.pause);
+            }
+        }
+
+        private void Play()
+        {
+            if (player.Status == RealPlayStatus.StatusStop)
+            {
+                player.StartPlay();
+
+            }
+            else if (player.Status == RealPlayStatus.StatusPlay)
+            {
+                player.StopPlay();
+                UpdateViewOnStateChanged();
             }
         }
 
@@ -222,6 +408,10 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         private ImageButton btnMute;
         private Button btnVideoLevel;
         private ImageButton btnMaximize;
-        private View layoutToolsNormalState;
+        private View viewToolsNormalState;
+        private ImageButton btnTalkback;
+        private ImageButton btnCtrl;
+        private ImageButton btnCapture;
+        private ImageButton btnRecord;
     }
 }
