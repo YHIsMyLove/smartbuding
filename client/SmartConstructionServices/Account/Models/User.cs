@@ -7,6 +7,11 @@ namespace SmartConstructionServices.Account.Models
     {
         public User()
         {
+            
         }
+
+        public string Username { get; set; }
+
+        public string PhotoPath { get; set; }
     }
 }

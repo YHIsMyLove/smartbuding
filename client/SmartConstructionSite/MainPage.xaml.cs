@@ -9,30 +9,11 @@ using Xamarin.Forms;
 
 namespace SmartConstructionSite
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : MasterDetailPage
     {
         public MainPage()
         {
             InitializeComponent();
         }
-
-        async void Handle_Clicked(object sender, System.EventArgs e)
-        {
-            if (sender == btnSceneMgr)
-                ((App)Application.Current).CameraHelper.ShowCameraList();
-            else if (sender == btnProductionMgr)
-                await Navigation.PushAsync(new ProductionManagementMainPage(), true);
-            else if (sender == btnSpecialTaskCheck)
-                await Navigation.PushAsync(new SpecialTaskCheckMainPage(), true);
-            else if (sender == btnAssetMgr)
-                await Navigation.PushAsync(new AssetListPage(), true);
-            else if (sender == btnEvents)
-                await Navigation.PushAsync(new EventsMainPage(), true);
-            else if (sender == barItemSearch)
-            {
-                
-            }
-        }
-
     }
 }

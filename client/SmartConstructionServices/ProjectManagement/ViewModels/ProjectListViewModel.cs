@@ -101,7 +101,7 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             Projects = await projectService.FindProjects(selectedProvince, selectedCity);
         }
 
-        public async Task FetchProvinces()
+        private async Task FetchProvinces()
         {
             if (dataLoading) return;
             Provinces = await projectService.FetchProvinces();

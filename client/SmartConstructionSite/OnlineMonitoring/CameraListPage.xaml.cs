@@ -15,7 +15,6 @@ namespace SmartConstructionSite.OnlineMonitoring
             InitializeComponent();
             viewModel = new CameraListViewModel();
             BindingContext = viewModel;
-            ServiceContext.Instance.Login("admin", "admin");
         }
 
         void Handle_Appearing(object sender, System.EventArgs e)

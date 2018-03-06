@@ -44,6 +44,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Account\Services\UserService.cs" />
+    <Compile Include="Account\ViewModels\UserMainViewModel.cs" />
     <Compile Include="ProjectManagement\Models\Project.cs" />
     <Compile Include="ProjectManagement\ViewModels\ProjectListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,11 +58,7 @@
     <Compile Include="OnlineMonitoring\ViewModels\CameraLiveStreamingViewModel.cs" />
     <Compile Include="ProjectManagement\Services\ProjectService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Account\Services\" />
-    <Folder Include="Account\ViewModels\" />
-    <Folder Include="ProjectManagement\Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\packages\Xamarin.Forms.2.5.0.280555\lib\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.Core.dll</HintPath>

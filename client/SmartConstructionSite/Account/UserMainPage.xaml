@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.Account.UserMainPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Vertical" HeightRequest="150">
+                <Image Source="{Binding CurrentUser.Photo}" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                <Label Text="{Binding CurrentUser.Username}" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </StackLayout>
+            <BoxView BackgroundColor="#ccc" HeightRequest="1"></BoxView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

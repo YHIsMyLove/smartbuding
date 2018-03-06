@@ -1,0 +1,39 @@
+﻿using SmartConstructionSite.AssetManagement;
+using SmartConstructionSite.Events;
+using SmartConstructionSite.ProductionManagement;
+using SmartConstructionSite.SpecialTaskCheck;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace SmartConstructionSite.ProjectManagement
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ProjectManagementMainPage : ContentPage
+    {
+        public ProjectManagementMainPage()
+        {
+            InitializeComponent();
+        }
+
+        async void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            if (sender == btnSceneMgr)
+                ((App)Application.Current).CameraHelper.ShowCameraList();
+            else if (sender == btnProductionMgr)
+                await Navigation.PushAsync(new ProductionManagementMainPage(), true);
+            else if (sender == btnSpecialTaskCheck)
+                await Navigation.PushAsync(new SpecialTaskCheckMainPage(), true);
+            else if (sender == btnAssetMgr)
+                await Navigation.PushAsync(new AssetListPage(), true);
+            else if (sender == btnEvents)
+                await Navigation.PushAsync(new EventsMainPage(), true);
+            btnAssetMgr.ContentLayout = new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Top, 0);
+        }
+    }
+}

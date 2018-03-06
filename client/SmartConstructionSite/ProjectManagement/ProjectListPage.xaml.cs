@@ -17,7 +17,7 @@ namespace SmartConstructionSite.ProjectManagement
             viewModel = new ProjectListViewModel();
             BindingContext = viewModel;
 			InitializeComponent ();
-            viewModel.FetchProvinces();
+            viewModel.FetchProvincesCommand.Execute(null);
 		}
 
         ProjectListViewModel viewModel;

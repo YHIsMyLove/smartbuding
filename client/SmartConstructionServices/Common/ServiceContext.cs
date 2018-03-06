@@ -30,16 +30,6 @@ namespace SmartConstructionServices.Common
             return CurrentUser != null;
         }
 
-        public void Login(string username, string password)
-        {
-            CurrentUser = new User();
-        }
-
-        public void Logout()
-        {
-            CurrentUser = null;
-        }
-
         private static ServiceContext instance;
     }
 }
