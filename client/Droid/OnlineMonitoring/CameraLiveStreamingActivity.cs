@@ -254,12 +254,11 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         /// </summary>
         /// <param name="cmd">the command</param>
         /// <param name="action">Action.</param>
-        private async Task<bool> DoCtrl(EZConstants.EZPTZCommand cmd, MotionEventActions action, View container)
+        private async Task DoCtrl(EZConstants.EZPTZCommand cmd, MotionEventActions action, View container)
         {
             EZConstants.EZPTZAction ptzAction = EZConstants.EZPTZAction.EZPTZActionSTOP;
             if (action == MotionEventActions.Down)
             {
-                ptzAction = EZConstants.EZPTZAction.EZPTZActionSTART;
                 if (cmd == EZConstants.EZPTZCommand.EZPTZCommandDown)
                     container.SetBackgroundResource(Resource.Drawable.ptz_bottom_sel);
                 else if (cmd == EZConstants.EZPTZCommand.EZPTZCommandLeft)
@@ -268,13 +267,18 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
                     container.SetBackgroundResource(Resource.Drawable.ptz_right_sel);
                 else if (cmd == EZConstants.EZPTZCommand.EZPTZCommandUp)
                     container.SetBackgroundResource(Resource.Drawable.ptz_up_sel);
+                if (ctrlCompleted)
+                {
+                    ctrlCompleted = false;
+                    await CameraHelpers.ControlPTZ(camera.DeviceSerial, camera.CameraNo, cmd, EZConstants.EZPTZAction.EZPTZActionSTART, EZConstants.PtzSpeedDefault);
+                    ctrlCompleted = true;
+                }
             }
             else if (action == MotionEventActions.Up)
             {
-                ptzAction = EZConstants.EZPTZAction.EZPTZActionSTOP;
                 container.SetBackgroundResource(Resource.Drawable.ptz_bg);
+                await CameraHelpers.ControlPTZ(camera.DeviceSerial, camera.CameraNo, cmd, EZConstants.EZPTZAction.EZPTZActionSTOP, EZConstants.PtzSpeedDefault);
             }
-            return await CameraHelpers.ControlPTZ(camera.DeviceSerial, camera.CameraNo, cmd, ptzAction, EZConstants.PtzSpeedDefault);
         }
 
         private void Maximize()
@@ -413,5 +417,6 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         private ImageButton btnCtrl;
         private ImageButton btnCapture;
         private ImageButton btnRecord;
+        private bool ctrlCompleted = true;
     }
 }

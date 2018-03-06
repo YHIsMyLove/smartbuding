@@ -3,18 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ProjectManagement="clr-namespace:SmartConstructionSite.ProjectManagement;assembly=SmartConstructionSite"
     xmlns:Account="clr-namespace:SmartConstructionSite.Account;assembly=SmartConstructionSite"
-    x:Class="SmartConstructionSite.MainPage">
+    x:Class="SmartConstructionSite.MainPage"
+    MasterBehavior="Popover">
 
     <MasterDetailPage.Master>
-        <ProjectManagement:ProjectManagementMainPage></ProjectManagement:ProjectManagementMainPage>
+        <Account:UserMainPage></Account:UserMainPage>
     </MasterDetailPage.Master>
 
     <MasterDetailPage.Detail>
-        <NavigationPage>
-            <x:Arguments>
-                <Account:UserMainPage></Account:UserMainPage>
-            </x:Arguments>
-        </NavigationPage>
+        <ProjectManagement:ProjectManagementMainPage></ProjectManagement:ProjectManagementMainPage>
     </MasterDetailPage.Detail>
     
 </MasterDetailPage>

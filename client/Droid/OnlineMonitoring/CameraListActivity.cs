@@ -21,7 +21,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
     public class CameraListActivity : Activity
     {
         public const string AppKey = "443eed7d6dab47739915d6a237dcad34";
-        public const string AccessTokenForTest = "at.at971uw757e0x6njd2t6tghbcbpw4mve-2vc2k9bc1r-13uq4rh-lua3ahwpa";
+        public const string AccessTokenForTest = "at.5dx4wfc728ucu7zj7hk1buzz7m18fwzu-707o7jsvz2-12g99x3-aruh9vwpv";
         static bool ezopenSDKInitilized;
 
         protected override void OnCreate(Bundle savedInstanceState)

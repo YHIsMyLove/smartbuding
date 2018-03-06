@@ -19,6 +19,16 @@ namespace SmartConstructionSite.ProjectManagement
         public ProjectManagementMainPage()
         {
             InitializeComponent();
+            Button.ButtonContentLayout contentLayout = new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Top, 5);
+            btnDevMgr.ContentLayout = contentLayout;
+            btnEnvMgr.ContentLayout = contentLayout;
+            btnEvents.ContentLayout = contentLayout;
+            btnAssetMgr.ContentLayout = contentLayout;
+            btnSceneMgr.ContentLayout = contentLayout;
+            btnPeopleMgr.ContentLayout = contentLayout;
+            btnProductionMgr.ContentLayout = contentLayout;
+            btnProjectProgress.ContentLayout = contentLayout;
+            btnSpecialTaskCheck.ContentLayout = contentLayout;
         }
 
         async void Handle_Clicked(object sender, System.EventArgs e)
@@ -34,6 +44,12 @@ namespace SmartConstructionSite.ProjectManagement
             else if (sender == btnEvents)
                 await Navigation.PushAsync(new EventsMainPage(), true);
             btnAssetMgr.ContentLayout = new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Top, 0);
+        }
+
+        async void OnProjectLabelTapped(object sender, System.EventArgs e)
+        {
+            ProjectListPage page = new ProjectListPage();
+            await Navigation.PushAsync(page);
         }
     }
 }

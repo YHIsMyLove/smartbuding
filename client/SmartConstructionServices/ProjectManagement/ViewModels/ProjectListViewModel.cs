@@ -98,23 +98,29 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
         private async Task FindProjects()
         {
             if (dataLoading) return;
+            DataLoading = true;
             Projects = await projectService.FindProjects(selectedProvince, selectedCity);
+            DataLoading = false;
         }
 
         private async Task FetchProvinces()
         {
             if (dataLoading) return;
+            DataLoading = true;
             Provinces = await projectService.FetchProvinces();
             if (Provinces.Count() > 0)
             {
                 Cities = await projectService.FetchCities(Provinces[0]);
             }
+            DataLoading = false;
         }
 
         private async Task FetchCities()
         {
             if (dataLoading) return;
+            DataLoading = true;
             Cities = await projectService.FetchCities(selectedProvince);
+            DataLoading = false;
         }
 
         private bool IsFindProjectCommandCanExecute()

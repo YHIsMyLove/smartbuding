@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SmartConstructionSite.ProjectManagement.ProjectListPage">
+             x:Class="SmartConstructionSite.ProjectManagement.ProjectListPage"
+             Title="项目搜索" IsBusy="{Binding DataLoading}">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
             <StackLayout Orientation="Horizontal">
-                <Picker Title="选择省" ItemsSource="{Binding Provinces}" SelectedItem="{Binding Path=SelectedProvince, Mode=TwoWay}"></Picker>
-                <Picker Title="选择市" ItemsSource="{Binding Cities}" SelectedItem="{Binding Path=SelectedCity, Mode=TwoWay}"></Picker>
+                <Picker Title="选择省" ItemsSource="{Binding Provinces}" SelectedItem="{Binding Path=SelectedProvince, Mode=TwoWay}" HorizontalOptions="FillAndExpand"></Picker>
+                <Picker Title="选择市" ItemsSource="{Binding Cities}" SelectedItem="{Binding Path=SelectedCity, Mode=TwoWay}" HorizontalOptions="FillAndExpand"></Picker>
                 <Button Text="搜索" Command="{Binding FindProjectsCommand}"></Button>
             </StackLayout>
             <ListView ItemsSource="{Binding Projects}" SelectedItem="Binding SelectedProject" VerticalOptions="FillAndExpand">
