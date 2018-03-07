@@ -59,6 +59,8 @@
     <Compile Include="Common\ServiceContext.cs" />
     <Compile Include="OnlineMonitoring\ViewModels\CameraLiveStreamingViewModel.cs" />
     <Compile Include="ProjectManagement\Services\ProjectService.cs" />
+    <Compile Include="Account\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Common\NotConverter.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
