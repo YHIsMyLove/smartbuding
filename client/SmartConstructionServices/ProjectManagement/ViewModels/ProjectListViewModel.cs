@@ -99,7 +99,8 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
         {
             if (dataLoading) return;
             DataLoading = true;
-            Projects = await projectService.FindProjects(selectedProvince, selectedCity);
+            var result = await projectService.FindProjects(selectedProvince, selectedCity);
+            Projects = result.Model;
             DataLoading = false;
         }
 
@@ -107,10 +108,12 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
         {
             if (dataLoading) return;
             DataLoading = true;
-            Provinces = await projectService.FetchProvinces();
+            var result = await projectService.FetchProvinces();
+            Provinces = result.Model;
             if (Provinces.Count() > 0)
             {
-                Cities = await projectService.FetchCities(Provinces[0]);
+                result = await projectService.FetchCities(Provinces[0]);
+                Cities = result.Model;
             }
             DataLoading = false;
         }
@@ -119,7 +122,8 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
         {
             if (dataLoading) return;
             DataLoading = true;
-            Cities = await projectService.FetchCities(selectedProvince);
+            var result = await projectService.FetchCities(selectedProvince);
+            Cities = result.Model;
             DataLoading = false;
         }
 

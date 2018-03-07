@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Account\Services\UserService.cs" />
     <Compile Include="Account\ViewModels\UserMainViewModel.cs" />
+    <Compile Include="Common\Error.cs" />
+    <Compile Include="Common\Result.cs" />
     <Compile Include="ProjectManagement\Models\Project.cs" />
     <Compile Include="ProjectManagement\ViewModels\ProjectListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
