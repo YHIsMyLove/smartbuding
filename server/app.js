@@ -28,6 +28,7 @@ fs.readdirSync(models)
 /************************************************************************************* */
 const admin = require('./routes/admin');
 const api = require('./routes/api');
+const business = require('./routes/business');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/users', users);
 app.use('/admin', admin);
 app.use('/api', api);
+app.use('/api', business);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
