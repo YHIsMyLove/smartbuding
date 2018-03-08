@@ -9,57 +9,48 @@ using Xamarin.Forms;
 
 namespace SmartConstructionServices.Account.ViewModels
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public LoginViewModel()
         {
             userService = new UserService();
-            LoginCommand = new Command(execute: () => { Login(); }, canExecute: () => { return IsLoginCommandCanExecute(); });
+            LoginCommand = new Command(execute: async () => { await Login(); }, canExecute: () => { return IsLoginCommandCanExecute(); });
         }
 
         private async Task Login()
         {
-            if (loginPending) return;
-            loginPending = true;
+            if (isBusy) return;
+            SetProperty(ref isBusy, true, nameof(IsBusy));
             var result = await userService.Login(username, password);
-            loginPending = false;
-            User user = result.Model;
+            SetProperty(ref isBusy, false, nameof(IsBusy));
+            if (result.HasError)
+            {
+                SetProperty(ref hasError, true, nameof(HasError));
+                SetProperty(ref error, result.Error, nameof(Error));
+            }
+            else
+            {
+                SetProperty(ref isLoginSucceed, true, nameof(IsLoginSucceed));
+                ServiceContext.Instance.CurrentUser = result.Model;
+            }
         }
 
         #region Properties
         public string Username
         {
             get { return username; }
-            set
-            {
-                if (username == value) return;
-                username = value;
-                NotifyPropertyChanged("Username");
-            }
+            set { username = value; }
         }
 
         public string Password
         {
             get { return password; }
-            set
-            {
-                if (password == value) return;
-                password = value;
-                NotifyPropertyChanged("Password");
-            }
+            set { password = value; }
         }
 
-        public bool LoginPending
+        public bool IsLoginSucceed
         {
-            get { return loginPending; }
-            set
-            {
-                if (loginPending == value) return;
-                loginPending = value;
-                NotifyPropertyChanged("LoginPending");
-            }
+            get { return isLoginSucceed; }
         }
         #endregion
 
@@ -73,17 +64,12 @@ namespace SmartConstructionServices.Account.ViewModels
         {
             return !string.IsNullOrEmpty(username)
                           && !string.IsNullOrEmpty(password)
-                          && !loginPending;
-        }
-
-        void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                          && !isBusy;
         }
 
         private UserService userService;
         private string username;
         private string password;
-        private bool loginPending;
+        private bool isLoginSucceed;
     }
 }

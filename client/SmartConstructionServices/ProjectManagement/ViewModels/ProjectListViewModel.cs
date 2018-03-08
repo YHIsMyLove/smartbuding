@@ -18,9 +18,9 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
         public ProjectListViewModel()
         {
             projectService = new ProjectService();
-            FindProjectsCommand = new Command(execute: () => { FindProjects(); }, canExecute: () => { return IsFindProjectCommandCanExecute(); });
-            FetchProvincesCommand = new Command(execute: () => { FetchProvinces(); }, canExecute: () => { return IsFetchProvincesCommandCanExecute(); });
-            FetchCitiesCommand = new Command(execute: () => { FetchCities(); }, canExecute: () => { return IsFetchCitiesCommandCanExecute(); });
+            FindProjectsCommand = new Command(execute: async () => { await FindProjects(); }, canExecute: () => { return IsFindProjectCommandCanExecute(); });
+            FetchProvincesCommand = new Command(execute: async () => { await FetchProvinces(); }, canExecute: () => { return IsFetchProvincesCommandCanExecute(); });
+            FetchCitiesCommand = new Command(execute: async () => { await FetchCities(); }, canExecute: () => { return IsFetchCitiesCommandCanExecute(); });
         }
 
         #region Properties

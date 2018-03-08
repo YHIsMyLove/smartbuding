@@ -10,6 +10,8 @@ namespace SmartConstructionServices.Account.Models
             
         }
 
+        public string SessionId { get; set; }
+
         public string Username { get; set; }
 
         public string PhotoPath { get; set; }

@@ -12,6 +12,7 @@ namespace SmartConstructionServices.Account.Services
     {
         public async Task<Result<User>> Login(string username, string password)
         {
+            await Task.Delay(2000);
             return await Task.Run(() =>
             {
                 Result<User> result = new Result<User>();
@@ -22,6 +23,7 @@ namespace SmartConstructionServices.Account.Services
 
         public async Task<Result<bool>> Logout()
         {
+            await Task.Delay(2000);
             return await Task.Run(() =>
             {
                 Result<bool> result = new Result<bool>();
@@ -32,6 +34,7 @@ namespace SmartConstructionServices.Account.Services
 
         public async Task<Result<User>> CheckSession()
         {
+            await Task.Delay(2000);
             return await Task.Run(() =>
             {
                 Result<User> result = new Result<User>();

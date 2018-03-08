@@ -22,7 +22,7 @@ namespace SmartConstructionServices.Common
         public User CurrentUser
         {
             get;
-            private set;
+            set;
         }
 
         public bool IsLogin()

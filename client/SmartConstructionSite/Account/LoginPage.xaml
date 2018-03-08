@@ -2,19 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:commons="clr-namespace:SmartConstructionServices.Common;assembly=SmartConstructionServices"
-             x:Class="SmartConstructionSite.Account.LoginPage">
+             x:Class="SmartConstructionSite.Account.LoginPage" IsEnabled="{Binding Path=IsBusy, Converter={StaticResource notConverter}}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <commons:NotConverter x:Key="notConverter"></commons:NotConverter>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical">
-            <ActivityIndicator IsRunning="{Binding LoginPending}"></ActivityIndicator>
-            <Image Source="icon.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
-            <Entry Placeholder="用户名" VerticalOptions="Center" Text="{Binding Username}" IsEnabled="{Binding Path=LoginPending, Converter={StaticResource notConverter}}"></Entry>
-            <Entry Placeholder="密码" IsPassword="True" VerticalOptions="Center" Text="{Binding Password}" IsEnabled="{Binding Path=LoginPending, Converter={StaticResource notConverter}}"></Entry>
-            <Button Text="登录" VerticalOptions="Center" Command="{Binding LoginCommand}"></Button>
-        </StackLayout>
+        <Frame>
+            <StackLayout Orientation="Vertical" VerticalOptions="Center">
+                <Label Text="{Binding Error.Description}" TextColor="Red" HorizontalOptions="Center" IsVisible="{Binding HasError}"></Label>
+                <Image Source="icon.png" HorizontalOptions="Center"></Image>
+                <Entry Placeholder="用户名" VerticalOptions="Center" Text="{Binding Username}"></Entry>
+                <Entry Placeholder="密码" IsPassword="True" Text="{Binding Password}"></Entry>
+                <Button Text="登录" Command="{Binding LoginCommand}"></Button>
+            </StackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="Center"></ActivityIndicator>
+        </Frame>
     </ContentPage.Content>
 </ContentPage>
