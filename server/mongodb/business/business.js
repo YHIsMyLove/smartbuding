@@ -23,7 +23,7 @@ exports.login = async (req, res) => {
         }
         //3. 将数据存进session表
         //4. 取出萤石的session
-        res.send(msg.genSuccessMsg('登录成功'))
+        res.send(msg.genSuccessMsg('登录成功', _user))
     } catch (error) {
         return res.send(msg.genFailedMsg('未知错误!'))
     }

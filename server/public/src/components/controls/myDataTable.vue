@@ -39,12 +39,27 @@ export default {
   },
   methods: {
     handleEdit(row) {
-      this.$emit("EditRow", row);
+      let index = 0;
+      let str = `{`;
+      Object.keys(row).forEach(item => {
+        str += `"data${index}":{`;
+        this.TabelField.forEach(ti => {
+          if (ti.prop == item) {
+            str += `"prop":"${item}","label":"${ti.label}","type":"${
+              ti.type
+            }",`;
+          }
+        });
+        str += `"data":"${row[item]}"},`;
+        index++;
+      });
+      str = str.substr(0, str.length - 1) + "}";
+      this.$emit("EditRow", row, JSON.parse(str));
     },
     handleDel(row) {
       var _this = this;
       _this
-        .$confirm("确认提交吗？", "提示", {})
+        .$confirm("确定删除吗?", "系统提示", {})
         .then(() => {
           NProgress.start();
           this.$emit("DelRow", row);
