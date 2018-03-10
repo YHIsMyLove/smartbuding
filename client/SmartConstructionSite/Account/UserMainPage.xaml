@@ -10,6 +10,7 @@
                 <Label Text="{Binding CurrentUser.Username}" HorizontalOptions="Center" VerticalOptions="Center"></Label>
             </StackLayout>
             <BoxView BackgroundColor="#ccc" HeightRequest="1"></BoxView>
+            <Button Text="注销" BackgroundColor="Red" VerticalOptions="EndAndExpand" Command="{Binding LogoutCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

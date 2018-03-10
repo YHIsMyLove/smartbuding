@@ -2,22 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:commons="clr-namespace:SmartConstructionServices.Common;assembly=SmartConstructionServices"
-             x:Class="SmartConstructionSite.Account.LoginPage" IsEnabled="{Binding Path=IsBusy, Converter={StaticResource notConverter}}">
+             x:Class="SmartConstructionSite.Account.LoginPage" IsEnabled="{Binding Path=IsBusy, Converter={StaticResource notConverter}}"
+             Title="登录">
     <ContentPage.Resources>
         <ResourceDictionary>
             <commons:NotConverter x:Key="notConverter"></commons:NotConverter>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Frame>
-            <StackLayout Orientation="Vertical" VerticalOptions="Center">
+        <StackLayout Orientation="Vertical">
+            <ActivityIndicator IsRunning="{Binding IsBusy}"></ActivityIndicator>
+            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" IsEnabled="{Binding Path=IsBusy, Converter={StaticResource notConverter}}">
                 <Label Text="{Binding Error.Description}" TextColor="Red" HorizontalOptions="Center" IsVisible="{Binding HasError}"></Label>
                 <Image Source="icon.png" HorizontalOptions="Center"></Image>
-                <Entry Placeholder="用户名" VerticalOptions="Center" Text="{Binding Username}"></Entry>
+                <Entry Placeholder="用户名" Text="{Binding Username}"></Entry>
                 <Entry Placeholder="密码" IsPassword="True" Text="{Binding Password}"></Entry>
                 <Button Text="登录" Command="{Binding LoginCommand}"></Button>
             </StackLayout>
-            <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="Center"></ActivityIndicator>
-        </Frame>
+        </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

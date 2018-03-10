@@ -1,4 +1,5 @@
 ﻿using SmartConstructionServices.Account.ViewModels;
+using SmartConstructionServices.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace SmartConstructionSite.Account
         {
             if (e.PropertyName == nameof(viewModel.IsLoginSucceed) && viewModel.IsLoginSucceed)
             {
+                //Application.Current.Properties["SessionId"] = ServiceContext.Instance.CurrentUser.SessionId;
+                Navigation.InsertPageBefore(new MainPage(), this);
+                await Task.Delay(200);
                 await Navigation.PopAsync(true);
             }
         }

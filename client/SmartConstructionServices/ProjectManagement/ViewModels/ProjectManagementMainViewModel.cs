@@ -34,8 +34,6 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
 
         #region Fields
 
-
-
         #endregion
     }
 }

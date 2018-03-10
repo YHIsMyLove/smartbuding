@@ -2,9 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartConstructionSite.ProjectManagement.ProjectManagementMainPage">
-    <!--<MasterDetailPage.ToolbarItems>
-        <ToolbarItem x:Name="barItemSearch" Icon="search.png" Clicked="Handle_Clicked"></ToolbarItem>
-    </MasterDetailPage.ToolbarItems>-->
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button">
@@ -17,16 +14,12 @@
             <StackLayout Orientation="Vertical" HeightRequest="150" BackgroundColor="#2196F3" Padding="10">
                 <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand">
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="工地项目助手" FontSize="24" TextColor="White"></Label>
+                        <Label Text="工地项目助手" FontSize="Large"  TextColor="White"></Label>
                         <Label Text="1.0V" TextColor="White" VerticalOptions="End"></Label>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="湖北省|黄石《中建八局黄石奥体中心项目》" TextColor="White">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnProjectLabelTapped" />
-                            </Image.GestureRecognizers>
-                        </Label>
-    <!--                    <Label Text="3/12摄氏度" HorizontalOptions="End"></Label>-->
+                        <Button x:Name="btnChangeProject" Text="湖北省|黄石《中建八局黄石奥体中心项目》" FontSize="Micro"  TextColor="White" BackgroundColor="#2196F3" Clicked="Handle_Clicked"></Button>
+                        <!--                    <Label Text="3/12摄氏度" HorizontalOptions="End"></Label>-->
                     </StackLayout>
                 </StackLayout>
             </StackLayout>

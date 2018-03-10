@@ -18,9 +18,9 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <include
-                android:layout="@layout/real_play_control" />
+                layout="@layout/real_play_control" />
             <include
-                android:layout="@layout/camera_ctrl" />
+                layout="@layout/camera_ctrl" />
         <!--
             <FrameLayout
                 android:minWidth="25px"

@@ -30,8 +30,8 @@ namespace SmartConstructionServices.Account.ViewModels
             }
             else
             {
-                SetProperty(ref isLoginSucceed, true, nameof(IsLoginSucceed));
                 ServiceContext.Instance.CurrentUser = result.Model;
+                SetProperty(ref isLoginSucceed, true, nameof(IsLoginSucceed));
             }
         }
 
@@ -39,13 +39,21 @@ namespace SmartConstructionServices.Account.ViewModels
         public string Username
         {
             get { return username; }
-            set { username = value; }
+            set
+            {
+                username = value;
+                ((Command)LoginCommand).ChangeCanExecute();
+            }
         }
 
         public string Password
         {
             get { return password; }
-            set { password = value; }
+            set
+            {
+                password = value;
+                ((Command)LoginCommand).ChangeCanExecute();
+            }
         }
 
         public bool IsLoginSucceed

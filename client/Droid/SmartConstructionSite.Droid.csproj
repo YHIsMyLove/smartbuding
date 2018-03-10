@@ -31,6 +31,9 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidSupportedAbis>armeabi-v7a;x86_64;x86</AndroidSupportedAbis>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,11 +52,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Xamarians.MediaPlayer">
-      <HintPath>..\packages\Xamarians.MediaPlayer.1.1.1\lib\MonoAndroid10\Xamarians.MediaPlayer.dll</HintPath>
+    <Reference Include="Toasts.Forms.Plugin.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Toasts.Forms.Plugin.3.3.2\lib\MonoAndroid10\Toasts.Forms.Plugin.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarians.MediaPlayer.Droid">
-      <HintPath>..\packages\Xamarians.MediaPlayer.1.1.1\lib\MonoAndroid10\Xamarians.MediaPlayer.Droid.dll</HintPath>
+    <Reference Include="Toasts.Forms.Plugin.Droid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Toasts.Forms.Plugin.3.3.2\lib\MonoAndroid10\Toasts.Forms.Plugin.Droid.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Support.Annotations">
       <HintPath>..\packages\Xamarin.Android.Support.Annotations.25.4.0.2\lib\MonoAndroid70\Xamarin.Android.Support.Annotations.dll</HintPath>
@@ -134,9 +137,6 @@
     <Compile Include="OnlineMonitoring\CameraListAdapter.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderers\VideoViewRenderer.cs" />
-    <Compile Include="Renderers\EZUIPlayerRenderer.cs" />
-    <Compile Include="MyApplication.cs" />
     <Compile Include="OnlineMonitoring\CameraListActivity.cs" />
     <Compile Include="OnlineMonitoring\CameraLiveStreamingActivity.cs" />
     <Compile Include="OnlineMonitoring\CameraRealPlayNormalStateFragment.cs" />
@@ -358,7 +358,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_points_highlighted.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_shield 2.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_shield_2.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\ic_shield.png" />
@@ -383,6 +383,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\ic_worker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Compat.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Compat.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Compat.targets')" />

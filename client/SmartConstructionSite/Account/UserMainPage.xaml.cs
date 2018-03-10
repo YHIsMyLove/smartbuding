@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartConstructionServices.Account.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,12 @@ namespace SmartConstructionSite.Account
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserMainPage : ContentPage
     {
+        private UserMainViewModel viewModel;
+
         public UserMainPage()
         {
+            viewModel = new UserMainViewModel();
+            BindingContext = viewModel;
             InitializeComponent();
         }
     }

@@ -1,4 +1,5 @@
-﻿using SmartConstructionSite.AssetManagement;
+﻿using SmartConstructionServices.ProjectManagement.ViewModels;
+using SmartConstructionSite.AssetManagement;
 using SmartConstructionSite.Events;
 using SmartConstructionSite.ProductionManagement;
 using SmartConstructionSite.SpecialTaskCheck;
@@ -16,8 +17,12 @@ namespace SmartConstructionSite.ProjectManagement
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectManagementMainPage : ContentPage
     {
+        private ProjectManagementMainViewModel viewModel;
+
         public ProjectManagementMainPage()
         {
+            viewModel = new ProjectManagementMainViewModel();
+            BindingContext = viewModel;
             InitializeComponent();
             Button.ButtonContentLayout contentLayout = new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Top, 5);
             btnDevMgr.ContentLayout = contentLayout;
@@ -43,13 +48,8 @@ namespace SmartConstructionSite.ProjectManagement
                 await Navigation.PushAsync(new AssetListPage(), true);
             else if (sender == btnEvents)
                 await Navigation.PushAsync(new EventsMainPage(), true);
-            btnAssetMgr.ContentLayout = new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Top, 0);
-        }
-
-        async void OnProjectLabelTapped(object sender, System.EventArgs e)
-        {
-            ProjectListPage page = new ProjectListPage();
-            await Navigation.PushAsync(page);
+            else if (sender == btnChangeProject)
+                await Navigation.PushAsync(new ProjectListPage());
         }
     }
 }

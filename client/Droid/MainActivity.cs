@@ -6,6 +6,8 @@ using Android.Content.PM;
 using Android.Views;
 using Android.OS;
 using SmartConstructionSite.Droid.OnlineMonitoring;
+using Xamarin.Forms;
+using Plugin.Toasts;
 
 namespace SmartConstructionSite.Droid
 {
@@ -23,7 +25,8 @@ namespace SmartConstructionSite.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
-            Xamarians.MediaPlayer.Droid.VideoPlayerRenderer.Init(this);
+            DependencyService.Register<ToastNotification>(); // Register your dependency
+            ToastNotification.Init(this);
 
             app = new App();
             app.SetFullScreen(false);

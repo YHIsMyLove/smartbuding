@@ -25,6 +25,8 @@ namespace SmartConstructionServices.Common
             set;
         }
 
+        public string SessionID { get; set; }
+
         public bool IsLogin()
         {
             return CurrentUser != null;

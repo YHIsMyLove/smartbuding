@@ -6,6 +6,10 @@
     x:Class="SmartConstructionSite.MainPage"
     MasterBehavior="Popover">
 
+    <!--<MasterDetailPage.ToolbarItems>
+        <ToolbarItem x:Name="barItemSearch" Icon="search.png"></ToolbarItem>
+    </MasterDetailPage.ToolbarItems>-->
+
     <MasterDetailPage.Master>
         <Account:UserMainPage></Account:UserMainPage>
     </MasterDetailPage.Master>
