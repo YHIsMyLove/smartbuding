@@ -16,6 +16,7 @@ import OrganizationManager from './components/business/OrganizationManager.vue'
 import RoleManager from './components/business/RoleManager.vue'
 import DeviceManager from './components/business/DeviceManager.vue'
 import SysFieldManager from './components/nav1/SysFieldManager.vue'
+import SystemManager from './components/business/SystemManager.vue'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
@@ -33,7 +34,8 @@ const routes = [
         name: '系统管理',
         iconCls: 'fa fa-id-card-o',//图标样式class
         children: [
-            { path: '/', component: Main, name: 'Home', hidden: true },
+            { path: '/', component: Main, name: '主页' },
+            { path: '/SystemManager', component: SystemManager, name: '系统管理' },
             { path: '/UserManager', component: UserManager, name: '用户管理' },
             { path: '/RoleManager', component: RoleManager, name: '角色管理' },
             { path: '/DeviceManager', component: DeviceManager, name: '设备管理' },
