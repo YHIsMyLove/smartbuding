@@ -68,5 +68,4 @@ exports.getProjbyArea = async (req, res) => {
 
 //获取设备列表
 exports.getDevs = async (req, res) => {
-
 }
