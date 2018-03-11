@@ -21,5 +21,10 @@ namespace SmartConstructionSite.Account
             BindingContext = viewModel;
             InitializeComponent();
         }
+
+        public ListView ListView
+        {
+            get { return listView; }
+        }
     }
 }

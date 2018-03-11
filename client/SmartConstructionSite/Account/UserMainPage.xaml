@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ProjectManagement="clr-namespace:SmartConstructionSite.ProjectManagement;assembly=SmartConstructionSite"
+             xmlns:local="clr-namespace:SmartConstructionSite;assembly=SmartConstructionSite"
              x:Class="SmartConstructionSite.Account.UserMainPage"
-    Title="用户信息">
+             Title="用户信息">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
             <StackLayout Orientation="Vertical" HeightRequest="150">
@@ -10,6 +12,27 @@
                 <Label Text="{Binding CurrentUser.Username}" HorizontalOptions="Center" VerticalOptions="Center"></Label>
             </StackLayout>
             <BoxView BackgroundColor="#ccc" HeightRequest="1"></BoxView>
+            <ListView x:Name="listView">
+               <ListView.ItemsSource>
+                    <x:Array Type="{x:Type local:MasterPageItem}">
+                        <local:MasterPageItem Title="项目管理" IconSource="icon.png" TargetType="{x:Type ProjectManagement:ProjectManagementMainPage}" />
+                    </x:Array>
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding IconSource}" />
+                                <Label Grid.Column="1" Text="{Binding Title}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <Button Text="注销" BackgroundColor="Red" VerticalOptions="EndAndExpand" Command="{Binding LogoutCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>

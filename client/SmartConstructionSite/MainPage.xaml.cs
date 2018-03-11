@@ -2,6 +2,8 @@
 using SmartConstructionServices.Account.ViewModels;
 using SmartConstructionServices.Common;
 using SmartConstructionSite.Account;
+using SmartConstructionSite.ProjectManagement;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -9,11 +11,28 @@ namespace SmartConstructionSite
 {
     public partial class MainPage : MasterDetailPage
     {
+        UserMainPage userMainPage;
+
         public MainPage()
         {
             InitializeComponent();
+            userMainPage = new UserMainPage();
+            userMainPage.ListView.ItemSelected += OnItemSelected;
+            Master = userMainPage;
+            Detail = new ContentPage();
             Appearing += MainPage_Appearing;
-            ((UserMainViewModel)Master.BindingContext).PropertyChanged += UserMainViewModel_PropertyChanged;
+            ((UserMainViewModel)userMainPage.BindingContext).PropertyChanged += UserMainViewModel_PropertyChanged;
+        }
+
+        void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var item = e.SelectedItem as MasterPageItem;
+            if (item != null)
+            {
+                Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
+                userMainPage.ListView.SelectedItem = null;
+                IsPresented = false;
+            }
         }
 
         private async void UserMainViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -57,6 +76,7 @@ namespace SmartConstructionSite
             else
             {
                 ServiceContext.Instance.CurrentUser = result.Model;
+                Detail = new ProjectManagementMainPage();
             }
         }
     }

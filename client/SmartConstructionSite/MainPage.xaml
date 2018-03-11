@@ -10,12 +10,12 @@
         <ToolbarItem x:Name="barItemSearch" Icon="search.png"></ToolbarItem>
     </MasterDetailPage.ToolbarItems>-->
 
-    <MasterDetailPage.Master>
+    <!--<MasterDetailPage.Master>
         <Account:UserMainPage></Account:UserMainPage>
     </MasterDetailPage.Master>
 
     <MasterDetailPage.Detail>
         <ProjectManagement:ProjectManagementMainPage></ProjectManagement:ProjectManagementMainPage>
-    </MasterDetailPage.Detail>
+    </MasterDetailPage.Detail>-->
     
 </MasterDetailPage>

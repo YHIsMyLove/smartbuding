@@ -12,27 +12,34 @@ namespace SmartConstructionServices.Account.Services
     {
         public async Task<Result<User>> Login(string username, string password)
         {
-            Result<User> result = new Result<User>();
-            string param = string.Format("UserID={0}&UserPwd={1}", username, password);
-            byte[] bs = Encoding.UTF8.GetBytes(param);
-            try
+            await Task.Delay(2000);
+            return await Task.Run(() =>
             {
-                var httpClient = new HttpClient(new NativeMessageHandler());
-                var content = new ByteArrayContent(Encoding.UTF8.GetBytes($"UserID={username}&UserPwd={password}"));
-                HttpResponseMessage msg = await httpClient.PostAsync("http://192.168.1.49:3000/api/login", content);
-                string json = await msg.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine("Response:{0}", json);
-                dynamic jsonObj = Newtonsoft.Json.Linq.JToken.Parse(json) as dynamic;
-                if (jsonObj.Success)
-                {
+                Result<User> result = new Result<User>();
+                result.Model = new User();
+                return result;
+            });
+            //Result<User> result = new Result<User>();
+            //string param = string.Format("UserID={0}&UserPwd={1}", username, password);
+            //byte[] bs = Encoding.UTF8.GetBytes(param);
+            //try
+            //{
+            //    var httpClient = new HttpClient(new NativeMessageHandler());
+            //    var content = new ByteArrayContent(Encoding.UTF8.GetBytes($"UserID={username}&UserPwd={password}"));
+            //    HttpResponseMessage msg = await httpClient.PostAsync("http://192.168.1.49:3000/api/login", content);
+            //    string json = await msg.Content.ReadAsStringAsync();
+            //    System.Diagnostics.Debug.WriteLine("Response:{0}", json);
+            //    dynamic jsonObj = Newtonsoft.Json.Linq.JToken.Parse(json) as dynamic;
+            //    if (jsonObj.Success)
+            //    {
 
-                }
-            }
-            catch (Exception e)
-            {
+            //    }
+            //}
+            //catch (Exception e)
+            //{
                 
-            }
-            return result;
+            //}
+            //return result;
         }
 
         public async Task<Result<bool>> Logout()

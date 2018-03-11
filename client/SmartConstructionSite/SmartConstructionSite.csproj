@@ -99,6 +99,7 @@
     <Compile Include="Events\EventsMainPage.xaml.cs">
       <DependentUpon>EventsMainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MasterPageItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Toasts.Forms.Plugin.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
