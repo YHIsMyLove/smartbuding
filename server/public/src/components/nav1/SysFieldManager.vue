@@ -29,6 +29,16 @@
                             </template>
                         </el-table-column>
                     </el-table>
+
+
+                    
+
+
+
+
+
+
+
                 </template>
                 <el-col :span="24" class="toolbar" style="padding-bottom:10px;">
                     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]"
@@ -211,6 +221,7 @@ export default {
       axios.get("/api/SysField/", { params: params }).then(function(res) {
         vm.$data.tableData = res.data.data;
         vm.$data.tableDataLength = res.data.meta.count;
+        console.log( vm.$data.tableData)
       });
       axios.get("/api/SysField/AllFieldName").then(function(res) {
         vm.$data.currentFieldNames = res.data.data;

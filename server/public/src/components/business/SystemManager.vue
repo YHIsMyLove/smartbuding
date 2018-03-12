@@ -1,91 +1,96 @@
 <template>
-	<el-tabs style="width:100%;">
-		<el-tab-pane label="区域管理">
-           
-               <section>
-                     <el-col :span="24" class="toolbar">
-                    <el-form :inline="true"  class="demo-form-inline">
-                        <el-form-item>
-                            <el-input  placeholder="名称"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                        <el-button >查询</el-button>
-                        </el-form-item>
-                        <el-form-item>
-                        <!-- <el-button @click="openDialog" >新增角色</el-button> -->
-                        </el-form-item>
-                    </el-form>
-                </el-col>
-                </section>
-
-                <template>
-                    <myDialog   :title="DialogTitle" 
-                                :editForm="DialogEditForm" 
-                                :visible='DialogVisible' 
-                                @closedialog="DialogVisible = false" 
-                                @commitdialog="dialogresult"/>
-
-                    <myDataTable :TableData="TableData" :TabelField="TabelField" @EditRow="EditRow" @DelRow="DelRow"></myDataTable>
-                </template> 
+	<el-tabs v-model="activeName" style="width:100%;">
+		<el-tab-pane label="自定义表管理" name='customTableManager'>
+      <section>
+          <el-col :span="24" class="toolbar">
+          <el-form :inline="true"  class="demo-form-inline">
+              <el-form-item>
+                  <el-input  placeholder="名称"></el-input>
+              </el-form-item>
+              <el-form-item>
+              <el-button >查询</el-button>
+              </el-form-item>
+              <el-form-item>
+              <el-button @click="newtabel">新增自定义表</el-button>
+              </el-form-item>
+          </el-form>
+      </el-col>
+      </section>
+      <template>
+          <myDataTable  :TableData="TableData" 
+                        :TableDataLength="TableDataLength"
+                        :TabelField="TabelField"
+                        :ModelName = "ModelName" 
+                        :SystemEditRow="SystemEditRow"
+                        @EditRow="EditRow" 
+                        @DelRow="DelRow"
+                        @RefTableData="RefTableData"></myDataTable>
+      </template> 
 		</el-tab-pane>
+    <el-tab-pane label="自定义字段管理" name="customFieldManager">
+      <SystemManager_Fields :TableRow="CurTableRow" @cancelEdit="cancelEdit"/>
+    </el-tab-pane>
 	</el-tabs>
 </template>
 <script>
 import myDataTable from "../controls/myDataTable.vue";
 import myDialog from "../controls/myDialog.vue";
+import SystemManager_Fields from "../business/SystemManager_Fields.vue";
 export default {
   components: {
     myDataTable: myDataTable,
-    myDialog: myDialog
+    myDialog: myDialog,
+    SystemManager_Fields: SystemManager_Fields
   },
   data() {
     return {
-      DialogTitle: "测试一下",
-      DialogResult: {},
-      DialogEditForm: {
-        data0: { prop: "t", label: "头像", type: "String" },
-        data1: { prop: "t1", label: "工号", type: "String" },
-        data2: { prop: "t2", label: "名字", type: "String" },
-        data3: { prop: "t3", label: "性别", type: "Bool" },
-        data4: { prop: "t5", label: "角色", type: "String" }
-      },
+      CurTableRow: {},
+      SystemEditRow: false,
+      activeName: "customTableManager",
+      ModelName: "SysField",
       TabelField: [
-        { prop: "SysTabName", label: "名称", type: "String" },
-        { prop: "SysTabFieldName", label: "字段", type: "String" },
+        { prop: "SysTabName", label: "表中文名", type: "String" },
+        { prop: "SysTabFieldName", label: "表名", type: "String" },
         { prop: "SysFieldInfo", label: "自定义信息", type: "String" }
       ],
-      TableData: [
-        { SysTabName: "hhh", SysTabFieldName: "asdasd", SysFieldInfo: "asdas" },
-        { SysTabName: "hhh", SysTabFieldName: "asdasd", SysFieldInfo: "asdas" },
-        { SysTabName: "hhh", SysTabFieldName: "asdasd", SysFieldInfo: "asdas" },
-        { SysTabName: "hhh", SysTabFieldName: "asdasd", SysFieldInfo: "asdas" },
-        { SysTabName: "hhh", SysTabFieldName: "asdasd", SysFieldInfo: "asdas" }
-      ],
+      TableData: [],
+      TableDataLength: 0,
       DialogVisible: false,
       editLoading: false
     };
   },
   methods: {
-    openDialog() {
-      this.DialogVisible = true;
-
-      console.log("open dialog");
+    //取消编辑
+    cancelEdit() {
+      this.activeName = "customTableManager";
+      this.CurTableRow = {};
+    },
+    //新增表、字段
+    newtabel() {
+      this.activeName = "customFieldManager";
+      this.CurTableRow = {};
+    },
+    //刷新表
+    RefTableData(data, count) {
+      this.TableData = data;
+      this.TableDataLength = count;
     },
     //编辑行
-    EditRow(row, rowdata) {
-      this.DialogVisible = true;
-      this.DialogEditForm = rowdata;
+    EditRow(row) {
+      this.activeName = "customFieldManager";
+      this.CurTableRow = row;
     },
     //删除行
-    DelRow(row) {},
-    dialogresult(result) {
+    DelRow(row) {
+      console.log(row);
+    },
+    //create or update
+    Commitdialog(result) {
       this.DialogVisible = false;
-      console.log(result);
     }
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 .toolbar .el-form-item {

@@ -14,8 +14,11 @@
     </el-dialog>
 </template>
 <script>
+import util from "../../common/util";
+import NProgress from "nprogress";
+import axios from "axios";
 export default {
-  props: ["title", "editForm", "visible"], //, "DialogData", "DialogField"
+  props: ["title", "editForm", "visible", "ModelName"], //, "DialogData", "DialogField"
   data() {
     return {
       editLoading: false,
@@ -27,6 +30,7 @@ export default {
       this.$emit("closedialog", this.visible);
     },
     commitdialog() {
+      let that = this;
       this.editLoading = true;
       let result = "{";
       Object.keys(this.editForm).forEach(i => {
@@ -34,7 +38,30 @@ export default {
       });
       result = result.substr(0, result.length - 1) + "}";
       this.$emit("commitdialog", result);
-      this.editLoading = false;
+
+      /********************************************************************* */
+      let url = `/api/${that.ModelName}`;
+      axios
+        .post(url, JSON.parse(result))
+        .then(res => {
+          if (res.data.success) {
+            that.$message({
+              message: "提交成功",
+              type: "success"
+            });
+          } else {
+            that.$message({
+              message: "提交失败",
+              type: "error"
+            });
+          }
+          that.editLoading = false;
+        })
+        .catch(err => {
+          that.editLoading = false;
+          console.log(err);
+        });
+      /********************************************************************* */
     }
   },
   watch: {
