@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -8,6 +7,8 @@ using Android.OS;
 using SmartConstructionSite.Droid.OnlineMonitoring;
 using Xamarin.Forms;
 using Plugin.Toasts;
+using Android.Runtime;
+using Plugin.Permissions;
 
 namespace SmartConstructionSite.Droid
 {
@@ -35,6 +36,12 @@ namespace SmartConstructionSite.Droid
             app.CameraHelper.ShowCameraListRequested += CameraHelper_ShowCameraListRequested;
 
             LoadApplication(app);
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+        {
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         protected override void OnDestroy()

@@ -1,4 +1,6 @@
-﻿using SmartConstructionServices.Account.Services;
+﻿using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using SmartConstructionServices.Account.Services;
 using SmartConstructionServices.Account.ViewModels;
 using SmartConstructionServices.Common;
 using SmartConstructionSite.Account;
@@ -16,12 +18,49 @@ namespace SmartConstructionSite
         public MainPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
             userMainPage = new UserMainPage();
             userMainPage.ListView.ItemSelected += OnItemSelected;
             Master = userMainPage;
-            Detail = new ContentPage();
+            Detail = new NavigationPage(new ProjectManagementMainPage());
             Appearing += MainPage_Appearing;
             ((UserMainViewModel)userMainPage.BindingContext).PropertyChanged += UserMainViewModel_PropertyChanged;
+        }
+
+        private async Task CheckPermissions()
+        {
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+                if (status != PermissionStatus.Granted)
+                {
+                    if (Device.RuntimePlatform == Device.Android)
+                    {
+                        if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                        {
+                            await DisplayAlert("请求权限", "智慧工地需要访问您的位置信息", "知道了");
+                        }
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+                    //Best practice to always check that the key exists
+                    if (results.ContainsKey(Permission.Location))
+                        status = results[Permission.Location];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    //todo
+                }
+                else if (status != PermissionStatus.Unknown)
+                {
+                    //todo
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+            }
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -62,6 +101,10 @@ namespace SmartConstructionSite
                     await Navigation.PopAsync();
                 }
             }
+            else
+            {
+                await CheckPermissions();
+            }
         }
 
         private async Task CheckSession(string sessionId)
@@ -76,7 +119,7 @@ namespace SmartConstructionSite
             else
             {
                 ServiceContext.Instance.CurrentUser = result.Model;
-                Detail = new ProjectManagementMainPage();
+                await CheckPermissions();
             }
         }
     }

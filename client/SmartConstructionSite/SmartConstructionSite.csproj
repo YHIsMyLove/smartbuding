@@ -102,6 +102,18 @@
     <Compile Include="MasterPageItem.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Plugin.Geolocator, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugin.Geolocator.4.2.0\lib\netstandard1.0\Plugin.Geolocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Geolocator.Abstractions, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugin.Geolocator.4.2.0\lib\netstandard1.0\Plugin.Geolocator.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Permissions, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plugin.Permissions.2.2.1\lib\netstandard1.0\Plugin.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Permissions.Abstractions, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Plugin.Permissions.2.2.1\lib\netstandard1.0\Plugin.Permissions.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Toasts.Forms.Plugin.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Toasts.Forms.Plugin-PCL.3.3.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10\Toasts.Forms.Plugin.Abstractions.dll</HintPath>
     </Reference>
@@ -118,7 +130,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EZUIKitForms\EZUIKitForms.csproj">
       <Project>{73b147f1-c2a1-4817-a5c4-4d1943feb7cf}</Project>

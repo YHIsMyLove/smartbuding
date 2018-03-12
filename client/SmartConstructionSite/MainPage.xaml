@@ -3,8 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ProjectManagement="clr-namespace:SmartConstructionSite.ProjectManagement;assembly=SmartConstructionSite"
     xmlns:Account="clr-namespace:SmartConstructionSite.Account;assembly=SmartConstructionSite"
-    x:Class="SmartConstructionSite.MainPage"
-    MasterBehavior="Popover">
+    x:Class="SmartConstructionSite.MainPage">
 
     <!--<MasterDetailPage.ToolbarItems>
         <ToolbarItem x:Name="barItemSearch" Icon="search.png"></ToolbarItem>

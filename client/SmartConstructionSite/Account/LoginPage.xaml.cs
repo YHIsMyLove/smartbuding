@@ -22,6 +22,7 @@ namespace SmartConstructionSite.Account
             BindingContext = viewModel;
             viewModel.PropertyChanged += ViewModel_PropertyChanged;
 			InitializeComponent ();
+            NavigationPage.SetHasNavigationBar(this, false);
 		}
 
         private async void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

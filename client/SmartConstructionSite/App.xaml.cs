@@ -1,5 +1,5 @@
-﻿using System;
-using SmartConstructionSite.OnlineMonitoring;
+﻿using SmartConstructionSite.OnlineMonitoring;
+using System;
 using Xamarin.Forms;
 
 namespace SmartConstructionSite
@@ -47,6 +47,8 @@ namespace SmartConstructionSite
         protected override void OnStart()
         {
             // Handle when your app starts
+
+
         }
 
         protected override void OnSleep()

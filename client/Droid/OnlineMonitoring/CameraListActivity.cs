@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Com.Videogo.Openapi.Bean;
 using Com.Videogo.Constant;
 using Com.Videogo.Openapi;
+using Plugin.Permissions;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
@@ -26,14 +27,59 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            InitSDK();
-
-            EZOpenSDK.Instance.SetAccessToken(AccessTokenForTest);
-
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_camera_list);
             InitViews();
-            InitData();
+            //InitData();
+            CheckPermissions();
+        }
+
+        private async Task CheckPermissions()
+        {
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Phone);
+                if (status != Plugin.Permissions.Abstractions.PermissionStatus.Granted)
+                {
+                    if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+                    {
+                        if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.Phone))
+                        {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                            builder.SetTitle("请求权限");
+                            builder.SetMessage("智慧工地需要读取您手机的状态来更好的运行");
+                            builder.Show();
+                        }
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Phone);
+                    //Best practice to always check that the key exists
+                    if (results.ContainsKey(Plugin.Permissions.Abstractions.Permission.Phone))
+                        status = results[Plugin.Permissions.Abstractions.Permission.Phone];
+                }
+
+                if (status == Plugin.Permissions.Abstractions.PermissionStatus.Granted)
+                {
+                    await InitData();
+                }
+                else if (status != Plugin.Permissions.Abstractions.PermissionStatus.Unknown)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.SetTitle(Resource.Id.alertTitle);
+                    builder.SetMessage("如果禁用该权限，该功能将不能使用，你确定禁用该权限吗？");
+                    builder.SetPositiveButton("确定", new EventHandler<DialogClickEventArgs>((sender, args) => {
+                        Finish();
+                    }));
+                    builder.SetNegativeButton("重新赋予", new EventHandler<DialogClickEventArgs>(async (sender, args) => {
+                        await CheckPermissions();
+                    }));
+                    builder.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+            }
         }
 
         private void InitSDK()
@@ -59,6 +105,8 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
 
         private async Task InitData()
         {
+            InitSDK();
+            EZOpenSDK.Instance.SetAccessToken(AccessTokenForTest);
             IList<EZDeviceInfo> list = await CameraHelpers.FetchCameraList(0, 10);
             cameraListAdapter.SetCameras(list);
         }
