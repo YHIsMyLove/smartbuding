@@ -5,7 +5,7 @@
           <el-col :span="24" class="toolbar">
           <el-form :inline="true"  class="demo-form-inline">
               <el-form-item>
-                  <el-input  placeholder="名称"></el-input>
+                  <el-input  placeholder="表名"></el-input>
               </el-form-item>
               <el-form-item>
               <el-button >查询</el-button>
@@ -49,8 +49,8 @@ export default {
       activeName: "customTableManager",
       ModelName: "SysField",
       TabelField: [
-        { prop: "SysTabName", label: "表中文名", type: "String" },
         { prop: "SysTabFieldName", label: "表名", type: "String" },
+        { prop: "SysTabName", label: "描述", type: "String" },
         { prop: "SysFieldInfo", label: "自定义信息", type: "String" }
       ],
       TableData: [],
@@ -68,7 +68,7 @@ export default {
     //新增表、字段
     newtabel() {
       this.activeName = "customFieldManager";
-      this.CurTableRow = {};
+      this.CurTableRow = { SysTabFieldName: "", SysTabName: "" };
     },
     //刷新表
     RefTableData(data, count) {
