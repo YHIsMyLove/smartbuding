@@ -50,31 +50,9 @@ export default {
       };
       NProgress.start();
       this.listLoading = true;
-      /************************************************************ */
-      let url = `/api/${that.ModelName}`;
-      axios.get(url, { params, params })
-        .then(res => {
-          if (res.data.success) {
-            that.$data.TableData = res.data.data;
-            that.$data.tableDataLength = res.data.meta.count;
-
-            that.$emit("RefTableData", res.data.data, res.data.meta.count);
-
-            console.log(that.$data.TableData);
-            that.listLoading = false;
-            NProgress.done();
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          that.$message({
-            message: "获取数据失败",
-            type: "error"
-          });
-          that.listLoading = false;
-          NProgress.done();
-        });
-      /************************************************************ */
+      that.$emit("RefTable");
+      this.listLoading = false;
+      NProgress.done();
     },
     systemEdit(row) {
       this.listLoading = true;
@@ -111,25 +89,6 @@ export default {
         .then(() => {
           NProgress.start();
           _this.$emit("DelRow", row);
-          /******************************************************* */
-          axios.post(`/api/delete/${_this.ModelName}}`, { id: row._id })
-            .then(res => {
-              if (res.data.success) {
-                _this.$message({
-                  message: "删除成功",
-                  type: "success"
-                });
-                _this.listLoading = false;
-                NProgress.done();
-                _this.getTabelData();
-              } else {
-                _this.$message({
-                  message: "删除失败",
-                  type: "error"
-                });
-              }
-            });
-          /******************************************************* */
           NProgress.done();
         })
         .catch(err => {
@@ -139,12 +98,10 @@ export default {
     },
     handleSizeChange(val) {
       this.$data.currentPageSize = val;
-      this.getTabelData();
       this.$emit("RefTable");
     },
     handleCurrentChange(val) {
       this.$data.currentPage = val;
-      this.getTabelData();
       this.$emit("RefTable");
     }
   }

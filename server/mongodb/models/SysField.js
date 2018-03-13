@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const SysFieldSchema = new Schema({
     SysTabName: String,
-    SysTabFieldName: String,
+    SysTabDesc: String,
     SysFieldInfo: mongoose.Schema.Types.Mixed
 })
 

@@ -6,10 +6,10 @@ const msg = require('../../utils/message')
 
 exports.getbyid = async(function* (req, res) {
     if (!id) {
-        return res.send(msg.genFailedMsg('id不能为空'))        
+        return res.send(msg.genFailedMsg('id不能为空'))
     }
     try {
-        
+
         res.send(msg.genSuccessMsg('读取列表成功', list, { count: count }))
     } catch (error) {
         res.send(msg.genFailedMsg('获取列表失败', error))
@@ -29,10 +29,12 @@ exports.list = async(function* (req, res) {
         var list_fields = yield SysField.find(JSON.parse(`{ "SysTabName": "${req.query.SysFieldID}" }`)).exec()
         let resultList = []
         if (list_fields.length > 0) {
-            let info = list_fields[0].SysFieldInfo
-            let info_keys = Object.keys(JSON.parse(info))
+            let info = JSON.parse(list_fields[0].SysFieldInfo)
+            let info_keys = Object.keys(info)
             info_keys.forEach(i => {
+                //console.log(info[i])
                 resultList.push(i)
+                //resultList.push(info[i].desc)
             })
         } else {
             return res.send(msg.genFailedMsg('获取列表失败'))

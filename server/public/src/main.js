@@ -35,17 +35,13 @@ const routes = [
         iconCls: 'fa fa-id-card-o',//图标样式class
         children: [
             { path: '/', component: Main, name: '主页' },
+            { path: '/SysFieldManager', component: SysFieldManager, name: '系统管理' },
             { path: '/SystemManager', component: SystemManager, name: '系统管理' },
             { path: '/UserManager', component: UserManager, name: '用户管理' },
             { path: '/RoleManager', component: RoleManager, name: '角色管理' },
             { path: '/DeviceManager', component: DeviceManager, name: '设备管理' },
             { path: '/OrganizationManager', component: OrganizationManager, name: '组织架构管理' },
             //{ path: '/ShowCaseManager', component: ShowCaseManager, name: '案例展示' },
-            {
-                path: '/SysFieldManager',
-                component: SysFieldManager,
-                name: '字段管理',
-            },
             // { path: '/LeaveMessageManager', component: LeaveMessageManager, name: '留言管理' },
             // { path: '/ActivityManager', component: ActivityManager, name: '活动管理' },
             // { path: '/form', component: Form, name: '表单提交' },

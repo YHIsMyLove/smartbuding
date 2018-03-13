@@ -1,44 +1,35 @@
 <template>
     <el-tabs v-model="activeName" style="width:100%;" @tab-click="handleClick">
-        <el-tab-pane name="BusinessManager" label="字段管理">
+        <el-tab-pane name="BusinessManager" label="自定义表管理">
             <section>
                 <el-col :span="24" class="toolbar">
                     <el-form :inline="true" :model="formInline" class="demo-form-inline">
                         <el-form-item>
-                            <el-input v-model="formInline.user" placeholder="字段名称"></el-input>
+                            <el-input v-model="formInline.user" placeholder="表名"></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button @click='getSysFieldList'>查询</el-button>
+                            <el-button @click="newCustomTable">新增自定义表</el-button>
                         </el-form-item>
                     </el-form>
                 </el-col>
                 <template>
-                    <el-table :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:500px">
-                        <el-table-column type="index" width="80">
+                    <el-table border fit stripe :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:100%">   
+                        <el-table-column label="编号" type="index" width="85">
                         </el-table-column>
-                        <el-table-column prop="SysTabName" label="表中文名称" width="180" sortable>
+                        <el-table-column prop="SysTabName" label="表名">
                         </el-table-column>
-                        <el-table-column prop="SysTabFieldName" label="表名称" width="180" sortable>
+                        <el-table-column prop="SysTabDesc" label="描述">
                         </el-table-column>
-                        <el-table-column prop="SysFieldInfo" label="自定义字段" width="500" sortable>
+                        <el-table-column prop="SysFieldInfo" label="自定义字段">
                         </el-table-column>
-                        <el-table-column label="操作" width="100">
+                        <el-table-column label="操作" width="150">
                             <template scope="scope">
                                 <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
                                 <el-button type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
-
-
-                    
-
-
-
-
-
-
-
                 </template>
                 <el-col :span="24" class="toolbar" style="padding-bottom:10px;">
                     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]"
@@ -48,19 +39,22 @@
                 </el-col>
             </section>
         </el-tab-pane>
-        <el-tab-pane name="BusinessInfo" label="字段详情">
-            <el-collapse>
+        <el-tab-pane name="BusinessInfo" label="自定义字段管理">
+            <el-collapse v-model="activeCollapseNames">
                 <el-collapse-item title="表结构管理" name="1">
                     <el-form label-width="80px">
                         <el-form-item label="表名称">
                             <el-input v-model='BusinessTitle'></el-input>
+                        </el-form-item>
+                        <el-form-item label="表描述">
+                            <el-input v-model='BusinessTitleDesc'></el-input>
                         </el-form-item>
                         <el-form-item label="字段信息" v-for="(item,index) in EditLine" :key='index'>
                             <el-col :span='7'>
                                 <el-input placeholder="字段名称" v-model='item.Title'></el-input>
                             </el-col>
                             <el-col :span='7'>
-                                <el-input placeholder="字段别名"></el-input>
+                                <el-input placeholder="字段描述" v-model="item.Desc"></el-input>
                             </el-col>
                             <el-col :span='4'>
                                 <el-select v-model="item.Link" placeholder="关联字段">
@@ -86,7 +80,7 @@
                     </el-form>
                 </el-collapse-item>
                 <el-collapse-item title="表内容管理" name="2">
-                    <SysFieldManager_Child :TabelName="BusinessTitle" :Field='currentField' />
+                    <SysFieldManager_Child :TabelName="BusinessTitle" :TableDesc="BusinessTitleDesc" :Field='currentField' />
                 </el-collapse-item>
             </el-collapse>
         </el-tab-pane>
@@ -103,8 +97,8 @@ import SysFieldManager_Child from "./SysFieldManager_Child.vue";
 export default {
   data() {
     return {
+      activeCollapseNames: "1",
       activeName: "BusinessManager",
-      currentid: "",
       formInline: {
         user: ""
       },
@@ -114,42 +108,22 @@ export default {
       currentPage: 1,
       currentPageSize: 10,
       options: [
-        {
-          value: "String",
-          label: "字符类型"
-        },
-        {
-          value: "Number",
-          label: "数值类型"
-        },
-        {
-          value: "Date",
-          label: "日期类型"
-        }
+        { value: "String", label: "字符类型" },
+        { value: "Number", label: "数值类型" },
+        { value: "Date", label: "日期类型" }
       ],
-      options_Fields: [
-        {
-          key: "none",
-          value: "空"
-        },
-        {
-          key: "UserID",
-          value: "用户ID"
-        },
-        {
-          key: "ShowCaseID",
-          value: "案例展示ID"
-        }
-      ],
+      options_Fields: [{ key: "none", value: "空" }],
       currentTabelName: "",
       EditLine: [
         {
           Title: "",
+          Desc: "",
           Type: "String",
-          Link: "none"
+          Link: "空"
         }
       ],
       BusinessTitle: "",
+      BusinessTitleDesc: "",
       currentField: "",
       currentFieldNames: []
     };
@@ -190,26 +164,11 @@ export default {
         })
         .catch(() => {});
     },
-    //显示编辑界面
-    handleEdit: function(row) {
-      this.activeName = "BusinessInfo";
-      this.BusinessTitle = row.SysTabName;
-      this.currentField = row;
-      var SysFieldInfo = JSON.parse(row.SysFieldInfo);
-      this.EditLine.splice(0, this.EditLine.length);
-      Object.keys(SysFieldInfo).forEach(i => {
-        this.EditLine.push({
-          Title: i,
-          Type: SysFieldInfo[i].type,
-          Link: SysFieldInfo[i].link
-        });
-      });
-      console.log("当前编辑" + JSON.stringify(this.EditLine));
-    },
     //显示新增界面
     handleAdd: function() {
       this.activeName = "BusinessInfo";
       this.BusinessTitle = "";
+      this.BusinessTitleDesc = "";
     },
     //获取字段列表
     getSysFieldList: function() {
@@ -221,7 +180,7 @@ export default {
       axios.get("/api/SysField/", { params: params }).then(function(res) {
         vm.$data.tableData = res.data.data;
         vm.$data.tableDataLength = res.data.meta.count;
-        console.log( vm.$data.tableData)
+        // console.log(vm.$data.tableData);
       });
       axios.get("/api/SysField/AllFieldName").then(function(res) {
         vm.$data.currentFieldNames = res.data.data;
@@ -233,22 +192,8 @@ export default {
       axios.get("/api/SysField/AllFieldName").then(
         function(res) {
           this.currentFieldNames = res.data.data;
-          this.options_Fields = [
-            {
-              key: "none",
-              value: "空"
-            },
-            {
-              key: "User",
-              value: "用户表"
-            },
-            {
-              key: "ShowCase",
-              value: "案例展示表"
-            }
-          ];
+          this.options_Fields = [{ key: "none", value: "空" }];
           res.data.data.forEach(i => {
-            //console.log(JSON.stringify(i))
             this.options_Fields.push({
               key: i.SysTabName,
               value: i.SysTabName
@@ -265,8 +210,28 @@ export default {
       this.$data.currentPage = val;
       this.getSysFieldList();
     },
-    //提交表单
+
+    //编辑当前行的自定义表
+    handleEdit: function(row) {
+      this.activeName = "BusinessInfo";
+      this.BusinessTitle = row.SysTabName;
+      this.BusinessTitleDesc = row.SysTabDesc;
+      this.currentField = row;
+      var SysFieldInfo = JSON.parse(row.SysFieldInfo);
+      this.EditLine.splice(0, this.EditLine.length);
+
+      Object.keys(SysFieldInfo).forEach(i => {
+        this.EditLine.push({
+          Title: i,
+          Desc: SysFieldInfo[i].desc,
+          Type: SysFieldInfo[i].type,
+          Link: SysFieldInfo[i].link
+        });
+      });
+    },
+    //提交自定义表表单
     onSubmit() {
+      //1. 验证数据完整性
       if (this.BusinessTitle === "") {
         this.$message({
           message: "请输入业务信息名称",
@@ -274,7 +239,6 @@ export default {
         });
         return;
       }
-      //console.log('保存时' + this.EditLine)
       if (this.EditLine.filter(i => i.Title === "").length > 0) {
         this.$message({
           message: "请输入业务信息标题",
@@ -282,16 +246,19 @@ export default {
         });
         return;
       }
+      //2. 组织数据
       var jsonStr = "{";
       this.EditLine.forEach(element => {
-        jsonStr += `"${element.Title}":{"type":"${element.Type}","link":"${
-          element.Link
-        }"},`;
+        jsonStr += `"${element.Title}":{"type":"${element.Type}","desc":"${
+          element.Desc
+        }","link":"${element.Link}"},`;
       });
       jsonStr = jsonStr.substr(0, jsonStr.length - 1) + "}";
+      //3. 请求保存
       axios
         .post("/api/SysField/create", {
           SysTabName: this.BusinessTitle,
+          SysTabDesc: this.BusinessTitleDesc,
           SysFieldInfo: jsonStr
         })
         .then((res, err) => {
@@ -308,7 +275,11 @@ export default {
           });
         });
       this.activeName = "BusinessManager";
+      //4. 刷新
+      this.getSysFieldList();
     },
+
+    //添加新行
     onAddLine() {
       if (this.EditLine.filter(i => i.Title === "").length > 0) {
         this.$message({
@@ -316,25 +287,36 @@ export default {
           type: "error"
         });
       } else {
-        //console.log('新增行')
         this.EditLine.push({ Title: "", Type: "String" });
       }
     },
+    //取消
     onCancel() {
       this.activeName = "BusinessManager";
-      this.currentid = "";
       this.EditLine.splice(1, this.EditLine.length - 1);
-      this.EditLine[0].Title = "";
-      //console.log('取消')
     },
-    handleClick() {
-      //console.log(this.currentid === '' ? '新增' : '编辑')
-    },
+    handleClick() {},
+    //删除行
     onDelLine(index) {
-      //console.log(index)
       if (this.EditLine.length === 1) return;
       this.EditLine.splice(index, 1);
-      //console.log('删除后' + this.EditLine)
+    },
+    //新增自定义表
+    newCustomTable() {
+      this.activeName = "BusinessInfo";
+      try {
+        this.activeCollapseNames = "1";
+      } catch (error) {}
+      this.BusinessTitle = "";
+      this.BusinessTitleDesc = "";
+      this.EditLine = [
+        {
+          Title: "",
+          Desc: "",
+          Type: "String",
+          Link: "空"
+        }
+      ];
     }
   },
   components: {

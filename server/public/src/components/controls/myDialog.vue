@@ -38,7 +38,6 @@ export default {
       });
       result = result.substr(0, result.length - 1) + "}";
       this.$emit("commitdialog", result);
-
       /********************************************************************* */
       let url = `/api/${that.ModelName}`;
       axios

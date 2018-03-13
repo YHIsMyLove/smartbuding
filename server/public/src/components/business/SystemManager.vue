@@ -28,7 +28,7 @@
       </template> 
 		</el-tab-pane>
     <el-tab-pane label="自定义字段管理" name="customFieldManager">
-      <SystemManager_Fields :TableRow="CurTableRow" @cancelEdit="cancelEdit"/>
+      <SystemManager_Fields :IsEdit="IsEdit" :TableRow="CurTableRow" @cancelEdit="cancelEdit" @newLine="newLine" @delLine="delLine" @commitEdit="commitEdit"/>
     </el-tab-pane>
 	</el-tabs>
 </template>
@@ -44,6 +44,7 @@ export default {
   },
   data() {
     return {
+      IsEdit: false,
       CurTableRow: {},
       SystemEditRow: false,
       activeName: "customTableManager",
@@ -64,26 +65,57 @@ export default {
     cancelEdit() {
       this.activeName = "customTableManager";
       this.CurTableRow = {};
+      this.IsEdit = false;
     },
     //新增表、字段
     newtabel() {
       this.activeName = "customFieldManager";
-      this.CurTableRow = { SysTabFieldName: "", SysTabName: "" };
+      this.CurTableRow = {
+        SysTabFieldName: "",
+        SysTabName: "",
+        SysFieldInfo: [{ name: "", desc: "", type: "String", link: "空" }]
+      };
+      this.IsEdit = false;
     },
-    //刷新表
-    RefTableData(data, count) {
-      this.TableData = data;
-      this.TableDataLength = count;
+    //新增字段
+    newLine(rowdata) {
+      if (this.IsEdit) {
+        this.$message({
+          message: "暂未支持",
+          type: "error"
+        });
+      } else {
+        this.CurTableRow.SysFieldInfo = rowdata;
+      }
     },
     //编辑行
     EditRow(row) {
       this.activeName = "customFieldManager";
       this.CurTableRow = row;
+      this.IsEdit = true;
+    },
+    //删除字段
+    delLine(index) {
+      this.CurTableRow.SysFieldInfo.splice(index, 1);
+    },
+    //提交数据
+    commitEdit(rowdata) {
+      this.activeName = "customTableManager";
+      if (!this.IsEdit) {
+        console.log(rowdata);
+        this.CurTableRow.SysFieldInfo = JSON.stringify(rowdata);
+        this.TableData.push(this.CurTableRow);
+        this.CurTableRow = [];
+      }
+    },
+    //刷新表
+    RefTableData(data, count) {
+      //data
+      this.TableData = data;
+      this.TableDataLength = count;
     },
     //删除行
-    DelRow(row) {
-      console.log(row);
-    },
+    DelRow(row) {},
     //create or update
     Commitdialog(result) {
       this.DialogVisible = false;

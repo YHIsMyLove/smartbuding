@@ -7,12 +7,13 @@
             <el-form-item label="描述">
                 <el-input v-model="TableRow.SysTabName"></el-input>
             </el-form-item>
+
             <el-form-item v-for="item,index in elFormData" :key="index" label="字段信息">
                 <el-col :span="7">
                     <el-input placeholder="字段名称" v-model="item.name"></el-input>
                 </el-col>
                 <el-col :span="7">
-                    <el-input placeholder="字段描述" v-model="item.name"></el-input>
+                    <el-input placeholder="字段描述" v-model="item.desc"></el-input>
                 </el-col>
                 <el-col :span="4">
                     <el-select v-model="item.link" placeholder="关联字段">
@@ -30,15 +31,17 @@
                     <el-button type="danger" @click="onDelLine(index)">删除</el-button>
                 </el-col>
             </el-form-item>
+            
         </el-form>
         <el-form class="demo-form-inline">
-            <el-button type="primary">新增行</el-button>
+            <el-button @click="newLine" type="primary">新增行</el-button>
             <el-button @click="commitEdit" type="primary">提交</el-button>
             <el-button @click="cancelEdit">取消</el-button>
         </el-form>
     </el-col>
 </template>
 <script>
+import util from "../../common/util";
 export default {
   props: ["TableRow", "IsEdit"],
   data() {
@@ -56,32 +59,68 @@ export default {
     cancelEdit() {
       this.$emit("cancelEdit");
     },
+    //新增行
+    newLine() {
+      if (this.elFormData.length >= 10) {
+        this.$message({
+          message: "最多允许建立10行数据",
+          type: "error"
+        });
+      } else {
+        let rowdata = this.elFormData;
+        let result = { name: "", desc: "", type: "String", link: "空" };
+        rowdata.push(result);
+        console.log(rowdata);
+        this.$emit("newLine", rowdata);
+      }
+    },
     //提交修改
     commitEdit() {
-      console.log("提交修改");
+      this.$confirm("确定提交吗?", "系统提示", {})
+        .then(() => {
+          let rowdata = this.elFormData;
+          this.$emit("commitEdit", rowdata);
+        })
+        .catch(e => {});
     },
     //删除字段
     onDelLine(index) {
-      console.log("删除字段" + index);
+      //todo 判断总行数只有1条时不允许删除
+      if (this.elFormData.length == 1) {
+        this.$message({
+          message: "最少需要保留一行数据不允许删除",
+          type: "error"
+        });
+      } else {
+        this.$confirm("确定删除吗?", "系统提示", {})
+          .then(() => {
+            this.$emit("delLine", index);
+          })
+          .catch(e => {});
+      }
     }
   },
   computed: {
     elFormData() {
-      if (!this.TableRow.SysFieldInfo) {
-        let result = [{ name: "", type: "String", link: "空" }];
-        console.log(result);
-        return result;
-      } else {
-        let result = JSON.parse(this.TableRow.SysFieldInfo);
+      if (!this.TableRow.SysFieldInfo) return;
+      if (!this.IsEdit) {
+        let result = this.TableRow.SysFieldInfo;
         let datas = [];
         Object.keys(result).forEach(i => {
           let item = {
-            name: i,
+            name: result[i].name,
+            desc: result[i].desc,
             type: result[i].type,
             link: result[i].link
           };
-          console.log(item.name);
           datas.push(item);
+        });
+        return datas;
+      } else {
+        let allfields = JSON.parse(this.TableRow.SysFieldInfo);
+        let datas = [];
+        allfields.forEach(result => {
+          datas.push(result);
         });
         return datas;
       }
