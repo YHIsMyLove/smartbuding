@@ -6314,6 +6314,9 @@ namespace SmartConstructionSite.Droid
 			// aapt resource value: 0x7f09009e
 			public const int alarm_type_water = 2131296414;
 			
+			// aapt resource value: 0x7f090206
+			public const int alert_title = 2131296774;
+			
 			// aapt resource value: 0x7f0900cc
 			public const int already_reset = 2131296460;
 			
@@ -7247,6 +7250,9 @@ namespace SmartConstructionSite.Droid
 			// aapt resource value: 0x7f09014a
 			public const int querying_camera_text = 2131296586;
 			
+			// aapt resource value: 0x7f090203
+			public const int read_phone_state_rationale = 2131296771;
+			
 			// aapt resource value: 0x7f090133
 			public const int readed = 2131296563;
 			
@@ -7403,6 +7409,9 @@ namespace SmartConstructionSite.Droid
 			// aapt resource value: 0x7f090075
 			public const int remoteplayback_searchfile_fail_for_network = 2131296373;
 			
+			// aapt resource value: 0x7f090204
+			public const int request_permission_tips = 2131296772;
+			
 			// aapt resource value: 0x7f0900c6
 			public const int reset_10_sec_to_release = 2131296454;
 			
@@ -7549,6 +7558,9 @@ namespace SmartConstructionSite.Droid
 			
 			// aapt resource value: 0x7f0900c3
 			public const int talking = 2131296451;
+			
+			// aapt resource value: 0x7f090205
+			public const int text_reply = 2131296773;
 			
 			// aapt resource value: 0x7f0901da
 			public const int tip_heard_voice = 2131296730;

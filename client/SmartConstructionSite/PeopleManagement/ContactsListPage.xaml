@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.PeopleManagement.ContactsListPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal">
+                <Picker Title="项目" ItemsSource="{Binding Projects}"></Picker>
+                <Picker Title="部门" ItemsSource="{Binding Departments}}"></Picker>
+            </StackLayout>
+            <ListView ItemsSource="{Binding Contacts}" VerticalOptions="Fill">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <TextCell Text="{Binding Name}" Detail="{Binding Post}"></TextCell>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

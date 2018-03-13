@@ -470,4 +470,8 @@
     <string name="open_camera_fail">打开相机失败，请选择手动输入添加设备</string>
      -->
     <string name="title_dev_list">设备列表</string>
+  <string name="read_phone_state_rationale">为了更好的为您提供服务，智慧工地需要读取您手机的状态</string>
+  <string name="request_permission_tips">您可以在手机设置-》应用程序重新赋予此权限</string>
+  <string name="text_reply">知道了</string>
+  <string name="alert_title">提示</string>
 </resources>

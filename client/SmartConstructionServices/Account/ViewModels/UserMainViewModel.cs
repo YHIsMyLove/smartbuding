@@ -1,4 +1,5 @@
-﻿using SmartConstructionServices.Account.Services;
+﻿using SmartConstructionServices.Account.Models;
+using SmartConstructionServices.Account.Services;
 using SmartConstructionServices.Common;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace SmartConstructionServices.Account.ViewModels
                     await Logout();
                 },
                 canExecute: () => { return IsLogoutCommandCanExecute(); });
+            SetProperty(ref user, ServiceContext.Instance.CurrentUser, nameof(User));
         }
 
         #region Properties
@@ -30,6 +32,8 @@ namespace SmartConstructionServices.Account.ViewModels
         {
             get { return isLogoutSucceed; }
         }
+
+        public User User { get { return user; } set { user = value; } }
 
         #endregion
 
@@ -76,6 +80,7 @@ namespace SmartConstructionServices.Account.ViewModels
 
         private UserService userService;
         private bool isLogoutSucceed;
+        private User user;
 
         #endregion
     }

@@ -7,9 +7,9 @@
              Title="用户信息">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
-            <StackLayout Orientation="Vertical" HeightRequest="150">
-                <Image Source="{Binding CurrentUser.Photo}" HorizontalOptions="Center" VerticalOptions="Center"></Image>
-                <Label Text="{Binding CurrentUser.Username}" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            <StackLayout Orientation="Vertical" HeightRequest="200">
+                <Image x:Name="imageUserPhoto" WidthRequest="96" HeightRequest="96" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                <Label Text="{Binding User.UserName}" HorizontalOptions="Center" VerticalOptions="Center"></Label>
             </StackLayout>
             <BoxView BackgroundColor="#ccc" HeightRequest="1"></BoxView>
             <ListView x:Name="listView">

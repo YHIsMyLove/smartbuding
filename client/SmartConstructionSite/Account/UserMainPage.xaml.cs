@@ -1,4 +1,5 @@
 ﻿using SmartConstructionServices.Account.ViewModels;
+using SmartConstructionServices.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,15 @@ namespace SmartConstructionSite.Account
             viewModel = new UserMainViewModel();
             BindingContext = viewModel;
             InitializeComponent();
+            if (ServiceContext.Instance.CurrentUser != null)
+            {
+                imageUserPhoto.Source = new UriImageSource
+                {
+                    Uri = new Uri(ServiceContext.Instance.CurrentUser.UserHeadImg),
+                    CachingEnabled = true,
+                    CacheValidity = new TimeSpan(5, 0, 0, 0)
+                };
+            }
         }
 
         public ListView ListView

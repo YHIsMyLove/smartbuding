@@ -16,7 +16,11 @@ namespace SmartConstructionServices.Account.Services
             return await Task.Run(() =>
             {
                 Result<User> result = new Result<User>();
-                result.Model = new User();
+                result.Model = new User()
+                {
+                    UserName = "张三",
+                    UserHeadImg = "http://himg.bdimg.com/sys/portrait/item/31bd6c62676f6e6766752b0e.jpg"
+                };
                 return result;
             });
             //Result<User> result = new Result<User>();

@@ -11,6 +11,10 @@ namespace SmartConstructionServices.Common
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public ViewModelBase()
+        {
+        }
+
         #region Properties
 
         public bool IsBusy
@@ -33,6 +37,11 @@ namespace SmartConstructionServices.Common
         protected void SetProperty<T>(ref T property, T value, string propertyName)
         {
             property = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected void NotifyPropertyChanged(string propertyName)
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 

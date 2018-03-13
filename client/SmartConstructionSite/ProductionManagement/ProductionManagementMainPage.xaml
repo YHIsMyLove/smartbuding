@@ -6,7 +6,8 @@
 	<ContentPage.Content>
 
         <StackLayout Orientation="Vertical">
-            <Grid>
+            <Label HorizontalOptions="Center" Text="正在开发，敬请期待。。。"></Label>
+            <!--<Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
@@ -28,7 +29,7 @@
                 <Button Grid.Row="2" Grid.Column="1" Image="icon.png" Text="设计交底"></Button>
                 <Button Grid.Row="2" Grid.Column="2" Image="icon.png" Text="施工图"></Button>
                 
-            </Grid>
+            </Grid>-->
         </StackLayout>
         
 	</ContentPage.Content>

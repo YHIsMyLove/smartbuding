@@ -23,11 +23,9 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-            <BoxView Color="#ccc" HeightRequest="1"></BoxView>
             <StackLayout Orientation="Horizontal" HeightRequest="40">
                 <Label Text="消息" VerticalOptions="Center"></Label>
             </StackLayout>
-            <BoxView Color="#ccc" HeightRequest="1"></BoxView>
             <Grid VerticalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
@@ -40,23 +38,101 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Row="0" Grid.Column="0" x:Name="btnSceneMgr" Image="icon.png" Text="现场监管" Clicked="Handle_Clicked"></Button>
+                <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" Color="#ccc"></BoxView>
+                <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" Color="#ccc"></BoxView>
+                <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" Color="#ccc"></BoxView>
+                <BoxView Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" VerticalOptions="FillAndExpand" HorizontalOptions="End" WidthRequest="1" Color="#ccc"></BoxView>
+                <BoxView Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" VerticalOptions="FillAndExpand" HorizontalOptions="End" WidthRequest="1" Color="#ccc"></BoxView>
 
-                <Button Grid.Row="0" Grid.Column="1" x:Name="btnPeopleMgr" Image="icon.png" Text="人员监管" Clicked="Handle_Clicked"></Button>
+                <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Vertical" x:Name="btnSceneMgr" Padding="4">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_camera.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                    <Label Text="现场监管" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </StackLayout>
 
-                <Button Grid.Row="0" Grid.Column="2" x:Name="btnEnvMgr" Image="icon.png" Text="环境监管" Clicked="Handle_Clicked"></Button>
+                <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" x:Name="btnPeopleMgr" Padding="4">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_worker.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                    <Label Text="人员监管" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </StackLayout>
 
-                <Button Grid.Row="1" Grid.Column="0" x:Name="btnDevMgr" Image="icon.png" Text="机械设备监测" Clicked="Handle_Clicked"></Button>
+                <StackLayout Grid.Row="0" Grid.Column="2" Orientation="Vertical" x:Name="btnEnvMgr" Padding="4">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_chimneys.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                    <Label Text="环境监测" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </StackLayout>
 
-                <Button Grid.Row="1" Grid.Column="1" x:Name="btnEvents" Image="icon.png" Text="日历事件" Clicked="Handle_Clicked"></Button>
+                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Vertical" x:Name="btnDevMgr" Padding="4">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_forklift.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                    <Label Text="机械设备监测" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </StackLayout>
 
-                <Button Grid.Row="1" Grid.Column="2" x:Name="btnProductionMgr" Image="icon.png" Text="生产管理" Clicked="Handle_Clicked"></Button>
+                <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Vertical" x:Name="btnEvents" Padding="4">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_calendar.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                    <Label Text="日历事件" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </StackLayout>
 
-                <Button Grid.Row="2" Grid.Column="0" x:Name="btnSpecialTaskCheck" Image="icon.png" Text="特种作业审批" Clicked="Handle_Clicked"></Button>
+                <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Vertical" x:Name="btnProductionMgr" Padding="4">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_note.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                    <Label Text="生产管理" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </StackLayout>
 
-                <Button Grid.Row="2" Grid.Column="1" x:Name="btnAssetMgr" Image="icon.png" Text="资产管理" Clicked="Handle_Clicked"></Button>
+                <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Vertical" x:Name="btnSpecialTaskCheck" Padding="4">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_shield_2.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                    <Label Text="特种作业审批" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </StackLayout>
 
-                <Button Grid.Row="2" Grid.Column="2" x:Name="btnProjectProgress" Image="icon.png" Text="项目进度" Clicked="Handle_Clicked"></Button>
+                <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Vertical" x:Name="btnAssetMgr" Padding="4">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_note_5.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                    <Label Text="资产管理" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </StackLayout>
+
+                <StackLayout Grid.Row="2" Grid.Column="2" Orientation="Vertical" x:Name="btnProjectProgress" Padding="4">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_back.png" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                    <Label Text="项目进度" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </StackLayout>
+
+                <!--<Button Grid.Row="0" Grid.Column="0" x:Name="btnSceneMgr" Image="ic_camera.png" Text="现场监管" Clicked="Handle_Clicked" HorizontalOptions="Center" VerticalOptions="Center"></Button>
+
+                <Button Grid.Row="0" Grid.Column="1" x:Name="btnPeopleMgr" Image="ic_worker.png" Text="人员监管" Clicked="Handle_Clicked"></Button>
+
+                <Button Grid.Row="0" Grid.Column="2" x:Name="btnEnvMgr" Image="ic_chimneys.png" Text="环境监管" Clicked="Handle_Clicked"></Button>
+
+                <Button Grid.Row="1" Grid.Column="0" x:Name="btnDevMgr" Image="ic_forklift.png" Text="机械设备监测" Clicked="Handle_Clicked"></Button>
+
+                <Button Grid.Row="1" Grid.Column="1" x:Name="btnEvents" Image="ic_calendar.png" Text="日历事件" Clicked="Handle_Clicked"></Button>
+
+                <Button Grid.Row="1" Grid.Column="2" x:Name="btnProductionMgr" Image="ic_note.png" Text="生产管理" Clicked="Handle_Clicked"></Button>
+
+                <Button Grid.Row="2" Grid.Column="0" x:Name="btnSpecialTaskCheck" Image="ic_shield_2.png" Text="特种作业审批" Clicked="Handle_Clicked"></Button>
+
+                <Button Grid.Row="2" Grid.Column="1" x:Name="btnAssetMgr" Image="ic_note_5.png" Text="资产管理" Clicked="Handle_Clicked"></Button>
+
+                <Button Grid.Row="2" Grid.Column="2" x:Name="btnProjectProgress" Image="ic_back.png" Text="项目进度" Clicked="Handle_Clicked"></Button>-->
 
             </Grid>
 

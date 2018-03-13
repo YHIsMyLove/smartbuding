@@ -76,6 +76,18 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\PlaceholderPage.xaml.cs">
+      <DependentUpon>PlaceholderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DevMonitoring\DevMonitoringMainPage.xaml.cs">
+      <DependentUpon>DevMonitoringMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EnvironmentalMonitoring\EnvMonitoringMainPage.xaml.cs">
+      <DependentUpon>EnvMonitoringMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PeopleManagement\ContactsListPage.xaml.cs">
+      <DependentUpon>ContactsListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProjectManagement\ProjectListPage.xaml.cs">
       <DependentUpon>ProjectListPage.xaml</DependentUpon>
     </Compile>
@@ -131,7 +143,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\" />
+    <Folder Include="ProjectProgress\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EZUIKitForms\EZUIKitForms.csproj">
@@ -163,6 +175,30 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Account\UserMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EnvironmentalMonitoring\EnvMonitoringMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DevMonitoring\DevMonitoringMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\PlaceholderPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PeopleManagement\ContactsListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

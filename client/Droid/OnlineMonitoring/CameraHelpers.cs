@@ -46,7 +46,14 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             bool result = true;
             await Task.Run(() =>
             {
-                result = EZOpenSDK.Instance.ControlPTZ(deviceSerial, cameraNo, cmd, action, EZConstants.PtzSpeedDefault);
+                try
+                {
+                    result = EZOpenSDK.Instance.ControlPTZ(deviceSerial, cameraNo, cmd, action, EZConstants.PtzSpeedDefault);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                }
             });
             return result;
         }

@@ -14,7 +14,10 @@ using System.Threading.Tasks;
 using Com.Videogo.Openapi.Bean;
 using Com.Videogo.Constant;
 using Com.Videogo.Openapi;
-using Plugin.Permissions;
+using Android.Support.V4.Content;
+using Android;
+using Android.Support.V4.App;
+using Android.Content.PM;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
@@ -30,55 +33,51 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_camera_list);
             InitViews();
-            //InitData();
             CheckPermissions();
         }
 
-        private async Task CheckPermissions()
+        private void CheckPermissions()
         {
-            try
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadPhoneState) != Permission.Granted)
             {
-                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Phone);
-                if (status != Plugin.Permissions.Abstractions.PermissionStatus.Granted)
-                {
-                    if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
-                    {
-                        if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.Phone))
-                        {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                            builder.SetTitle("请求权限");
-                            builder.SetMessage("智慧工地需要读取您手机的状态来更好的运行");
-                            builder.Show();
-                        }
-                    }
-
-                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Phone);
-                    //Best practice to always check that the key exists
-                    if (results.ContainsKey(Plugin.Permissions.Abstractions.Permission.Phone))
-                        status = results[Plugin.Permissions.Abstractions.Permission.Phone];
-                }
-
-                if (status == Plugin.Permissions.Abstractions.PermissionStatus.Granted)
-                {
-                    await InitData();
-                }
-                else if (status != Plugin.Permissions.Abstractions.PermissionStatus.Unknown)
+                if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.ReadPhoneState))
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.SetTitle(Resource.Id.alertTitle);
-                    builder.SetMessage("如果禁用该权限，该功能将不能使用，你确定禁用该权限吗？");
-                    builder.SetPositiveButton("确定", new EventHandler<DialogClickEventArgs>((sender, args) => {
-                        Finish();
-                    }));
-                    builder.SetNegativeButton("重新赋予", new EventHandler<DialogClickEventArgs>(async (sender, args) => {
-                        await CheckPermissions();
+                    builder.SetTitle(Resource.String.alert_title);
+                    builder.SetMessage(Resource.String.read_phone_state_rationale);
+                    builder.SetPositiveButton(Resource.String.text_reply, new EventHandler<DialogClickEventArgs>((sender, args) =>
+                    {
+                        ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.ReadPhoneState }, RequestPermissionCode);
                     }));
                     builder.Show();
                 }
+                else
+                    ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.ReadPhoneState }, RequestPermissionCode);
             }
-            catch (Exception ex)
+            else
+                InitData();
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+        {
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (requestCode == RequestPermissionCode)
             {
-                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+                if (grantResults[0] == Permission.Granted)
+                {
+                    InitData();
+                }
+                else
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.SetTitle(Resource.String.alert_title);
+                    builder.SetMessage(Resource.String.request_permission_tips);
+                    builder.SetPositiveButton(Resource.String.text_reply, new EventHandler<DialogClickEventArgs>((sender, args) =>
+                    {
+                        Finish();
+                    }));
+                    builder.Show();
+                }
             }
         }
 
@@ -139,5 +138,6 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
 
         private ListView listViewCamera;
         private CameraListAdapter cameraListAdapter;
+        private int RequestPermissionCode = 100;
     }
 }
