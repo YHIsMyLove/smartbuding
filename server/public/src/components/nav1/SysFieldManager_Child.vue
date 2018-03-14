@@ -81,34 +81,38 @@ export default {
   methods: {
     //获取字段数据
     getFieldInfo() {
-      if (!this.Field) return;
-      var SysFieldInfo = JSON.parse(this.Field.SysFieldInfo);
-      this.EditLine.splice(0, this.EditLine.length);
-      Object.keys(SysFieldInfo).forEach(i => {
-        var line = {
-          Title: i,
-          Desc: SysFieldInfo[i].desc,
-          Type: SysFieldInfo[i].type,
-          Link: SysFieldInfo[i].link
-        };
-        this.EditLine.push(line);
-        if (SysFieldInfo[i].link !== "空") {
-          switch (SysFieldInfo[i].link) {
-            case "用户表":
-              break;
-            default:
-              axios
-                .get(`/api/SysTable?SysFieldID=${SysFieldInfo[i].link}`)
-                .then(
-                  function(res) {
-                    line.ItemLinks = res.data.data;
-                    console.log(line);
-                  }.bind(line)
-                );
-              break;
+      try {
+        if (!this.Field) return;
+        var SysFieldInfo = JSON.parse(this.Field.SysFieldInfo);
+        this.EditLine.splice(0, this.EditLine.length);
+        Object.keys(SysFieldInfo).forEach(i => {
+          var line = {
+            Title: i,
+            Desc: SysFieldInfo[i].desc,
+            Type: SysFieldInfo[i].type,
+            Link: SysFieldInfo[i].link
+          };
+          this.EditLine.push(line);
+          if (SysFieldInfo[i].link !== "空") {
+            switch (SysFieldInfo[i].link) {
+              case "用户表":
+                break;
+              default:
+                axios
+                  .get(`/api/SysTable?SysFieldID=${SysFieldInfo[i].link}`)
+                  .then(
+                    function(res) {
+                      line.ItemLinks = res.data.data;
+                      console.log(line);
+                    }.bind(line)
+                  );
+                break;
+            }
           }
-        }
-      });
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     //获取tabel的数据 api/SysTable
     getTabelData() {
@@ -121,9 +125,7 @@ export default {
       axios.get("/api/SysTable/", { params: params }).then(function(res) {
         vm.$data.tableData = res.data.data;
         vm.$data.tableDataLength = res.data.meta.count;
-        //console.log(JSON.stringify(vm.$data.tableData ));
       });
-      // console.log(this.EditLine);
     },
     handleEdit(row) {},
     handleDel(row) {},
@@ -167,6 +169,7 @@ export default {
         });
       this.editFormVisible = false;
       this.getTabelData();
+      this.getFieldInfo();
     }
   },
   watch: {

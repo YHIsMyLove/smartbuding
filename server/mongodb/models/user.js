@@ -4,18 +4,12 @@ const Schema = mongoose.Schema;
 //用户表
 const userSchema = new Schema({
     UserID: String,
+    UserPwd:String,
     UserName: String,
     UserSex: Number,
     UserAge: Number,
-    UserBirth: Date,
-    UserAddr: String,
-    UserHeadImg: String,
     UserPhoneNum: Number,
     UserCreatedAt: { type: Date, default: Date.now },
-    UserCardID: String,
-    UserProjs: String,//json数组
-    UserRoles: String,//json数组
-    UserPwd:String
 })
 
 userSchema.pre('save', function (next) {

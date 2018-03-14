@@ -69,13 +69,6 @@
 				currentPath: ''
 			}
 		},
-		watch: {
-			'$route'(to, from) {//监听路由改变
-				if (to.path == '/') {
-					this.openedArr = [];
-				}
-			}
-		},
 		methods: {
 			onSubmit() {
 				// console.log('submit!');

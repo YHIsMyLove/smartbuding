@@ -5,19 +5,39 @@ const msg = require('../../utils/message')
 const SystemConfig = require('../../config/config')
 const Mock = require('mockjs')
 
+
+//检查ID是否重复
+exports.checkID = async (req, res) => {
+    if (!req.query.UserID) {
+        return res.send(msg.genFailedMsg('id不能为空'))
+    }
+    let query = {
+        UserID: req.query.UserID
+    }
+    let result = await User.findOne(query)
+    if (!result) {
+        return res.send(msg.genSuccessMsg('允许创建'))
+    }
+    console.log(req.query)
+    res.send(msg.genFailedMsg('UserID重复!'))
+}
+
+
 exports.load = async(function* (req, res, next, id) {
     if (!id) {
         return res.send(msg.genFailedMsg('id不能为空'))
     }
     try {
-        req.user = yield User.load(id)        
+        req.user = yield User.load(id)
         if (!req.user) return next(new Error('Use not found'));
     } catch (error) {
         return next(error);
     }
     next()
 })
+
 exports.create = async(function* (req, res) {
+    console.log("***********************************************")
     console.log(req.body)
     if (Object.keys(req.body).length === 0) {
         return res.send(msg.genFailedMsg('body不能为空'))
@@ -31,6 +51,7 @@ exports.create = async(function* (req, res) {
         res.send(msg.genFailedMsg('保存失败'))
     }
 })
+
 exports.update = async(function* (req, res) {
     console.log('修改')
     try {
@@ -44,6 +65,7 @@ exports.update = async(function* (req, res) {
         res.send(msg.genFailedMsg('保存失败'))
     }
 })
+
 exports.delete = async(function* (req, res) {
     try {
         let user = req.user;
@@ -54,6 +76,7 @@ exports.delete = async(function* (req, res) {
         res.send(msg.genFailedMsg('删除失败'))
     }
 })
+
 //检查登录
 exports.checklogin = async(function* (req, res) {
     if (Object.keys(req.body).length === 0) {
@@ -65,6 +88,7 @@ exports.checklogin = async(function* (req, res) {
     }
     return res.send(msg.genFailedMsg('登录失败'))
 })
+
 //分页获取人员数据
 exports.list = async(function* (req, res) {
     var query = {

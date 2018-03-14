@@ -3,8 +3,8 @@ const msg = require("../../utils/message")
 
 const userSession = mongoose.model('UserSession')
 const user = mongoose.model('User')
-const area = mongoose.model('Area')
-const proj = mongoose.model('Proj')
+// const area = mongoose.model('Area')
+// const proj = mongoose.model('Proj')
 
 //登录
 exports.login = async (req, res) => {

@@ -172,35 +172,43 @@ export default {
     },
     //获取字段列表
     getSysFieldList: function() {
-      var vm = this;
-      var params = {
-        limit: vm.$data.currentPageSize,
-        page: vm.$data.currentPage
-      };
-      axios.get("/api/SysField/", { params: params }).then(function(res) {
-        vm.$data.tableData = res.data.data;
-        vm.$data.tableDataLength = res.data.meta.count;
-        // console.log(vm.$data.tableData);
-      });
-      axios.get("/api/SysField/AllFieldName").then(function(res) {
-        vm.$data.currentFieldNames = res.data.data;
-      });
+      try {
+        var vm = this;
+        var params = {
+          limit: vm.$data.currentPageSize,
+          page: vm.$data.currentPage
+        };
+        axios.get("/api/SysField/", { params: params }).then(function(res) {
+          vm.$data.tableData = res.data.data;
+          vm.$data.tableDataLength = res.data.meta.count;
+          // console.log(vm.$data.tableData);
+        });
+        axios.get("/api/SysField/AllFieldName").then(function(res) {
+          vm.$data.currentFieldNames = res.data.data;
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     //获取所有字段名
     getAllFieldList: function() {
-      var vm = this;
-      axios.get("/api/SysField/AllFieldName").then(
-        function(res) {
-          this.currentFieldNames = res.data.data;
-          this.options_Fields = [{ key: "none", value: "空" }];
-          res.data.data.forEach(i => {
-            this.options_Fields.push({
-              key: i.SysTabName,
-              value: i.SysTabName
+      try {
+        var vm = this;
+        axios.get("/api/SysField/AllFieldName").then(
+          function(res) {
+            this.currentFieldNames = res.data.data;
+            this.options_Fields = [{ key: "none", value: "空" }];
+            res.data.data.forEach(i => {
+              this.options_Fields.push({
+                key: i.SysTabName,
+                value: i.SysTabName
+              });
             });
-          });
-        }.bind(this)
-      );
+          }.bind(this)
+        );
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleSizeChange(val) {
       this.$data.currentPageSize = val;
@@ -213,21 +221,25 @@ export default {
 
     //编辑当前行的自定义表
     handleEdit: function(row) {
-      this.activeName = "BusinessInfo";
-      this.BusinessTitle = row.SysTabName;
-      this.BusinessTitleDesc = row.SysTabDesc;
-      this.currentField = row;
-      var SysFieldInfo = JSON.parse(row.SysFieldInfo);
-      this.EditLine.splice(0, this.EditLine.length);
+      try {
+        this.activeName = "BusinessInfo";
+        this.BusinessTitle = row.SysTabName;
+        this.BusinessTitleDesc = row.SysTabDesc;
+        this.currentField = row;
+        var SysFieldInfo = JSON.parse(row.SysFieldInfo);
+        this.EditLine.splice(0, this.EditLine.length);
 
-      Object.keys(SysFieldInfo).forEach(i => {
-        this.EditLine.push({
-          Title: i,
-          Desc: SysFieldInfo[i].desc,
-          Type: SysFieldInfo[i].type,
-          Link: SysFieldInfo[i].link
+        Object.keys(SysFieldInfo).forEach(i => {
+          this.EditLine.push({
+            Title: i,
+            Desc: SysFieldInfo[i].desc,
+            Type: SysFieldInfo[i].type,
+            Link: SysFieldInfo[i].link
+          });
         });
-      });
+      } catch (error) {
+        console.log(error);
+      }
     },
     //提交自定义表表单
     onSubmit() {
@@ -278,7 +290,6 @@ export default {
       //4. 刷新
       this.getSysFieldList();
     },
-
     //添加新行
     onAddLine() {
       if (this.EditLine.filter(i => i.Title === "").length > 0) {
@@ -303,20 +314,22 @@ export default {
     },
     //新增自定义表
     newCustomTable() {
-      this.activeName = "BusinessInfo";
       try {
+        this.activeName = "BusinessInfo";
         this.activeCollapseNames = "1";
-      } catch (error) {}
-      this.BusinessTitle = "";
-      this.BusinessTitleDesc = "";
-      this.EditLine = [
-        {
-          Title: "",
-          Desc: "",
-          Type: "String",
-          Link: "空"
-        }
-      ];
+        this.BusinessTitle = "";
+        this.BusinessTitleDesc = "";
+        this.EditLine = [
+          {
+            Title: "",
+            Desc: "",
+            Type: "String",
+            Link: "空"
+          }
+        ];
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   components: {
