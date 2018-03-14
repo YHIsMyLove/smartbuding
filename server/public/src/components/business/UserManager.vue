@@ -54,7 +54,7 @@
                 <el-dialog :title="editFormTtile" v-model="editFormVisible" :close-on-click-modal="true">
                     <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
                       <el-form-item label="账号" prop="UserID">
-                            <el-input v-model="editForm.UserID" auto-complete="off"></el-input>
+                            <el-input :disabled="editFormTtile.id == 0" v-model="editForm.UserID" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="密码" prop="UserPwd">
                             <el-input type="password" v-model="editForm.UserPwd" auto-complete="off"></el-input>
@@ -99,8 +99,9 @@ export default {
     var checkUserID = (rule, value, callback) => {
       console.log(value);
       if (!value) {
-        return callback(new Error("年龄不能为空"));
+        return callback(new Error("请输入工号"));
       }
+      if (this.editForm.id) return callback();
       axios.get(`/api/user/checkID?UserID=${value}`).then(res => {
         if (!res.data.success) {
           return callback(new Error("工号不允许重复"));
@@ -131,9 +132,7 @@ export default {
       editLoading: false,
       btnEditText: "提 交",
       editFormRules: {
-        UserID: [
-          { validator: checkUserID, message: "请输入工号", trigger: "blur" }
-        ],
+        UserID: [{ validator: checkUserID, trigger: "blur" }],
         UserPwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
         UserName: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         UserPhoneNum: [
@@ -156,6 +155,15 @@ export default {
     newCustomTable() {
       this.editFormTtile = "新建用户";
       this.editFormVisible = true;
+      this.editForm = {
+        id: 0,
+        UserID: 0,
+        UserName: "",
+        UserSex: 1,
+        UserAge: 0,
+        UserPhoneNum: "",
+        UserPwd: "123456"
+      };
     },
     //显示编辑界面
     handleEdit: function(row) {

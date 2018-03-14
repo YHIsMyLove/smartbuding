@@ -22,6 +22,8 @@ exports.checkID = async (req, res) => {
     res.send(msg.genFailedMsg('UserID重复!'))
 }
 
+//2018-3-14 20:49 更新
+/***************************************************************************** */
 
 exports.load = async(function* (req, res, next, id) {
     if (!id) {
