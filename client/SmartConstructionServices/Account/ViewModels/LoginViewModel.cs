@@ -19,46 +19,52 @@ namespace SmartConstructionServices.Account.ViewModels
 
         private async Task Login()
         {
-            if (isBusy) return;
-            SetProperty(ref isBusy, true, nameof(IsBusy));
+            if (IsBusy) return;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
             var result = await userService.Login(username, password);
-            SetProperty(ref isBusy, false, nameof(IsBusy));
+            IsBusy = false;
             if (result.HasError)
             {
-                SetProperty(ref hasError, true, nameof(HasError));
-                SetProperty(ref error, result.Error, nameof(Error));
+                HasError = true;
+                Error = result.Error;
             }
             else
             {
                 ServiceContext.Instance.CurrentUser = result.Model;
-                SetProperty(ref isLoginSucceed, true, nameof(IsLoginSucceed));
+                IsLoginSucceed = true;
             }
         }
 
         #region Properties
-        public string Username
-        {
+        public string Username {
             get { return username; }
-            set
-            {
+            set {
+                if (username == value) return;
                 username = value;
+                NotifyPropertyChanged(nameof(Username));
                 ((Command)LoginCommand).ChangeCanExecute();
             }
         }
 
-        public string Password
-        {
+        public string Password {
             get { return password; }
-            set
-            {
+            set {
+                if (password == value) return;
                 password = value;
+                NotifyPropertyChanged(nameof(Password));
                 ((Command)LoginCommand).ChangeCanExecute();
             }
         }
 
-        public bool IsLoginSucceed
-        {
+        public bool IsLoginSucceed {
             get { return isLoginSucceed; }
+            set {
+                if (isLoginSucceed == value) return;
+                isLoginSucceed = value;
+                NotifyPropertyChanged(nameof(IsLoginSucceed));
+            }
         }
         #endregion
 
@@ -72,12 +78,12 @@ namespace SmartConstructionServices.Account.ViewModels
         {
             return !string.IsNullOrEmpty(username)
                           && !string.IsNullOrEmpty(password)
-                          && !isBusy;
+                          && !IsBusy;
         }
 
         private UserService userService;
-        private string username;
-        private string password;
+        private string username = "admin";
+        private string password = "admin";
         private bool isLoginSucceed;
     }
 }

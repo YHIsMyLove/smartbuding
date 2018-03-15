@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.PeopleManagement.ContactsDetailPage"
+             Title="人员监管">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Vertical" BackgroundColor="#E0E0E0" Padding="4">
+                <Image HorizontalOptions="Center" WidthRequest="96" HeightRequest="96">
+                    <Image.Source>
+                        <UriImageSource CachingEnabled="True" Uri="{Binding Contacts.PhotoUrl}"></UriImageSource>
+                    </Image.Source>
+                </Image>
+                <Label HorizontalOptions="Center" Text="{Binding Contacts.Name}"></Label>
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout x:Name="btnCall" Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                        <Image WidthRequest="32" HeightRequest="32" Source="action_call.png" HorizontalOptions="CenterAndExpand"></Image>
+                        <Label Text="呼叫" HorizontalOptions="CenterAndExpand"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <TableView Intent="Data">
+                <TableRoot>
+                    <TableSection>
+                        <TextCell Text="手机" Detail="{Binding Contacts.PhoneNumber}"></TextCell>
+                    </TableSection>
+                    <TableSection>
+                        <TextCell Text="职位" Detail="{Binding Contacts.Position}"></TextCell>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

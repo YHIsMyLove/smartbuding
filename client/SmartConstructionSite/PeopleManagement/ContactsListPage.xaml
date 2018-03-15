@@ -1,19 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SmartConstructionSite.PeopleManagement.ContactsListPage">
+             x:Class="SmartConstructionSite.PeopleManagement.ContactsListPage"
+             Title="人员监管">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
             <StackLayout Orientation="Horizontal">
-                <Picker Title="项目" ItemsSource="{Binding Projects}"></Picker>
-                <Picker Title="部门" ItemsSource="{Binding Departments}}"></Picker>
+                <Picker Title="项目" ItemsSource="{Binding Projects}" HorizontalOptions="FillAndExpand"></Picker>
+                <Picker Title="部门" ItemsSource="{Binding Departments}}" HorizontalOptions="FillAndExpand"></Picker>
             </StackLayout>
-            <ListView ItemsSource="{Binding Contacts}" VerticalOptions="Fill">
+            <ListView ItemsSource="{Binding Contacts}" VerticalOptions="Fill" ItemTapped="ListView_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <TextCell Text="{Binding Name}" Detail="{Binding Post}"></TextCell>
-                        </ViewCell>
+                        <TextCell Text="{Binding Name}" Detail="{Binding Position}"></TextCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

@@ -17,28 +17,36 @@ namespace SmartConstructionServices.Common
 
         #region Properties
 
-        public bool IsBusy
-        {
+        public bool IsBusy {
             get { return isBusy; }
+            set {
+                if (isBusy == value) return;
+                isBusy = value;
+                NotifyPropertyChanged(nameof(IsBusy));
+            }
         }
 
         public bool HasError {
             get { return hasError; }
+            set {
+                if (hasError == value) return;
+                hasError = value;
+                NotifyPropertyChanged(nameof(HasError));
+            }
         }
 
         public Error Error {
             get { return error; }
+            set {
+                if (error == value) return;
+                error = value;
+                NotifyPropertyChanged(nameof(Error));
+            }
         }
 
         #endregion
 
         #region Methods
-
-        protected void SetProperty<T>(ref T property, T value, string propertyName)
-        {
-            property = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         protected void NotifyPropertyChanged(string propertyName)
         {
@@ -47,8 +55,8 @@ namespace SmartConstructionServices.Common
 
         #endregion
 
-        protected bool isBusy;
-        protected bool hasError;
-        protected Error error;
+        private bool isBusy;
+        private bool hasError;
+        private Error error;
     }
 }

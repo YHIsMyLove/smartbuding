@@ -51,6 +51,7 @@
     <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="PeopleManagement\Models\Contacts.cs" />
     <Compile Include="PeopleManagement\Services\ContactsService.cs" />
+    <Compile Include="PeopleManagement\ViewModels\ContactsDetailViewModel.cs" />
     <Compile Include="PeopleManagement\ViewModels\ContactsListViewModel.cs" />
     <Compile Include="ProjectManagement\Models\Project.cs" />
     <Compile Include="ProjectManagement\ViewModels\ProjectListViewModel.cs" />

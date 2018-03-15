@@ -2,6 +2,7 @@
 using SmartConstructionSite.AssetManagement;
 using SmartConstructionSite.Common;
 using SmartConstructionSite.Events;
+using SmartConstructionSite.PeopleManagement;
 using SmartConstructionSite.ProductionManagement;
 using SmartConstructionSite.SpecialTaskCheck;
 using System;
@@ -50,7 +51,7 @@ namespace SmartConstructionSite.ProjectManagement
             else if (sender == btnEvents)
                 await Navigation.PushAsync(new PlaceholderPage() { Title = "日历事件" }, true);
             else if (sender == btnPeopleMgr)
-                await Navigation.PushAsync(new PlaceholderPage() { Title = "人员监管" }, true);
+                await Navigation.PushAsync(new ContactsListPage(), true);
             else if (sender == btnEnvMgr)
                 await Navigation.PushAsync(new PlaceholderPage() { Title = "环境监测" }, true);
             else if (sender == btnDevMgr)

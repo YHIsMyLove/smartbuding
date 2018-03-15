@@ -23,17 +23,28 @@ namespace SmartConstructionServices.Account.ViewModels
                     await Logout();
                 },
                 canExecute: () => { return IsLogoutCommandCanExecute(); });
-            SetProperty(ref user, ServiceContext.Instance.CurrentUser, nameof(User));
+            User = ServiceContext.Instance.CurrentUser;
         }
 
         #region Properties
 
-        public bool IsLogoutSucceed
-        {
+        public bool IsLogoutSucceed {
             get { return isLogoutSucceed; }
+            set {
+                if (isLogoutSucceed == value) return;
+                isLogoutSucceed = value;
+                NotifyPropertyChanged(nameof(IsLogoutSucceed));
+            }
         }
 
-        public User User { get { return user; } set { user = value; } }
+        public User User {
+            get { return user; }
+            set {
+                if (user == value) return;
+                user = value;
+                NotifyPropertyChanged(nameof(User));
+            }
+        }
 
         #endregion
 
@@ -52,25 +63,27 @@ namespace SmartConstructionServices.Account.ViewModels
 
         private bool IsLogoutCommandCanExecute()
         {
-            return !isBusy;
+            return !IsBusy;
         }
 
         private async Task Logout()
         {
-            if (isBusy) return;
-            SetProperty(ref isBusy, true, "IsBusy");
+            if (IsBusy) return;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
             RefreshCommandCanExecute();
             var result = await userService.Logout();
-            SetProperty(ref isBusy, false, "IsBusy");
+            IsBusy = false;
             if (result.HasError)
             {
-                SetProperty(ref hasError, true, "HasError");
-                SetProperty(ref error, result.Error, "Error");
+                HasError = true;
+                Error = result.Error;
             }
             else
             {
                 ServiceContext.Instance.CurrentUser = null;
-                SetProperty(ref isLogoutSucceed, true, "IsLogoutSucceed");
+                IsLogoutSucceed = true;
             }
         }
 

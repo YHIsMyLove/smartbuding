@@ -24,90 +24,133 @@ namespace SmartConstructionServices.PeopleManagement.ViewModels
 
         private bool IsFetchContactsCommandCanExecute()
         {
-            return !isBusy;
+            return !IsBusy;
         }
 
         private async Task FetchContacts()
         {
-            if (isBusy) return;
-            SetProperty(ref nomoreData, false, nameof(nomoreData));
-            SetProperty(ref isBusy, true, nameof(IsBusy));
+            if (IsBusy) return;
+            NomoreData = false;
+            HasError = false;
+            Error = null;
+            IsBusy = true;
             page = 1;
             var result = await contactsService.Find(SelectedProject, SelectedDepartment, 1, pageSize);
-            SetProperty(ref isBusy, false, nameof(IsBusy));
+            IsBusy = false;
             if (result.HasError)
             {
-                SetProperty(ref hasError, true, nameof(HasError));
-                SetProperty(ref error, result.Error, nameof(Error));
+                HasError = true;
+                Error = result.Error;
             }
             else
             {
                 List<Contacts> list = new List<Contacts>(result.Model);
-                SetProperty(ref contacts, list, nameof(Contacts));
+                Contacts = list;
             }
         }
 
         private bool IsFetchMoreContactsCommandCanExecute()
         {
-            return !isBusy;
+            return !IsBusy;
         }
 
         private async Task FetchMoreContacts()
         {
-            if (isBusy) return;
-            SetProperty(ref isBusy, true, nameof(IsBusy));
+            if (IsBusy) return;
+            IsBusy = true;
+            IsLoadingMoreData = true;
+            HasError = false;
+            Error = null;
             var result = await contactsService.Find(SelectedProject, SelectedDepartment, page, pageSize);
-            SetProperty(ref isBusy, false, nameof(IsBusy));
+            IsBusy = false;
+            IsLoadingMoreData = false;
             if (result.HasError)
             {
-                SetProperty(ref hasError, true, nameof(HasError));
-                SetProperty(ref error, result.Error, nameof(Error));
+                HasError = true;
+                Error = result.Error;
             }
             else
             {
                 if (result.Model.Count == 0)
                 {
-                    SetProperty(ref nomoreData, true, nameof(NomoreData));
+                    NomoreData = true;
                 }
                 else
                 {
                     page++;
-                    List<Contacts> prevContacts = contacts;
-                    prevContacts.AddRange(result.Model);
-                    SetProperty(ref contacts, null, nameof(Contacts));
-                    SetProperty(ref contacts, prevContacts, nameof(Contacts));
+                    List<Contacts> newContacts = new List<Contacts>(contacts);
+                    newContacts.AddRange(result.Model);
+                    Contacts = newContacts;
                 }
             }
-        }
-
-        private void ClearError()
-        {
-            SetProperty(ref hasError, false, nameof(ClearError));
         }
 
         #endregion
 
         #region Properties
-        public IList<Contacts> Contacts
-        {
+        public IList<Contacts> Contacts {
             get { return contacts; }
+            private set {
+                if (contacts == value) return;
+                contacts = value;
+                NotifyPropertyChanged(nameof(Contacts));
+            }
         }
 
-        public IList<string> Projects
-        {
+        public IList<string> Projects {
             get { return projects; }
+            private set {
+                if (projects == value) return;
+                projects = value;
+                NotifyPropertyChanged(nameof(Projects));
+            }
         }
 
-        public IList<string> Departments
-        {
+        public IList<string> Departments {
             get { return departments; }
+            private set {
+                if (departments == value) return;
+                departments = value;
+                NotifyPropertyChanged(nameof(Departments));
+            }
         }
 
-        public string SelectedProject { get; set; }
+        public string SelectedProject {
+            get { return selectedProject; }
+            set {
+                if (selectedProject == value) return;
+                selectedProject = value;
+                NotifyPropertyChanged(nameof(SelectedProject));
+            }
+        }
 
-        public string SelectedDepartment { get; set; }
+        public string SelectedDepartment {
+            get { return selectedDepartment; }
+            set {
+                if (selectedDepartment == value) return;
+                selectedDepartment = value;
+                NotifyPropertyChanged(nameof(SelectedDepartment));
+            }
+        }
 
-        public bool NomoreData { get { return nomoreData; } }
+        public bool NomoreData {
+            get { return nomoreData; }
+            set {
+                if (nomoreData == value) return;
+                nomoreData = value;
+                NotifyPropertyChanged(nameof(NomoreData));
+            }
+        }
+
+        public bool IsLoadingMoreData {
+            get { return isLoadingMoreData; }
+            set {
+                if (isLoadingMoreData == value) return;
+                isLoadingMoreData = value;
+                NotifyPropertyChanged(nameof(IsLoadingMoreData));
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -119,11 +162,14 @@ namespace SmartConstructionServices.PeopleManagement.ViewModels
         #endregion
 
         private ContactsService contactsService;
-        private List<Contacts> contacts;
-        private List<string> projects;
-        private List<string> departments;
+        private IList<Contacts> contacts;
+        private IList<string> projects;
+        private IList<string> departments;
+        private string selectedProject;
+        private string selectedDepartment;
         private int page = 1;
         private int pageSize = 10;
         private bool nomoreData;
+        private bool isLoadingMoreData;
     }
 }
