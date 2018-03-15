@@ -1,2 +1,0 @@
-{"_id":{ "$oid": "5aa91891eba250326ccf23eb" },"UserID":"dannyjones","UserName":"王思宇","UserSex":1,"UserAge":25,"UserPhoneNum":15629633339,"UserPwd":"123456","UserCreatedAt":"2018-03-14T12:41:53.714Z","__v":0}
-{"_id":{ "$oid": "5aa91944eba250326ccf23ec" },"UserID":"lbgongfu","UserName":"李彪","UserSex":1,"UserAge":29,"UserPhoneNum":11111111111,"UserPwd":"123456","UserCreatedAt":"2018-03-14T12:44:52.848Z","__v":0}
