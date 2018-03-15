@@ -1,8 +1,4 @@
 <template>
-
-    <!-- <el-tabs style="width:100%;">
-        <el-tab-pane label="主页"> -->
-           
     <section class="chart">
         <el-row>
             <el-col :span="12">

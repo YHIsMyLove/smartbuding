@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 const msg = require("../../utils/message")
 
 const userSession = mongoose.model('UserSession')
+const SysTable = mongoose.model('SysTable')
 const user = mongoose.model('User')
 // const area = mongoose.model('Area')
 // const proj = mongoose.model('Proj')
@@ -29,43 +30,63 @@ exports.login = async (req, res) => {
     }
 }
 
-//获取项目信息[err]
-exports.getProjsbyUser = async (req, res) => {
+//根据项目ID获取部门数据
+exports.GetDeptByProjID = async (req, res) => {
     var query = {
-        UserID: req.body.UserID
+        SysFieldID: "dept",
+        item2: req.query.ProjID//自定义表中的ITem2代表项目ID
     }
-    let _user = await user.findOne({ UserID: query.UserID }).exec()
-    if (!_user) return res.send(msg.genFailedMsg('该人员不存在!'))
-    let projs = _user.UserProjs
-    let match_proj = Array.isArray(projs) ? { $in: projs } : projs;
-    let _proj = await proj.find({ projid: match_proj }).exec()
-    if (_proj.length == 0) return res.send(msg.genFailedMsg('该人员尚未分配项目!'))
+    try {
+        if (!query) return res.send(msg.genFailedMsg('请输入项目ID'))
+        let result = await SysTable.find(query)
 
-    let result = _proj.map(i => {
-        return {
-            "UserID": _user.UserID,
-            "UserName": _user.UserName,
-            "ProjName": _proj.projname
+        //映射
+        let data = result.map(i => {
+            return {
+                ID: i._id,
+                DeptName: i.item0,
+                ParentID: i.item1,
+                ProjID: i.item2,
+            }
+        })
+
+        //组装数据
+        let realdata = []
+        //根节点
+        let root1 = data.filter(i => i.ParentID == 'undefined')[0]
+        let root = {
+            ID: root1.ID,
+            label: root1.DeptName,
+            children: []
         }
-    })
+        realdata.push(root)
+        let recursion = (list, root) => {
+            list.forEach(item => {
+                if (item.ParentID == root.ID) {
+                    if (!root.children) root.children = []
+                    root.children.push({
+                        ID: item.ID,
+                        label: item.DeptName
+                    })
+                    recursion(list, root.children.filter(i => i.ID == item.ID)[0])
+                }
+            });
+        }
+        recursion(data, root)
 
-    await res.send(msg.genSuccessMsg('登录成功', result))
+        if (result.length == 0) return res.send(msg.genFailedMsg('没有获取到部门数据,请检查项目ID'))
+        res.send(msg.genMsg("获取成功", "", realdata))
+    } catch (error) {
+        return res.send(msg.genFailedMsg('未知错误'))
+    }
 }
 
-//获取区域信息
-exports.getAreas = async (req, res) => {
-    let query = {}
-    let _areas = await area.list()
-    return req.send(msg.genSuccessMsg('获取区域信息成功', _areas))
+//根据项目ID获取用户数据
+exports.GetUsersByProjID = async (req, res) => {
+
 }
 
-//获取项目信息
-exports.getProjbyArea = async (req, res) => {
-    let match_proj = Array.isArray(req.query.projs) ? { $in: req.query.projs } : req.query.projs;
-    let _projs = await proj.find({ areaid: match_proj }).exec()
-    return req.send(msg.genSuccessMsg('获取区域信息成功', _projs))
-}
+//设置用户部门表
+exports.SetDeptUsers = async (req, res) => {
 
-//获取设备列表
-exports.getDevs = async (req, res) => {
 }

@@ -10,7 +10,7 @@ Vue.use(Vuex)
 const state = {
     count: 10,
     //系统总变量区域
-    proj: ""
+    proj: "5aa905ae9b5dad48ecd2bb89"//黄石奥体中心
 }
 
 // 定义所需的 mutations
@@ -23,7 +23,7 @@ const mutations = {
     },
     //请求选择的项目
     GETPROJ(state) {
-
+        state.proj
     }
 }
 

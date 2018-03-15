@@ -12,11 +12,13 @@ import Login from './components/Login.vue'
 import Home from './components/Home.vue'
 import Main from './components/Main.vue'
 import UserManager from './components/business/UserManager.vue'
-import OrganizationManager from './components/business/OrganizationManager.vue'
-import RoleManager from './components/business/RoleManager.vue'
-import DeviceManager from './components/business/DeviceManager.vue'
+import DeptManager from './components/business/DeptManager.vue'
 import SysFieldManager from './components/nav1/SysFieldManager.vue'
 import SystemManager from './components/business/SystemManager.vue'
+
+
+import OrganizationManager from './components/business/OrganizationManager.vue'
+import DeviceManager from './components/business/DeviceManager.vue'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
@@ -37,10 +39,11 @@ const routes = [
             { path: '/', component: Main, name: '主页' },
             { path: '/SysFieldManager', component: SysFieldManager, name: '系统管理' },
             { path: '/UserManager', component: UserManager, name: '用户管理' },
+            { path: '/DeptManager', component: DeptManager, name: '部门管理' },
+
             // { path: '/SystemManager', component: SystemManager, name: '系统管理' },
-            { path: '/RoleManager', component: RoleManager, name: '角色管理' },
-            { path: '/DeviceManager', component: DeviceManager, name: '设备管理' },
-            { path: '/OrganizationManager', component: OrganizationManager, name: '组织架构管理' },
+            // { path: '/DeviceManager', component: DeviceManager, name: '设备管理' },
+            // { path: '/OrganizationManager', component: OrganizationManager, name: '组织架构管理' },
             //{ path: '/ShowCaseManager', component: ShowCaseManager, name: '案例展示' },
             // { path: '/LeaveMessageManager', component: LeaveMessageManager, name: '留言管理' },
             // { path: '/ActivityManager', component: ActivityManager, name: '活动管理' },

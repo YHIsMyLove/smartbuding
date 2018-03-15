@@ -93,7 +93,15 @@ import util from "../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
 import moment from "moment";
+import { mapGetters } from "vuex";
 export default {
+  computed: {
+    // 使用对象展开运算符将 getters 混入 computed 对象中
+    ...mapGetters([
+      "getProj"
+      // ...
+    ])
+  },
   data() {
     //验证工号是否重复
     var checkUserID = (rule, value, callback) => {
@@ -112,6 +120,7 @@ export default {
       });
     };
     return {
+      valueeeeee: false,
       formInline: {
         user: ""
       },
