@@ -4,8 +4,7 @@ const msg = require("../../utils/message")
 const userSession = mongoose.model('UserSession')
 const SysTable = mongoose.model('SysTable')
 const user = mongoose.model('User')
-// const area = mongoose.model('Area')
-// const proj = mongoose.model('Proj')
+const UserDept = mongoose.model('UserDept')
 
 //登录
 exports.login = async (req, res) => {
@@ -82,11 +81,27 @@ exports.GetDeptByProjID = async (req, res) => {
 }
 
 //根据项目ID获取用户数据
-exports.GetUsersByProjID = async (req, res) => {
+exports.GetUsersByUserDept_ProjID = async (req, res) => {
+    let query = {
+        page: parseInt(req.query.page) - 1,
+        limit: parseInt(req.query.limit),
+        ProjID: req.query.ProjID
+    }
 
+    //1. 查询总数
+    let count = await UserDept.find({ ProjID: query.ProjID }).count()
+    //2. 查询IDs
+    let users = await UserDept.find(query).select("UserID")
+        .populate({
+            path: 'User',
+            select: "UserName UserSex UserAge UserPhoneNum"
+        })
+    //3. 查询人员信息
+    let users = await user.find({ UserID: { $in: ids } })
 }
 
 //设置用户部门表
-exports.SetDeptUsers = async (req, res) => {
+exports.SetUser2DeptByUserID = async (req, res) => {
+    let query = {}
 
 }
