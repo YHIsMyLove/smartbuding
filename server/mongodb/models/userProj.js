@@ -3,9 +3,8 @@ const Schema = mongoose.Schema;
 
 //用户表
 const userProjSchema = new Schema({
-    UserID: String,
+    UserID: { type: Schema.Types.ObjectId, ref: 'User' },
     ProjID: String,
-    DeptID: String
 })
 
 userProjSchema.pre('save', function (next) {

@@ -5,6 +5,7 @@ const userSession = mongoose.model('UserSession')
 const SysTable = mongoose.model('SysTable')
 const user = mongoose.model('User')
 const UserDept = mongoose.model('UserDept')
+const UserProj = mongoose.model('UserProj')
 
 //登录
 exports.login = async (req, res) => {
@@ -29,7 +30,7 @@ exports.login = async (req, res) => {
     }
 }
 
-//根据项目ID获取部门数据
+//根据项目ID获取所有的部门数据
 exports.GetDeptByProjID = async (req, res) => {
     var query = {
         SysFieldID: "dept",
@@ -80,28 +81,8 @@ exports.GetDeptByProjID = async (req, res) => {
     }
 }
 
-//根据项目ID获取用户数据
-exports.GetUsersByUserDept_ProjID = async (req, res) => {
-    let query = {
-        page: parseInt(req.query.page) - 1,
-        limit: parseInt(req.query.limit),
-        ProjID: req.query.ProjID
-    }
-
-    //1. 查询总数
-    //let count = await UserDept.find({ ProjID: query.ProjID }).count()
-    //2. 查询IDs
-    //let users = await UserDept.find(query).select("UserID")
-    //    .populate({
-    //        path: 'User',
-    //        select: "UserName UserSex UserAge UserPhoneNum"
-    //    })
-    //3. 查询人员信息
-    //let users = await user.find({ UserID: { $in: ids } })
-}
-
 //设置用户部门表
-exports.SetUser2DeptByUserID = async (req, res) => {
+exports.InsertOrDelUserDept = async (req, res) => {
     let insertOrDel = req.body.insertOrDel
     if (!insertOrDel) {
         return res.send(msg.genFailedMsg('请输入插入/删除'))
@@ -121,8 +102,8 @@ exports.SetUser2DeptByUserID = async (req, res) => {
         return res.send(msg.genFailedMsg('请输入部门ID'))
     }
     try {
-        let _userDept = new UserDept(query)
         if (insertOrDel == 'insert') {
+            let _userDept = new UserDept(query)
             await _userDept.updateAndSave()
             res.send(msg.genMsg('保存成功'))
         } else {
@@ -131,5 +112,79 @@ exports.SetUser2DeptByUserID = async (req, res) => {
         }
     } catch{
         res.send(msg.getFailedMsg('保存失败'))
+    }
+}
+
+//设置用户项目表
+exports.InsertOrDelUserProj = async (req, res) => {
+    let insertOrDel = req.body.insertOrDel
+    if (!insertOrDel) {
+        return res.send(msg.genFailedMsg('请输入插入/删除'))
+    }
+    let query = {
+        UserID: req.body.UserID,
+        ProjID: req.body.ProjID,
+    }
+    if (!query.UserID) {
+        return res.send(msg.genFailedMsg('请输入人员ID'))
+    }
+    if (!query.ProjID) {
+        return res.send(msg.genFailedMsg('请输入项目ID'))
+    }
+    try {
+        if (insertOrDel == 'insert') {
+            let _userProj = new UserProj(query)
+            await _userProj.updateAndSave()
+            res.send(msg.genMsg('保存成功'))
+        } else {
+            await UserProj.findOne(query).remove()
+            res.send(msg.genMsg('删除成功'))
+        }
+    } catch{
+        res.send(msg.getFailedMsg('保存失败'))
+    }
+}
+
+//获取项目中的人员信息
+exports.GetUserByProj = async (req, res) => {
+    let query = {
+        ProjID: req.query.ProjID
+    }
+    if (!query.ProjID) {
+        return res.send(msg.genFailedMsg('请输入项目ID'))
+    }
+    try {
+        let result = await UserProj.find(query)
+            .populate({
+                path: 'User',
+                select: '_id UserID UserName UserSex UserAge UserPhoneNum'
+            })
+        res.send(msg.genMsg("查询成功", "", result))
+    } catch (error) {
+        res.send(msg.genMsg("查询失败"))
+    }
+}
+
+//根据部门获取人员信息
+exports.GetUserByDept = async (req, res) => {
+    let query = {
+        DeptID: req.query.DeptID,
+        ProjID: req.query.ProjID
+    }
+    if (!query.DeptID) {
+        return res.send(msg.genFailedMsg('请输入部门ID'))
+    }
+    if (!query.ProjID) {
+        return res.send(msg.genFailedMsg('请输入项目ID'))
+    }
+    try {
+        let deptResult = await UserDept.find(query)
+            .populate({
+                path: 'User',
+                select: '_id UserID UserName UserSex UserAge UserPhoneNum'
+            })
+        res.send(msg.genMsg("查询成功", "", result))
+    } catch (error) {
+        res.send(msg.genMsg("查询失败"))
     }
 }
