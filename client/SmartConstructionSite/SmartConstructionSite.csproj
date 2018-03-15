@@ -61,7 +61,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Events\EventsMainPage.xaml">
+    <EmbeddedResource Include="Events\EventListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -84,6 +84,15 @@
     </Compile>
     <Compile Include="EnvironmentalMonitoring\EnvMonitoringMainPage.xaml.cs">
       <DependentUpon>EnvMonitoringMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Events\EventDetailPage.xaml.cs">
+      <DependentUpon>EventDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Events\MeetingMnutesListPage.xaml.cs">
+      <DependentUpon>MeetingMnutesListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Events\MeetingPictureListPage.xaml.cs">
+      <DependentUpon>MeetingPictureListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PeopleManagement\ContactsDetailPage.xaml.cs">
       <DependentUpon>ContactsDetailPage.xaml</DependentUpon>
@@ -111,8 +120,8 @@
     <Compile Include="AssetManagement\AssetListPage.xaml.cs">
       <DependentUpon>AssetListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Events\EventsMainPage.xaml.cs">
-      <DependentUpon>EventsMainPage.xaml</DependentUpon>
+    <Compile Include="Events\EventListPage.xaml.cs">
+      <DependentUpon>EventListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MasterPageItem.cs" />
   </ItemGroup>
@@ -208,6 +217,24 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="PeopleManagement\ContactsDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Events\EventDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Events\MeetingMnutesListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Events\MeetingPictureListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

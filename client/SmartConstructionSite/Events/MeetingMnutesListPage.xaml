@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.Events.MeetingMnutesListPage"
+             Title="会议纪要">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView ItemsSource="{Binding MeetingMinutes}" HasUnevenRows="True" RowHeight="-1">
+                <ListView.Header>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Meeting.Compere.Name, StringFormat='会议主持人：{0}'}"></Label>
+                        <Label Text="{Binding Meeting.Time, StringFormat='{0:yyyy/MM/dd}'}" HorizontalOptions="End"></Label>
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid MinimumHeightRequest="100" Padding="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Text="{Binding Content}"></Label>
+
+                            <Label Text="{Binding ExecuteDepartment, StringFormat='执行部门：{0}'}" HorizontalOptions="EndAndExpand"></Label>
+                            
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

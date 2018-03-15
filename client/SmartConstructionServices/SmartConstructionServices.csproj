@@ -49,6 +49,12 @@
     <Compile Include="Common\Error.cs" />
     <Compile Include="Common\Result.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="Events\Models\Event.cs" />
+    <Compile Include="Events\Models\Meeting.cs" />
+    <Compile Include="Events\Models\MeetingMinutes.cs" />
+    <Compile Include="Events\Services\EventService.cs" />
+    <Compile Include="Events\ViewModels\EventDetailViewModel.cs" />
+    <Compile Include="Events\ViewModels\EventListViewModel.cs" />
     <Compile Include="PeopleManagement\Models\Contacts.cs" />
     <Compile Include="PeopleManagement\Services\ContactsService.cs" />
     <Compile Include="PeopleManagement\ViewModels\ContactsDetailViewModel.cs" />

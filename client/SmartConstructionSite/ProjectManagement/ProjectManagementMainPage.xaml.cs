@@ -49,7 +49,7 @@ namespace SmartConstructionSite.ProjectManagement
             else if (sender == btnAssetMgr)
                 await Navigation.PushAsync(new PlaceholderPage() { Title = "资产管理" }, true);
             else if (sender == btnEvents)
-                await Navigation.PushAsync(new PlaceholderPage() { Title = "日历事件" }, true);
+                await Navigation.PushAsync(new EventListPage(), true);
             else if (sender == btnPeopleMgr)
                 await Navigation.PushAsync(new ContactsListPage(), true);
             else if (sender == btnEnvMgr)
