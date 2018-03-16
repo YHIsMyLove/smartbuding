@@ -13,12 +13,11 @@ import Home from './components/Home.vue'
 import Main from './components/Main.vue'
 import UserManager from './components/business/UserManager.vue'
 import DeptManager from './components/business/DeptManager.vue'
+import UserProjManager from './components/business/UserProjManager.vue'
 import SysFieldManager from './components/nav1/SysFieldManager.vue'
 import SystemManager from './components/business/SystemManager.vue'
 
-
-import OrganizationManager from './components/business/OrganizationManager.vue'
-import DeviceManager from './components/business/DeviceManager.vue'
+// import OrganizationManager from './components/business/OrganizationManager.vue'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
@@ -38,29 +37,24 @@ const routes = [
         children: [
             { path: '/', component: Main, name: '主页' },
             { path: '/SysFieldManager', component: SysFieldManager, name: '系统管理' },
-            { path: '/UserManager', component: UserManager, name: '用户管理' },
-            { path: '/DeptManager', component: DeptManager, name: '部门管理' },
-
+            //{ path: '/UserManager', component: UserManager, name: '用户管理' },
             // { path: '/SystemManager', component: SystemManager, name: '系统管理' },
             // { path: '/DeviceManager', component: DeviceManager, name: '设备管理' },
             // { path: '/OrganizationManager', component: OrganizationManager, name: '组织架构管理' },
-            //{ path: '/ShowCaseManager', component: ShowCaseManager, name: '案例展示' },
-            // { path: '/LeaveMessageManager', component: LeaveMessageManager, name: '留言管理' },
-            // { path: '/ActivityManager', component: ActivityManager, name: '活动管理' },
-            // { path: '/form', component: Form, name: '表单提交' },
-            // { path: '/tabs', component: Tabs, name: '标签页' },
         ]
     },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: '系统管理',
-    //     iconCls: 'fa fa-id-card-o',
-    //     children: [
-    //         { path: '/vuex', component: VuexComp, name: 'Vuex' },
-    //         { path: '/page5', component: Page5, name: '测试页面' }
-    //     ]
-    // },
+    {
+        path: '/',
+        component: Home,
+        name: '用户管理',
+        iconCls: 'fa fa-id-card-o',
+        children: [
+            { path: '/UserManager', component: UserManager, name: '用户管理' },
+            { path: '/UserProjManager', component: UserProjManager, name: '用户项目管理' },
+            { path: '/DeptManager', component: DeptManager, name: '用户部门管理' },
+            // { path: '/vuex', component: VuexComp, name: 'Vuex' }
+        ]
+    },
     // {
     //     path: '/',
     //     component: Home,

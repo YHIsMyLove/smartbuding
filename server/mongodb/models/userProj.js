@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 //用户表
 const userProjSchema = new Schema({
-    UserID: { type: Schema.Types.ObjectId, ref: 'User' },
+    // UserID: { type: Schema.Types.ObjectId, ref: 'User' },
+    UserID: String,
     ProjID: String,
 })
 

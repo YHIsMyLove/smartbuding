@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 //用户表
 const userDeptSchema = new Schema({
-    UserID: { type: Schema.Types.ObjectId, ref: 'User' },
+    UserID: String,
     ProjID: String,
     DeptID: String
 })

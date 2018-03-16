@@ -9,7 +9,7 @@
                         </el-form-item>
                         <el-form-item>
                             <el-button @click='getUserList'>查询</el-button>
-                            <el-button @click="newCustomTable">新增用户</el-button>
+                            <el-button type="primary" round @click="newCustomTable">新增用户</el-button>
                         </el-form-item>
                     </el-form>
                 </el-col>
