@@ -79,18 +79,6 @@ exports.delete = async(function* (req, res) {
     }
 })
 
-//检查登录
-exports.checklogin = async(function* (req, res) {
-    if (Object.keys(req.body).length === 0) {
-        return res.send(msg.genFailedMsg('body不能为空'))
-    }
-    if ((req.body.account && req.body.account === SystemConfig.Admin_User) &&
-        (req.body.checkPass && req.body.checkPass === SystemConfig.Admin_Pwd)) {
-        return res.send(msg.genSuccessMsg('登录成功'))
-    }
-    return res.send(msg.genFailedMsg('登录失败'))
-})
-
 //分页获取人员数据
 exports.list = async(function* (req, res) {
     var query = {
@@ -131,4 +119,17 @@ exports.list = async(function* (req, res) {
     } catch (error) {
         res.send(msg.genFailedMsg('获取用户列表失败'))
     }
+})
+
+
+//检查登录
+exports.checklogin = async(function* (req, res) {
+    if (Object.keys(req.body).length === 0) {
+        return res.send(msg.genFailedMsg('body不能为空'))
+    }
+    if ((req.body.account && req.body.account === SystemConfig.Admin_User) &&
+        (req.body.checkPass && req.body.checkPass === SystemConfig.Admin_Pwd)) {
+        return res.send(msg.genSuccessMsg('登录成功'))
+    }
+    return res.send(msg.genFailedMsg('登录失败'))
 })

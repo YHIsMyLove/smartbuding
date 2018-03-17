@@ -19,6 +19,7 @@ import SysFieldManager from './components/nav1/SysFieldManager.vue'
 import SystemManager from './components/business/SystemManager.vue'
 import DeviceRoleManager from './components/business/DeviceRoleManager.vue'
 import DeviceManager from './components/business/DeviceManager.vue'
+import YSDeviceManager from './components/business/YSDeviceManager.vue'
 import SystemRoleManager from './components/business/SystemRoleManager.vue'
 
 Vue.use(ElementUI)
@@ -61,6 +62,7 @@ const routes = [
         iconCls: 'fa fa-id-card-o',
         children: [
             { path: '/DeviceManager', component: DeviceManager, name: '设备管理' },
+            { path: '/YSDeviceManager', component: YSDeviceManager, name: '萤石设备管理' },
         ]
     },
     {

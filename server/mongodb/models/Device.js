@@ -5,12 +5,13 @@ const Schema = mongoose.Schema;
 const deviceSchema = new Schema({
     DevID: String,
     DevName: String,
-    DevClass: String,
-    DevDesc: String,
     DevStatus: Number,
+    DevType: String,
+    DevDesc: String,
+    DevClass: String,
     DevIp: String,
     DevPort: Number,
-    areaid:String
+    ProjID: String
 })
 
 deviceSchema.pre('save', function (next) {

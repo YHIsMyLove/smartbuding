@@ -98,10 +98,11 @@ export default {
     //设置用户项目
     changeUserProj(row) {
       let that = this;
+      console.log(row._id);
       let query = {
         UserID: row._id,
         ProjID: that.curProjID,
-        insertOrDel: row.UserInDept ? "insert" : "del"
+        insertOrDel: row.UserInProj ? "insert" : "del"
       };
       axios
         .post("/api/InsertOrDelUserProj", query)

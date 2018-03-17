@@ -1,21 +1,23 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
-//区域表
-const userSessionSchema = new Schema({
-    UserID: String,
-    UserLoginDate: { type: Date, default: Date.now }
+//会议表
+const mettingSchema = new Schema({
+    MettingName: String,
+    MettingCreatedAt: { type: Date, default: Date.now },
+    Compere: String,//主持人
+    ProjID: String
 })
 
-userSessionSchema.pre('save', function (next) {
+mettingSchema.pre('save', function (next) {
     next()
 })
-userSessionSchema.methods = {
+mettingSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-userSessionSchema.statics = {
+mettingSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -32,4 +34,4 @@ userSessionSchema.statics = {
             .exec();
     }
 }
-mongoose.model('UserSession', userSessionSchema);
+mongoose.model('Metting', mettingSchema);

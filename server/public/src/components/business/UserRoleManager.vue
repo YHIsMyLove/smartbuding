@@ -167,10 +167,10 @@ export default {
     },
     //获取角色信息
     getRoleData() {
-      console.log("请求role");
+      //console.log("请求role");
       let that = this;
       axios
-        .get("/api/GetRole")
+        .get(`/api/GetRole?ProjID=${that.getProj}`)
         .then(res => {
           if (res.data.success) {
             that.role_data = res.data.data;

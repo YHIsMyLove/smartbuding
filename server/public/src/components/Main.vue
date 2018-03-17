@@ -2,11 +2,11 @@
   <section class="chart">
     <el-row>
       <el-col :span="24">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <!-- <el-form class="demo-form-inline">
           <el-form-item label="区域选择">
-            <el-cascader :options="prov_city_options" change-on-select @change="handleItemChange"></el-cascader>
+            <el-cascader ></el-cascader>
           </el-form-item>
-        </el-form>
+        </el-form> -->
       </el-col>
     </el-row>
     <el-row>
@@ -228,9 +228,7 @@ export default {
       ]
     });
   },
-  modules: {
-    
-  }
+  modules: {}
 };
 </script>
 

@@ -10,7 +10,16 @@ Vue.use(Vuex)
 const state = {
     count: 10,
     //系统总变量区域
-    proj: "5aa905ae9b5dad48ecd2bb89"//黄石奥体中心
+    //项目ID
+    proj: "5aa905ae9b5dad48ecd2bb89",
+    //城市ID
+    cityid: '',
+    //省份ID
+    provid: '',
+    //萤石Token
+    ystoken: 'at.6r8wpspz9p6k5omn0d20oq7j5l139vwq-6ihmyg8top-1kdce8f-81yi0iht8',
+    //人员session
+    sessionid: ''
 }
 
 // 定义所需的 mutations

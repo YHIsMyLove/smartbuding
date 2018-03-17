@@ -1,12 +1,15 @@
 const mongoose = require("mongoose")
 const msg = require("../../utils/message")
+const SystemConfig = require('../../config/config')
+const YS = require('../../utils/yingshi')
 
-const userSession = mongoose.model('UserSession')
+const UserSession = mongoose.model('UserSession')
 const SysTable = mongoose.model('SysTable')
 const User = mongoose.model('User')
 const UserDept = mongoose.model('UserDept')
 const UserProj = mongoose.model('UserProj')
 const UserRole = mongoose.model('UserRole')
+const Device = mongoose.model('Device')
 
 /****************************************************************** */
 /**系统登录***********************************************************/
@@ -17,22 +20,55 @@ exports.login = async (req, res) => {
         UserID: req.body.UserID,
         UserPwd: req.body.UserPwd
     }
-    try {
-        //1. 查询session
-        let session = await userSession.find({ UserID: query.UserID }).exec()
-        if (session.length == 0) {
-            //2. 匹配账号密码
-            let _user = await User.find({ UserID: query.UserID }).exec()
-            if (_user.length == 0) return res.send(msg.genFailedMsg('该账号不存在!'))
-            if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!'))
+    if (query.UserID == 'admin') {
+        if ((query.UserID === SystemConfig.Admin_User) &&
+            (query.UserPwd === SystemConfig.Admin_Pwd)) {
+            return res.send(msg.genSuccessMsg('登录成功'))
         }
-        //3. 将数据存进session表
-        //4. 取出萤石的session
-        res.send(msg.genSuccessMsg('登录成功', _user))
-    } catch (error) {
-        return res.send(msg.genFailedMsg('未知错误!'))
+        return res.send(msg.genFailedMsg('登录失败'))
+    } else {
+        try {
+            //1. 查询session
+            let session = await UserSession.find({ UserID: query.UserID }).exec()
+            if (session.length == 0) {
+                //2. 匹配账号密码
+                let _user = await User.findOne({ UserID: query.UserID }).exec()
+                if (_user.length == 0) return res.send(msg.genFailedMsg('该账号不存在!'))
+                if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!'))
+            }
+            //3. 将数据存进/更新session表
+            let _usersession = new UserSession({
+                UserID: query.UserID
+            })
+            await _usersession.updateAndSave()
+            //4. 取出萤石的token
+            let ys_result = await YS.getaccessToken()
+            let ystoken = ys_result.data.code == '200' ? ys_result.data.data.accessToken : ''
+            return res.send(msg.genSuccessMsg('登录成功', {
+                UserID: query.UserID,
+                SessionID: _usersession._id,
+                YSToken: ystoken
+            }))
+        } catch (error) {
+            return res.send(msg.genFailedMsg('未知错误!'))
+        }
     }
 }
+
+//检查用户session
+exports.checkSession = async (req, res) => {
+    let query = {
+        _id: req.query.SessionID
+    }
+    let session = await UserSession.findOne(query).exec()
+    if (session) {
+        return res.send(msg.genSuccessMsg('登录成功'))
+    }
+    res.send(msg.genFailedMsg('无效session,请登录'))
+}
+
+//log out 注销
+
 
 /****************************************************************** */
 /**用户项目管理*******************************************************/
@@ -265,7 +301,7 @@ exports.GetCityByProvID = async (req, res) => {
     }
 }
 
-//根据省市获取项目信息
+//根据城市获取项目信息
 exports.GetProjByCityID = async (req, res) => {
     let query = {
         item1: req.query.item1,
@@ -297,8 +333,6 @@ exports.GetUserByDeptID = async (req, res) => {
     let ProjID = req.query.ProjID
     let count = query.limit
 
-    console.log('**********************' + DeptID)
-
     if (isEdit == 'true' && DeptID != -1) {// 
         console.log('编辑模式且有部门ID')
         let list = await User.find({})
@@ -308,34 +342,41 @@ exports.GetUserByDeptID = async (req, res) => {
             .exec();
         let ids = list.map(i => i._id.toString())
         let userdeptlist = await UserDept.find({ UserID: { $in: ids }, DeptID: DeptID, ProjID: ProjID }).exec()//
+        let userinproj = await UserProj.find({ UserID: { $in: ids }, ProjID: ProjID })
         //group user and userprojlist
-        let data = list.map(i => {
-            let r = {
-                _id: i._id,
-                UserID: i.UserID,
-                UserPwd: i.UserPwd,
-                UserName: i.UserName,
-                UserSex: i.UserSex,
-                UserAge: i.UserAge,
-                UserPhoneNum: i.UserPhoneNum,
-                UserInDept: userdeptlist.find(d => d.UserID == i._id) != undefined
-            }
-            return r
-        })
+        let data = list
+            .filter(item => userinproj.filter(p => p.UserID == item._id).length > 0)
+            .map(i => {
+                let r = {
+                    _id: i._id,
+                    UserID: i.UserID,
+                    UserPwd: i.UserPwd,
+                    UserName: i.UserName,
+                    UserSex: i.UserSex,
+                    UserAge: i.UserAge,
+                    UserPhoneNum: i.UserPhoneNum,
+                    UserInDept: userdeptlist.find(d => d.UserID == i._id) != undefined
+                }
+                return r
+            })
         count = await User.count()
         return res.send(msg.genSuccessMsg("查询成功", data, { count: count }))
     }
 
-    if (isEdit == 'true' && DeptID == -1) {
-        console.log('编辑模式部门ID=-1')
-        let list = await User.find({})
-            .sort({ createdAt: -1 })
-            .limit(query.limit)
-            .skip(query.limit * query.page)
-            .exec();
-        count = await User.count()
-        return res.send(msg.genSuccessMsg("查询成功", list, { count: count }))
-    }
+    // if (isEdit == 'true' && DeptID == -1) {
+    //     console.log('编辑模式部门ID=-1')
+    //     let list = await User.find({})
+    //         .sort({ createdAt: -1 })
+    //         .limit(query.limit)
+    //         .skip(query.limit * query.page)
+    //         .exec();
+    //     //需要匹配项目.............................................................................
+    //     let userinproj = await UserProj.find({ UserID: { $in: ids }, ProjID: ProjID })
+    //     //group user and userprojlist
+    //     let data = list.filter(item => userinproj.filter(p => p.UserID == item._id).length > 0)
+    //     count = await User.count()
+    //     return res.send(msg.genSuccessMsg("查询成功", data, { count: count }))
+    // }
     //
     if (isEdit == 'false' && DeptID != -1) {
         console.log('非编辑模式且有部门ID')
@@ -364,9 +405,13 @@ exports.GetUserByDeptID = async (req, res) => {
 /**用户角色管理*******************************************************/
 /****************************************************************** */
 //获取角色资料
-exports.GetRole = async (req, res) => {
+exports.GetRoleByRoleID = async (req, res) => {
+    let query = {
+        SysFieldID: 'role',
+        item2: req.query.ProjID
+    }
     try {
-        let role = await SysTable.find({ SysFieldID: "role" })
+        let role = await SysTable.find(query)
         let result = role.map(i => {
             return {
                 label: i.item0,
@@ -390,8 +435,6 @@ exports.GetUserByRoleID = async (req, res) => {
     let ProjID = req.query.ProjID
     let count = query.limit
 
-    console.log('**********************' + RoleID)
-
     if (isEdit == 'true' && RoleID != -1) {// 
         console.log('编辑模式且有角色ID')
         let list = await User.find({})
@@ -401,20 +444,23 @@ exports.GetUserByRoleID = async (req, res) => {
             .exec();
         let ids = list.map(i => i._id.toString())
         let userrolelist = await UserRole.find({ UserID: { $in: ids }, RoleID: RoleID, ProjID: ProjID }).exec()//
+        let userinproj = await UserProj.find({ UserID: { $in: ids }, ProjID: ProjID })
         //group user and userprojlist
-        let data = list.map(i => {
-            let r = {
-                _id: i._id,
-                UserID: i.UserID,
-                UserPwd: i.UserPwd,
-                UserName: i.UserName,
-                UserSex: i.UserSex,
-                UserAge: i.UserAge,
-                UserPhoneNum: i.UserPhoneNum,
-                UserInRole: userrolelist.find(d => d.UserID == i._id) != undefined
-            }
-            return r
-        })
+        let data = list
+            .filter(item => userinproj.filter(p => p.UserID == item._id).length > 0)
+            .map(i => {
+                let r = {
+                    _id: i._id,
+                    UserID: i.UserID,
+                    UserPwd: i.UserPwd,
+                    UserName: i.UserName,
+                    UserSex: i.UserSex,
+                    UserAge: i.UserAge,
+                    UserPhoneNum: i.UserPhoneNum,
+                    UserInRole: userrolelist.find(d => d.UserID == i._id) != undefined
+                }
+                return r
+            })
         count = await User.count()
         return res.send(msg.genSuccessMsg("查询成功", data, { count: count }))
     }
@@ -492,14 +538,42 @@ exports.InsertOrDelUserRole = async (req, res) => {
 /****************************************************************** */
 /**设备管理***********************************************************/
 /****************************************************************** */
-exports.GetDevs = async (req, res) => {
+exports.GetDevsByRole = async (req, res) => {
+    let query = {
+        ProjID: req.query.ProjID,
+        page: parseInt(req.query.page) - 1,
+        limit: parseInt(req.query.limit),
+    }
+    if (!query.ProjID) return res.send(msg.genFailedMsg('请输入项目ID'))
+    let devs = await Device.find(query)
 
 }
 
 //获取萤石设备
 exports.GetYSDevs = async (req, res) => {
-    //1. 查询萤石数据获得所有的相机列表
-    //2. 查询设备列表
-    //3. 对比差异插入相机
+    let query = {
+        token: 'at.6r8wpspz9p6k5omn0d20oq7j5l139vwq-6ihmyg8top-1kdce8f-81yi0iht8'
+    }
+    try {
+        console.log('...............')
+        let cameralist = await YS.getCameraList(query)
+        // let result = 
+        if (cameralist.data.code == '200') {
+            let result = cameralist.data.data
+                .map(i => {
+                    return {
+                        DevID: i.deviceSerial,
+                        DevName: i.deviceName,
+                        DevStatus: i.status,
+                        DevVersion: i.deviceVersion,
+                        DevType: i.deviceType,
+                    }
+                })
+            res.send(msg.genSuccessMsg('查询成功', result, { count: cameralist.data.page.total }))
+        }
+    } catch (error) {
+        res.send(msg.genFailedMsg('查询失败->' + error))
+        console.log(error)
+    }
 }
 
