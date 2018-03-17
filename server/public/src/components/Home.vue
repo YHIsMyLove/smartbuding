@@ -28,7 +28,9 @@
 							<template slot="title">
 								<i :class="item.iconCls"></i>{{item.name}}</template>
 							<!--内嵌菜单-->
-							<el-menu-item v-for="child in item.children" v-if="!child.hidden" :index="child.path">{{child.name}}</el-menu-item>
+							<el-menu-item v-for="child in item.children" v-if="!child.hidden" :index="child.path">
+								{{child.name}}
+							</el-menu-item>
 						</el-submenu>
 						<!--单个菜单-->
 						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path">
@@ -62,142 +64,143 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				openedArr: [],
-				currentPath: ''
-			}
-		},
-		methods: {
-			onSubmit() {
-				// console.log('submit!');
-			},
-			handleopen() {
-				// console.log('handleopen');
-			},
-			handleclose() {
-				// console.log('handleclose');
-			},
-			handleselect: function (a, b) {
-			},
-			logout: function () {
-				var _this = this;
-				this.$confirm('确认退出吗?', '提示', {
-					type: 'warning'
-				}).then(() => {
-					_this.$router.replace('/login');
-				}).catch(() => {
-				});
-			}
-		}
-	}
+export default {
+  data() {
+    return {
+      openedArr: [],
+      currentPath: ""
+    };
+  },
+  methods: {
+    onSubmit() {
+      // console.log('submit!');
+    },
+    handleopen() {
+      // console.log('handleopen');
+    },
+    handleclose() {
+      // console.log('handleclose');
+    },
+    handleselect: function(a, b) {},
+    logout: function() {
+      var _this = this;
+      this.$confirm("确认退出吗?", "提示", {
+        type: "warning"
+      })
+        .then(() => {
+          _this.$router.replace("/login");
+        })
+        .catch(() => {});
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-	.panel {
-		position: absolute;
-		top: 0px;
-		bottom: 0px;
-		width: 100%;
-	}
+.panel {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  width: 100%;
+}
 
-	.panel-top {
-		height: 60px;
-		line-height: 60px;
-		background: #1F2D3D;
-		color: #c0ccda;
-	}
+.panel-top {
+  height: 60px;
+  line-height: 60px;
+  background: #1f2d3d;
+  color: #c0ccda;
+}
 
-	.panel-center {
-		background: #324057;
-		position: absolute;
-		top: 60px;
-		bottom: 0px;
-		overflow: hidden;
-	}
+.panel-center {
+  background: #324057;
+  position: absolute;
+  top: 60px;
+  bottom: 0px;
+  overflow: hidden;
+}
 
-	.logo-txt {
-		margin-left: 10px;
-		font-size: 20px;
-		i {
-			color: #20a0ff;
-			font-style: normal;
-		}
-		a {
-			font-size: 14px;
-			margin-left: 5px;
-			color: #fff;
-			text-decoration: none;
-			&:hover {
-				color: #ddd;
-			}
-		}
-	}
+.logo-txt {
+  margin-left: 10px;
+  font-size: 20px;
+  i {
+    color: #20a0ff;
+    font-style: normal;
+  }
+  a {
+    font-size: 14px;
+    margin-left: 5px;
+    color: #fff;
+    text-decoration: none;
+    &:hover {
+      color: #ddd;
+    }
+  }
+}
 
-	.left-aside {
-		width: 230px;
-		.aside-menu {}
-	}
+.left-aside {
+  width: 230px;
+  .aside-menu {
+  }
+}
 
-	.panel-c-c {
-		background: #f1f2f7;
-		position: absolute;
-		right: 0px;
-		top: 0px;
-		bottom: 0px;
-		left: 230px;
-		overflow-y: scroll;
-		padding: 20px;
-		.panel-inner-top {
-			margin-bottom: 15px;
-			.bread-crumb {
-				height: 22px;
-				line-height: 22px;
-				float: right;
-			}
-			strong {
-				width: 200px;
-				float: left;
-				color: #475669;
-			}
-		}
-		.panel-inner-bottom {
-			background-color: #fff;
-			box-sizing: border-box;
-			padding: 15px;
-		}
-	}
+.panel-c-c {
+  background: #f1f2f7;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  left: 230px;
+  overflow-y: scroll;
+  padding: 20px;
+  .panel-inner-top {
+    margin-bottom: 15px;
+    .bread-crumb {
+      height: 22px;
+      line-height: 22px;
+      float: right;
+    }
+    strong {
+      width: 200px;
+      float: left;
+      color: #475669;
+    }
+  }
+  .panel-inner-bottom {
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 15px;
+  }
+}
 
-	.logout {
-		// background: url(../assets/logout_36.png);
-		background-size: contain;
-		width: 20px;
-		height: 20px;
-		float: left;
-	}
+.logout {
+  // background: url(../assets/logout_36.png);
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  float: left;
+}
 
-	.logo {
-		width: 40px;
-		float: left;
-		margin: 10px 10px 10px 18px;
-	}
+.logo {
+  width: 40px;
+  float: left;
+  margin: 10px 10px 10px 18px;
+}
 
-	.tip-logout {
-		float: right;
-		margin-right: 20px;
-		padding-top: 5px;
-	}
+.tip-logout {
+  float: right;
+  margin-right: 20px;
+  padding-top: 5px;
+}
 
-	.tip-logout i {
-		cursor: pointer;
-	}
+.tip-logout i {
+  cursor: pointer;
+}
 
-	.admin {
-		color: #c0ccda;
-		margin-left: 20px;
-		i {
-			margin-right: 5px;
-		}
-	}
+.admin {
+  color: #c0ccda;
+  margin-left: 20px;
+  i {
+    margin-right: 5px;
+  }
+}
 </style>

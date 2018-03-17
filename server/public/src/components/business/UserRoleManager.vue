@@ -1,13 +1,10 @@
 <template>
   <div>
     <el-tabs style="width:100%;">
-      <el-tab-pane label="用户项目管理">
+      <el-tab-pane label="用户角色管理">
         <section>
           <el-col :span="24" class="toolbar">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
-              <el-form-item label="区域选择">
-                <el-cascader :options="prov_city_options" change-on-select @change="handleItemChange"></el-cascader>
-              </el-form-item>
               <el-form-item label="人员搜索">
                 <el-input placeholder="工号/姓名"></el-input>
               </el-form-item>
@@ -22,10 +19,12 @@
           <el-col :span="8">
             <el-card class="box-card" :body-style="{ padding: '0px' }">
               <div slot="header" class="clearfix">
-                <span>项目列表</span>
+                <span>角色列表</span>
               </div>
               <el-menu :default-active="default_active" @select="handleselect" >
-                <el-menu-item v-for="i,index in proj_data" :index="(index+'')">{{i.label}}</el-menu-item>
+                <el-menu-item v-for="i,index in role_data" :index="(index+'')">
+                    {{i.label}}
+                </el-menu-item>
               </el-menu>
             </el-card>
           </el-col>
@@ -45,7 +44,7 @@
               </el-table-column>
               <el-table-column v-if="isEdit" label="成员" width="100">
                 <template scope="scope">
-                  <el-switch v-model="scope.row.UserInProj" @change="changeUserProj(scope.row)"></el-switch>
+                  <el-switch v-model="scope.row.UserInRole" @change="changeUserRole(scope.row)"></el-switch>
                 </template>
               </el-table-column>
             </el-table>
@@ -72,39 +71,34 @@ export default {
   },
   data() {
     return {
-      curCityID: -1,
-      curProjID: -1,
+      curRoleID: -1,
       isEdit: false,
       isEditText: "查看模式",
       default_active: "0",
-      prov_city_options: [],
-      proj_data: [],
+      role_data: [],
       tableUserData: [],
-      formInline: {
-        user: ""
-      },
+      formInline: { user: "" },
       listLoading: false,
       currentPage: 0,
       tableDataLength: 0,
-      currentPageSize: 0,
-      curentDeptID: -1
+      currentPageSize: 0
     };
   },
   created() {
-    //this.getUserData();
-    this.getProvData();
+    this.getRoleData();
   },
   methods: {
     //设置用户项目
-    changeUserProj(row) {
+    changeUserRole(row) {
       let that = this;
       let query = {
         UserID: row._id,
-        ProjID: that.curProjID,
-        insertOrDel: row.UserInDept ? "insert" : "del"
+        ProjID: that.getProj,
+        RoleID: that.curRoleID,
+        insertOrDel: row.UserInRole ? "insert" : "del"
       };
       axios
-        .post("/api/InsertOrDelUserProj", query)
+        .post("/api/InsertOrDelUserRole", query)
         .then(res => {
           if (res.data.success) {
             that.$message({
@@ -117,71 +111,15 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    //选择项目
+    //选择角色
     handleselect(index) {
-      if (this.proj_data) {
-        this.curProjID = this.proj_data[index].value.id;
-        this.getUserData();
-      }
-    },
-    //省市项目级联选择
-    handleItemChange(val) {
-      this.curCityID = -1;
-      let cur_val = val[0];
-      let that = this;
-      let url = `/api/GetCityByProvID?item1=${cur_val.id}`;
-      axios
-        .get(url)
-        .then(res => {
-          if (res.data.success) {
-            let cur = that.prov_city_options.filter(
-              i => i.value.id == cur_val.id
-            )[0].children;
-            res.data.data.forEach(item => {
-              if (cur.filter(i => i.label == item.label).length == 0)
-                cur.push(item);
-            });
-            //完成后 查询项目列表
-            let firstcity = val[1];
-            if (!firstcity) return;
-            this.curCityID = firstcity.id;
-            if (firstcity) {
-              axios
-                .get(`/api/GetProjByCityID?item1=${firstcity.id}`)
-                .then(res => {
-                  if (res.data.success) {
-                    that.proj_data = res.data.data;
-                    that.default_active = "0";
-                    if (that.proj_data[0]) {
-                      that.curProjID = that.proj_data[0].value.id;
-                    } else {
-                      that.isEdit = false;
-                      that.isEditText = "查看模式";
-                      this.curProjID = -1;
-                    }
-                    that.getUserData();
-                  }
-                })
-                .catch(err => {
-                  console.log(err);
-                });
-            } else {
-              that.isEdit = false;
-              that.isEditText = "查看模式";
-              that.getUserData();
-            }
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.curRoleID = this.role_data[index].value;
+      this.getUserData();
     },
     //性别显示转换
     formatSex: function(row, column) {
       return row.UserSex == 1 ? "男" : row.UserSex == 0 ? "女" : "未知";
     },
-    handleEdit(row) {},
-    handleDel(row) {},
     handleSizeChange() {},
     handleCurrentChange() {},
     //切换编辑/查看模式
@@ -200,11 +138,12 @@ export default {
     //获取人员资料
     getUserData() {
       let that = this;
-      let url = `/api/GetUserByProjID`;
+      let url = `/api/GetUserByRoleID`;
       let params = {
         limit: that.$data.currentPageSize,
         page: that.$data.currentPage,
-        ProjID: that.curProjID,
+        ProjID: that.getProj,
+        RoleID: that.curRoleID,
         isEdit: that.isEdit
       };
       that.listLoading = true;
@@ -226,15 +165,22 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    //获取省份资料
-    getProvData() {
+    //获取角色信息
+    getRoleData() {
+      console.log("请求role");
       let that = this;
       axios
-        .get("/api/GetProv")
+        .get("/api/GetRole")
         .then(res => {
           if (res.data.success) {
-            that.prov_city_options = res.data.data;
+            that.role_data = res.data.data;
+            //console.log(that.role_data);
+            if (that.role_data[0]) {
+              that.curRoleID = that.role_data[0].value;
+              that.getUserData();
+            }
           }
+          //console.log(res.data);
         })
         .catch(err => console.log(err));
     }

@@ -1,31 +1,68 @@
-<template>
-    <section class="chart">
-        <el-row>
-            <el-col :span="12">
-                <div id="chartColumn" style="width:100%; height:400px;"></div>
-            </el-col>
-            <el-col :span="12">
-                <div id="chartBar" style="width:100%; height:400px;"></div>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="12">
-                <div id="chartLine" style="width:100%; height:400px;"></div>
-            </el-col>
-            <el-col :span="12">
-                <div id="chartPie" style="width:100%; height:400px;"></div>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="24">
-                <a href="http://echarts.baidu.com/examples.html" target="_blank" style="float: right;">more>></a>
-            </el-col>
-        </el-row>
-    </section>
-        <!-- </el-tab-pane>
-    </el-tabs> -->
+<template>        
+  <section class="chart">
+    <el-row>
+      <el-col :span="24">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item label="区域选择">
+            <el-cascader :options="prov_city_options" change-on-select @change="handleItemChange"></el-cascader>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+    <el-row>
+        <el-col :span="12">
+          <el-card :body-style="{ padding: '0px' }">
+            <div id="chartColumn" style="width:100%; height:400px;"></div>
+            <div style="padding: 14px;">
+              <!-- <span>好吃的汉堡</span> -->
+              <div class="bottom clearfix">
+                <time class="time">{{ currentDate }}</time>
+                <el-button type="text" class="button">操作按钮</el-button>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="12">
+          <el-card :body-style="{ padding: '0px' }">
+            <div id="chartBar" style="width:100%; height:400px;"></div>
+            <div style="padding: 14px;">
+              <!-- <span>好吃的汉堡</span> -->
+              <div class="bottom clearfix">
+                <time class="time">{{ currentDate }}</time>
+                <el-button type="text" class="button">操作按钮</el-button>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+    </el-row>
+    <el-row>
+        <el-col :span="12">
+          <el-card :body-style="{ padding: '0px' }">
+            <div id="chartLine" style="width:100%; height:400px;"></div>
+            <div style="padding: 14px;">
+              <!-- <span>好吃的汉堡</span> -->
+              <div class="bottom clearfix">
+                <time class="time">{{ currentDate }}</time>
+                <el-button type="text" class="button">操作按钮</el-button>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="12">
+          <el-card :body-style="{ padding: '0px' }">
+            <div id="chartPie" style="width:100%; height:400px;"></div>
+            <div style="padding: 14px;">
+              <!-- <span>好吃的汉堡</span> -->
+              <div class="bottom clearfix">
+                <time class="time">{{ currentDate }}</time>
+                <el-button type="text" class="button">操作按钮</el-button>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+    </el-row>
+  </section>
 </template>
-
 
 <script>
 import echarts from "echarts";
@@ -33,6 +70,7 @@ import echarts from "echarts";
 export default {
   data() {
     return {
+      currentDate: new Date(),
       chartColumn: null,
       chartBar: null,
       chartLine: null,
@@ -189,6 +227,9 @@ export default {
         }
       ]
     });
+  },
+  modules: {
+    
   }
 };
 </script>
@@ -200,5 +241,34 @@ export default {
 }
 .el-col {
   padding: 30px 20px;
+}
+.time {
+  font-size: 13px;
+  color: #999;
+}
+
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+
+.button {
+  padding: 0;
+  float: right;
+}
+
+.image {
+  width: 100%;
+  display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
 }
 </style>

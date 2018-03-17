@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs style="width:100%;">
-      <el-tab-pane label="部门管理">
+      <el-tab-pane label="用户部门管理">
         <section>
           <el-col :span="24" class="toolbar">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -33,7 +33,7 @@
               </el-table-column>
               <el-table-column v-if="isEdit" label="成员" width="100">
                 <template scope="scope">
-                  <el-switch v-model="scope.row.UserInDept"></el-switch>
+                  <el-switch v-model="scope.row.UserInDept" @change="changeUserDept(scope.row)"></el-switch>
                 </template>
               </el-table-column>
             </el-table>
@@ -60,8 +60,8 @@ export default {
       formInline: {
         user: ""
       },
-      isEditText: "编辑模式",
-      isEdit: true,
+      isEditText: "查看模式",
+      isEdit: false,
       expand: false,
       filterText: "",
       treeDeptData: [],
@@ -74,12 +74,11 @@ export default {
       currentPage: 0,
       tableDataLength: 0,
       currentPageSize: 0,
-      curentDeptID: -1
+      curDeptID: -1
     };
   },
   created() {
     this.getDeptsData();
-    this.getUserData();
   },
   computed: {
     // 使用对象展开运算符将 getters 混入 computed 对象中
@@ -89,6 +88,47 @@ export default {
     ])
   },
   methods: {
+    //设置用户部门
+    changeUserDept(row) {
+      console.log(row);
+
+      let that = this;
+      let query = {
+        UserID: row._id,
+        ProjID: that.getProj,
+        DeptID: that.curDeptID,
+        insertOrDel: row.UserInDept ? "insert" : "del"
+      };
+      axios
+        .post("/api/InsertOrDelUserDept", query)
+        .then(res => {
+          if (res.data.success) {
+            that.$message({
+              message: `[${row.UserName}]设置成功`,
+              type: "success"
+            });
+          } else {
+            console.log(res.data);
+          }
+        })
+        .catch(err => console.log(err));
+    },
+    //切换编辑/查看模式
+    changeEdit() {
+      this.isEdit = !this.isEdit;
+      this.isEditText = this.isEdit ? "编辑模式" : "查看模式";
+      this.getUserData();
+    },
+    //树节点切换事件
+    selectDeptTreeChange(node) {
+      this.curDeptID = node.ID;
+      this.getUserData();
+    },
+    //过滤树节点
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    },
     //性别显示转换
     formatSex: function(row, column) {
       return row.UserSex == 1 ? "男" : row.UserSex == 0 ? "女" : "未知";
@@ -97,41 +137,29 @@ export default {
     handleDel(row) {},
     handleSizeChange() {},
     handleCurrentChange() {},
-    //树节点切换事件
-    selectDeptTreeChange(node) {
-      console.log(node);
-      this.curentDeptID = node.ID;
-    },
-    //过滤树节点
-    filterNode(value, data) {
-      if (!value) return true;
-      return data.label.indexOf(value) !== -1;
-    },
-    //切换编辑/查看模式
-    changeEdit() {
-      this.isEdit = !this.isEdit;
-      this.isEditText = this.isEdit ? "编辑模式" : "查看模式";
-    },
     //获取部门数据
     getDeptsData() {
       let that = this;
       that.listLoading = true;
       NProgress.start();
-      console.log(this.getProj);
       axios
         .get(`/api/GetDeptByProjID?ProjID=${that.getProj}`)
         .then(res => {
+          if (res.data.success) {
+            that.treeDeptData = res.data.data;
+            //this.curDeptID = this.treeDeptData[0].ID;
+            this.getUserData();
+          } else {
+            //获取失败
+          }
           that.listLoading = false;
           NProgress.done();
-          if (res.data.success) {
-            console.log(res.data.data);
-            that.treeDeptData = res.data.data;
-          } else {
-            console.log(res.data);
-          }
         })
         .catch(err => {
           console.log(err);
+
+          that.listLoading = false;
+          NProgress.done();
         });
     },
     //获取人员资料
@@ -142,10 +170,9 @@ export default {
         limit: that.$data.currentPageSize,
         page: that.$data.currentPage,
         ProjID: that.getProj,
-        DeptID: that.curentDeptID,
+        DeptID: that.curDeptID,
         isEdit: that.isEdit
       };
-      console.log("*****************************************" + params.DeptID);
       that.listLoading = true;
       NProgress.start();
       axios
