@@ -11,8 +11,11 @@ namespace SmartConstructionServices.Events.Models
     {
         public string Name { get; set; }
         //主持人
-        public Contacts Compere { get; set; }
+        public string Compere { get; set; }
 
         public DateTime Time { get; set; }
+
+        //与当前用户相关的会议内容数量
+        public int RelationalContentCount { get; set; }
     }
 }

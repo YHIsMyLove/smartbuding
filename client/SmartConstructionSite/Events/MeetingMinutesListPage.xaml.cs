@@ -10,11 +10,16 @@ using Xamarin.Forms.Xaml;
 namespace SmartConstructionSite.Events
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MeetingMnutesListPage : ContentPage
+    public partial class MeetingMinutesListPage : ContentPage
     {
-        public MeetingMnutesListPage()
+        public MeetingMinutesListPage()
         {
             InitializeComponent();
+        }
+
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            listView.SelectedItem = null;
         }
     }
 }

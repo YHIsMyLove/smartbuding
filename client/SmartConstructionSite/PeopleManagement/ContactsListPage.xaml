@@ -5,14 +5,24 @@
              Title="人员监管">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
-            <StackLayout Orientation="Horizontal">
-                <Picker Title="项目" ItemsSource="{Binding Projects}" HorizontalOptions="FillAndExpand"></Picker>
-                <Picker Title="部门" ItemsSource="{Binding Departments}}" HorizontalOptions="FillAndExpand"></Picker>
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal" Padding="15,0,15,0">
+                    <Picker x:Name="pickerProjects" Title="项目" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" SelectedIndexChanged="pickerProjects_SelectedIndexChanged" HorizontalOptions="FillAndExpand"></Picker>
+                    <Picker x:Name="pickerDepartments" Title="部门" ItemsSource="{Binding Departments}}" SelectedItem="{Binding SelectedDepartment}" HorizontalOptions="FillAndExpand" IsEnabled="False"></Picker>
+                </StackLayout>
+                <BoxView HeightRequest="1" BackgroundColor="#ccc"></BoxView>
             </StackLayout>
-            <ListView ItemsSource="{Binding Contacts}" VerticalOptions="Fill" ItemTapped="ListView_ItemTapped">
+            <ListView x:Name="listView" ItemsSource="{Binding Contacts}" VerticalOptions="FillAndExpand" ItemTapped="ListView_ItemTapped" ItemSelected="listView_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Name}" Detail="{Binding Position}"></TextCell>
+                        <!--<TextCell Text="{Binding Name}" Detail="{Binding Position}"></TextCell>-->
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="15,0,15,0">
+                                <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center"></Label>
+                                <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="Center"></BoxView>
+                                <Label Text="{Binding Position}" VerticalOptions="Center"></Label>
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

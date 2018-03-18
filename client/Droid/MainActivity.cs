@@ -22,7 +22,12 @@ namespace SmartConstructionSite.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            Window.DecorView.SystemUiVisibility = StatusBarVisibility.Hidden;
+
             base.OnCreate(bundle);
+
+            
+            //Window.AddFlags(WindowManagerFlags.Fullscreen);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
@@ -36,6 +41,22 @@ namespace SmartConstructionSite.Droid
             app.CameraHelper.ShowCameraListRequested += CameraHelper_ShowCameraListRequested;
 
             LoadApplication(app);
+        }
+
+        protected void HideBottomUIMenu()
+        {
+            //隐藏虚拟按键，并且全屏
+            if ((int)Build.VERSION.SdkInt > 11 && (int)Build.VERSION.SdkInt < 19)
+            { // lower api
+                Android.Views.View v = Window.DecorView;
+                v.SystemUiVisibility = StatusBarVisibility.Hidden;
+            }        
+            else if ((int)Build.VERSION.SdkInt >= 19)
+            {
+                //for new api versions.
+                Android.Views.View decorView = Window.DecorView;
+                decorView.SystemUiVisibility = StatusBarVisibility.Hidden;
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)

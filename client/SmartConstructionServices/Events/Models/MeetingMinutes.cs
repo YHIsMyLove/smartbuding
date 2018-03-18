@@ -11,6 +11,11 @@ namespace SmartConstructionServices.Events.Models
     {
         public string Content { get; set; }
 
-        public IList<string> ExecuteDepartments { get; set; }
+        public string ExecuteDepartments { get; set; }
+
+        /// <summary>
+        /// 是否与当前用户相关
+        /// </summary>
+        public bool IsRelational { get; set; }
     }
 }

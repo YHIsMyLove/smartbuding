@@ -3,6 +3,7 @@ using SmartConstructionServices.Events.Models;
 using SmartConstructionServices.Events.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace SmartConstructionServices.Events.ViewModels
         {
             eventService = new EventService();
             FetchLatestEventsCommand = new Command(execute: async () => { await FetchLatestEvents(); }, canExecute: () => { return IsFetchLatestEventsCommandCanExecute(); });
+            FetchLatestEvents();
         }
 
         private bool IsFetchLatestEventsCommandCanExecute()
@@ -39,24 +41,18 @@ namespace SmartConstructionServices.Events.ViewModels
             }
             else
             {
-                List<Meeting> list = null;
-                if (meetings == null)
-                    list = new List<Meeting>();
-                else
-                    list = new List<Meeting>(meetings);
-                for (int i = result.Model.Count - 1; i >= 0; i--)
+                foreach (var item in result.Model)
                 {
-                    list.Insert(0, result.Model[i]);
+                    meetings.Add(item);
                 }
-                Meetings = list;
             }
         }
 
         #region Properties
 
-        public IList<Meeting> Meetings {
+        public ObservableCollection<PageTypeGroup> Meetings {
             get { return meetings; }
-            set {
+            private set {
                 if (meetings == value) return;
                 meetings = value;
                 NotifyPropertyChanged(nameof(Meetings));
@@ -74,7 +70,7 @@ namespace SmartConstructionServices.Events.ViewModels
         #region Fields
 
         private EventService eventService;
-        private IList<Meeting> meetings;
+        private ObservableCollection<PageTypeGroup> meetings = new ObservableCollection<PageTypeGroup>();
 
         #endregion
     }

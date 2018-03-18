@@ -14,5 +14,7 @@ namespace SmartConstructionServices.PeopleManagement.Models
         public string Position { get; set; }
         public string PhoneNumber { get; set; }
         public string PhotoUrl { get; set; }
+        public string Email { get; set; }
+        public string IdCard { get; set; }
     }
 }

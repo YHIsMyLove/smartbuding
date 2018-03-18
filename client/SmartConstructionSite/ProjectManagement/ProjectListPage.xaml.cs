@@ -17,9 +17,22 @@ namespace SmartConstructionSite.ProjectManagement
             viewModel = new ProjectListViewModel();
             BindingContext = viewModel;
 			InitializeComponent ();
-            viewModel.FetchProvincesCommand.Execute(null);
 		}
 
         ProjectListViewModel viewModel;
-	}
+
+        private void pickerProvinces_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ("无".Equals(pickerProvinces.SelectedItem))
+                pickerCities.IsEnabled = false;
+            else
+                pickerCities.IsEnabled = true;
+        }
+
+        private async void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            await Navigation.PopAsync(true);
+            listView.SelectedItem = null;
+        }
+    }
 }

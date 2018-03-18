@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using SmartConstructionServices.ProjectManagement.Services;
+using SmartConstructionServices.Common;
 
 namespace SmartConstructionServices.ProjectManagement.ViewModels
 {
@@ -21,6 +22,12 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             FindProjectsCommand = new Command(execute: async () => { await FindProjects(); }, canExecute: () => { return IsFindProjectCommandCanExecute(); });
             FetchProvincesCommand = new Command(execute: async () => { await FetchProvinces(); }, canExecute: () => { return IsFetchProvincesCommandCanExecute(); });
             FetchCitiesCommand = new Command(execute: async () => { await FetchCities(); }, canExecute: () => { return IsFetchCitiesCommandCanExecute(); });
+
+            provinces = SimpleData.Instance.GetProvinces();
+            selectedProvince = provinces[0];
+            cities = SimpleData.Instance.GetCities(selectedProvince);
+            selectedCity = cities[0];
+            projects = SimpleData.Instance.GetProjects(selectedProvince, selectedCity);
         }
 
         #region Properties
@@ -32,6 +39,11 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
                 if (selectedProvince == value) return;
                 selectedProvince = value;
                 DoPropertyChanged("SelectedProvince");
+
+                //update cities and projects
+                Cities = SimpleData.Instance.GetCities(selectedProvince);
+                Projects = SimpleData.Instance.GetProjects(selectedProvince);
+                selectedCity = Cities[0];
             }
         }
 
@@ -41,6 +53,9 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
                 if (selectedCity == value) return;
                 selectedCity = value;
                 DoPropertyChanged("SelectedCity");
+
+                //update projects
+                Projects = SimpleData.Instance.GetProjects(selectedProvince, selectedCity);
             }
         }
 
@@ -53,11 +68,11 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             }
         }
 
-        public IList<Project> Projects {
+        public IList<string> Projects {
             get => projects;
             private set {
                 if (projects == value) return;
-                projects = (List<Project>)value;
+                projects = value;
                 DoPropertyChanged("Projects");
             }
         }
@@ -66,7 +81,7 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             get => provinces;
             private set {
                 if (provinces == value) return;
-                provinces = (List<string>)value;
+                provinces = value;
                 DoPropertyChanged("Provinces");
             }
         }
@@ -75,7 +90,7 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             get => cities;
             private set {
                 if (cities == value) return;
-                cities = (List<string>)value;
+                cities = value;
                 DoPropertyChanged("Cities");
             }
         }
@@ -146,8 +161,8 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
         private string selectedProvince;
         private string selectedCity;
         private bool dataLoading;
-        private List<Project> projects;
-        private List<string> provinces;
-        private List<string> cities;
+        private IList<string> projects;
+        private IList<string> provinces;
+        private IList<string> cities;
     }
 }

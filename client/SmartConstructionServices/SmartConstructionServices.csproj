@@ -46,12 +46,17 @@
   <ItemGroup>
     <Compile Include="Account\Services\UserService.cs" />
     <Compile Include="Account\ViewModels\UserMainViewModel.cs" />
+    <Compile Include="Common\BehaviorBase.cs" />
     <Compile Include="Common\Error.cs" />
+    <Compile Include="Common\EventToCommandBehavior.cs" />
+    <Compile Include="Common\NumberToBooleanConverter.cs" />
     <Compile Include="Common\Result.cs" />
+    <Compile Include="Common\SimpleData.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="Events\Models\Event.cs" />
     <Compile Include="Events\Models\Meeting.cs" />
     <Compile Include="Events\Models\MeetingMinutes.cs" />
+    <Compile Include="Events\Models\PageTypeGroup.cs" />
     <Compile Include="Events\Services\EventService.cs" />
     <Compile Include="Events\ViewModels\EventDetailViewModel.cs" />
     <Compile Include="Events\ViewModels\EventListViewModel.cs" />

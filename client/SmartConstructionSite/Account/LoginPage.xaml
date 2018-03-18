@@ -10,14 +10,14 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Vertical" Padding="15" BackgroundColor="#3670d4">
             <ActivityIndicator IsRunning="{Binding IsBusy}"></ActivityIndicator>
-            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" IsEnabled="{Binding Path=IsBusy, Converter={StaticResource notConverter}}">
+            <Image Source="icon.png" HorizontalOptions="Center" Margin="0,50,0,50"></Image>
+            <StackLayout Orientation="Vertical" IsEnabled="{Binding Path=IsBusy, Converter={StaticResource notConverter}}">
                 <Label Text="{Binding Error.Description}" TextColor="Red" HorizontalOptions="Center" IsVisible="{Binding HasError}"></Label>
-                <Image Source="icon.png" HorizontalOptions="Center"></Image>
-                <Entry Placeholder="用户名" Text="{Binding Username}"></Entry>
-                <Entry Placeholder="密码" IsPassword="True" Text="{Binding Password}"></Entry>
-                <Button Text="登录" Command="{Binding LoginCommand}"></Button>
+                <Entry Placeholder="用户名" Text="{Binding Username}" TextColor="White" PlaceholderColor="White"></Entry>
+                <Entry Placeholder="密码" IsPassword="True" Text="{Binding Password}" PlaceholderColor="White" TextColor="White"></Entry>
+                <Button Text="登录" Command="{Binding LoginCommand}" Margin="0, 15, 0, 0" HeightRequest="60" BackgroundColor="White" TextColor="#3670d4"></Button>
             </StackLayout>
         </StackLayout>
         

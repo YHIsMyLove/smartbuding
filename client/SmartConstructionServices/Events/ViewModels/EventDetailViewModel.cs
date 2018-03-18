@@ -18,6 +18,7 @@ namespace SmartConstructionServices.Events.ViewModels
             eventService = new EventService();
             RefreshCommand = new Command(execute: async () => { await Refresh(); }, canExecute: () => { return IsRefreshCommandCanExecute(); });
             FetchMoreCommand = new Command(execute: async () => { await FetchMore(); }, canExecute: () => { return IsFetchMoreCommandCanExecute(); });
+            Refresh();
         }
 
         private bool IsFetchMoreCommandCanExecute()
@@ -25,9 +26,23 @@ namespace SmartConstructionServices.Events.ViewModels
             return !IsBusy;
         }
 
-        private Task FetchMore()
+        private async Task FetchMore()
         {
-            throw new NotImplementedException();
+            if (IsBusy) return;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
+            page++;
+            var result = await eventService.FetchMeetingMinutes(meeting, page, pageSize);
+            IsBusy = false;
+            HasError = result.HasError;
+            Error = result.Error;
+            if (!result.HasError && result.Model.Count > 0)
+            {
+                var list = new List<MeetingMinutes>(meetingMinutes);
+                list.AddRange(result.Model);
+                MeetingMinutes = list;
+            }
         }
 
         private async Task Refresh()
@@ -54,7 +69,7 @@ namespace SmartConstructionServices.Events.ViewModels
 
             if (!result.HasError)
             {
-                mettingMinutes = result.Model;
+                MeetingMinutes = result.Model;
             }
         }
 
@@ -68,6 +83,17 @@ namespace SmartConstructionServices.Events.ViewModels
                 if (meeting == value) return;
                 meeting = value;
                 NotifyPropertyChanged(nameof(Meeting));
+            }
+        }
+
+        public IList<MeetingMinutes> MeetingMinutes
+        {
+            get { return meetingMinutes; }
+            set
+            {
+                if (meetingMinutes == value) return;
+                meetingMinutes = value;
+                NotifyPropertyChanged(nameof(MeetingMinutes));
             }
         }
 
@@ -85,7 +111,7 @@ namespace SmartConstructionServices.Events.ViewModels
 
         private EventService eventService;
         private Meeting meeting;
-        private IList<MeetingMinutes> mettingMinutes;
+        private IList<MeetingMinutes> meetingMinutes;
         private int page = 1;
         private int pageSize = 10;
 

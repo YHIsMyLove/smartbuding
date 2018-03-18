@@ -22,7 +22,7 @@ namespace SmartConstructionSite
             userMainPage = new UserMainPage();
             userMainPage.ListView.ItemSelected += OnItemSelected;
             Master = userMainPage;
-            Detail = new NavigationPage(new ProjectManagementMainPage());
+            Detail = new NavigationPage(new HomePage());
             Appearing += MainPage_Appearing;
             ((UserMainViewModel)userMainPage.BindingContext).PropertyChanged += UserMainViewModel_PropertyChanged;
         }

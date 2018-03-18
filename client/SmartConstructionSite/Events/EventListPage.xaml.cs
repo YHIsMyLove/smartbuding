@@ -1,5 +1,6 @@
 ﻿using SmartConstructionServices.Events.Models;
 using SmartConstructionServices.Events.ViewModels;
+using SmartConstructionSite.Common;
 using System;
 using System.Collections.Generic;
 
@@ -18,12 +19,6 @@ namespace SmartConstructionSite.Events
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            viewModel.FetchLatestEventsCommand.Execute(null);
-        }
-
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             Meeting meeting = e.Item as Meeting;
@@ -34,6 +29,11 @@ namespace SmartConstructionSite.Events
             EventDetailPage detailPage = new EventDetailPage();
             detailPage.BindingContext = detailViewModel;
             await Navigation.PushAsync(detailPage);
+        }
+
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            listView.SelectedItem = null;
         }
     }
 }

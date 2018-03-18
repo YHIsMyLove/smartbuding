@@ -23,12 +23,12 @@ namespace SmartConstructionSite.Account
             InitializeComponent();
             if (ServiceContext.Instance.CurrentUser != null)
             {
-                imageUserPhoto.Source = new UriImageSource
-                {
-                    Uri = new Uri(ServiceContext.Instance.CurrentUser.UserHeadImg),
-                    CachingEnabled = true,
-                    CacheValidity = new TimeSpan(5, 0, 0, 0)
-                };
+                //imageUserPhoto.Source = new UriImageSource
+                //{
+                //    Uri = new Uri(ServiceContext.Instance.CurrentUser.UserHeadImg),
+                //    CachingEnabled = true,
+                //    CacheValidity = new TimeSpan(5, 0, 0, 0)
+                //};
             }
         }
 

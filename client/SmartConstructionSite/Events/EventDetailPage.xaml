@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SmartConstructionSite.Events.EventDetailPage"
-             Title="{Binding CurrentEvent.Name}">
+<xf:BottomBarPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:events ="clr-namespace:SmartConstructionSite.Events"
+            x:Class="SmartConstructionSite.Events.EventDetailPage"
+            xmlns:xf="clr-namespace:BottomBar.XamarinForms;assembly=BottomBar.XamarinForms"
+            Title="{Binding Meeting.Name}"
+            FixedMode="True">
 
-    <ContentPage Title="会议纪要"></ContentPage>
-    <ContentPage Title="会议照片"></ContentPage>
+    <events:MeetingMinutesListPage BindingContext="{Binding .}"></events:MeetingMinutesListPage>
+    <events:MeetingPictureListPage BindingContext="{Binding .}"></events:MeetingPictureListPage>
     
-</TabbedPage>
+</xf:BottomBarPage>

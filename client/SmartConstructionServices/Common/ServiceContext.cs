@@ -1,5 +1,6 @@
 ﻿using System;
 using SmartConstructionServices.Account.Models;
+using SmartConstructionServices.ProjectManagement.Models;
 
 namespace SmartConstructionServices.Common
 {
@@ -24,6 +25,10 @@ namespace SmartConstructionServices.Common
             get;
             set;
         }
+
+        public string Region { get; set; }
+
+        public string CurrentProject { get; set; }
 
         public string SessionID { get; set; }
 

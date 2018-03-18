@@ -7,25 +7,29 @@
              Title="用户信息">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
-            <StackLayout Orientation="Vertical" HeightRequest="200">
-                <Image x:Name="imageUserPhoto" WidthRequest="96" HeightRequest="96" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Image.Source>
+            <Grid HeightRequest="200">
+                <StackLayout Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Image x:Name="imageUserPhoto" Source="user.png" WidthRequest="96" HeightRequest="96">
+                        <!--<Image.Source>
                         <UriImageSource CachingEnabled="True" Uri="{Binding User.UserHeadImg}">
-                            <UriImageSource.CacheValidity>
+                            -->
+                        <!--<UriImageSource.CacheValidity>
                                 <x:TimeSpan>
 
                                 </x:TimeSpan>
-                            </UriImageSource.CacheValidity>
+                            </UriImageSource.CacheValidity>-->
+                        <!--
                         </UriImageSource>
-                    </Image.Source>
-                </Image>
-                <Label Text="{Binding User.UserName}" HorizontalOptions="Center" VerticalOptions="Center"></Label>
-            </StackLayout>
+                    </Image.Source>-->
+                    </Image>
+                    <Label Text="{Binding User.UserName}" HorizontalOptions="Center" FontSize="Medium"></Label>
+                </StackLayout>
+            </Grid>
             <BoxView BackgroundColor="#ccc" HeightRequest="1"></BoxView>
             <ListView x:Name="listView">
                 <ListView.ItemsSource>
                     <x:Array Type="{x:Type local:MasterPageItem}">
-                        <local:MasterPageItem Title="项目管理" IconSource="icon.png" TargetType="{x:Type ProjectManagement:ProjectManagementMainPage}" />
+                        <local:MasterPageItem Title="项目管理" IconSource="icon.png" TargetType="{x:Type local:HomePage}" />
                     </x:Array>
                 </ListView.ItemsSource>
                 <ListView.ItemTemplate>

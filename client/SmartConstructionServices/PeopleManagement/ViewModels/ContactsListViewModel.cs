@@ -1,6 +1,7 @@
 ﻿using SmartConstructionServices.Common;
 using SmartConstructionServices.PeopleManagement.Models;
 using SmartConstructionServices.PeopleManagement.Services;
+using SmartConstructionServices.ProjectManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,9 @@ namespace SmartConstructionServices.PeopleManagement.ViewModels
             contactsService = new ContactsService();
             FetchContactsCommand = new Command(execute: async () => { await FetchContacts(); }, canExecute: () => { return IsFetchContactsCommandCanExecute(); });
             FetchMoreContactsCommand = new Command(execute: async () => { await FetchMoreContacts(); }, canExecute: () => { return IsFetchMoreContactsCommandCanExecute(); });
+
+            Projects = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region);
+            Contacts = SimpleData.Instance.GetContacts(ServiceContext.Instance.CurrentProject);
         }
 
         #region Methods
@@ -121,6 +125,18 @@ namespace SmartConstructionServices.PeopleManagement.ViewModels
                 if (selectedProject == value) return;
                 selectedProject = value;
                 NotifyPropertyChanged(nameof(SelectedProject));
+
+                //Update departments and contacts
+                if ("无".Equals(selectedProject))
+                {
+                    SelectedDepartment = "无";
+                    Contacts = SimpleData.Instance.GetContacts(ServiceContext.Instance.CurrentProject);
+                }
+                else
+                {
+                    Departments = SimpleData.Instance.GetDepartments(selectedProject);
+                    Contacts = SimpleData.Instance.GetContacts(selectedProject);
+                }
             }
         }
 
@@ -130,6 +146,16 @@ namespace SmartConstructionServices.PeopleManagement.ViewModels
                 if (selectedDepartment == value) return;
                 selectedDepartment = value;
                 NotifyPropertyChanged(nameof(SelectedDepartment));
+
+                if (!"无".Equals(selectedDepartment))
+                    Contacts = SimpleData.Instance.GetContacts(selectedProject, selectedDepartment);
+                else
+                {
+                    if (!"无".Equals(selectedProject))
+                    {
+                        Contacts = SimpleData.Instance.GetContacts(selectedProject);
+                    }
+                }
             }
         }
 

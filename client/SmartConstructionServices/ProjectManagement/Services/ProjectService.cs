@@ -13,17 +13,13 @@ namespace SmartConstructionServices.ProjectManagement.Services
             
         }
 
-        internal async Task<Result<IList<Project>>> FindProjects(string province, string city)
+        internal async Task<Result<IList<string>>> FindProjects(string province, string city)
         {
             await Task.Delay(2000);
             return await Task.Run(() =>
             {
-                Result<IList<Project>> result = new Result<IList<Project>>();
-                result.Model = new List<Project>()
-                {
-                    new Project(){ Name = "黄石奥体中心建设项目" },
-                    new Project(){ Name = "黄石新下路区立交桥建设项目" }
-                };
+                Result<IList<string>> result = new Result<IList<string>>();
+                result.Model = SimpleData.Instance.GetProjects(province, city);
                 return result;
             });
         }
