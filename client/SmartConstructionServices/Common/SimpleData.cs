@@ -18,6 +18,8 @@ namespace SmartConstructionServices.Common
         private readonly Dictionary<string, List<Contacts>> departmentContactsDic = new Dictionary<string, List<Contacts>>();
         private readonly Dictionary<Meeting, List<MeetingMinutes>> meetingMinutesDic = new Dictionary<Meeting, List<MeetingMinutes>>();
         private readonly Dictionary<string, List<string>> cityDic = new Dictionary<string, List<string>>();
+        private readonly List<string> years = new List<string>();
+        private readonly List<string> months = new List<string>();
 
         public static SimpleData Instance
         {
@@ -57,7 +59,7 @@ namespace SmartConstructionServices.Common
             string region = province + city;
             if (projectDic.ContainsKey(region))
             {
-                List<string> list = projectDic[province];
+                List<string> list = projectDic[region];
                 list.Remove("无");
                 return list;
             }
@@ -95,6 +97,28 @@ namespace SmartConstructionServices.Common
         public List<MeetingMinutes> GetMeetingMinutes()
         {
             return meetingMinutesDic.Values.FirstOrDefault(); ;
+        }
+
+        public List<string> GetYears()
+        {
+            return years;
+        }
+
+        public List<string> GetMonths()
+        {
+            return months;
+        }
+
+        public List<string> GetDays(int year, int month)
+        {
+            int count = DateTime.DaysInMonth(year, month);
+            var days = new List<string>();
+            days.Add("无");
+            for (int i = 1; i <= count; i++)
+            {
+                days.Add(i.ToString());
+            }
+            return days;
         }
 
         private SimpleData()
@@ -178,7 +202,19 @@ namespace SmartConstructionServices.Common
             meetingMinutesDic.Add(meetings[1], minutes1);
             meetingMinutesDic.Add(meetings[2], minutes1);
             meetingMinutesDic.Add(meetings[3], minutes1);
+
+            years.Add("无");
+            for (int i = 1902; i <= 2037; i++)
+            {
+                years.Add(i.ToString());
+            }
+            months.Add("无");
+            for (int i = 1; i < 13; i++)
+            {
+                months.Add(i.ToString());
+            }
         }
+
         private static SimpleData instance;
     }
 }

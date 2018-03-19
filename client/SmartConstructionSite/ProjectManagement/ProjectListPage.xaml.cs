@@ -23,16 +23,16 @@ namespace SmartConstructionSite.ProjectManagement
 
         private void pickerProvinces_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if ("无".Equals(pickerProvinces.SelectedItem))
-                pickerCities.IsEnabled = false;
-            else
-                pickerCities.IsEnabled = true;
+            //if ("无".Equals(pickerProvinces.SelectedItem))
+            //    pickerCities.IsEnabled = false;
+            //else
+                //pickerCities.IsEnabled = true;
         }
 
-        private async void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            await Navigation.PopAsync(true);
             listView.SelectedItem = null;
+            //await Navigation.PopAsync(true);
         }
     }
 }

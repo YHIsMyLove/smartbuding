@@ -1,31 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:SmartConstructionSite.Common"
              x:Class="SmartConstructionSite.PeopleManagement.ContactsListPage"
              Title="人员监管">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical">
-            <StackLayout Orientation="Vertical">
-                <StackLayout Orientation="Horizontal" Padding="15,0,15,0">
-                    <Picker x:Name="pickerProjects" Title="项目" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" SelectedIndexChanged="pickerProjects_SelectedIndexChanged" HorizontalOptions="FillAndExpand"></Picker>
-                    <Picker x:Name="pickerDepartments" Title="部门" ItemsSource="{Binding Departments}}" SelectedItem="{Binding SelectedDepartment}" HorizontalOptions="FillAndExpand" IsEnabled="False"></Picker>
-                </StackLayout>
-                <BoxView HeightRequest="1" BackgroundColor="#ccc"></BoxView>
-            </StackLayout>
-            <ListView x:Name="listView" ItemsSource="{Binding Contacts}" VerticalOptions="FillAndExpand" ItemTapped="ListView_ItemTapped" ItemSelected="listView_ItemSelected">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <!--<TextCell Text="{Binding Name}" Detail="{Binding Position}"></TextCell>-->
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="15,0,15,0">
-                                <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center"></Label>
-                                <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="Center"></BoxView>
-                                <Label Text="{Binding Position}" VerticalOptions="Center"></Label>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+        <ListView x:Name="listView" ItemsSource="{Binding Contacts}" VerticalOptions="FillAndExpand" ItemTapped="ListView_ItemTapped" ItemSelected="listView_ItemSelected" SeparatorColor="#ccc">
+            <ListView.Header>
+                <Grid Padding="15,0,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <common:MyPicker Title="项目" VerticalOptions="Center" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" SelectedIndexChanged="pickerProjects_SelectedIndexChanged" HorizontalOptions="FillAndExpand"></common:MyPicker>
+                    <common:MyPicker Grid.Column="1" VerticalOptions="Center" Title="部门" ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}" HorizontalOptions="FillAndExpand"></common:MyPicker>
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!--<TextCell Text="{Binding Name}" Detail="{Binding Position}"></TextCell>-->
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="15,0,15,0">
+                            <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center"></Label>
+                            <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="Center"></BoxView>
+                            <Label Text="{Binding Position}" VerticalOptions="Center"></Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </ContentPage.Content>
 </ContentPage>

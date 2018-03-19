@@ -19,9 +19,6 @@
             android:orientation="vertical">
             <include
                 layout="@layout/real_play_control" />
-            <include
-                layout="@layout/camera_ctrl" />
-        <!--
             <FrameLayout
                 android:minWidth="25px"
                 android:minHeight="25px"
@@ -126,7 +123,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>
-            -->
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

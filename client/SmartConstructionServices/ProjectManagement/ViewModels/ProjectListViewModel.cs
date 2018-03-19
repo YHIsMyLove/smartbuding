@@ -12,10 +12,8 @@ using SmartConstructionServices.Common;
 
 namespace SmartConstructionServices.ProjectManagement.ViewModels
 {
-    public class ProjectListViewModel : INotifyPropertyChanged
+    public class ProjectListViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public ProjectListViewModel()
         {
             projectService = new ProjectService();
@@ -38,7 +36,7 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             {
                 if (selectedProvince == value) return;
                 selectedProvince = value;
-                DoPropertyChanged("SelectedProvince");
+                NotifyPropertyChanged(nameof(SelectedProvince));
 
                 //update cities and projects
                 Cities = SimpleData.Instance.GetCities(selectedProvince);
@@ -52,19 +50,10 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             set {
                 if (selectedCity == value) return;
                 selectedCity = value;
-                DoPropertyChanged("SelectedCity");
+                NotifyPropertyChanged(nameof(SelectedCity));
 
                 //update projects
                 Projects = SimpleData.Instance.GetProjects(selectedProvince, selectedCity);
-            }
-        }
-
-        public bool DataLoading {
-            get => dataLoading;
-            private set {
-                if (dataLoading == value) return;
-                dataLoading = value;
-                DoPropertyChanged("DataLoading");
             }
         }
 
@@ -73,7 +62,7 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             private set {
                 if (projects == value) return;
                 projects = value;
-                DoPropertyChanged("Projects");
+                NotifyPropertyChanged(nameof(Projects));
             }
         }
 
@@ -82,7 +71,7 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             private set {
                 if (provinces == value) return;
                 provinces = value;
-                DoPropertyChanged("Provinces");
+                NotifyPropertyChanged(nameof(Provinces));
             }
         }
 
@@ -91,7 +80,7 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
             private set {
                 if (cities == value) return;
                 cities = value;
-                DoPropertyChanged("Cities");
+                NotifyPropertyChanged(nameof(Cities));
             }
         }
         #endregion
@@ -105,24 +94,19 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
 
         #endregion
 
-        private void DoPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private async Task FindProjects()
         {
-            if (dataLoading) return;
-            DataLoading = true;
+            if (IsBusy) return;
+            IsBusy = true;
             var result = await projectService.FindProjects(selectedProvince, selectedCity);
             Projects = result.Model;
-            DataLoading = false;
+            IsBusy = false;
         }
 
         private async Task FetchProvinces()
         {
-            if (dataLoading) return;
-            DataLoading = true;
+            if (IsBusy) return;
+            IsBusy = true;
             var result = await projectService.FetchProvinces();
             Provinces = result.Model;
             if (Provinces.Count() > 0)
@@ -130,37 +114,36 @@ namespace SmartConstructionServices.ProjectManagement.ViewModels
                 result = await projectService.FetchCities(Provinces[0]);
                 Cities = result.Model;
             }
-            DataLoading = false;
+            IsBusy = false;
         }
 
         private async Task FetchCities()
         {
-            if (dataLoading) return;
-            DataLoading = true;
+            if (IsBusy) return;
+            IsBusy = true;
             var result = await projectService.FetchCities(selectedProvince);
             Cities = result.Model;
-            DataLoading = false;
+            IsBusy = false;
         }
 
         private bool IsFindProjectCommandCanExecute()
         {
-            return !dataLoading;
+            return !IsBusy;
         }
 
         private bool IsFetchProvincesCommandCanExecute()
         {
-            return !dataLoading;
+            return !IsBusy;
         }
 
         private bool IsFetchCitiesCommandCanExecute()
         {
-            return !dataLoading;
+            return !IsBusy;
         }
 
         private ProjectService projectService;
         private string selectedProvince;
         private string selectedCity;
-        private bool dataLoading;
         private IList<string> projects;
         private IList<string> provinces;
         private IList<string> cities;

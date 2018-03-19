@@ -25,15 +25,21 @@
                             </StackLayout.GestureRecognizers>
                             <Image Source="ic_location_little.png" WidthRequest="12" HeightRequest="12"></Image>
                             <Label Text="湖北省|黄石《中建八局黄石奥体中心项目》" TextColor="White" FontSize="Micro" VerticalOptions="Center"></Label>
+                            <BoxView HorizontalOptions="Fill"></BoxView>
+                            <Image Source="weather.png" WidthRequest="12" HeightRequest="12"></Image>
+                            <Label Text="3/12℃" FontSize="Micro" TextColor="White" VerticalOptions="Center"></Label>
                         </StackLayout>
                         <!--<Button x:Name="btnChangeProject" Text="湖北省|黄石《中建八局黄石奥体中心项目》" FontSize="Micro"  TextColor="White" BackgroundColor="#3670d4" Clicked="Handle_Clicked"></Button>-->
                         <!--                    <Label Text="3/12摄氏度" HorizontalOptions="End"></Label>-->
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-            <StackLayout Orientation="Horizontal" HeightRequest="40" Padding="15,0,0,15">
-                <Label Text="消息" VerticalOptions="Center"></Label>
-            </StackLayout>
+            <Grid x:Name="billborard" HeightRequest="60" IsClippedToBounds="true">
+                <StackLayout x:Name="message" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Center">
+                    <Image Source="ic_warnning_2.png" HeightRequest="16" WidthRequest="16"></Image>
+                    <Label Text="项目助手就要发布1.0版本啦" VerticalOptions="Center" LineBreakMode="NoWrap"></Label>
+                </StackLayout>
+            </Grid>
             <Grid VerticalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>

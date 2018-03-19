@@ -26,16 +26,16 @@ namespace SmartConstructionSite.ProjectManagement
             viewModel = new ProjectManagementMainViewModel();
             BindingContext = viewModel;
             InitializeComponent();
-            //Button.ButtonContentLayout contentLayout = new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Top, 5);
-            //btnDevMgr.ContentLayout = contentLayout;
-            //btnEnvMgr.ContentLayout = contentLayout;
-            //btnEvents.ContentLayout = contentLayout;
-            //btnAssetMgr.ContentLayout = contentLayout;
-            //btnSceneMgr.ContentLayout = contentLayout;
-            //btnPeopleMgr.ContentLayout = contentLayout;
-            //btnProductionMgr.ContentLayout = contentLayout;
-            //btnProjectProgress.ContentLayout = contentLayout;
-            //btnSpecialTaskCheck.ContentLayout = contentLayout;
+
+            Device.StartTimer(TimeSpan.FromMilliseconds(200), Rolling);
+        }
+
+        private bool Rolling()
+        {
+            message.Margin = new Thickness(message.Margin.Left - 5, 0, 0, 0);
+            if (message.Margin.Left <= -message.Width)
+                message.Margin = new Thickness(billborard.Width, 0, 0, 0);
+            return true;
         }
 
         async void Handle_Clicked(object sender, System.EventArgs e)

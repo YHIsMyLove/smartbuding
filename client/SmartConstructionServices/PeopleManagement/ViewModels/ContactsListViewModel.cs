@@ -20,8 +20,8 @@ namespace SmartConstructionServices.PeopleManagement.ViewModels
             FetchContactsCommand = new Command(execute: async () => { await FetchContacts(); }, canExecute: () => { return IsFetchContactsCommandCanExecute(); });
             FetchMoreContactsCommand = new Command(execute: async () => { await FetchMoreContacts(); }, canExecute: () => { return IsFetchMoreContactsCommandCanExecute(); });
 
-            Projects = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region);
-            Contacts = SimpleData.Instance.GetContacts(ServiceContext.Instance.CurrentProject);
+            projects = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region);
+            contacts = SimpleData.Instance.GetContacts(ServiceContext.Instance.CurrentProject);
         }
 
         #region Methods

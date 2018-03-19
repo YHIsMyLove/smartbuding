@@ -21,8 +21,8 @@ using Android.Content.PM;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
-    [Activity(Label = "@string/title_dev_list")]
-    public class CameraListActivity : Activity
+    [Activity(Label = "@string/title_dev_list", Theme = "@style/AppTheme")]
+    public class CameraListActivity : Android.Support.V7.App.AppCompatActivity
     {
         public const string AppKey = "443eed7d6dab47739915d6a237dcad34";
         public const string AccessTokenForTest = "at.5by3sdd31r32tq7jdoij227j8fmp4qmi-3glqvzc95u-02q3u1s-uayxejlrv";
@@ -107,7 +107,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             InitSDK();
             EZOpenSDK.Instance.SetAccessToken(AccessTokenForTest);
             IList<EZDeviceInfo> list = await CameraHelpers.FetchCameraList(0, 10);
-            cameraListAdapter.SetCameras(list);
+            cameraListAdapter.AddCameras("塔区", list.ToArray());
         }
 
         private void InitViews()

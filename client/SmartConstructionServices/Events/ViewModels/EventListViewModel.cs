@@ -19,6 +19,8 @@ namespace SmartConstructionServices.Events.ViewModels
             eventService = new EventService();
             FetchLatestEventsCommand = new Command(execute: async () => { await FetchLatestEvents(); }, canExecute: () => { return IsFetchLatestEventsCommandCanExecute(); });
             FetchLatestEvents();
+            years = SimpleData.Instance.GetYears();
+            months = SimpleData.Instance.GetMonths();
         }
 
         private bool IsFetchLatestEventsCommandCanExecute()
@@ -59,6 +61,82 @@ namespace SmartConstructionServices.Events.ViewModels
             }
         }
 
+        public List<string> Years
+        {
+            get { return years; }
+            set
+            {
+                if (years == value) return;
+                years = value;
+                NotifyPropertyChanged(nameof(Years));
+            }
+        }
+
+        public List<string> Months
+        {
+            get { return months; }
+            set
+            {
+                if (months == value) return;
+                months = value;
+                NotifyPropertyChanged(nameof(Months));
+            }
+        }
+
+        public List<string> Days
+        {
+            get { return days; }
+            set
+            {
+                if (days == value) return;
+                days = value;
+                NotifyPropertyChanged(nameof(Days));
+            }
+        }
+
+        public string SelectedYear
+        {
+            get { return selectedYear; }
+            set
+            {
+                if (selectedYear == value) return;
+                selectedYear = value;
+                NotifyPropertyChanged(nameof(SelectedYear));
+                UpdateDays();
+            }
+        }
+
+        private void UpdateDays()
+        {
+            if (!"无".Equals(selectedYear) && !"无".Equals(selectedMonth))
+            {
+                Days = SimpleData.Instance.GetDays(Convert.ToInt32(selectedYear), Convert.ToInt32(selectedMonth));
+            }
+        }
+
+        public string SelectedMonth
+        {
+            get { return selectedMonth; }
+            set
+            {
+                if (selectedMonth == value) return;
+                selectedMonth = value;
+                NotifyPropertyChanged(nameof(SelectedMonth));
+                UpdateDays();
+            }
+        }
+
+        public string SelectedDay
+        {
+            get { return selectedDay; }
+            set
+            {
+                if (selectedDay == value) return;
+                selectedDay = value;
+                NotifyPropertyChanged(nameof(SelectedDay));
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -71,6 +149,12 @@ namespace SmartConstructionServices.Events.ViewModels
 
         private EventService eventService;
         private ObservableCollection<PageTypeGroup> meetings = new ObservableCollection<PageTypeGroup>();
+        private List<string> years;
+        private List<string> months;
+        private List<string> days;
+        private string selectedYear;
+        private string selectedMonth;
+        private string selectedDay;
 
         #endregion
     }

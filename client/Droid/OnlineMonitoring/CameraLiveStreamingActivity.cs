@@ -143,19 +143,19 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             btnMaximize.Click += (sender, e) => Maximize();
 
             //camera ctrl
-            //btnTalkback = FindViewById<ImageButton>(Resource.Id.btnTalkback);
-            //btnTalkback.Enabled = device.IsSupportTalk() != EZConstants.EZTalkbackCapability.EZTalkbackNoSupport;
-            //btnTalkback.Click += (sender, e) => ShowTalkbackWindow();
+            btnTalkback = FindViewById<ImageButton>(Resource.Id.btnTalkback);
+            btnTalkback.Enabled = device.IsSupportTalk() != EZConstants.EZTalkbackCapability.EZTalkbackNoSupport;
+            btnTalkback.Click += (sender, e) => ShowTalkbackWindow();
 
-            //btnCtrl = FindViewById<ImageButton>(Resource.Id.btnCtrl);
-            //btnCtrl.Enabled = device.IsSupportPTZ;
-            //btnCtrl.Click += (sender, e) => ShowCtrlWindow();
+            btnCtrl = FindViewById<ImageButton>(Resource.Id.btnCtrl);
+            btnCtrl.Enabled = device.IsSupportPTZ;
+            btnCtrl.Click += (sender, e) => ShowCtrlWindow();
 
-            //btnCapture = FindViewById<ImageButton>(Resource.Id.btnCapture);
-            //btnCapture.Click += (sender, e) => DoCapture();
+            btnCapture = FindViewById<ImageButton>(Resource.Id.btnCapture);
+            btnCapture.Click += (sender, e) => DoCapture();
 
-            //btnRecord = FindViewById<ImageButton>(Resource.Id.btnRecord);
-            //btnRecord.Click += (sender, e) => DoRecord();
+            btnRecord = FindViewById<ImageButton>(Resource.Id.btnRecord);
+            btnRecord.Click += (sender, e) => DoRecord();
 
             View container = FindViewById(Resource.Id.viewCtrlToolsContainer);
             container.Enabled = device.IsSupportPTZ;
@@ -206,75 +206,75 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         /// <summary>
         /// Shows the talkback window.
         /// </summary>
-        //private void ShowTalkbackWindow()
-        //{
-        //    LayoutInflater inflater = (LayoutInflater)GetSystemService(LayoutInflaterService);
-        //    View view = inflater.Inflate(Resource.Layout.camera_talkback, null, true);
-        //    int height = FindViewById(Resource.Id.viewCameraCtrlContainer).Height;
-        //    PopupWindow window = new PopupWindow(view, ViewGroup.LayoutParams.MatchParent, height, true);
-        //    window.ShowAsDropDown((View)btnPlay.Parent);
+        private void ShowTalkbackWindow()
+        {
+            LayoutInflater inflater = (LayoutInflater)GetSystemService(LayoutInflaterService);
+            View view = inflater.Inflate(Resource.Layout.camera_talkback, null, true);
+            int height = FindViewById(Resource.Id.viewCameraCtrlContainer).Height;
+            PopupWindow window = new PopupWindow(view, ViewGroup.LayoutParams.MatchParent, height, true);
+            window.ShowAsDropDown((View)btnPlay.Parent);
 
-        //    ImageButton btnClose = view.FindViewById<ImageButton>(Resource.Id.btnClose);
-        //    btnClose.Touch += (sender, e) => window.Dismiss();
+            ImageButton btnClose = view.FindViewById<ImageButton>(Resource.Id.btnClose);
+            btnClose.Touch += (sender, e) => window.Dismiss();
 
-        //    RingView ringView = view.FindViewById<RingView>(Resource.Id.ringView);
-        //    ringView.Visibility = ViewStates.Invisible;
+            RingView ringView = view.FindViewById<RingView>(Resource.Id.ringView);
+            ringView.Visibility = ViewStates.Invisible;
 
-        //    Button btnTalk = view.FindViewById<Button>(Resource.Id.btnTalkback);
-        //    btnTalk.Touch += (sender, e) => {
-        //        switch (e.Event.Action)
-        //        {
-        //            case MotionEventActions.Down:
-        //                ringView.Visibility = ViewStates.Visible;
-        //                break;
-        //            case MotionEventActions.Up:
-        //                ringView.Visibility = ViewStates.Invisible;
-        //                break;
-        //        }
-        //    };
+            Button btnTalk = view.FindViewById<Button>(Resource.Id.btnTalkback);
+            btnTalk.Touch += (sender, e) => {
+                switch (e.Event.Action)
+                {
+                    case MotionEventActions.Down:
+                        ringView.Visibility = ViewStates.Visible;
+                        break;
+                    case MotionEventActions.Up:
+                        ringView.Visibility = ViewStates.Invisible;
+                        break;
+                }
+            };
 
-        //    window.Update();
-        //    ringView.Post(()=>{
-        //        ringView.SetMinRadiusAndDistance(btnTalk.Height / 2.0f, Utils.Dip2px(this, 22));
-        //    });
-        //}
+            window.Update();
+            ringView.Post(()=>{
+                ringView.SetMinRadiusAndDistance(btnTalk.Height / 2.0f, Utils.Dip2px(this, 22));
+            });
+        }
 
         /// <summary>
         /// Shows the control window.
         /// </summary>
-        //private void ShowCtrlWindow()
-        //{
-        //    LayoutInflater inflater = (LayoutInflater)GetSystemService(LayoutInflaterService);
-        //    View view = inflater.Inflate(Resource.Layout.camera_ctrl, null, true);
-        //    int height = FindViewById(Resource.Id.viewCameraCtrlContainer).Height;
-        //    PopupWindow window = new PopupWindow(view, ViewGroup.LayoutParams.MatchParent, height, true);
-        //    window.ShowAsDropDown((View)btnPlay.Parent);
+        private void ShowCtrlWindow()
+        {
+            LayoutInflater inflater = (LayoutInflater)GetSystemService(LayoutInflaterService);
+            View view = inflater.Inflate(Resource.Layout.camera_ctrl, null, true);
+            int height = FindViewById(Resource.Id.viewCameraCtrlContainer).Height;
+            PopupWindow window = new PopupWindow(view, ViewGroup.LayoutParams.MatchParent, height, true);
+            window.ShowAsDropDown((View)btnPlay.Parent);
 
-        //    View container = view.FindViewById(Resource.Id.viewCtrlToolsContainer);
+            View container = view.FindViewById(Resource.Id.viewCtrlToolsContainer);
 
-        //    ImageButton btnClose = view.FindViewById<ImageButton>(Resource.Id.btnClose);
-        //    btnClose.Touch += (sender, e) => window.Dismiss();
+            ImageButton btnClose = view.FindViewById<ImageButton>(Resource.Id.btnClose);
+            btnClose.Touch += (sender, e) => window.Dismiss();
 
-        //    ImageButton btnUp = view.FindViewById<ImageButton>(Resource.Id.btnUp);
-        //    btnUp.Touch += async (sender, e) => {
-        //        await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandUp, e.Event.Action, container);
-        //    };
+            ImageButton btnUp = view.FindViewById<ImageButton>(Resource.Id.btnUp);
+            btnUp.Touch += async (sender, e) => {
+                await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandUp, e.Event.Action, container);
+            };
 
-        //    ImageButton btnDown = view.FindViewById<ImageButton>(Resource.Id.btnDown);
-        //    btnDown.Touch += async (sender, e) => {
-        //        await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandDown, e.Event.Action, container);
-        //    };
+            ImageButton btnDown = view.FindViewById<ImageButton>(Resource.Id.btnDown);
+            btnDown.Touch += async (sender, e) => {
+                await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandDown, e.Event.Action, container);
+            };
 
-        //    ImageButton btnLeft = view.FindViewById<ImageButton>(Resource.Id.btnLeft);
-        //    btnLeft.Touch += async (sender, e) => {
-        //        await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandLeft, e.Event.Action, container);
-        //    };
+            ImageButton btnLeft = view.FindViewById<ImageButton>(Resource.Id.btnLeft);
+            btnLeft.Touch += async (sender, e) => {
+                await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandLeft, e.Event.Action, container);
+            };
 
-        //    ImageButton btnRight = view.FindViewById<ImageButton>(Resource.Id.btnRight);
-        //    btnRight.Touch += async (sender, e) => {
-        //        await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandRight, e.Event.Action, container);
-        //    };
-        //}
+            ImageButton btnRight = view.FindViewById<ImageButton>(Resource.Id.btnRight);
+            btnRight.Touch += async (sender, e) => {
+                await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandRight, e.Event.Action, container);
+            };
+        }
 
         /// <summary>
         /// Sends the command.

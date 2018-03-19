@@ -30,10 +30,7 @@ namespace SmartConstructionServices.ProjectManagement.Services
             return await Task.Run(() =>
             {
                 Result<IList<string>> result = new Result<IList<string>>();
-                result.Model = new List<string>()
-                {
-                    "湖北省", "湖南省"
-                };
+                result.Model = SimpleData.Instance.GetProvinces();
                 return result;
             });
         }
@@ -44,16 +41,7 @@ namespace SmartConstructionServices.ProjectManagement.Services
             return await Task.Run(() =>
             {
                 Result<IList<string>> result = new Result<IList<string>>();
-                if (province == "湖北省")
-                    result.Model = new List<string>()
-                    {
-                        "武汉市", "黄冈市"
-                    };
-                else
-                    result.Model = new List<string>()
-                    {
-                        "长沙市", "郴州市"
-                    };
+                result.Model = SimpleData.Instance.GetCities(province);
                 return result;
             });
         }

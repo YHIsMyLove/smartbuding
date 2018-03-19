@@ -38,10 +38,10 @@ namespace SmartConstructionSite.PeopleManagement
 
         private void pickerProjects_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            if ("无".Equals(pickerProjects.SelectedItem))
-                pickerDepartments.IsEnabled = false;
-            else
-                pickerDepartments.IsEnabled = true;
+            //if ("无".Equals(pickerProjects.SelectedItem))
+            //    pickerDepartments.IsEnabled = false;
+            //else
+                //pickerDepartments.IsEnabled = true;
         }
     }
 }
