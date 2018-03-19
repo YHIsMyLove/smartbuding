@@ -2,31 +2,17 @@
   <section class="chart">
     <el-row>
       <el-col :span="24">
-        <!-- <el-form class="demo-form-inline">
-          <el-form-item label="区域选择">
-            <el-cascader ></el-cascader>
-          </el-form-item>
-        </el-form> -->
+          <el-checkbox-group v-model="checkList">
+            <el-checkbox v-model="checkList" v-for="i in showList" :key="i.id" :label="i.label"></el-checkbox>
+          </el-checkbox-group>
       </el-col>
     </el-row>
+
     <el-row>
-        <el-col :span="12">
+        <el-col :span="12" v-for="i in showList" v-show="checkList.filter(item=>item == i.label).length > 0">
           <el-card :body-style="{ padding: '0px' }">
-            <div id="chartColumn" style="width:100%; height:400px;"></div>
+            <div :id="i.id" style="width:100%; height:400px;"></div>
             <div style="padding: 14px;">
-              <!-- <span>好吃的汉堡</span> -->
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="12">
-          <el-card :body-style="{ padding: '0px' }">
-            <div id="chartBar" style="width:100%; height:400px;"></div>
-            <div style="padding: 14px;">
-              <!-- <span>好吃的汉堡</span> -->
               <div class="bottom clearfix">
                 <time class="time">{{ currentDate }}</time>
                 <el-button type="text" class="button">操作按钮</el-button>
@@ -35,41 +21,22 @@
           </el-card>
         </el-col>
     </el-row>
-    <el-row>
-        <el-col :span="12">
-          <el-card :body-style="{ padding: '0px' }">
-            <div id="chartLine" style="width:100%; height:400px;"></div>
-            <div style="padding: 14px;">
-              <!-- <span>好吃的汉堡</span> -->
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="12">
-          <el-card :body-style="{ padding: '0px' }">
-            <div id="chartPie" style="width:100%; height:400px;"></div>
-            <div style="padding: 14px;">
-              <!-- <span>好吃的汉堡</span> -->
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-    </el-row>
+    
   </section>
 </template>
 
 <script>
 import echarts from "echarts";
-
 export default {
   data() {
     return {
+      checkList: ["柱状图", "条状图"],
+      showList: [
+        { id: "chartColumn", label: "柱状图" },
+        { id: "chartBar", label: "条状图" },
+        { id: "chartLine", label: "线状图" },
+        { id: "chartPie", label: "饼图" }
+      ],
       currentDate: new Date(),
       chartColumn: null,
       chartBar: null,
@@ -81,9 +48,13 @@ export default {
     var _this = this;
     //基于准备好的dom，初始化echarts实例
     this.chartColumn = echarts.init(document.getElementById("chartColumn"));
+    console.log("3");
     this.chartBar = echarts.init(document.getElementById("chartBar"));
+    console.log("4");
     this.chartLine = echarts.init(document.getElementById("chartLine"));
+    console.log("5");
     this.chartPie = echarts.init(document.getElementById("chartPie"));
+    console.log("6");
 
     this.chartColumn.setOption({
       title: { text: "Column Chart" },
@@ -228,7 +199,6 @@ export default {
       ]
     });
   },
-  modules: {}
 };
 </script>
 

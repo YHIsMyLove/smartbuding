@@ -18,16 +18,25 @@ const cos = new COS({
  * 7. sliceUploadFile 分片上传 params{bucket,region,key,filepath}
  * 8. deleteObject 删除实体 params{bucket,region,key} 
  */
-exports.UpLoad = function (key, callback) {
-    cos.sliceUploadFile({
+exports.Upload = async (key) => {
+    let result = await cos.sliceUploadFile({
         Bucket: config.Qcos_Bucket,
         Region: config.Qcos_Region,
-        Key: key,
+        key: key,
         FilePath: `./${key}`
-    }, function (err, data) {
-        if (err) {
-            return callback(err, null)
-        }
-        callback(null, data.Location)
-    });
+    })
+    return result
+}
+
+//putBucket
+
+exports.GetFiles = async (query) => {
+    let params = {
+        Bucket: config.Qcos_Bucket,
+        Region: config.Qcos_Region,
+        MaxKeys: query.currentPageSize,//单次返回最大的条目数量,
+        //Prefix: '',//模糊搜索
+    };
+    let result = await cos.getBucket(params)
+    return result
 }

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const mettingMinutesSchema = new Schema({
     MettingID: String,
     Content: String,
-    DeptID: String
+    Status: Number
 })
 
 mettingMinutesSchema.pre('save', function (next) {

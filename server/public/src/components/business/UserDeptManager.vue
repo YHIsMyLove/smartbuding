@@ -143,7 +143,7 @@ export default {
       that.listLoading = true;
       NProgress.start();
       axios
-        .get(`/api/GetDeptByProjID?ProjID=${that.getProj}`)
+        .get(`/api/GetDeptTreeByProjID?ProjID=${that.getProj}`)
         .then(res => {
           if (res.data.success) {
             that.treeDeptData = res.data.data;

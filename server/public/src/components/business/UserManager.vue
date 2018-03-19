@@ -120,7 +120,6 @@ export default {
       });
     };
     return {
-      valueeeeee: false,
       formInline: {
         user: ""
       },

@@ -21,6 +21,9 @@ import DeviceRoleManager from './components/business/DeviceRoleManager.vue'
 import DeviceManager from './components/business/DeviceManager.vue'
 import YSDeviceManager from './components/business/YSDeviceManager.vue'
 import SystemRoleManager from './components/business/SystemRoleManager.vue'
+import Metting from './components/business/Metting.vue'
+import FileManager from './components/business/FileManager.vue'
+import MettingMinutesManager from './components/business/MettingMinutesManager.vue'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
@@ -40,6 +43,7 @@ const routes = [
         children: [
             { path: '/', component: Main, name: '主页' },
             { path: '/SysFieldManager', component: SysFieldManager, name: '系统管理' },
+            { path: '/FileManager', component: FileManager, name: '文件管理' },
         ]
     },
     {
@@ -65,35 +69,26 @@ const routes = [
             { path: '/YSDeviceManager', component: YSDeviceManager, name: '萤石设备管理' },
         ]
     },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '权限管理',
+    //     iconCls: 'fa fa-id-card-o',
+    //     children: [
+    //         { path: '/DeviceRoleManager', component: DeviceRoleManager, name: '设备权限管理' },
+    //         { path: '/SystemRoleManager', component: SystemRoleManager, name: '系统权限管理' },
+    //     ]
+    // },
     {
         path: '/',
         component: Home,
-        name: '权限管理',
+        name: '会议管理',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/DeviceRoleManager', component: DeviceRoleManager, name: '设备权限管理' },
-            { path: '/SystemRoleManager', component: SystemRoleManager, name: '系统权限管理' },
+            { path: '/Metting', component: Metting, name: '会议管理' },
+            // { path: '/MettingMinutesManager', component: MettingMinutesManager, name: '会议内容管理' },
         ]
     },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: '导航三',
-    //     iconCls: 'fa fa-address-card',
-    //     leaf: true,
-    //     children: [
-    //         { path: '/page6', component: Page6, name: '导航三' }
-    //     ]
-    // },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: 'Charts',
-    //     iconCls: 'fa fa-bar-chart',
-    //     children: [
-    //         { path: '/echarts', component: echarts, name: 'echarts' }
-    //     ]
-    // },
     {
         path: '*',
         redirect: '/',

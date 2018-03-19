@@ -4,7 +4,7 @@
 		<el-col :span="24" class="panel-top">
 			<el-col :span="20">
 				<span class="logo-txt">
-					<i>智慧工地后台</i>
+					<i>工地项目助手</i>
 				</span>
 			</el-col>
 			<el-col :span="4">
@@ -67,6 +67,7 @@
 export default {
   data() {
     return {
+      showList: [],
       openedArr: [],
       currentPath: ""
     };

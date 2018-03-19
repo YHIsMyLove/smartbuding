@@ -3,7 +3,6 @@ const msg = require("../../utils/message")
 const SystemConfig = require('../../config/config')
 const YS = require('../../utils/yingshi')
 const Qcos = require('../../utils/Qcos.js')
-const moment = require('moment')
 
 const UserSession = mongoose.model('UserSession')
 const SysTable = mongoose.model('SysTable')
@@ -12,7 +11,6 @@ const UserDept = mongoose.model('UserDept')
 const UserProj = mongoose.model('UserProj')
 const UserRole = mongoose.model('UserRole')
 const Device = mongoose.model('Device')
-const Metting = mongoose.model('Metting')
 
 /****************************************************************** */
 /**系统登录***********************************************************/
@@ -363,14 +361,26 @@ exports.GetUserByDeptID = async (req, res) => {
 
     if (isEdit == 'true' && DeptID != -1) {// 
         console.log('编辑模式且有部门ID')
-        let list = await User.find({})
+        //1. 查询用户项目表
+        let userinproj = await UserProj.find({ ProjID: ProjID })
+            .limit(query.limit)
+            .skip(query.limit * query.page)
+
+        //2. 映射一个人员ID列表
+        let ids_proj = userinproj.map(i => i.UserID.toString())
+
+        //3. 查询用户部门表 筛选该部门的人员
+        let userdeptlist = await UserDept.find({ UserID: { $in: ids_proj }, DeptID: DeptID, ProjID: ProjID })
+
+        //4.  映射一个人员ID列表
+        let ids_dept = userdeptlist.map(i => i.UserID.toString())
+
+        let list = await User.find({ _id: { $in: ids_dept } })
             .sort({ createdAt: -1 })
             .limit(query.limit)
             .skip(query.limit * query.page)
             .exec();
         let ids = list.map(i => i._id.toString())
-        let userinproj = await UserProj.find({ UserID: { $in: ids }, ProjID: ProjID })
-        let userdeptlist = await UserDept.find({ UserID: { $in: ids }, DeptID: DeptID, ProjID: ProjID })
         //group user and userprojlist
         let data = list
             .filter(item => userinproj.filter(p => p.UserID == item._id).length > 0)
@@ -391,14 +401,25 @@ exports.GetUserByDeptID = async (req, res) => {
         return res.send(msg.genSuccessMsg("查询成功", data, { count: count }))
     }
 
+    // if (isEdit == 'true' && DeptID == -1) {
+    //     console.log('编辑模式部门ID=-1')
+    //     let list = await User.find({})
+    //         .sort({ createdAt: -1 })
+    //         .limit(query.limit)
+    //         .skip(query.limit * query.page)
+    //         .exec();
+    //     //需要匹配项目.............................................................................
+    //     let userinproj = await UserProj.find({ UserID: { $in: ids }, ProjID: ProjID })
+    //     //group user and userprojlist
+    //     let data = list.filter(item => userinproj.filter(p => p.UserID == item._id).length > 0)
+    //     count = await User.count()
+    //     return res.send(msg.genSuccessMsg("查询成功", data, { count: count }))
+    // }
+    //
     if (isEdit == 'false' && DeptID != -1) {
         console.log('非编辑模式且有部门ID')
         try {
             let result = await UserDept.find({ ProjID: ProjID, DeptID: DeptID }).select('UserID')
-                .limit(query.limit)
-                .skip(query.limit * query.page)
-            count = await UserDept.find({ ProjID: ProjID, DeptID: DeptID }).count()
-
             let q = result.map(i => {
                 return {
                     "_id": i.UserID
@@ -406,8 +427,11 @@ exports.GetUserByDeptID = async (req, res) => {
             })
             let users = await User.find({ _id: { $in: q } })
                 .sort({ createdAt: -1 })
+                .limit(query.limit)
+                .skip(query.limit * query.page)
                 .exec()
-            console.log(users)
+            count = await User.find({ _id: { $in: q } }).count()
+
             return res.send(msg.genSuccessMsg("查询成功", users, { count: count }))
         } catch (error) {
             return res.send(msg.genFailedMsg("查询失败"))
@@ -590,62 +614,7 @@ exports.GetYSDevs = async (req, res) => {
         console.log(error)
     }
 }
-/****************************************************************** */
-/**文件上传***********************************************************/
-/****************************************************************** */
-exports.GetMettings = async (req, res) => {
-    let query = {
-        ProjID: req.query.ProjID,
-        page: parseInt(req.query.page) - 1,
-        limit: parseInt(req.query.limit)
-    }
-    try {
-        let result = await Metting.list(query)
-        // let ids = result.map(i => {
-        //     return {
-        //         _id: i.Compere
-        //     }
-        // })
-        // let users = await User.find({ _id: { $in: ids } }).select('_id UserName').exec()
-        let data = result.map(i => {
-            return {
-                _id: i._id,
-                MettingName: i.MettingName,
-                MettingCreatedAt: moment(i.MettingCreatedAt).format('YYYY-MM-DD hh:mm:ss'),
-                // Compere: users.filter(u => u._id == i.Compere)[0].UserName,
-                Compere: i.Compere
-            }
-        })
-        let count = await Metting.count()//.find({ ProjID: query.ProjID })
-        console.log(count)
-        res.send(msg.genSuccessMsg('查询成功', data, { count: count }))
 
-    } catch (error) {
-        res.send(msg.genFailedMsg('查询失败->' + error))
-    }
-}
-
-//插入或修改会议信息
-exports.InsertOrUpdateMetting = async (req, res) => {
-    try {
-        if (req.body._id == undefined) {
-            let metting = new Metting(req.body)
-            await metting.updateAndSave();
-        } else {
-            let metting = req.metting
-            metting = Object.assign(Metting, req.body);
-            await metting.updateAndSave();
-        }
-        res.send(msg.genSuccessMsg('保存成功'))
-    } catch (error) {
-        res.send(msg.genFailedMsg('保存失败->' + error))
-    }
-}
-
-//删除会议
-exports.DelMetting = async (req, res) => {
-
-}
 
 /****************************************************************** */
 /**文件上传***********************************************************/

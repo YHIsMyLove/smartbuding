@@ -10,10 +10,14 @@ router.get("/GetProjByCityID", business.GetProjByCityID)
 router.post("/InsertOrDelUserProj", business.InsertOrDelUserProj)
 router.post("/InsertOrDelUserDept", business.InsertOrDelUserDept)
 router.post("/InsertOrDelUserRole", business.InsertOrDelUserRole)
+router.get("/GetDeptTreeByProjID", business.GetDeptTreeByProjID)
 router.get("/GetDeptByProjID", business.GetDeptByProjID)
 router.get("/GetUserByProjID", business.GetUserByProjID)
 router.get("/GetUserByDeptID", business.GetUserByDeptID)
 router.get("/GetUserByRoleID", business.GetUserByRoleID)
+
+router.post("/InsertOrUpdateMetting", business.InsertOrUpdateMetting)
+router.get("/GetMettings", business.GetMettings)
 
 
 router.get("/GetYSDevs", business.GetYSDevs)

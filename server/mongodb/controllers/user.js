@@ -39,8 +39,6 @@ exports.load = async(function* (req, res, next, id) {
 })
 
 exports.create = async(function* (req, res) {
-    console.log("***********************************************")
-    console.log(req.body)
     if (Object.keys(req.body).length === 0) {
         return res.send(msg.genFailedMsg('body不能为空'))
     }
@@ -55,15 +53,12 @@ exports.create = async(function* (req, res) {
 })
 
 exports.update = async(function* (req, res) {
-    console.log('修改')
     try {
         let user = req.user;
-        console.log(JSON.stringify(req.user))
         user = Object.assign(user, req.body);
         yield user.updateAndSave();
         res.send(msg.genSuccessMsg('保存成功'))
     } catch (error) {
-        console.log(error);
         res.send(msg.genFailedMsg('保存失败'))
     }
 })
