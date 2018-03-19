@@ -23,10 +23,10 @@
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
                             </StackLayout.GestureRecognizers>
-                            <Image Source="ic_location_little.png" WidthRequest="12" HeightRequest="12"></Image>
+                            <Image Source="ic_location_little.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"></Image>
                             <Label Text="湖北省|黄石《中建八局黄石奥体中心项目》" TextColor="White" FontSize="Micro" VerticalOptions="Center"></Label>
                             <BoxView HorizontalOptions="Fill"></BoxView>
-                            <Image Source="weather.png" WidthRequest="12" HeightRequest="12"></Image>
+                            <Image Source="weather.png" WidthRequest="16" HeightRequest="16"></Image>
                             <Label Text="3/12℃" FontSize="Micro" TextColor="White" VerticalOptions="Center"></Label>
                         </StackLayout>
                         <!--<Button x:Name="btnChangeProject" Text="湖北省|黄石《中建八局黄石奥体中心项目》" FontSize="Micro"  TextColor="White" BackgroundColor="#3670d4" Clicked="Handle_Clicked"></Button>-->

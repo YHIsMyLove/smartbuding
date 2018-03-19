@@ -157,32 +157,32 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             btnRecord = FindViewById<ImageButton>(Resource.Id.btnRecord);
             btnRecord.Click += (sender, e) => DoRecord();
 
-            View container = FindViewById(Resource.Id.viewCtrlToolsContainer);
-            container.Enabled = device.IsSupportPTZ;
+            //View container = FindViewById(Resource.Id.viewCtrlToolsContainer);
+            //container.Enabled = device.IsSupportPTZ;
 
-            ImageButton btnUp = FindViewById<ImageButton>(Resource.Id.btnUp);
-            btnUp.Touch += async (sender, e) =>
-            {
-                await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandUp, e.Event.Action, container);
-            };
+            //ImageButton btnUp = FindViewById<ImageButton>(Resource.Id.btnUp);
+            //btnUp.Touch += async (sender, e) =>
+            //{
+            //    await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandUp, e.Event.Action, container);
+            //};
 
-            ImageButton btnDown = FindViewById<ImageButton>(Resource.Id.btnDown);
-            btnDown.Touch += async (sender, e) =>
-            {
-                await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandDown, e.Event.Action, container);
-            };
+            //ImageButton btnDown = FindViewById<ImageButton>(Resource.Id.btnDown);
+            //btnDown.Touch += async (sender, e) =>
+            //{
+            //    await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandDown, e.Event.Action, container);
+            //};
 
-            ImageButton btnLeft = FindViewById<ImageButton>(Resource.Id.btnLeft);
-            btnLeft.Touch += async (sender, e) =>
-            {
-                await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandLeft, e.Event.Action, container);
-            };
+            //ImageButton btnLeft = FindViewById<ImageButton>(Resource.Id.btnLeft);
+            //btnLeft.Touch += async (sender, e) =>
+            //{
+            //    await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandLeft, e.Event.Action, container);
+            //};
 
-            ImageButton btnRight = FindViewById<ImageButton>(Resource.Id.btnRight);
-            btnRight.Touch += async (sender, e) =>
-            {
-                await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandRight, e.Event.Action, container);
-            };
+            //ImageButton btnRight = FindViewById<ImageButton>(Resource.Id.btnRight);
+            //btnRight.Touch += async (sender, e) =>
+            //{
+            //    await DoCtrl(EZConstants.EZPTZCommand.EZPTZCommandRight, e.Event.Action, container);
+            //};
 
             viewToolsNormalState = FindViewById(Resource.Id.viewToolsNormalState);
         }
