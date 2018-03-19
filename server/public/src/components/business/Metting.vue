@@ -83,28 +83,37 @@
                     </el-form-item>
                 </el-form>
             </el-col>
-            <div v-for="i in tabContent">
+            <div v-for="i,index in tabContent" :key="index">
               <el-card class="box-card">
               <div slot="header" class="clearfix">
-              <span>{{i.label}}</span>
-              <el-button style="float: right; padding: 3px 2px" type="text">发布</el-button>
-              <!-- <el-button style="float: right; padding: 3px 2px" type="text">推送</el-button> -->
+                <span>
+                    <el-input style="float: left; width:30%" v-model="i.label"></el-input>
+                </span>
+                <el-button  @click="delcontent(index)" style="float: right; padding: 3px 2px" type="text">删除</el-button>
+                <el-button  @click="Send2Person" style="float: right; padding: 3px 2px" type="text">推送</el-button>
               </div>
                 <el-input type="textarea" v-model="i.content"  placeholder="输入内容"></el-input>
               </el-card>
             </div>
+
+            <SelectDept :Visible="Visible" @ShowDialog="ShowDialog"/>
+
         </section>
 
       </el-tab-pane>
  </el-tabs>
 </template>
 <script>
+import SelectDept from "../businesscontrols/SelectDept.vue";
 import util from "../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
 import { mapGetters } from "vuex";
 import moment from "moment";
 export default {
+  components: {
+    SelectDept: SelectDept
+  },
   computed: {
     ...mapGetters(["getProj"])
   },
@@ -117,6 +126,7 @@ export default {
       }
     };
     return {
+      Visible: false,
       tabContent: [
         {
           label: "test",
@@ -126,14 +136,6 @@ export default {
           label: "test1",
           content:
             "水电费供电所覆盖和第三方好人发帖后居然同意让他与肉体与肉体与肉体与肉体与人体在徐州宣传部V型从正射"
-        },
-        {
-          label: "test2",
-          content: "是东方红东方国际体育课堂与"
-        },
-        {
-          label: "test3",
-          content: "水电费多少个第三方合法的国际化的风格和结果返回结果符合就"
         }
       ],
       activeTabName: "metting",
@@ -171,8 +173,28 @@ export default {
     this.getMetting();
   },
   methods: {
+    ShowDialog(v) {
+      this.Visible = v;
+      console.log("ssssssss");
+    },
+    Send2Person() {
+      this.Visible = true;
+    },
+    delcontent(row) {
+      console.log(row);
+      this.$confirm("是否删除该内容", "系统提示", {
+        type: "warning"
+      }).then(() => {
+        this.tabContent.splice(row, 1);
+      });
+    },
     //新建内容
-    newContent() {},
+    newContent() {
+      this.tabContent.push({
+        label: "会议内容",
+        content: ""
+      });
+    },
     //更换激活tab
     changeActive(tab) {
       if (this.activeTabName == tab.name) {

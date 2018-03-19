@@ -30,7 +30,7 @@ import echarts from "echarts";
 export default {
   data() {
     return {
-      checkList: ["柱状图", "条状图"],
+      checkList: ["柱状图", "条状图", "线状图", "饼图"],
       showList: [
         { id: "chartColumn", label: "柱状图" },
         { id: "chartBar", label: "条状图" },
@@ -198,7 +198,7 @@ export default {
         }
       ]
     });
-  },
+  }
 };
 </script>
 
