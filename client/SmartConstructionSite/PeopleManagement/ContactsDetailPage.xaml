@@ -14,18 +14,18 @@
                     </Image>
                     <Label HorizontalOptions="Center" Text="{Binding Contacts.Name}" FontSize="Medium"></Label>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <StackLayout x:Name="btnCall" Orientation="Vertical" Margin="15">
+                        <StackLayout x:Name="btnCall" Orientation="Vertical" Margin="10">
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
                             </StackLayout.GestureRecognizers>
-                            <Image WidthRequest="32" HeightRequest="32" Source="action_call.png"></Image>
+                            <Image WidthRequest="32" HeightRequest="32" Source="ic_call.png"></Image>
                             <Label Text="呼叫" HorizontalOptions="Center"></Label>
                         </StackLayout>
-                        <StackLayout x:Name="btnSend" Orientation="Vertical" Margin="15">
+                        <StackLayout x:Name="btnSend" Orientation="Vertical" Margin="10">
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
                             </StackLayout.GestureRecognizers>
-                            <Image WidthRequest="32" HeightRequest="32" Source="action_call.png"></Image>
+                            <Image WidthRequest="32" HeightRequest="32" Source="ic_send.png"></Image>
                             <Label Text="发送" HorizontalOptions="Center"></Label>
                         </StackLayout>
                     </StackLayout>

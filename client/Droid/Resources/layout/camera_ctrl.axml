@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg">
-  <!--
     <ImageButton
         android:id="@+id/btnClose"
         android:layout_width="wrap_content"
@@ -11,7 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:background="@drawable/play_close_selector"
-        android:onClick="onClick" />-->
+        android:onClick="onClick" />
     <LinearLayout
         android:id="@+id/viewCtrlToolsContainer"
         android:layout_width="wrap_content"

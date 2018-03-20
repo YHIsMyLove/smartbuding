@@ -14,7 +14,18 @@ namespace SmartConstructionSite.Common
             label.Text = Title;
         }
 
-		protected override void OnParentSet()
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            //HeightRequest = label.Height + 4;
+        }
+
+        protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
+        {
+            return base.OnMeasure(widthConstraint, heightConstraint);
+        }
+
+        protected override void OnParentSet()
 		{
             base.OnParentSet();
             label.Text = Title;

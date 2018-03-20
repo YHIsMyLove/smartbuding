@@ -6,13 +6,12 @@ using Android.Views;
 using Android.OS;
 using SmartConstructionSite.Droid.OnlineMonitoring;
 using Xamarin.Forms;
-using Plugin.Toasts;
 using Android.Runtime;
 using Plugin.Permissions;
 
 namespace SmartConstructionSite.Droid
 {
-    [Activity(Label = "SmartConstructionSite.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/app_name", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         App app;
@@ -31,8 +30,8 @@ namespace SmartConstructionSite.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
-            DependencyService.Register<ToastNotification>(); // Register your dependency
-            ToastNotification.Init(this);
+            //DependencyService.Register<ToastNotification>(); // Register your dependency
+            //ToastNotification.Init(this);
 
             app = new App();
             app.SetFullScreen(false);

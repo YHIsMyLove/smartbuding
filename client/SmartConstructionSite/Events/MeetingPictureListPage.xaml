@@ -5,9 +5,7 @@
              Title="会议照片">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="没有照片" HorizontalOptions="Center" Margin="15"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

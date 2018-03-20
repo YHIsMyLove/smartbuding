@@ -108,10 +108,8 @@ namespace SmartConstructionServices.Events.ViewModels
 
         private void UpdateDays()
         {
-            if (!"无".Equals(selectedYear) && !"无".Equals(selectedMonth))
-            {
-                Days = SimpleData.Instance.GetDays(Convert.ToInt32(selectedYear), Convert.ToInt32(selectedMonth));
-            }
+            if (selectedYear == null || selectedMonth == null || "无".Equals(selectedYear) || "无".Equals(selectedMonth)) return;
+            Days = SimpleData.Instance.GetDays(Convert.ToInt32(selectedYear), Convert.ToInt32(selectedMonth));
         }
 
         public string SelectedMonth

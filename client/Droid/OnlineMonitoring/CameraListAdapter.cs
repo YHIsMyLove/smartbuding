@@ -21,7 +21,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         Context context;
         //List<EZDeviceInfo> devices;
         //List<string> groups;
-        List<Java.Lang.Object> datas = new List<Java.Lang.Object>();
+        List<object> datas = new List<object>();
         Dictionary<string, IList<EZDeviceInfo>> deviceDic = new Dictionary<string, IList<EZDeviceInfo>>();
 
         public CameraListAdapter(Context context)
@@ -64,7 +64,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
 
 		public override Java.Lang.Object GetItem(int position)
         {
-            return datas.Count == 0 ? null : datas[position];
+            return datas.Count == 0 ? null : (Java.Lang.Object)datas[position];
         }
 
         public override long GetItemId(int position)
@@ -80,7 +80,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             if (view != null)
                 holder = view.Tag as CameraListAdapterViewHolder;
 
-            Java.Lang.Object data = datas[position];
+            object data = datas[position];
             bool isGroup = deviceDic.ContainsKey(datas[position].ToString());
 
             if (holder == null)
@@ -112,7 +112,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             else
             {
                 //it is device
-                EZDeviceInfo device = data.JavaCast<EZDeviceInfo>();
+                EZDeviceInfo device = (EZDeviceInfo)data;
                 holder.TextViewName.Text = device.DeviceName;
                 String imageUrl = device.DeviceCover;
                 if (!TextUtils.IsEmpty(imageUrl))
