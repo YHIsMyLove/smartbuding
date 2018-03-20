@@ -96,7 +96,7 @@
               </el-card>
             </div>
 
-            <SelectDept :Visible="Visible" @ShowDialog="ShowDialog"/>
+            <SelectDept :Visible="Visible" @cancelEdit="cancelEdit" @submitEdit="submitEdit"/>
 
         </section>
 
@@ -173,9 +173,13 @@ export default {
     this.getMetting();
   },
   methods: {
-    ShowDialog(v) {
-      this.Visible = v;
-      console.log("ssssssss");
+    //取消编辑
+    cancelEdit() {
+      this.Visible = false;
+    },
+    //提交编辑
+    submitEdit() {
+      this.Visible = false;
     },
     Send2Person() {
       this.Visible = true;

@@ -1,13 +1,17 @@
 <template>
-    <el-dialog title="选择部门" v-model="dialogVisible" :close-on-click-modal="true">
-        <div v-for="i,index in Depts" :key="index">
-            <el-col :span="12">{{i.label}}</el-col>
-            <el-col :span="12"><el-switch v-model="i.Selected"  active-color="#13ce66" inactive-color="#ff4949"></el-switch></el-col>
-        </div>
+    <el-dialog title="选择部门" v-model="Visible" :close-on-click-modal="true">
+
+          <el-form :inline="true" class="demo-form-inline">
+            <el-form-item v-for="i,index in Depts" :key="index" :label="i.label">
+            <el-switch v-model="i.Selected"  active-color="#13ce66" inactive-color="#ff4949"/>
+            </el-form-item>
+          </el-form>
+     
         <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="editSubmit" >确定</el-button>
+            <el-button @click="cancelEdit">取 消</el-button>
+            <el-button type="primary" @click="submitEdit" >确定</el-button>
         </div>
+     
     </el-dialog>
 </template>
 <script>
@@ -23,22 +27,21 @@ export default {
   props: ["Visible"],
   data() {
     return {
-      dialogVisible: this.Visible,
-      Depts: [{ DeptName: "", Selected: false }]
+      Depts: [{ DeptID: "", DeptName: "", Selected: false }]
     };
   },
   created() {
     this.getDepts();
   },
-  watch: {
-    Visible(o, n) {
-      this.dialogVisible = o;
-    }
-  },
   methods: {
-    editSubmit() {
-      this.dialogVisible = false;
-      this.$emit("ShowDialog", this.dialogVisible);
+    cancelEdit() {
+      this.$emit("cancelEdit");
+      this.Depts.forEach(element => {
+        element.Selected = false;
+      });
+    },
+    submitEdit() {
+      this.$emit("submitEdit", this.Depts);
     },
     //获取部门资料
     getDepts() {
@@ -60,6 +63,8 @@ export default {
 };
 </script>
 <style scoped>
-
+.deptGroup {
+  margin-top: 2px;
+}
 </style>
 
