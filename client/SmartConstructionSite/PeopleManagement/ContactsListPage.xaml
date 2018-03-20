@@ -7,7 +7,7 @@
     <ContentPage.Content>
         <ListView x:Name="listView" ItemsSource="{Binding Contacts}" VerticalOptions="FillAndExpand" ItemTapped="ListView_ItemTapped" ItemSelected="listView_ItemSelected" SeparatorColor="#ccc">
             <ListView.Header>
-                <Grid Padding="15,10,15,10">
+                <Grid Padding="15,0,15,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>

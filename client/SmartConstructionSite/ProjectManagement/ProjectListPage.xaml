@@ -5,7 +5,7 @@
              x:Class="SmartConstructionSite.ProjectManagement.ProjectListPage"
              Title="项目搜索" IsBusy="{Binding DataLoading}">
     <ContentPage.Content>
-        <ListView x:Name="listView" ItemSelected="listView_ItemSelected" ItemsSource="{Binding Projects}" SelectedItem="Binding SelectedProject" SeparatorColor="#ccc">
+        <ListView x:Name="listView" ItemSelected="listView_ItemSelected" ItemsSource="{Binding Projects}" SelectedItem="Binding_SelectedProject" ItemTapped="Handle_ItemTapped" SeparatorColor="#ccc">
             <ListView.Header>
                 <Grid Padding="15,0,15,0">
                     <Grid.ColumnDefinitions>
@@ -18,7 +18,21 @@
             </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding .}" TextColor="#3670d4"></TextCell>
+                    <ViewCell>
+                        <Grid Padding="15,0,15,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding .}" VerticalOptions="Center" TextColor="#3670d4"></Label>
+
+                            <Image Source="ic_location_normal.png" VerticalOptions="Center" Grid.Column="1"></Image>
+
+<!--                            <BoxView WidthRequest="1" Color="#ccc" VerticalOptions="Fill" HorizontalOptions="End" Margin="15,0,15,0"></BoxView>-->
+                            
+                        </Grid>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

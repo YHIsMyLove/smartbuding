@@ -34,7 +34,7 @@ namespace SmartConstructionServices.Account.ViewModels
             {
                 ServiceContext.Instance.CurrentUser = result.Model;
                 ServiceContext.Instance.Region = "湖北省黄石市";
-                ServiceContext.Instance.CurrentProject = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region)[1];
+                ServiceContext.Instance.CurrentProject = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region)[0];
                 IsLoginSucceed = true;
             }
         }

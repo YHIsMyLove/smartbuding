@@ -34,5 +34,10 @@ namespace SmartConstructionSite.ProjectManagement
             listView.SelectedItem = null;
             //await Navigation.PopAsync(true);
         }
+
+        async void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
     }
 }
