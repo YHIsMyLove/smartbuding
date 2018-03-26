@@ -91,7 +91,8 @@ export default {
   computed: {
     // 使用对象展开运算符将 getters 混入 computed 对象中
     ...mapGetters([
-      "getProj"
+      "getProj",
+      "getYSToken"
       // ...
     ])
   },
@@ -193,8 +194,9 @@ export default {
       var params = {
         limit: that.$data.currentPageSize,
         page: that.$data.currentPage,
-        accessToken: ""
+        token: that.getYSToken
       };
+      //console.log(that.getYSToken)
       axios.get("/api/GetYSDevs", { params: params }).then(function(res) {
         that.$data.tableData = res.data.data;
         that.$data.tableDataLength = res.data.meta.count;

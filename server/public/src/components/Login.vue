@@ -15,36 +15,54 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import util from "../common/util";
+import NProgress from "nprogress";
+import moment from "moment";
 export default {
+  computed: {
+    ...mapGetters(["getProj", "getSession", "getYSToken"])
+  },
   data() {
+    //检查是否登录成功
+    var checkLogin = (rule, value, callback) => {};
     return {
       ruleForm2: {
         UserID: "",
         UserPwd: ""
       },
       rules2: {
-        UserID: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        UserPwd: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        UserID: [
+          { required: true, message: "请输入账号", trigger: "blur" }
+          // { validator: checkLogin, trigger: "blur" }
+        ],
+        UserPwd: [
+          { required: true, message: "请输入密码", trigger: "blur" }
+          // { validator: checkLogin, trigger: "blur" }
+        ]
       },
       checked: true
     };
   },
   methods: {
+    ...mapActions(["setLogin"]),
     handleReset2() {
       this.$refs.ruleForm2.resetFields();
     },
     checklogin(ev) {
-      console.log('asdasd')
       var _this = this;
       axios.post("/api/login", this.ruleForm2).then(function(res, err) {
-        console.log(res.data.success);
-        console.log(err);
         if (err || !res.data.success) {
           console.log("登录失败");
+          _this.$message({
+            type: "error",
+            message: res.data.msg
+          });
           return false;
         }
-        console.log("登录成功");
+        _this.setLogin(res.data.data);
+        console.log(_this.getYSToken);
         _this.$router.replace("/table");
       });
     }

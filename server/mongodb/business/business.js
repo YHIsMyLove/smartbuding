@@ -32,28 +32,34 @@ exports.login = async (req, res) => {
     } else {
         try {
             //1. 查询session
-            let session = await UserSession.find({ UserID: query.UserID }).exec()
-            if (session.length == 0) {
-                //2. 匹配账号密码
-                let _user = await User.findOne({ UserID: query.UserID }).exec()
-                if (_user.length == 0) return res.send(msg.genFailedMsg('该账号不存在!'))
-                if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!'))
-            }
+            var sessionid = ''
+            let session = await UserSession.findOne({ UserID: query.UserID }).exec()
+            sessionid = session._id
+            console.log(sessionid)
+            //2. 匹配账号密码
+            let _user = await User.findOne({ UserID: query.UserID }).exec()
+            if (_user.length == 0) return res.send(msg.genFailedMsg('该账号不存在!'))
+            if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!'))
             //3. 将数据存进/更新session表
-            let _usersession = new UserSession({
-                UserID: query.UserID
-            })
-            await _usersession.updateAndSave()
+            if (sessionid == '') {
+                let _usersession = new UserSession({
+                    UserID: _user.UserID
+                })
+                await _usersession.updateAndSave()
+                sessionid = _usersession._id
+                console.log(sessionid)
+            }
             //4. 取出萤石的token
             let ys_result = await YS.getaccessToken()
             let ystoken = ys_result.data.code == '200' ? ys_result.data.data.accessToken : ''
+            //5. 取出默认省份/城市/项目?需要吗
             return res.send(msg.genSuccessMsg('登录成功', {
                 UserID: query.UserID,
-                SessionID: _usersession._id,
+                SessionID: sessionid,
                 YSToken: ystoken
             }))
         } catch (error) {
-            return res.send(msg.genFailedMsg('未知错误!'))
+            return res.send(msg.genFailedMsg('未知错误!' + error))
         }
     }
 }
@@ -566,10 +572,10 @@ exports.GetDevsByRole = async (req, res) => {
 //获取萤石设备
 exports.GetYSDevs = async (req, res) => {
     let query = {
-        token: 'at.6r8wpspz9p6k5omn0d20oq7j5l139vwq-6ihmyg8top-1kdce8f-81yi0iht8'
+        token: req.query.token
     }
     try {
-        console.log('...............')
+        console.log(query.token)
         let cameralist = await YS.getCameraList(query)
         // let result = 
         if (cameralist.data.code == '200') {

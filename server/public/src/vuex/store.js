@@ -17,7 +17,7 @@ const state = {
     //省份ID
     provid: '',
     //萤石Token
-    ystoken: 'at.6r8wpspz9p6k5omn0d20oq7j5l139vwq-6ihmyg8top-1kdce8f-81yi0iht8',
+    ystoken: '',
     //人员session
     sessionid: ''
 }
@@ -33,6 +33,19 @@ const mutations = {
     //请求选择的项目
     GETPROJ(state) {
         state.proj
+    },
+    GETSESSION(state) {
+        state.sessionid
+    },
+    GETYSTOKEN(state) {
+        state.ystoken
+    },
+    SETLOGIN(state, LOGINSTATE) {
+        state.sessionid = LOGINSTATE.SessionID
+        state.ystoken = LOGINSTATE.YSToken
+        // state.proj = LOGINSTATE.proj
+        // state.provid = LOGINSTATE.provid
+        // state.cityid = LOGINSTATE.cityid
     }
 }
 

@@ -41,10 +41,20 @@ const routes = [
         name: '系统管理',
         iconCls: 'fa fa-id-card-o',//图标样式class
         children: [
-            { path: '/', component: Main, name: '主页' },
-            { path: '/SysFieldManager', component: SysFieldManager, name: '系统管理' },
-            { path: '/FileManager', component: FileManager, name: '文件管理' },
-        ]
+            {
+                path: '/', component: Main, name: '主页',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/SysFieldManager', component: SysFieldManager, name: '系统管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/FileManager', component: FileManager, name: '文件管理',
+                meta: { redirectAuth: true }
+            },
+        ],
+        meta: { redirectAuth: true }
     },
     {
         path: '/',
@@ -52,12 +62,25 @@ const routes = [
         name: '用户管理',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/UserManager', component: UserManager, name: '用户管理' },
-            { path: '/UserProjManager', component: UserProjManager, name: '用户项目管理' },
-            { path: '/UserDeptManager', component: UserDeptManager, name: '用户部门管理' },
-            { path: '/UserRoleManager', component: UserRoleManager, name: '用户角色管理' },
+            {
+                path: '/UserManager', component: UserManager, name: '用户管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/UserProjManager', component: UserProjManager, name: '用户项目管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/UserDeptManager', component: UserDeptManager, name: '用户部门管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/UserRoleManager', component: UserRoleManager, name: '用户角色管理',
+                meta: { redirectAuth: true }
+            },
             // { path: '/vuex', component: VuexComp, name: 'Vuex' }
-        ]
+        ],
+        meta: { redirectAuth: true }
     },
     {
         path: '/',
@@ -65,29 +88,29 @@ const routes = [
         name: '设备管理',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/DeviceManager', component: DeviceManager, name: '设备管理' },
-            { path: '/YSDeviceManager', component: YSDeviceManager, name: '萤石设备管理' },
-        ]
+            {
+                path: '/DeviceManager', component: DeviceManager, name: '设备管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/YSDeviceManager', component: YSDeviceManager, name: '萤石设备管理',
+                meta: { redirectAuth: true }
+            },
+        ],
+        meta: { redirectAuth: true }
     },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: '权限管理',
-    //     iconCls: 'fa fa-id-card-o',
-    //     children: [
-    //         { path: '/DeviceRoleManager', component: DeviceRoleManager, name: '设备权限管理' },
-    //         { path: '/SystemRoleManager', component: SystemRoleManager, name: '系统权限管理' },
-    //     ]
-    // },
     {
         path: '/',
         component: Home,
         name: '会议管理',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/Metting', component: Metting, name: '会议管理' },
-            // { path: '/MettingMinutesManager', component: MettingMinutesManager, name: '会议内容管理' },
-        ]
+            {
+                path: '/Metting', component: Metting, name: '会议管理',
+                meta: { redirectAuth: true }
+            },
+        ],
+        meta: { redirectAuth: true }
     },
     {
         path: '*',
@@ -100,9 +123,19 @@ const router = new VueRouter({
     routes
 })
 
+//store
 router.beforeEach((to, from, next) => {
-    NProgress.start();
-    next()
+    if (to.meta.redirectAuth) {
+        NProgress.start();
+        if (store.state.sessionid) {
+            next()
+        } else {
+            next({ path: '/login' })
+        }
+    } else {
+        NProgress.start();
+        next()
+    }
 })
 
 router.afterEach(transition => {
