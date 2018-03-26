@@ -13,6 +13,10 @@ export const getProj = ({ commit }) => {
 export const getSession = ({ commit }) => {
     commit('GETSESSION')
 }
+//获取session
+export const getYSToken = ({ commit }) => {
+    commit('GETYSTOKEN')
+}
 //设置session
 export const setLogin = ({ commit }, loginState) => {
     commit('SETLOGIN', loginState)

@@ -38,7 +38,8 @@ exports.login = async (req, res) => {
             console.log(sessionid)
             //2. 匹配账号密码
             let _user = await User.findOne({ UserID: query.UserID }).exec()
-            if (_user.length == 0) return res.send(msg.genFailedMsg('该账号不存在!'))
+            console.log(_user)
+            if (!_user) return res.send(msg.genFailedMsg('该账号不存在!'))
             if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!'))
             //3. 将数据存进/更新session表
             if (sessionid == '') {
