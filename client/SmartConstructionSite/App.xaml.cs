@@ -53,7 +53,7 @@ namespace SmartConstructionSite
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            Application.Current.SavePropertiesAsync();
         }
 
         protected override void OnResume()

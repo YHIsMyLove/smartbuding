@@ -118,7 +118,6 @@ namespace SmartConstructionSite
             }
             else
             {
-                ServiceContext.Instance.CurrentUser = result.Model;
                 await CheckPermissions();
             }
         }
