@@ -17,5 +17,6 @@ namespace SmartConstructionServices.Events.Models
 
         //与当前用户相关的会议内容数量
         public int RelationalContentCount { get; set; }
+
     }
 }

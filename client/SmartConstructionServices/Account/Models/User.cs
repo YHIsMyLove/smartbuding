@@ -18,7 +18,12 @@ namespace SmartConstructionServices.Account.Models
         public string UserPhoneNum { get; set; }
         public DateTime UserCreatedAt { get; set; }
         public string UserCardID { get; set; }
-        public string[] UserProjs { get; set; }
-        public string[] UserRoles { get; set; }
+        public string Department { get; set; }
+        public string Position { get; set; }
+        public string Email { get; set; }
+        /// <summary>
+        /// 证书图像地址数组
+        /// </summary>
+        public string[] Certificates { get; set; }
     }
 }

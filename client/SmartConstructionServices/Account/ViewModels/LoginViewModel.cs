@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using SmartConstructionServices.Account.Models;
 using SmartConstructionServices.Account.Services;
 using SmartConstructionServices.Common;
 using Xamarin.Forms;
@@ -32,7 +31,7 @@ namespace SmartConstructionServices.Account.ViewModels
             }
             else
             {
-                ServiceContext.Instance.CurrentUser = result.Model;
+                //ServiceContext.Instance.CurrentUser = result.Model;
                 ServiceContext.Instance.Region = "湖北省黄石市";
                 ServiceContext.Instance.CurrentProject = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region)[0];
                 IsLoginSucceed = true;

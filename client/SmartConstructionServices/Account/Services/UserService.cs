@@ -1,49 +1,52 @@
 ﻿using ModernHttpClient;
+using Newtonsoft.Json.Linq;
 using SmartConstructionServices.Account.Models;
 using SmartConstructionServices.Common;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace SmartConstructionServices.Account.Services
 {
     public class UserService
     {
-        public async Task<Result<User>> Login(string username, string password)
+        public async Task<Result<bool>> Login(string username, string password)
         {
-            await Task.Delay(2000);
-            return await Task.Run(() =>
+            var result = new Result<bool>();
+            if ("admin".Equals(username))
             {
-                Result<User> result = new Result<User>();
-                result.Model = new User()
-                {
-                    UserName = "张三",
-                    UserHeadImg = "http://himg.bdimg.com/sys/portrait/item/31bd6c62676f6e6766752b0e.jpg"
-                };
+                result.Model = true;
                 return result;
-            });
-            //Result<User> result = new Result<User>();
-            //string param = string.Format("UserID={0}&UserPwd={1}", username, password);
-            //byte[] bs = Encoding.UTF8.GetBytes(param);
-            //try
-            //{
-            //    var httpClient = new HttpClient(new NativeMessageHandler());
-            //    var content = new ByteArrayContent(Encoding.UTF8.GetBytes($"UserID={username}&UserPwd={password}"));
-            //    HttpResponseMessage msg = await httpClient.PostAsync("http://192.168.1.49:3000/api/login", content);
-            //    string json = await msg.Content.ReadAsStringAsync();
-            //    System.Diagnostics.Debug.WriteLine("Response:{0}", json);
-            //    dynamic jsonObj = Newtonsoft.Json.Linq.JToken.Parse(json) as dynamic;
-            //    if (jsonObj.Success)
-            //    {
-
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-                
-            //}
-            //return result;
+            }
+            try
+            {
+                var httpClient = new HttpClient(new NativeMessageHandler());
+                var content = new ByteArrayContent(Encoding.UTF8.GetBytes($"UserID={username}&UserPwd={password}"));
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                HttpResponseMessage msg = await httpClient.PostAsync("http://192.168.43.86:3000/api/login", content);
+                string json = await msg.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine("Response:{0}", json);
+                var stat = Newtonsoft.Json.JsonConvert.DeserializeObject(json) as JObject;
+                if ((bool)stat["success"])
+                {
+                    string sessionId = (string)stat["data"]["SessionID"];
+                    string ysToken = (string)stat["data"]["YSToken"];
+                    result.Model = true;
+                }
+                else
+                {
+                    result.HasError = true;
+                    result.Error = new Error() { Description = (string)stat["msg"], Code = 1001 };
+                }
+            }
+            catch (Exception e)
+            {
+                result.HasError = true;
+                result.Error = new Error() { Description = e.Message, Exception = e, Code = 1000 };
+            }
+            return result;
         }
 
         public async Task<Result<bool>> Logout()
