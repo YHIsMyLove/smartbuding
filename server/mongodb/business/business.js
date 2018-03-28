@@ -18,11 +18,12 @@ const Metting = mongoose.model('Metting')
 /**系统登录***********************************************************/
 /****************************************************************** */
 //登录
-exports.login = async (req, res) => {
+exports.Login = async (req, res) => {
     var query = {
         UserID: req.body.UserID,
         UserPwd: req.body.UserPwd
     }
+    console.log(query)
     if (query.UserID == 'admin') {
         if ((query.UserID === SystemConfig.Admin_User) &&
             (query.UserPwd === SystemConfig.Admin_Pwd)) {
@@ -34,8 +35,8 @@ exports.login = async (req, res) => {
             //1. 查询session
             var sessionid = ''
             let session = await UserSession.findOne({ UserID: query.UserID }).exec()
-            sessionid = session._id
-            console.log(sessionid)
+            if (session)
+                sessionid = session._id
             //2. 匹配账号密码
             let _user = await User.findOne({ UserID: query.UserID }).exec()
             console.log(_user)
@@ -68,11 +69,28 @@ exports.login = async (req, res) => {
 //检查用户session
 exports.checkSession = async (req, res) => {
     let query = {
-        _id: req.query.SessionID
+        _id: req.body.SessionID
     }
     let session = await UserSession.findOne(query).exec()
     if (session) {
         return res.send(msg.genSuccessMsg('登录成功'))
+    }
+    res.send(msg.genFailedMsg('无效session,请登录'))
+}
+
+//获取用户信息
+exports.getUserInfo = async (req, res) => {
+    let query = {
+        _id: req.query.SessionID
+    }
+    let session = await UserSession.findOne(query).exec()
+    if (session) {
+        let id = session.UserID
+        console.log(id)
+        let user = await User.findOne({ UserID: id }).exec()
+        if (user) {
+            return res.send(msg.genSuccessMsg('获取成功!', user))
+        }
     }
     res.send(msg.genFailedMsg('无效session,请登录'))
 }

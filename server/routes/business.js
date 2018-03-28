@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 const business = require('../mongodb/business/business')
 
-router.post("/login", business.login)
+router.post("/Login", business.Login)
+router.post("/CheckSession", business.checkSession)
+router.get("/GetUser", business.getUserInfo)
 router.get("/GetProv", business.GetProv)
 router.get("/GetRole", business.GetRoleByRoleID)
 router.get("/GetCityByProvID", business.GetCityByProvID)
