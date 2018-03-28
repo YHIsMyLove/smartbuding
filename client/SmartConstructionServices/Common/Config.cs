@@ -8,7 +8,7 @@ namespace SmartConstructionServices.Common
 {
     public class Config
     {
-        public static string host = "http://192.168.43.86:3000/";
+        public static string host = "http://118.89.237.172:3000/";
         /// <summary>
         /// 用户登录（Post），参数：UserID=?&SserPwd=?
         /// </summary>

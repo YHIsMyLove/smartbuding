@@ -19,7 +19,7 @@ namespace SmartConstructionServices.Common
 
         public System.Net.Http.HttpContent CreateContent(string parameters)
         {
-            var content = new System.Net.Http.ByteArrayContent(Encoding.UTF8.GetBytes(parameters);
+            var content = new System.Net.Http.ByteArrayContent(Encoding.UTF8.GetBytes(parameters));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
             return content;
         }

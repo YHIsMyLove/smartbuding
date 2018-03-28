@@ -162,6 +162,7 @@
     <Compile Include="Renderers\AccountEntryRenderer.cs" />
     <Compile Include="Renderers\BorderedPickerRenderer.cs" />
     <Compile Include="Renderers\BorderedEntryRenderer.cs" />
+    <Compile Include="SplashScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -234,6 +235,8 @@
     <AndroidResource Include="Resources\drawable-xhdpi\playback_more_down.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\weather.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\device_other.png" />
+    <AndroidResource Include="Resources\layout\layout_splash_screen.axml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\timg.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
