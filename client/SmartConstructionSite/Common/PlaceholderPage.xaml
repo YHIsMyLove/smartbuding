@@ -4,7 +4,7 @@
              x:Class="SmartConstructionSite.Common.PlaceholderPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="正在开发，敬请期待。。。" HorizontalOptions="CenterAndExpand" />
+            <Label Text="定制开发功能" HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

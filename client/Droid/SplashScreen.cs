@@ -6,6 +6,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.App;
@@ -14,28 +15,22 @@ using Android.Widget;
 
 namespace SmartConstructionSite.Droid
 {
-    [Activity(Label = "SplashScreen", MainLauncher = true, Theme = "@style/MyTheme", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/app_name", MainLauncher = true, Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class SplashScreen : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            //RequestWindowFeature(WindowFeatures.NoTitle);
-            //Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
-
-            //if (Build.VERSION.SdkInt >= BuildVersionCodes.Honeycomb)
-                //Window.DecorView.SystemUiVisibility = StatusBarVisibility.Hidden;
-
-            //var uiOpts = SystemUiFlags.LayoutStable 
-            //                          | SystemUiFlags.LayoutHideNavigation
-            //                          | SystemUiFlags.LayoutFullscreen
-            //                          | SystemUiFlags.Fullscreen
-            //                          | SystemUiFlags.HideNavigation
-            //                          | SystemUiFlags.Immersive;
-            //Window.DecorView.SystemUiVisibility = uiOpts;
-
             SetContentView(Resource.Layout.layout_splash_screen);
+
+            var uiOpts = SystemUiFlags.LayoutStable 
+                | SystemUiFlags.LayoutHideNavigation
+                | SystemUiFlags.LayoutFullscreen
+                | SystemUiFlags.Fullscreen
+                | SystemUiFlags.HideNavigation
+                | SystemUiFlags.Immersive;
+            Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOpts;
 
             new Handler().PostDelayed(() =>
             {

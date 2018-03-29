@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartConstructionServices.PeopleManagement.ViewModels;
+using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,11 +16,8 @@ namespace SmartConstructionSite.PeopleManagement
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            //ContactsDetailViewModel viewModel = BindingContext as ContactsDetailViewModel;
-            //if (viewModel == null || viewModel.Contacts == null || string.IsNullOrEmpty(viewModel.Contacts.PhoneNumber)) return;
-            //var phoneDialer = CrossMessaging.Current.PhoneDialer;
-            //if (phoneDialer.CanMakePhoneCall)
-            //    phoneDialer.MakePhoneCall(viewModel.Contacts.PhoneNumber);
+            ContactsDetailViewModel viewModel = BindingContext as ContactsDetailViewModel;
+            viewModel.PhoneCallCommand.Execute(null);
         }
     }
 }

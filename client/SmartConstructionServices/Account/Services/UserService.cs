@@ -1,4 +1,5 @@
 ﻿using ModernHttpClient;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SmartConstructionServices.Account.Models;
 using SmartConstructionServices.Common;
@@ -27,7 +28,7 @@ namespace SmartConstructionServices.Account.Services
                 HttpResponseMessage msg = await httpClient.PostAsync(Config.loginUrl, content);
                 string json = await msg.Content.ReadAsStringAsync();
                 System.Diagnostics.Debug.WriteLine("Response:{0}", json);
-                var stat = Newtonsoft.Json.JsonConvert.DeserializeObject(json) as JObject;
+                var stat = JsonConvert.DeserializeObject(json) as JObject;
                 if ((bool)stat["success"])
                 {
                     string sessionId = (string)stat["data"]["SessionID"];
@@ -35,6 +36,35 @@ namespace SmartConstructionServices.Account.Services
                     ServiceContext.Instance.SessionID = sessionId;
                     ServiceContext.Instance.YSAccessToken = ysToken;
                     result.Model = true;
+                }
+                else
+                {
+                    result.HasError = true;
+                    result.Error = new Error() { Description = (string)stat["msg"], Code = 1001 };
+                }
+            }
+            catch (Exception e)
+            {
+                result.HasError = true;
+                result.Error = new Error() { Description = e.Message, Exception = e, Code = 1000 };
+            }
+            return result;
+        }
+
+        public async Task<Result<User>> GetUserInfo(string sessionId)
+        {
+            var result = new Result<User>();
+            try
+            {
+                var httpClient = CreateHttpClient();
+                var msg = await httpClient.GetAsync(string.Format(Config.getUserInfoUrl, sessionId));
+                string json = await msg.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine("Response:{0}", json);
+                var stat = JsonConvert.DeserializeObject(json) as JObject;
+                if ((bool)stat["success"])
+                {
+                    string userJson = stat["data"].ToString();
+                    result.Model = JsonConvert.DeserializeObject(userJson) as User;
                 }
                 else
                 {

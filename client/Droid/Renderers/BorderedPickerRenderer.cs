@@ -1,6 +1,6 @@
 ﻿using System;
 using Android.Content;
-using SmartConstructionSite.Common;
+using SmartConstructionSite.Core.Common;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 

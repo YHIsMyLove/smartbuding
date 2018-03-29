@@ -16,7 +16,7 @@ namespace SmartConstructionServices.Common
         /// <summary>
         /// 获取用户信息（get），参数：SessionID=?
         /// </summary>
-        public static string getUserUrl = host + "api/GetUser";
+        public static string getUserInfoUrl = host + "api/GetUser?SessionID={0}";
         /// <summary>
         /// 检查session（Post），参数：SessionID=?
         /// </summary>
@@ -42,6 +42,14 @@ namespace SmartConstructionServices.Common
         /// </summary>
         public static string getProjectsByProvIDUrl = host + "api/GetProjByProvID";
 
-        public static string getContactsByProjIDUrl = host + "api/Get";
+        public static string getUsersByProjIDUrl = host + "api/GetUserByProjID";
+
+        public static string getUsersByDeptIDUrl = host + "api/GetUserByDeptID";
+
+        public static string getUsersByRoleIDUrl = host + "api/GetUserByRoleID";
+
+        public static string getMeetingsUrl = host + "api/GetMettings";
+
+        public static string getCamerasUrl = host + "api/GetYSDevs";
     }
 }

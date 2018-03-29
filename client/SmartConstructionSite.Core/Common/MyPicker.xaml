@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SmartConstructionSite.Core.Common.MyPicker">
+    <ContentView.GestureRecognizers>
+        <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
+    </ContentView.GestureRecognizers>
+    <ContentView.Content>
+        <Grid IsClippedToBounds="true" Padding="0,10,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <BoxView Grid.Column="0" Grid.ColumnSpan="2" HeightRequest="1" Color="#ccc" VerticalOptions="Start"></BoxView>
+            <BoxView Grid.Column="0" Grid.ColumnSpan="2" HeightRequest="1" Color="#ccc" VerticalOptions="End"></BoxView>
+            <BoxView Grid.Column="0" WidthRequest="1" Color="#ccc" HorizontalOptions="Start"></BoxView>
+            <BoxView Grid.Column="1" WidthRequest="1" Color="#ccc" HorizontalOptions="End"></BoxView>
+            <Label Grid.Column="0" x:Name="label" Margin="4,0,0,0" LineBreakMode="NoWrap" VerticalOptions="Center"></Label>
+            <Image Grid.Column="1" Source="playback_more_down.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center" Margin="4"></Image>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

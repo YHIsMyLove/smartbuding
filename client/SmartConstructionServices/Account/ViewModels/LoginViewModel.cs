@@ -14,6 +14,11 @@ namespace SmartConstructionServices.Account.ViewModels
         {
             userService = new UserService();
             LoginCommand = new Command(execute: async () => { await Login(); }, canExecute: () => { return IsLoginCommandCanExecute(); });
+
+            if (Application.Current.Properties.ContainsKey("Username"))
+                username = (string)Application.Current.Properties["Username"];
+            if (Application.Current.Properties.ContainsKey("Password"))
+                password = (string)Application.Current.Properties["Password"];
         }
 
         private async Task Login()
@@ -23,7 +28,6 @@ namespace SmartConstructionServices.Account.ViewModels
             HasError = false;
             Error = null;
             var result = await userService.Login(username, password);
-            IsBusy = false;
             if (result.HasError)
             {
                 HasError = true;
@@ -31,10 +35,24 @@ namespace SmartConstructionServices.Account.ViewModels
             }
             else
             {
-                //ServiceContext.Instance.CurrentUser = result.Model;
-                //ServiceContext.Instance.Region = "湖北省黄石市";
-                //ServiceContext.Instance.CurrentProject = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region)[0];
-                IsLoginSucceed = true;
+                Application.Current.Properties["Username"] = username;
+                Application.Current.Properties["Password"] = password;
+                await Application.Current.SavePropertiesAsync();
+                var result1 = await userService.GetUserInfo(ServiceContext.Instance.SessionID);
+                IsBusy = false;
+                if (result1.HasError)
+                {
+                    HasError = true;
+                    Error = result.Error;
+                }
+                else
+                {
+                    //ServiceContext.Instance.CurrentUser = result1.Model;
+                    ServiceContext.Instance.CurrentUser = new Models.User();
+                    ServiceContext.Instance.Region = SimpleData.Instance.GetProvinces()[0];
+                    ServiceContext.Instance.CurrentProject = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region)[0];
+                    IsLoginSucceed = true;
+                }
             }
         }
 

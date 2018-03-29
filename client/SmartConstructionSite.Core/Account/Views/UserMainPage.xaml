@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartConstructionSite.Core"
+             x:Class="SmartConstructionSite.Core.Account.Views.UserMainPage"
+             Title="用户">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Grid HeightRequest="200">
+                <StackLayout Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Image x:Name="imageUserPhoto" Source="user.png" WidthRequest="96" HeightRequest="96">
+                        <!--<Image.Source>
+                        <UriImageSource CachingEnabled="True" Uri="{Binding User.UserHeadImg}">
+                            -->
+                        <!--<UriImageSource.CacheValidity>
+                                <x:TimeSpan>
+
+                                </x:TimeSpan>
+                            </UriImageSource.CacheValidity>-->
+                        <!--
+                        </UriImageSource>
+                    </Image.Source>-->
+                    </Image>
+                    <Label Text="{Binding User.UserName}" HorizontalOptions="Center" FontSize="Medium"></Label>
+                </StackLayout>
+            </Grid>
+            <BoxView BackgroundColor="#ccc" HeightRequest="1"></BoxView>
+            <ListView x:Name="listView">
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type local:MasterPageItem}">
+                        <local:MasterPageItem Title="项目管理" IconSource="icon.png" TargetType="{x:Type local:HomePage}" />
+                    </x:Array>
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding IconSource}" />
+                                <Label Grid.Column="1" Text="{Binding Title}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="注销" BackgroundColor="Red" VerticalOptions="EndAndExpand" Command="{Binding LogoutCommand}"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

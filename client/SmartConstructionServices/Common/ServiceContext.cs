@@ -33,7 +33,13 @@ namespace SmartConstructionServices.Common
 
         public string SessionID
         {
-            get { return Application.Current.Properties["SessionID"] as string; }
+            get
+            {
+                if (Application.Current.Properties.ContainsKey("SessionID"))
+                    return Application.Current.Properties["SessionID"] as string;
+                else
+                    return null;
+            }
             set { Application.Current.Properties["SessionID"] = value; }
         }
         /// <summary>
@@ -42,7 +48,13 @@ namespace SmartConstructionServices.Common
         /// <value>The YSA ccess token.</value>
 		public string YSAccessToken
         {
-            get { return Application.Current.Properties["YSAccessToken"] as string; }
+            get
+            {
+                if (Application.Current.Properties.ContainsKey("YSAccessToken"))
+                    return Application.Current.Properties["YSAccessToken"] as string;
+                else
+                    return null;
+            }
             set { Application.Current.Properties["YSAccessToken"] = value; }
         }
 

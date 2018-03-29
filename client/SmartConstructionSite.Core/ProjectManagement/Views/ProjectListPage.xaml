@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:SmartConstructionSite.Core.Common"
+             x:Class="SmartConstructionSite.Core.ProjectManagement.Views.ProjectListPage"
+             Title="项目搜索" IsBusy="{Binding DataLoading}">
+    <ContentPage.Content>
+        <ListView x:Name="listView" ItemSelected="listView_ItemSelected" ItemsSource="{Binding Projects}" SelectedItem="Binding_SelectedProject" ItemTapped="Handle_ItemTapped" SeparatorColor="#ccc">
+            <ListView.Header>
+                <Grid Padding="15,0,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <common:MyPicker Title="选择省" VerticalOptions="Center" ItemsSource="{Binding Provinces}" SelectedItem="{Binding SelectedProvince}" HorizontalOptions="FillAndExpand"></common:MyPicker>
+                    <common:MyPicker Grid.Column="1" VerticalOptions="Center" Title="选择市" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" HorizontalOptions="FillAndExpand"></common:MyPicker>
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="15,0,15,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding .}" VerticalOptions="Center" TextColor="#3670d4"></Label>
+
+                            <Image Source="ic_location_normal.png" VerticalOptions="Center" Grid.Column="1"></Image>
+
+<!--                            <BoxView WidthRequest="1" Color="#ccc" VerticalOptions="Fill" HorizontalOptions="End" Margin="15,0,15,0"></BoxView>-->
+                            
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

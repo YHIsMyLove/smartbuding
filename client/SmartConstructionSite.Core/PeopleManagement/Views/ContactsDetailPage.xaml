@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.Core.PeopleManagement.Views.ContactsDetailPage"
+             Title="人员监管">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical" Spacing="0">
+                <StackLayout Orientation="Vertical" BackgroundColor="#E0E0E0" Padding="15">
+                    <Image HorizontalOptions="Center" WidthRequest="96" HeightRequest="96" Source="user.png">
+                        <!--<Image.Source>
+                            <UriImageSource CachingEnabled="True" Uri="{Binding Contacts.PhotoUrl}"></UriImageSource>
+                        </Image.Source>-->
+                    </Image>
+                    <Label HorizontalOptions="Center" Text="{Binding Contacts.Name}" FontSize="Medium"></Label>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <StackLayout x:Name="btnCall" Orientation="Vertical" Margin="10">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                            <Image WidthRequest="32" HeightRequest="32" Source="ic_call.png"></Image>
+                            <Label Text="呼叫" HorizontalOptions="Center"></Label>
+                        </StackLayout>
+                        <StackLayout x:Name="btnSend" Orientation="Vertical" Margin="10">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                            <Image WidthRequest="32" HeightRequest="32" Source="ic_send.png"></Image>
+                            <Label Text="发送" HorizontalOptions="Center"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Vertical" Padding="15">
+                        <Label Text="手机"></Label>
+                        <Label Text="{Binding Contacts.PhoneNumber}" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" Padding="15">
+                        <Label Text="邮箱"></Label>
+                        <Label Text="{Binding Contacts.Email}" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="End" HeightRequest="1" BackgroundColor="#ccc"></BoxView>
+
+                    <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Vertical" Padding="15">
+                        <Label Text="身份证"></Label>
+                        <Label Text="{Binding Contacts.IdCard}" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Vertical" Padding="15">
+                        <Label Text="考勤信息"></Label>
+                        <Label Text="22天" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="End" HeightRequest="1" BackgroundColor="#ccc"></BoxView>
+
+                    <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Vertical" Padding="15">
+                        <Label Text="部门"></Label>
+                        <Label Text="{Binding Contacts.Department}" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Vertical" Padding="15">
+                        <Label Text="职位"></Label>
+                        <Label Text="{Binding Contacts.Position}" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="End" HeightRequest="1" BackgroundColor="#ccc"></BoxView>
+
+                    <StackLayout Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Padding="15">
+                        <Label Text="资格证书"></Label>
+                        <Image Source="certificate.png"></Image>
+                    </StackLayout>
+
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

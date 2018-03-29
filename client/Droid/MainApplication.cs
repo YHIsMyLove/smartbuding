@@ -1,5 +1,5 @@
 using System;
-
+using Acr.UserDialogs;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
@@ -20,6 +20,8 @@ namespace SmartConstructionSite.Droid
         {
             base.OnCreate();
             RegisterActivityLifecycleCallbacks(this);
+
+            UserDialogs.Init(this);
             //A great place to initialize Xamarin.Insights and Dependency Services!
         }
 
