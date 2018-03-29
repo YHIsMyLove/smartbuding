@@ -24,4 +24,7 @@ router.get("/GetMettings", business.GetMettings)
 
 router.get("/GetYSDevs", business.GetYSDevs)
 
+
+router.post("/UploadFile", business.UploadFile)
+
 module.exports = router;

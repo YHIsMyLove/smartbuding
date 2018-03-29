@@ -40,7 +40,7 @@
                         <el-form-item label="图片名称">
                             <el-upload
                                 class="upload-demo"
-                                action="https://jsonplaceholder.typicode.com/posts/"
+                                action="/api/UploadFile"
                                 :on-preview="handlePreview"
                                 :on-remove="handleRemove"
                                 :file-list="fileList2"
@@ -97,8 +97,7 @@ export default {
     },
     editSubmit() {
       this.editFormVisible = false;
-      //1. 等待上传完
-      //2. 提交记录到数据库
+      this.fileList2 = [];
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -124,16 +123,17 @@ export default {
       console.log(fileList);
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
+      console.log(file.type);
+      //const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 50;
-
-      if (!isJPG) {
-        this.$message.error("仅允许上传图片");
-      }
+      // if (!isJPG) {
+      //   this.$message.error("仅允许上传jpeg图片");
+      // }
       if (!isLt2M) {
         this.$message.error("上传图片大小不能超过 50MB!");
       }
-      return isJPG && isLt2M;
+      //isJPG &&
+      return isLt2M;
     }
   }
 };

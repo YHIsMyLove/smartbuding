@@ -38,3 +38,6 @@ jspm_packages
 .DS_Store
 
 .vscode
+
+# 过滤文件上传
+/static/

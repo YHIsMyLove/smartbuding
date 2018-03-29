@@ -4,6 +4,8 @@ const SystemConfig = require('../../config/config')
 const YS = require('../../utils/yingshi')
 const Qcos = require('../../utils/Qcos.js')
 const moment = require('moment')
+const multiparty = require('multiparty')
+const fs = require('fs')
 
 const UserSession = mongoose.model('UserSession')
 const SysTable = mongoose.model('SysTable')
@@ -616,7 +618,7 @@ exports.GetYSDevs = async (req, res) => {
     }
 }
 /****************************************************************** */
-/**文件上传***********************************************************/
+/**会议***********************************************************/
 /****************************************************************** */
 exports.GetMettings = async (req, res) => {
     let query = {
@@ -675,7 +677,37 @@ exports.DelMetting = async (req, res) => {
 /****************************************************************** */
 /**文件上传***********************************************************/
 /****************************************************************** */
+//获取文件
+exports.GetFiles = async (req, res) => {
+}
+
 //上传文件
-exports.UploadFile = async (req, res) => {
-    Qcos.UpLoad()
+exports.UploadFile = (req, res) => {
+    //生成multiparty对象，并配置上传目标路径
+    var form = new multiparty.Form({ uploadDir: './static' });
+    //上传完成后处理
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            return res.send(msg.genFailedMsg('上传失败', err))
+        }
+        var inputFile = files.file[0];
+        var uploadedPath = inputFile.path;
+        var dstPath = './static/' + inputFile.originalFilename;
+        fs.rename(uploadedPath, dstPath, function (err) {
+            if (err) {
+                return res.send(msg.genFailedMsg('更名失败', err))
+            }
+            else {
+                files.file.path = dstPath;
+                let data = files;
+                Qcos.uploadSync(files.file.path, (err, qcospath) => {
+                    if (err) {
+                        return res.send(msg.genFailedMsg('上传失败', err))
+                    }
+                    res.send(msg.genSuccessMsg('上传成功', qcospath))
+                })
+            }
+        });
+
+    });
 }

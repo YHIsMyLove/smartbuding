@@ -28,9 +28,21 @@ exports.Upload = async (key) => {
     return result
 }
 
-//putBucket
+exports.uploadSync = function (key, callback) {
+    cos.sliceUploadFile({
+        Bucket: config.Qcos_Bucket,
+        Region: config.Qcos_Region,
+        Key: key,
+        FilePath: `./${key}`
+    }, function (err, data) {
+        if (err) {
+            return callback(err, null)
+        }
+        callback(null, data.Location)
+    });
+}
 
-exports.GetFiles = async (query) => {
+exports.GetBucket = async (query) => {
     let params = {
         Bucket: config.Qcos_Bucket,
         Region: config.Qcos_Region,
