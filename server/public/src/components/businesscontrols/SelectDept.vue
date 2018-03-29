@@ -3,7 +3,7 @@
 
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item v-for="i,index in Depts" :key="index" :label="i.label">
-            <el-switch v-model="i.Selected"  active-color="#13ce66" inactive-color="#ff4949"/>
+              <el-switch v-model="i.Selected"  active-color="#13ce66" inactive-color="#ff4949"/>
             </el-form-item>
           </el-form>
      
@@ -27,7 +27,7 @@ export default {
   props: ["Visible"],
   data() {
     return {
-      Depts: [{ DeptID: "", DeptName: "", Selected: false }]
+      Depts: []
     };
   },
   created() {
@@ -41,10 +41,13 @@ export default {
       });
     },
     submitEdit() {
-      this.$emit("submitEdit", this.Depts);
+      let result = this.Depts.filter(i => i.Selected).map(i => {
+        return { DeptID: i.value.id, DeptName: i.label };
+      });
+      this.$emit("submitEdit", result);
     },
     //获取部门资料
-    getDepts() {
+    getDepts(callback) {
       let that = this;
       let params = {
         item2: that.getProj
@@ -54,10 +57,22 @@ export default {
         .then(res => {
           if (res.data.success) {
             that.Depts = res.data.data;
-            console.log(that.Depts);
+            callback();
           }
         })
         .catch(err => console.log(err));
+    },
+    //选中部门
+    UpdateSelected(depts) {
+      this.getDepts(() => {
+        if (depts) {
+          this.Depts.forEach(i => {
+            if (depts.filter(item => item.DeptID == i.value.id).length > 0) {
+              i.Selected = true;
+            }
+          });
+        }
+      });
     }
   }
 };

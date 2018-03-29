@@ -19,7 +19,9 @@ router.get("/GetUserByDeptID", business.GetUserByDeptID)
 router.get("/GetUserByRoleID", business.GetUserByRoleID)
 
 router.post("/InsertOrUpdateMetting", business.InsertOrUpdateMetting)
+router.post("/InsertOrUpdateMeetingContent", business.InsertOrUpdateMeetingContent)
 router.get("/GetMettings", business.GetMettings)
+router.get("/GetMeetingContentByMeetingID", business.GetMeetingContentByMeetingID)
 
 
 router.get("/GetYSDevs", business.GetYSDevs)

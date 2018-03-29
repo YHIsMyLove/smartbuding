@@ -2,21 +2,23 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 //会议表
-const mettingMinutesSchema = new Schema({
-    MettingID: String,
+const meetingMinutesSchema = new Schema({
+    MeetingID: String,
+    MeetingTitle: String,
     Content: String,
-    Status: Number
+    Status: Number,
+    Depts: mongoose.Schema.Types.Mixed
 })
 
-mettingMinutesSchema.pre('save', function (next) {
+meetingMinutesSchema.pre('save', function (next) {
     next()
 })
-mettingMinutesSchema.methods = {
+meetingMinutesSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-mettingMinutesSchema.statics = {
+meetingMinutesSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -33,4 +35,4 @@ mettingMinutesSchema.statics = {
             .exec();
     }
 }
-mongoose.model('MettingMinutes', mettingMinutesSchema);
+mongoose.model('MeetingMinutes', meetingMinutesSchema);

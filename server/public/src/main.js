@@ -21,9 +21,9 @@ import DeviceRoleManager from './components/business/DeviceRoleManager.vue'
 import DeviceManager from './components/business/DeviceManager.vue'
 import YSDeviceManager from './components/business/YSDeviceManager.vue'
 import SystemRoleManager from './components/business/SystemRoleManager.vue'
-import Metting from './components/business/Metting.vue'
+import Meeting from './components/business/Meeting.vue'
 import FileManager from './components/business/FileManager.vue'
-import MettingMinutesManager from './components/business/MettingMinutesManager.vue'
+import MeetingMinutesManager from './components/business/MeetingMinutesManager.vue'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
@@ -106,7 +106,7 @@ const routes = [
         iconCls: 'fa fa-id-card-o',
         children: [
             {
-                path: '/Metting', component: Metting, name: '会议管理',
+                path: '/Meeting', component: Meeting, name: '会议管理',
                 meta: { redirectAuth: true }
             },
         ],
@@ -127,7 +127,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.redirectAuth) {
         NProgress.start();
-        if (store.state.sessionid) {
+        if (store.state.sessionid || sessionStorage.getItem('SessionID')) {
             next()
         } else {
             next({ path: '/login' })

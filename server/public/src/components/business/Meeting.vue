@@ -89,17 +89,18 @@
                 <span>
                     <el-input style="float: left; width:30%" v-model="i.label"></el-input>
                 </span>
-                <el-button  @click="delcontent(index)" style="float: right; padding: 3px 2px" type="text">删除</el-button>
-                <el-button  @click="Send2Person" style="float: right; padding: 3px 2px" type="text">推送</el-button>
+                <span>{{i._id=='-1'?'未上传':'已上传'}}</span>
               </div>
                 <el-input type="textarea" v-model="i.content"  placeholder="输入内容"></el-input>
+                <el-tag type="success" v-for="item in i.Depts">{{item.DeptName}}</el-tag>
+                
+                <el-button  style="float: right;" type="info" @click="submitContent(index)" >提交</el-button>
+                <el-button  @click="Send2Person(index)" style="float: right;" type="warning">推送部门</el-button>
+                <!-- <el-button  @click="delcontent(index)" style="float: right;" type="warning">删除</el-button> -->
               </el-card>
             </div>
-
-            <SelectDept :Visible="Visible" @cancelEdit="cancelEdit" @submitEdit="submitEdit"/>
-
+            <SelectDept :Visible="Visible" @cancelEdit="cancelEdit" @submitEdit="submitEdit" ref="dept_select"/>
         </section>
-
       </el-tab-pane>
  </el-tabs>
 </template>
@@ -127,20 +128,10 @@ export default {
     };
     return {
       Visible: false,
-      tabContent: [
-        {
-          label: "test",
-          content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"
-        },
-        {
-          label: "test1",
-          content:
-            "水电费供电所覆盖和第三方好人发帖后居然同意让他与肉体与肉体与肉体与肉体与人体在徐州宣传部V型从正射"
-        }
-      ],
+      tableData: [], //会议列表
+      tabContent: [], //会议内容列表
       activeTabName: "metting",
       editLoading: false,
-      tableData: [],
       dept_Users_options: [],
       editForm: {
         MettingCreatedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
@@ -166,7 +157,8 @@ export default {
       currentPageSize: 0,
       handleSizeChange: 0,
       currentPage: 0,
-      tableDataLength: 0
+      tableDataLength: 0,
+      curIndex4Meeting: 0
     };
   },
   created() {
@@ -178,14 +170,62 @@ export default {
       this.Visible = false;
     },
     //提交编辑
-    submitEdit() {
+    submitEdit(depts) {
       this.Visible = false;
+      this.tabContent[this.curIndex4Meeting].Depts = depts;
     },
-    Send2Person() {
+    //提交会议内容
+    submitContent(index) {
+      let that = this;
+      if (!this.tabContent[index].Depts) {
+        that.$message({
+          message: "请选择推送的部门!",
+          type: "error"
+        });
+        return;
+      }
+
+      //1. 验证部门,内容是否为空
+      //2. 组装数据
+      //3. post提交
+      let MeetingMinutes = {
+        _id: this.tabContent[index]._id,
+        MeetingID: this.editForm._id,
+        MeetingTitle: this.tabContent[index].label,
+        Content: this.tabContent[index].content,
+        Depts: this.tabContent[index].Depts.map(i => {
+          return { DeptID: i.DeptID, DeptName: i.DeptName };
+        })
+      };
+      axios
+        .post("/api/InsertOrUpdateMeetingContent", MeetingMinutes)
+        .then(res => {
+          if (res.data.success) {
+            //提交成功
+            that.$message({
+              message: "提交成功",
+              type: "success"
+            });
+            that.getMeetingContent();
+          } else {
+            that.$message({
+              message: "提交失败",
+              type: "error"
+            });
+            //提交失败
+          }
+        })
+        .catch(err => console.log(err));
+    },
+    //打开部门选择
+    Send2Person(index) {
       this.Visible = true;
+      this.curIndex4Meeting = index;
+      //获取当前选择的部门
+      let curselectdepts = this.tabContent[this.curIndex4Meeting].Depts;
+      this.$refs.dept_select.UpdateSelected(curselectdepts);
     },
     delcontent(row) {
-      console.log(row);
       this.$confirm("是否删除该内容", "系统提示", {
         type: "warning"
       }).then(() => {
@@ -196,7 +236,8 @@ export default {
     newContent() {
       this.tabContent.push({
         label: "会议内容",
-        content: ""
+        content: "",
+        _id: -1
       });
     },
     //更换激活tab
@@ -213,7 +254,7 @@ export default {
       };
       this.getDeptData();
     },
-    //提交
+    //提交会议
     editSubmit() {
       let that = this;
       that.$refs.editForm.validate(valid => {
@@ -255,17 +296,15 @@ export default {
         });
       });
     },
-    //编辑
+    //编辑会议内容
     handleEdit(row) {
       this.editForm._id = row._id;
       this.editForm.MettingName = row.MettingName;
       this.editForm.MettingCreatedAt = row.MettingCreatedAt;
       this.editForm.Compere = row.Compere;
-
-      //this.editFormVisible = true;
-      //this.getDeptData();
-
       this.activeTabName = "content";
+
+      this.getMeetingContent();
     },
     handleDel(row) {},
     handleCurrentChange() {},
@@ -330,6 +369,7 @@ export default {
         })
         .catch(err => console.log(err));
     },
+    //获取会议
     getMetting() {
       let that = this;
       let params = {
@@ -341,6 +381,26 @@ export default {
           if (res.data.success) {
             that.$data.tableData = res.data.data;
             that.$data.tableDataLength = res.data.meta.count;
+          }
+        })
+        .catch(err => console.log(err));
+    },
+    //获取会议内容
+    getMeetingContent() {
+      let that = this;
+      axios
+        .get(`/api/GetMeetingContentByMeetingID?MeetingID=${that.editForm._id}`)
+        .then(res => {
+          if (res.data.success) {
+            //获取会议内容
+            that.tabContent = res.data.data.map(i => {
+              return {
+                label: i.MeetingTitle,
+                content: i.Content,
+                Depts: i.Depts,
+                _id: i._id
+              };
+            });
           }
         })
         .catch(err => console.log(err));
@@ -371,5 +431,8 @@ export default {
   width: 98%;
   padding-top: 5px;
   margin-top: 5px;
+}
+.el-tag {
+  margin-left: 1px;
 }
 </style>

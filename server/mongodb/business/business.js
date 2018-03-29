@@ -15,6 +15,7 @@ const UserProj = mongoose.model('UserProj')
 const UserRole = mongoose.model('UserRole')
 const Device = mongoose.model('Device')
 const Metting = mongoose.model('Metting')
+const MeetingMinutes = mongoose.model('MeetingMinutes')
 
 /****************************************************************** */
 /**系统登录***********************************************************/
@@ -269,20 +270,18 @@ exports.GetDeptByProjID = async (req, res) => {
         if (!query) return res.send(msg.genFailedMsg('请输入项目ID'))
         let result = await SysTable.find(query)
 
-        let data = result.map(i => {
+        let data = result.filter(i => i.item0 != 'Root').map(i => {
             return {
                 label: i.item0,
                 value: { id: i._id, type: "dept" },
                 children: []
             }
         })
-
         res.send(msg.genSuccessMsg("获取成功", data))
     } catch (error) {
         return res.send(msg.genFailedMsg('未知错误'))
     }
 }
-
 
 //设置用户部门表
 exports.InsertOrDelUserDept = async (req, res) => {
@@ -626,30 +625,37 @@ exports.GetMettings = async (req, res) => {
         page: parseInt(req.query.page) - 1,
         limit: parseInt(req.query.limit)
     }
+    console.log('获取会议')
     try {
         let result = await Metting.list(query)
-        // let ids = result.map(i => {
-        //     return {
-        //         _id: i.Compere
-        //     }
-        // })
-        // let users = await User.find({ _id: { $in: ids } }).select('_id UserName').exec()
         let data = result.map(i => {
             return {
                 _id: i._id,
                 MettingName: i.MettingName,
                 MettingCreatedAt: moment(i.MettingCreatedAt).format('YYYY-MM-DD hh:mm:ss'),
-                // Compere: users.filter(u => u._id == i.Compere)[0].UserName,
                 Compere: i.Compere
             }
         })
-        let count = await Metting.count()//.find({ ProjID: query.ProjID })
+        let count = await Metting.count()
         console.log(count)
         res.send(msg.genSuccessMsg('查询成功', data, { count: count }))
-
     } catch (error) {
         res.send(msg.genFailedMsg('查询失败->' + error))
     }
+}
+
+//获取会议内容
+exports.GetMeetingContentByMeetingID = async (req, res) => {
+    let query = {
+        MeetingID: req.query.MeetingID
+    }
+    try {
+        let result = await MeetingMinutes.find(query)
+        res.send(msg.genSuccessMsg('获取成功', result))
+    } catch (error) {
+        res.send(msg.genFailedMsg('获取失败' + error))
+    }
+
 }
 
 //插入或修改会议信息
@@ -669,8 +675,40 @@ exports.InsertOrUpdateMetting = async (req, res) => {
     }
 }
 
-//删除会议
-exports.DelMetting = async (req, res) => {
+//插入或修改会议内容
+exports.InsertOrUpdateMeetingContent = async (req, res) => {
+    try {
+        console.log(req.body._id)
+        if (req.body._id == '-1') {
+            req.body._id = undefined
+            let content = new MeetingMinutes(req.body)
+            await content.updateAndSave();
+        } else {
+            console.log(req.body)
+            await MeetingMinutes.updateOne({ _id: req.body._id }, req.body).exec()
+
+        }
+        res.send(msg.genSuccessMsg('保存成功'))
+    } catch (error) {
+        res.send(msg.genFailedMsg('保存失败->' + error))
+    }
+    // try {
+    //     if (req.body._id == undefined) {
+    //         let metting = new Metting(req.body)
+    //         await metting.updateAndSave();
+    //     } else {
+    //         let metting = req.metting
+    //         metting = Object.assign(Metting, req.body);
+    //         await metting.updateAndSave();
+    //     }
+    //     res.send(msg.genSuccessMsg('保存成功'))
+    // } catch (error) {
+    //     res.send(msg.genFailedMsg('保存失败->' + error))
+    // }
+}
+
+//删除会议内容
+exports.DelMettingContent = async (req, res) => {
 
 }
 

@@ -42,10 +42,8 @@ const mutations = {
     },
     SETLOGIN(state, LOGINSTATE) {
         state.sessionid = LOGINSTATE.SessionID
+        sessionStorage.setItem("SessionID", state.sessionid); //存入session
         state.ystoken = LOGINSTATE.YSToken
-        // state.proj = LOGINSTATE.proj
-        // state.provid = LOGINSTATE.provid
-        // state.cityid = LOGINSTATE.cityid
     }
 }
 
