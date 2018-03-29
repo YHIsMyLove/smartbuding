@@ -8,18 +8,18 @@
                         <el-input  placeholder="图片名称"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button>查询</el-button>
+                        <el-button @click="refImgs">查询</el-button>
                         <el-button @click="upload" type="primary">上传</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>
-            <el-col :span="4" v-for="i in 12">
+            <el-col :span="4" v-for="i,index in tableData" :key="index">
                 <el-card class="img-card" :body-style="{ padding: '0px' }">
-                    <img src="../../assets/logo.png" class="image">
+                    <img style="width:100%,height:100%" :src="i.url" class="image">
                     <div style="padding: 14px;">
-                        <span>图片名称</span>
+                        <span>{{i.key}}</span>
                         <div class="bottom clearfix">
-                            <time class="time">{{ currentDate }}</time>
+                            <time class="time">{{ i.ctime }}</time>
                             <el-button type="text" class="button">删除</el-button>
                         </div>
                     </div>
@@ -31,8 +31,7 @@
                     style="float:right">
                 </el-pagination>
             </el-col>
-
-               <el-dialog title="图片上传" v-model="editFormVisible" :close-on-click-modal="true">
+            <el-dialog title="图片上传" v-model="editFormVisible" :close-on-click-modal="true">
                     <el-form :model="editForm" label-width="100px"  ref="editForm">
                         <!-- <el-form-item  label="图片名称" prop="DevID">
                             <el-input :disabled="true" v-model="editForm.ImgName" auto-complete="off"></el-input>
@@ -78,20 +77,30 @@ export default {
   data() {
     return {
       currentDate: moment().format("YYYY-MM-DD hh:mm:ss"),
-      currentPage: 0,
-      tableDataLength: 0,
-      currentPageSize: 0,
       editFormVisible: false,
       editForm: {
         ImgName: ""
       },
       fileList2: [],
-      uploding: false
+      uploding: false,
+
+      currentPage: 0,
+      tableData: [],
+      tableDataLength: 0,
+      currentPageSize: 12,
+      startKey: "" //分页需要记下最后一个图片的Key
     };
   },
+  created() {
+    this.GetImages();
+  },
   methods: {
+    refImgs() {
+      this.GetImages();
+    },
     handleCurrentChange() {},
     handleSizeChange() {},
+    //上传图片
     upload() {
       this.editFormVisible = true;
     },
@@ -134,6 +143,40 @@ export default {
       }
       //isJPG &&
       return isLt2M;
+    },
+    //分页获取图片
+    GetImages() {
+      let that = this;
+      let query = {
+        startKey: that.startKey,
+        pageCount: that.$data.currentPageSize
+        // limit: vm.$data.currentPageSize,
+        // page: vm.$data.currentPage
+      };
+      axios
+        .get("/api/GetFiles", { params: query })
+        .then(res => {
+          console.log(res);
+          if (res.data.success) {
+            that.$data.tableData = res.data.data;
+            that.$data.tableDataLength = res.data.meta.count;
+            console.log(res.data.data);
+            that.startKey =
+              that.$data.tableData[that.$data.currentPageSize].key;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    handleSizeChange(val) {
+      this.$data.currentPageSize = val;
+      this.GetImages();
+    },
+    handleCurrentChange(val) {
+      that.startKey = that.$data.tableData[that.$data.currentPageSize].key;
+      this.$data.currentPage = val; //计算startKey
+      this.GetImages();
     }
   }
 };

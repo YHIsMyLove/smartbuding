@@ -9,7 +9,7 @@
     </el-form-item>
     <el-checkbox v-model="checked" checked style="margin:0px 0px 35px 0px;">记住密码</el-checkbox>
     <el-form-item style="width:100%;">
-      <el-button type="primary" style="width:100%;" @click.native.prevent="checklogin">登录</el-button>
+      <el-button type="primary" style="width:100%;" :loading="Loginloading" @click.native.prevent="checklogin">登录</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -28,6 +28,7 @@ export default {
     //检查是否登录成功
     var checkLogin = (rule, value, callback) => {};
     return {
+      Loginloading: false,
       ruleForm2: {
         UserID: "",
         UserPwd: ""
@@ -52,6 +53,7 @@ export default {
     },
     checklogin(ev) {
       var _this = this;
+      this.Loginloading = true;
       axios.post("/api/login", this.ruleForm2).then(function(res, err) {
         if (err || !res.data.success) {
           console.log("登录失败");
@@ -59,6 +61,7 @@ export default {
             type: "error",
             message: res.data.msg
           });
+          _this.Loginloading = false;
           return false;
         }
         _this.setLogin(res.data.data);

@@ -6,6 +6,7 @@ const Qcos = require('../../utils/Qcos.js')
 const moment = require('moment')
 const multiparty = require('multiparty')
 const fs = require('fs')
+const ImageMagick = require('../../utils/ImageMagick')
 
 const UserSession = mongoose.model('UserSession')
 const SysTable = mongoose.model('SysTable')
@@ -717,6 +718,16 @@ exports.DelMettingContent = async (req, res) => {
 /****************************************************************** */
 //获取文件
 exports.GetFiles = async (req, res) => {
+    let query = {
+        startKey: req.query.startKey,
+        pageCount: req.query.pageCount
+    }
+    console.log(query)
+    let result = await Qcos.GetBucketAsync(query)
+    if (result.error) {
+        return res.send(msg.genFailedMsg('获取失败!' + result.error))
+    }
+    res.send(msg.genSuccessMsg("获取成功", result.data, { count: 100 }))
 }
 
 //上传文件
@@ -738,6 +749,11 @@ exports.UploadFile = (req, res) => {
             else {
                 files.file.path = dstPath;
                 let data = files;
+
+                //1. 获得缩略图
+                //ImageMagick.resizeImg('')
+
+                //2. 上传
                 Qcos.uploadSync(files.file.path, (err, qcospath) => {
                     if (err) {
                         return res.send(msg.genFailedMsg('上传失败', err))

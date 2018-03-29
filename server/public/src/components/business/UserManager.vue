@@ -28,12 +28,6 @@
                         </el-table-column>
                         <el-table-column prop="UserPhoneNum" label="手机号">
                         </el-table-column>
-                        <!-- <el-table-column prop="UserPost" label="职位">
-                        </el-table-column>
-                        <el-table-column prop="UserDept" label="部门">
-                        </el-table-column>
-                        <el-table-column prop="UserRole" label="角色">
-                        </el-table-column> -->
                         <el-table-column label="操作" width="150">
                             <template scope="scope">
                                 <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
@@ -143,9 +137,9 @@ export default {
         UserID: [{ validator: checkUserID, trigger: "blur" }],
         UserPwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
         UserName: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        UserPhoneNum: [
-          { required: true, message: "请输入手机号", trigger: "blur" }
-        ]
+        // UserPhoneNum: [
+        //   { required: true, message: "请输入手机号", trigger: "blur" }
+        // ]
       },
       tableData: [],
       tableDataLength: 0,

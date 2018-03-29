@@ -7,9 +7,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('./config/config')
 const fs = require('fs');
-
 const models = path.join(__dirname, 'mongodb/models');
-
 const app = express();
 
 /************************************************************************************* */

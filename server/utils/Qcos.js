@@ -18,16 +18,6 @@ const cos = new COS({
  * 7. sliceUploadFile 分片上传 params{bucket,region,key,filepath}
  * 8. deleteObject 删除实体 params{bucket,region,key} 
  */
-exports.Upload = async (key) => {
-    let result = await cos.sliceUploadFile({
-        Bucket: config.Qcos_Bucket,
-        Region: config.Qcos_Region,
-        key: key,
-        FilePath: `./${key}`
-    })
-    return result
-}
-
 exports.uploadSync = function (key, callback) {
     cos.sliceUploadFile({
         Bucket: config.Qcos_Bucket,
@@ -42,13 +32,71 @@ exports.uploadSync = function (key, callback) {
     });
 }
 
-exports.GetBucket = async (query) => {
-    let params = {
+function getBucket() {
+    cos.getBucket({
         Bucket: config.Qcos_Bucket,
         Region: config.Qcos_Region,
-        MaxKeys: query.currentPageSize,//单次返回最大的条目数量,
-        //Prefix: '',//模糊搜索
-    };
-    let result = await cos.getBucket(params)
-    return result
+        Prefix: 'static/',
+        Marker: 'static/',
+        MaxKeys: 2
+    }, function (err, data) {
+        let result = data.Contents
+        let selectKey = result.map(i => i.Key)
+        selectKey.forEach(element => {
+            getObjectUrl(element, data => {
+                console.log(data)
+            })
+        });
+    });
 }
+function getObjectUrl(key, callback) {
+    var url = cos.getObjectUrl({
+        Bucket: config.Qcos_Bucket,
+        Region: config.Qcos_Region,
+        Key: key,
+        Expires: 60,
+        Sign: true,
+    }, function (err, data) {
+    });
+    callback(url)
+}
+
+//异步分页获取文件 startKey:起始文件,默认根目录文件夹开始,pageCount:分页大小
+async function getBuketPromise(query = { startKey: 'static/', pageCount: 10 }) {
+    return new Promise((resole, reject) => {
+        cos.getBucket({
+            Bucket: config.Qcos_Bucket,
+            Region: config.Qcos_Region,
+            Prefix: 'static/',
+            Marker: query.startKey == undefined ? 'static/' : query.startKey,
+            MaxKeys: query.pageCount == undefined ? 10 : query.pageCount
+        }, function (err, data) {
+            // console.log('**********************************')
+            // console.log(query)
+            let result = data.Contents
+            let count = 0
+            let resultData = []
+            result.forEach(element => {
+                try {
+                    getObjectUrl(element.Key, data => {
+                        resultData.push({ url: data, key: element.Key, ctime: element.LastModified, size: element.Size })
+                        count++
+                        if (count == result.length) {
+                            resole({ data: resultData })
+                        }
+                    })
+                } catch (error) {
+                    reject(error)
+                }
+            });
+        });
+    })
+}
+
+exports.GetBucketAsync = getBuketPromise
+
+// getBuketPromise().then(res => {
+//     console.log(res)
+// }).catch(err => {
+//     console.log(err)
+// })
