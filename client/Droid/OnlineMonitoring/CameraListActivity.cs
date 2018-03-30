@@ -18,14 +18,13 @@ using Android.Support.V4.Content;
 using Android;
 using Android.Support.V4.App;
 using Android.Content.PM;
+using SmartConstructionSite.Core.Common;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
     [Activity(Label = "@string/title_dev_list", Theme = "@style/AppTheme")]
     public class CameraListActivity : Android.Support.V7.App.AppCompatActivity
     {
-        public const string AppKey = "443eed7d6dab47739915d6a237dcad34";
-        public const string AccessTokenForTest = "at.9a0bwbl37y1kjxf30b2zko8f4hkh0sei-99qpb3p4pr-0uyg61f-bcha9ruqh";
         static bool ezopenSDKInitilized;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -97,7 +96,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             /**
              * APP_KEY请替换成自己申请的
              */
-            EZOpenSDK.InitLib(Application, AppKey, "");
+            EZOpenSDK.InitLib(Application, ServiceContext.AppKey, "");
 
             ezopenSDKInitilized = true;
         }
@@ -105,9 +104,16 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         private async Task InitData()
         {
             InitSDK();
-            EZOpenSDK.Instance.SetAccessToken(AccessTokenForTest);
-            IList<EZDeviceInfo> list = await CameraHelpers.FetchCameraList(0, 10);
-            cameraListAdapter.AddCameras("塔区", list.ToArray());
+            EZOpenSDK.Instance.SetAccessToken(ServiceContext.Instance.YSAccessToken);
+            var result = await CameraHelpers.FetchCameraList(0, 10);
+            if (result.HasError)
+            {
+                Toast.MakeText(this, result.Error.Description, ToastLength.Long).Show();
+            }
+            else
+            {
+                cameraListAdapter.AddCameras("塔区", result.Model.ToArray());
+            }
         }
 
         private void InitViews()

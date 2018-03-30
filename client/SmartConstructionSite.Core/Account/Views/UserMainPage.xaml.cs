@@ -1,4 +1,5 @@
-﻿using SmartConstructionSite.Core.Account.ViewModels;
+﻿using Acr.UserDialogs;
+using SmartConstructionSite.Core.Account.ViewModels;
 using SmartConstructionSite.Core.Common;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,24 @@ namespace SmartConstructionSite.Core.Account.Views
                 //    CachingEnabled = true,
                 //    CacheValidity = new TimeSpan(5, 0, 0, 0)
                 //};
+            }
+            viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        }
+
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(viewModel.IsBusy))
+            {
+                if (viewModel.IsBusy)
+                    UserDialogs.Instance.ShowLoading("正在登陆。。。", MaskType.Black);
+                else
+                    UserDialogs.Instance.HideLoading();
+            }
+            else if (e.PropertyName == nameof(viewModel.Error) && viewModel.Error != null)
+            {
+                var toastConfig = new ToastConfig(viewModel.Error.Description);
+                toastConfig.SetDuration(3000);
+                UserDialogs.Instance.Toast(toastConfig);
             }
         }
 

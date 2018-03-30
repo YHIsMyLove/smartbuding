@@ -1,5 +1,4 @@
-﻿using ModernHttpClient;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SmartConstructionSite.Core.Account.Models;
 using SmartConstructionSite.Core.Common;
@@ -60,11 +59,12 @@ namespace SmartConstructionSite.Core.Account.Services
                 var msg = await httpClient.GetAsync(string.Format(Config.getUserInfoUrl, sessionId));
                 string json = await msg.Content.ReadAsStringAsync();
                 System.Diagnostics.Debug.WriteLine("Response:{0}", json);
-                var stat = JsonConvert.DeserializeObject(json) as JObject;
+                var stat = (JObject)JsonConvert.DeserializeObject(json);
                 if ((bool)stat["success"])
                 {
-                    string userJson = stat["data"].ToString();
-                    result.Model = JsonConvert.DeserializeObject(userJson) as User;
+                    var userJson = stat["data"].ToString();
+                    System.Diagnostics.Debug.WriteLine($"user json: {userJson}");
+                    result.Model = JsonConvert.DeserializeObject<User>(userJson);
                 }
                 else
                 {
@@ -80,15 +80,33 @@ namespace SmartConstructionSite.Core.Account.Services
             return result;
         }
 
-        public async Task<Result<bool>> Logout()
+        public async Task<Result<bool>> Logout(string sessionId)
         {
-            await Task.Delay(2000);
-            return await Task.Run(() =>
+            var result = new Result<bool>();
+            try
             {
-                Result<bool> result = new Result<bool>();
-                result.Model = true;
-                return result;
-            });
+                var httpClient = CreateHttpClient();
+                var content = CreateContent($"SessionID={sessionId}");
+                var message = await httpClient.PostAsync(Config.logoutUrl, content);
+                var json = await message.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine($"Response:{json}");
+                var stat = JsonConvert.DeserializeObject<JObject>(json);
+                if ((bool)stat["success"])
+                {
+                    result.Model = true;
+                }
+                else
+                {
+                    result.HasError = true;
+                    result.Error = new Error() { Description = (string)stat["msg"] };
+                }
+            }
+            catch (Exception e)
+            {
+                result.HasError = true;
+                result.Error = new Error() { Description = e.Message, Exception = e };
+            }
+            return result;
         }
 
         public async Task<Result<bool>> CheckSession(string sessionId)

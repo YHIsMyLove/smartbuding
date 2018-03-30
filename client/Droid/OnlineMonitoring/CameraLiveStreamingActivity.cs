@@ -22,6 +22,7 @@ using Com.Videogo.Util;
 using Android.Content.PM;
 using System.Threading.Tasks;
 using Com.Videogo.Widget;
+using SmartConstructionSite.Core.Common;
 
 namespace SmartConstructionSite.Droid.OnlineMonitoring
 {
@@ -125,8 +126,8 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
         {
             //player
             player = (EZUIPlayer)FindViewById(Resource.Id.player);
-            EZUIKit.InitWithAppKey(Application, CameraListActivity.AppKey);
-            EZUIKit.SetAccessToken(CameraListActivity.AccessTokenForTest);
+            EZUIKit.InitWithAppKey(Application, ServiceContext.AppKey);
+            EZUIKit.SetAccessToken(ServiceContext.Instance.YSAccessToken);
             player.SetCallBack(new PlayerCallBack(this));
             string url = string.Format("ezopen://open.ys7.com/{0}/{1}.live", camera.DeviceSerial, camera.CameraNo);
             player.SetUrl(url);
@@ -297,14 +298,22 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
                 if (ctrlCompleted)
                 {
                     ctrlCompleted = false;
-                    await CameraHelpers.ControlPTZ(camera.DeviceSerial, camera.CameraNo, cmd, EZConstants.EZPTZAction.EZPTZActionSTART, EZConstants.PtzSpeedDefault);
+                    var result = await CameraHelpers.ControlPTZ(camera.DeviceSerial, camera.CameraNo, cmd, EZConstants.EZPTZAction.EZPTZActionSTART, EZConstants.PtzSpeedDefault);
+                    if (result.HasError)
+                    {
+                        Toast.MakeText(this, result.Error.Description, ToastLength.Long).Show();
+                    }
                     ctrlCompleted = true;
                 }
             }
             else if (action == MotionEventActions.Up)
             {
                 container.SetBackgroundResource(Resource.Drawable.ptz_bg);
-                await CameraHelpers.ControlPTZ(camera.DeviceSerial, camera.CameraNo, cmd, EZConstants.EZPTZAction.EZPTZActionSTOP, EZConstants.PtzSpeedDefault);
+                var result = await CameraHelpers.ControlPTZ(camera.DeviceSerial, camera.CameraNo, cmd, EZConstants.EZPTZAction.EZPTZActionSTOP, EZConstants.PtzSpeedDefault);
+                if (result.HasError)
+                {
+                    Toast.MakeText(this, result.Error.Description, ToastLength.Long).Show();
+                }
             }
         }
 
@@ -362,10 +371,10 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             builder.SetCancelable(false);
             builder.SetMessage(Resource.String.setting_video_level);
             Android.Support.V7.App.AlertDialog dialog = builder.Show();
-            bool result = await CameraHelpers.SetVideoLevel(camera.DeviceSerial, camera.CameraNo, level);
+            var result = await CameraHelpers.SetVideoLevel(camera.DeviceSerial, camera.CameraNo, level);
             dialog.Dismiss();
 
-            if (result)
+            if (result.Model)
             {
                 camera.SetVideoLevel(videoLevel.Ordinal());
                 if (level == EZConstants.EZVideoLevel.VideoLevelHd)
@@ -382,6 +391,10 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
                 }
                 else
                     btnVideoLevel.Text = GetString(Resource.String.quality_flunet);
+            }
+            else if (result.HasError)
+            {
+                Toast.MakeText(this, result.Error.Description, ToastLength.Long).Show();
             }
 
             player.StopPlay();

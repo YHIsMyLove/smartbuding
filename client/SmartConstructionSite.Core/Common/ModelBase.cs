@@ -3,7 +3,7 @@ namespace SmartConstructionSite.Core.Common
 {
     public abstract class ModelBase
     {
-        public string Id
+        public string _id
         {
             get;
             set;

@@ -6,6 +6,8 @@ namespace SmartConstructionSite.Core.Common
 {
     public class ServiceContext
     {
+        public const string AppKey = "443eed7d6dab47739915d6a237dcad34";
+
         private ServiceContext()
         {
         }

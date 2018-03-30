@@ -9,7 +9,6 @@ using Xamarin.Forms;
 using Android.Runtime;
 using Plugin.Permissions;
 using SmartConstructionSite.Core;
-using Plugin.Toasts;
 
 namespace SmartConstructionSite.Droid
 {
@@ -30,16 +29,13 @@ namespace SmartConstructionSite.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
-            //ZXing.Net.Mobile.Forms.Android.Platform.Init();
-
-            DependencyService.Register<ToastNotification>(); // Register your dependency
-            ToastNotification.Init(this);
+            ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
             app = new App();
             app.SetFullScreen(false);
             app.FullScreenRequested += App_FullScreenRequested;
             app.LandscapeRequested += App_LandscapeRequested;
-            //app.CameraHelper.ShowCameraListRequested += CameraHelper_ShowCameraListRequested;
+            app.ShowCameraListRequested += CameraHelper_ShowCameraListRequested;
 
             LoadApplication(app);
         }
@@ -64,7 +60,7 @@ namespace SmartConstructionSite.Droid
         {
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            //ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         protected override void OnDestroy()

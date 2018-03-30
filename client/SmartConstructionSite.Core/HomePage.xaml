@@ -7,7 +7,7 @@
             x:Class="SmartConstructionSite.Core.HomePage">
 
     <xf:BottomBarPage.ToolbarItems>
-        <ToolbarItem Icon="ic_search_white_48dp.png"></ToolbarItem>
+        <ToolbarItem x:Name="btnScan" Icon="action_scan_2.png" Clicked="Button_Clicked"></ToolbarItem>
     </xf:BottomBarPage.ToolbarItems>
 
     <projectManagement:ProjectManagementMainPage Title="项目管理" Icon="ic_points.png"></projectManagement:ProjectManagementMainPage>

@@ -73,8 +73,9 @@ namespace SmartConstructionSite.Core.Account.ViewModels
             HasError = false;
             Error = null;
             RefreshCommandCanExecute();
-            var result = await userService.Logout();
+            var result = await userService.Logout(ServiceContext.Instance.SessionID);
             IsBusy = false;
+            RefreshCommandCanExecute();
             if (result.HasError)
             {
                 HasError = true;

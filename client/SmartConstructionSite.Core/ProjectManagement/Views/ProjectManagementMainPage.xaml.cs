@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SmartConstructionSite.Core.PeopleManagement.Views;
-using Plugin.Toasts;
 
 namespace SmartConstructionSite.Core.ProjectManagement.Views
 {
@@ -26,21 +25,6 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             InitializeComponent();
 
             Device.StartTimer(TimeSpan.FromMilliseconds(200), Rolling);
-
-            Appearing += ProjectManagementMainPage_Appearing;
-        }
-
-        private async void ProjectManagementMainPage_Appearing(object sender, EventArgs e)
-        {
-            var notificator = DependencyService.Get<IToastNotificator>();
-
-            var options = new NotificationOptions()
-            {
-                Title = "Title",
-                Description = "Description"
-            };
-
-            var result = await notificator.Notify(options);
         }
 
         private bool Rolling()
@@ -53,8 +37,8 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
 
         async void Handle_Clicked(object sender, System.EventArgs e)
         {
-            if (sender == btnSceneMgr) { }
-            //((App)Application.Current).CameraHelper.ShowCameraList();
+            if (sender == btnSceneMgr)
+                ((App)Application.Current).ShowCameraList();
             else if (sender == btnProductionMgr)
                 await Navigation.PushAsync(new PlaceholderPage() { Title = "生产管理" }, true);
             else if (sender == btnSpecialTaskCheck)

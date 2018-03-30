@@ -47,8 +47,7 @@ namespace SmartConstructionSite.Core.Account.ViewModels
                 }
                 else
                 {
-                    //ServiceContext.Instance.CurrentUser = result1.Model;
-                    ServiceContext.Instance.CurrentUser = new Models.User();
+                    ServiceContext.Instance.CurrentUser = result1.Model;
                     ServiceContext.Instance.Region = SimpleData.Instance.GetProvinces()[0];
                     ServiceContext.Instance.CurrentProject = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region)[0];
                     IsLoginSucceed = true;

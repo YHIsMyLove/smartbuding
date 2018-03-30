@@ -1,4 +1,5 @@
 ﻿using SmartConstructionSite.Core.Common;
+using SmartConstructionSite.Core.ProjectManagement.Models;
 using SmartConstructionSite.Core.ProjectManagement.Services;
 using System;
 using System.Collections.Generic;
@@ -20,15 +21,15 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             FetchProvincesCommand = new Command(execute: async () => { await FetchProvinces(); }, canExecute: () => { return IsFetchProvincesCommandCanExecute(); });
             FetchCitiesCommand = new Command(execute: async () => { await FetchCities(); }, canExecute: () => { return IsFetchCitiesCommandCanExecute(); });
 
-            provinces = SimpleData.Instance.GetProvinces();
-            selectedProvince = provinces[0];
-            cities = SimpleData.Instance.GetCities(selectedProvince);
-            selectedCity = cities[0];
-            projects = SimpleData.Instance.GetProjects(selectedProvince, selectedCity);
+            //provinces = SimpleData.Instance.GetProvinces();
+            //selectedProvince = provinces[0];
+            //cities = SimpleData.Instance.GetCities(selectedProvince);
+            //selectedCity = cities[0];
+            //projects = SimpleData.Instance.GetProjects(selectedProvince, selectedCity);
         }
 
         #region Properties
-        public string SelectedProvince
+        public Province SelectedProvince
         {
             get => selectedProvince;
             set
@@ -38,13 +39,13 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 NotifyPropertyChanged(nameof(SelectedProvince));
 
                 //update cities and projects
-                Cities = SimpleData.Instance.GetCities(selectedProvince);
-                Projects = SimpleData.Instance.GetProjects(selectedProvince);
+                //Cities = SimpleData.Instance.GetCities(selectedProvince);
+                //Projects = SimpleData.Instance.GetProjects(selectedProvince);
                 selectedCity = Cities[0];
             }
         }
 
-        public string SelectedCity {
+        public City SelectedCity {
             get => selectedCity;
             set {
                 if (selectedCity == value) return;
@@ -52,11 +53,11 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 NotifyPropertyChanged(nameof(SelectedCity));
 
                 //update projects
-                Projects = SimpleData.Instance.GetProjects(selectedProvince, selectedCity);
+                //Projects = SimpleData.Instance.GetProjects(selectedProvince, selectedCity);
             }
         }
 
-        public IList<string> Projects {
+        public IList<Project> Projects {
             get => projects;
             private set {
                 if (projects == value) return;
@@ -65,7 +66,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             }
         }
 
-        public IList<string> Provinces {
+        public IList<Province> Provinces {
             get => provinces;
             private set {
                 if (provinces == value) return;
@@ -74,7 +75,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             }
         }
 
-        public IList<string> Cities {
+        public IList<City> Cities {
             get => cities;
             private set {
                 if (cities == value) return;
@@ -110,8 +111,8 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             Provinces = result.Model;
             if (Provinces.Count() > 0)
             {
-                result = await projectService.FetchCities(Provinces[0]);
-                Cities = result.Model;
+                //result = await projectService.FetchCities(Provinces[0]);
+                //Cities = result.Model;
             }
             IsBusy = false;
         }
@@ -141,10 +142,10 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
         }
 
         private ProjectService projectService;
-        private string selectedProvince;
-        private string selectedCity;
-        private IList<string> projects;
-        private IList<string> provinces;
-        private IList<string> cities;
+        private Province selectedProvince;
+        private City selectedCity;
+        private IList<Project> projects;
+        private IList<Province> provinces;
+        private IList<City> cities;
     }
 }

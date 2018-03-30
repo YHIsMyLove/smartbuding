@@ -7,6 +7,7 @@ namespace SmartConstructionSite.Core
     {
         public event EventHandler<bool> FullScreenRequested;
         public event EventHandler<bool> LandscapeRequested;
+        public event EventHandler ShowCameraListRequested;
 
         public App()
         {
@@ -41,6 +42,11 @@ namespace SmartConstructionSite.Core
                 LandscapeRequested?.Invoke(this, landscape);
                 this.landscape = landscape;
             }
+        }
+
+        public void ShowCameraList()
+        {
+            ShowCameraListRequested?.Invoke(this, EventArgs.Empty);
         }
 
         protected override void OnStart()
