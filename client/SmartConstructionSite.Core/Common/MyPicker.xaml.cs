@@ -38,10 +38,10 @@ namespace SmartConstructionSite.Core.Common
         }
 
         public static readonly BindableProperty ItemsSourceProperty =
-            BindableProperty.Create(nameof(ItemsSource), typeof(IList<string>), typeof(MyPicker), null);
+            BindableProperty.Create(nameof(ItemsSource), typeof(IList<object>), typeof(MyPicker), null);
 
-        public IList<string> ItemsSource {
-            get { return (IList<string>)GetValue(ItemsSourceProperty); }
+        public IList<object> ItemsSource {
+            get { return (IList<object>)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
@@ -85,7 +85,7 @@ namespace SmartConstructionSite.Core.Common
                     if (item != null)
                         buttons.Add(item.ToString());
                     else
-                        buttons.Add("item is null");
+                        buttons.Add("无");
                 }
             }
             var result = await OwnerPage.DisplayActionSheet(Title, null, null, buttons.ToArray());

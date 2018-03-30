@@ -15,7 +15,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.Services
             
         }
 
-        internal async Task<Result<IList<Project>>> FindProjects(Province province, City city)
+        internal async Task<Result<IList<Project>>> FindProjects(Province province = null, City city = null)
         {
             var result = new Result<IList<Project>>();
             try

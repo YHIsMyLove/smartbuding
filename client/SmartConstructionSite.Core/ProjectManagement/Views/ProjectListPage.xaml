@@ -25,7 +25,7 @@
                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <Label Text="{Binding .}" VerticalOptions="Center" TextColor="#3670d4"></Label>
+                            <Label Text="{Binding Name}" VerticalOptions="Center" TextColor="#3670d4"></Label>
 
                             <Image Source="ic_location_normal.png" VerticalOptions="Center" Grid.Column="1"></Image>
 

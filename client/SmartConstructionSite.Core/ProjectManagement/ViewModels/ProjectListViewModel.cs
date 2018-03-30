@@ -26,6 +26,35 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             //cities = SimpleData.Instance.GetCities(selectedProvince);
             //selectedCity = cities[0];
             //projects = SimpleData.Instance.GetProjects(selectedProvince, selectedCity);
+            InitData();
+        }
+
+        async Task InitData()
+        {
+            if (ServiceContext.Instance.CurrentUser == null) return;
+            if (IsBusy) return;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
+            var result = await projectService.FetchProvinces();
+            if (result.HasError)
+            {
+                HasError = true;
+                Error = result.Error;
+                return;
+            }
+            Provinces = result.Model;
+            if (Provinces.Count != 0)
+                Provinces.Insert(0, null);
+            var result1 = await projectService.FindProjects();
+            if (result1.HasError)
+            {
+                HasError = true;
+                Error = result1.Error;
+                return;
+            }
+            Projects = result1.Model;
+            IsBusy = false;
         }
 
         #region Properties
@@ -41,8 +70,43 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 //update cities and projects
                 //Cities = SimpleData.Instance.GetCities(selectedProvince);
                 //Projects = SimpleData.Instance.GetProjects(selectedProvince);
-                selectedCity = Cities[0];
+                //selectedCity = Cities[0];
+                UpdateCityAndProject();
             }
+        }
+
+        async Task UpdateCityAndProject()
+        {
+            if (IsBusy) return;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
+            if (selectedProvince == null)
+            {
+                Cities = null;
+            }
+            else
+            {
+                var result = await projectService.FetchCities(selectedProvince);
+                if (result.HasError)
+                {
+                    HasError = true;
+                    Error = result.Error;
+                    return;
+                }
+                Cities = result.Model;
+                if (Cities.Count != 0)
+                    Cities.Insert(0, null);
+            }
+            var result1 = await projectService.FindProjects(selectedProvince, selectedCity);
+            if (result1.HasError)
+            {
+                HasError = true;
+                Error = result1.Error;
+                return;
+            }
+            Projects = result1.Model;
+            IsBusy = false;
         }
 
         public City SelectedCity {
@@ -54,6 +118,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
 
                 //update projects
                 //Projects = SimpleData.Instance.GetProjects(selectedProvince, selectedCity);
+                FindProjects();
             }
         }
 
@@ -98,22 +163,16 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
         {
             if (IsBusy) return;
             IsBusy = true;
+            HasError = false;
+            Error = null;
             var result = await projectService.FindProjects(selectedProvince, selectedCity);
-            Projects = result.Model;
-            IsBusy = false;
-        }
-
-        private async Task FetchProvinces()
-        {
-            if (IsBusy) return;
-            IsBusy = true;
-            var result = await projectService.FetchProvinces();
-            Provinces = result.Model;
-            if (Provinces.Count() > 0)
+            if (result.HasError)
             {
-                //result = await projectService.FetchCities(Provinces[0]);
-                //Cities = result.Model;
+                HasError = true;
+                Error = result.Error;
+                return;
             }
+            Projects = result.Model;
             IsBusy = false;
         }
 
@@ -121,7 +180,15 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
         {
             if (IsBusy) return;
             IsBusy = true;
+            HasError = false;
+            Error = null;
             var result = await projectService.FetchCities(selectedProvince);
+            if (result.HasError)
+            {
+                HasError = true;
+                Error = result.Error;
+                return;
+            }
             Cities = result.Model;
             IsBusy = false;
         }
