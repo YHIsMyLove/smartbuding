@@ -36,11 +36,9 @@ export default {
       rules2: {
         UserID: [
           { required: true, message: "请输入账号", trigger: "blur" }
-          // { validator: checkLogin, trigger: "blur" }
         ],
         UserPwd: [
           { required: true, message: "请输入密码", trigger: "blur" }
-          // { validator: checkLogin, trigger: "blur" }
         ]
       },
       checked: true

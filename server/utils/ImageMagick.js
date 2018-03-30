@@ -2,18 +2,37 @@ var gm = require('gm')
     , fs = require('fs')
     , imageMagick = gm.subClass({ imageMagick: true });
 
-//生成缩略图 -----mustbe install imagemagick
-exports.resizeImg = function (path = '../static/a.png') {
-    let r_path = '../static/a_x150.png'
+/**
+ * 生成缩略图
+ * mustbe install ImageMagick
+ * @param 原图路径
+ * @param 缩略图大小
+ */
+let resizeImg = function (path = '', resize = 150) {
     return new Promise((res, rej) => {
-        imageMagick(path)
-            .resize(150, 150, '!')
-            .write(r_path, function (err) {
-                if (!err) res()
-                else rej(err)
-            });
+        try {
+            let r_path = `${path.substr(0, path.lastIndexOf('.'))}_x${resize}${path.substr(path.lastIndexOf('.'))}`
+            imageMagick(path)
+                .resize(resize, resize, '!')
+                .write(r_path, function (err) {
+                    if (!err) res({ data: r_path })
+                    else rej(err)
+                });
+        } catch (err) {
+            rej(err)
+        }
     })
 }
 
-//resizeImg().then(res => { console.log('转换成功') }).catch(err => console.log('转换失败->' + err))
+
+/**
+ * 生成缩略图
+ * @param 原图路径
+ * @param 缩略图大小
+ */
+exports.ResizeImg = resizeImg
+
+//resizeImg()
+//    .then(res => { console.log('转换成功') })
+//    .catch(err => console.log('转换失败->' + err))
 

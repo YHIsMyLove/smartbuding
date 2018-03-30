@@ -100,8 +100,6 @@ exports.getUserInfo = async (req, res) => {
 }
 
 //log out 注销
-
-
 /****************************************************************** */
 /**用户项目管理*******************************************************/
 /****************************************************************** */
@@ -722,12 +720,12 @@ exports.GetFiles = async (req, res) => {
         startKey: req.query.startKey,
         pageCount: req.query.pageCount
     }
-    console.log(query)
     let result = await Qcos.GetBucketAsync(query)
+    let count = await Qcos.GetBucketCount()
     if (result.error) {
         return res.send(msg.genFailedMsg('获取失败!' + result.error))
     }
-    res.send(msg.genSuccessMsg("获取成功", result.data, { count: 100 }))
+    res.send(msg.genSuccessMsg("获取成功", result.data, { count: count - 1 }))
 }
 
 //上传文件
@@ -742,26 +740,49 @@ exports.UploadFile = (req, res) => {
         var inputFile = files.file[0];
         var uploadedPath = inputFile.path;
         var dstPath = './static/' + inputFile.originalFilename;
-        fs.rename(uploadedPath, dstPath, function (err) {
+        fs.rename(uploadedPath, dstPath, async function (err) {
             if (err) {
                 return res.send(msg.genFailedMsg('更名失败', err))
             }
             else {
                 files.file.path = dstPath;
                 let data = files;
-
                 //1. 获得缩略图
-                //ImageMagick.resizeImg('')
+                let resizeimg_result = await ImageMagick.ResizeImg(dstPath)
+                if (!resizeimg_result.err) {
+                    Qcos.uploadSync(resizeimg_result.data, (err, qcospath) => {
+                        if (err) {
+                            return res.send(msg.genFailedMsg('上传失败', err))
+                        }
+                        res.send(msg.genSuccessMsg('上传成功', qcospath))
 
-                //2. 上传
-                Qcos.uploadSync(files.file.path, (err, qcospath) => {
-                    if (err) {
-                        return res.send(msg.genFailedMsg('上传失败', err))
-                    }
-                    res.send(msg.genSuccessMsg('上传成功', qcospath))
-                })
+                        //2. 删除本地
+                        fs.unlinkSync(resizeimg_result.data)
+                        //3. 删除原图
+                        fs.unlinkSync(files.file.path)
+                    })
+                } else {
+                    //缩略图失败..
+                    return res.send(msg.genFailedMsg('上传失败', err))
+                }
             }
         });
-
     });
+}
+
+/**
+ * 根据索引取得对象名称
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.GetFileKeyByIndex = async (req, res) => {
+    let query = {
+        index: req.query.index
+    }
+    try {
+        let result = await Qcos.GetObjectNameByIndex(query)
+        res.send(msg.genSuccessMsg('获取成功', result))
+    } catch (error) {
+        res.send(msg.genFailedMsg('获取失败', error))
+    }
 }

@@ -13,20 +13,20 @@
                     </el-form-item>
                 </el-form>
             </el-col>
-            <el-col :span="4" v-for="i,index in tableData" :key="index">
+            <el-col :span="3" v-for="i,index in tableData" :key="index">
                 <el-card class="img-card" :body-style="{ padding: '0px' }">
-                    <img style="width:100%,height:100%" :src="i.url" class="image">
+                    <img style="width:100%,height:100%;" alt="(✺ω✺)" :src="i.url" class="image">
                     <div style="padding: 14px;">
                         <span>{{i.key}}</span>
                         <div class="bottom clearfix">
                             <time class="time">{{ i.ctime }}</time>
-                            <el-button type="text" class="button">删除</el-button>
+                            <!-- <el-button type="text" class="button">删除 //background-color:black </el-button> -->
                         </div>
                     </div>
                 </el-card>
             </el-col>
             <el-col :span="24" class="toolbar" style="padding-bottom:10px;">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[12, 24, 36, 48]"
+                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[16, 32, 64]"
                     :page-size="currentPageSize" layout="total, sizes, prev, pager, next, jumper" :total="tableDataLength"
                     style="float:right">
                 </el-pagination>
@@ -84,11 +84,12 @@ export default {
       fileList2: [],
       uploding: false,
 
-      currentPage: 0,
+      currentPage: 1,
       tableData: [],
       tableDataLength: 0,
-      currentPageSize: 12,
-      startKey: "" //分页需要记下最后一个图片的Key
+      currentPageSize: 16,
+      startKey: "static/", //分页需要记下最后一个图片的Key
+      UpOrDown: true
     };
   },
   created() {
@@ -132,7 +133,6 @@ export default {
       console.log(fileList);
     },
     beforeAvatarUpload(file) {
-      console.log(file.type);
       //const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 50;
       // if (!isJPG) {
@@ -150,33 +150,58 @@ export default {
       let query = {
         startKey: that.startKey,
         pageCount: that.$data.currentPageSize
-        // limit: vm.$data.currentPageSize,
-        // page: vm.$data.currentPage
       };
       axios
         .get("/api/GetFiles", { params: query })
         .then(res => {
-          console.log(res);
           if (res.data.success) {
             that.$data.tableData = res.data.data;
             that.$data.tableDataLength = res.data.meta.count;
-            console.log(res.data.data);
-            that.startKey =
-              that.$data.tableData[that.$data.currentPageSize].key;
+
+            console.log(that.$data.tableData);
           }
         })
         .catch(err => {
           console.log(err);
         });
     },
+    //分页
     handleSizeChange(val) {
       this.$data.currentPageSize = val;
-      this.GetImages();
+      this.updateimgswhenpagechange();
     },
+    //下/上一页
     handleCurrentChange(val) {
-      that.startKey = that.$data.tableData[that.$data.currentPageSize].key;
-      this.$data.currentPage = val; //计算startKey
-      this.GetImages();
+      // console.log(val);
+      // console.log(this.$data.currentPage);
+      this.UpOrDown = this.$data.currentPage < val;
+      // console.log(val);
+      this.$data.currentPage = val;
+      this.updateimgswhenpagechange();
+    },
+    updateimgswhenpagechange() {
+      let that = this;
+      //1.计算索引
+      let keyindex =
+        (this.$data.currentPage - 1 <= 0 ? 1 : this.$data.currentPage - 1) *
+        this.$data.currentPageSize;
+
+      keyindex = this.UpOrDown
+        ? keyindex
+        : keyindex - this.$data.currentPageSize;
+
+      //2. 获取对象名称
+      axios
+        .get(`/api/GetFileKeyByIndex?index=${keyindex}`)
+        .then(res => {
+          if (res.data.success) {
+            let key = res.data.data.Key;
+            console.log(`${keyindex}====================${key}`);
+            that.startKey = key;
+            that.GetImages();
+          }
+        })
+        .catch(err => console.log(err));
     }
   }
 };

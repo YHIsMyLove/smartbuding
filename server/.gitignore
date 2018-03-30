@@ -41,3 +41,6 @@ jspm_packages
 
 # 过滤文件上传
 /static/
+
+# 过滤config文件
+/config/config.js

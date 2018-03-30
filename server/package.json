@@ -30,6 +30,7 @@
     "express": "~4.14.0",
     "flex.css": "^1.1.6",
     "font-awesome": "^4.7.0",
+    "gm": "^1.23.1",
     "http-errors": "^1.6.2",
     "ipaddr": "^0.0.9",
     "jsonwebtoken": "^8.1.0",

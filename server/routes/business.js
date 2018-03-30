@@ -29,5 +29,6 @@ router.get("/GetYSDevs", business.GetYSDevs)
 
 router.post("/UploadFile", business.UploadFile)
 router.get("/GetFiles", business.GetFiles)
+router.get("/GetFileKeyByIndex", business.GetFileKeyByIndex)
 
 module.exports = router;

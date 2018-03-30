@@ -4,6 +4,7 @@ const cos = new COS({
     SecretId: config.Qcos_SecretId,
     SecretKey: config.Qcos_SecretKey,
 });
+const moment = require('moment')
 /******
  * 1. cos.getService 接口实现获取该用户下所有 Bucket 列表。
  * 该 API 接口需要使用 Authorization 签名认证，
@@ -49,6 +50,7 @@ function getBucket() {
         });
     });
 }
+
 function getObjectUrl(key, callback) {
     var url = cos.getObjectUrl({
         Bucket: config.Qcos_Bucket,
@@ -61,7 +63,11 @@ function getObjectUrl(key, callback) {
     callback(url)
 }
 
-//异步分页获取文件 startKey:起始文件,默认根目录文件夹开始,pageCount:分页大小
+/**
+ * 获取所有的图片
+ * @param 开始路径
+ * @param 获取数量
+ */
 async function getBuketPromise(query = { startKey: 'static/', pageCount: 10 }) {
     return new Promise((resole, reject) => {
         cos.getBucket({
@@ -79,7 +85,7 @@ async function getBuketPromise(query = { startKey: 'static/', pageCount: 10 }) {
             result.forEach(element => {
                 try {
                     getObjectUrl(element.Key, data => {
-                        resultData.push({ url: data, key: element.Key, ctime: element.LastModified, size: element.Size })
+                        resultData.push({ url: data, key: element.Key, ctime: moment(element.LastModified).format('YYYY-MM-DD hh:mm:ss'), size: element.Size })
                         count++
                         if (count == result.length) {
                             resole({ data: resultData })
@@ -95,8 +101,58 @@ async function getBuketPromise(query = { startKey: 'static/', pageCount: 10 }) {
 
 exports.GetBucketAsync = getBuketPromise
 
+/**
+ * 获取当前Buket的图片数量
+ */
+let getBuketCount = async () => {
+    return new Promise((res, rej) => {
+        cos.getBucket({
+            Bucket: config.Qcos_Bucket,
+            Region: config.Qcos_Region,
+            Prefix: 'static/',
+            Marker: 'static/',
+            MaxKeys: 1000
+        }, function (err, data) {
+            console.log(data)
+            if (err) {
+                rej(err)
+            } else {
+                res(data.Contents.length)
+            }
+        });
+    })
+}
+
+/**
+ * 根据索引取得对象的key
+ */
+async function getObjectNameByIndex(query) {
+    return new Promise((res, rej) => {
+        cos.getBucket({
+            Bucket: config.Qcos_Bucket,
+            Region: config.Qcos_Region,
+            Prefix: 'static/',
+            Marker: 'static/',
+            MaxKeys: 1000
+        }, function (err, data) {
+            if (err) {
+                rej(err)
+            } else {
+                res(data.Contents[query.index])
+                // console.log(query.index)
+                // console.log(data.Contents[0])
+            }
+        });
+    })
+}
+
+exports.GetObjectNameByIndex = getObjectNameByIndex
+exports.GetBucketCount = getBuketCount
+
 // getBuketPromise().then(res => {
 //     console.log(res)
 // }).catch(err => {
 //     console.log(err)
 // })
+
+//testGetBuketCount()
