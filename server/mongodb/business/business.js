@@ -41,11 +41,18 @@ exports.Login = async (req, res) => {
             let session = await UserSession.findOne({ UserID: query.UserID }).exec()
             if (session)
                 sessionid = session._id
+
             //2. 匹配账号密码
             let _user = await User.findOne({ UserID: query.UserID }).exec()
             console.log(_user)
             if (!_user) return res.send(msg.genFailedMsg('该账号不存在!'))
             if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!'))
+
+            //2. 查询匹配项目 若没有则不允许登录
+            let haveProj = await UserProj.findOne({ UserID: _user._id })
+            if (!haveProj) {
+                return res.send(msg.genFailedMsg('没权限登录'))
+            }
             //3. 将数据存进/更新session表
             if (sessionid == '') {
                 let _usersession = new UserSession({
@@ -58,7 +65,7 @@ exports.Login = async (req, res) => {
             //4. 取出萤石的token
             let ys_result = await YS.getaccessToken()
             let ystoken = ys_result.data.code == '200' ? ys_result.data.data.accessToken : ''
-            //5. 取出默认省份/城市/项目?需要吗
+
             return res.send(msg.genSuccessMsg('登录成功', {
                 UserID: query.UserID,
                 SessionID: sessionid,
@@ -82,7 +89,26 @@ exports.checkSession = async (req, res) => {
     res.send(msg.genFailedMsg('无效session,请登录'))
 }
 
-//获取用户信息
+/**
+ * 注销 POST SessionID
+ */
+exports.LogOut = async (req, res) => {
+    let query = {
+        _id: req.body.SessionID
+    }
+    try {
+        await UserSession.findOne(query).remove()
+        res.send(msg.genSuccessMsg('注销成功'))
+    } catch (error) {
+        res.send(msg.genFailedMsg('注销失败', error))
+    }
+}
+
+/**
+ * 获取用户信息 Get for Login over
+ * @param {*} req.query.SessionID  
+ * @param {*} res 
+ */
 exports.getUserInfo = async (req, res) => {
     let query = {
         _id: req.query.SessionID
@@ -90,14 +116,85 @@ exports.getUserInfo = async (req, res) => {
     let session = await UserSession.findOne(query).exec()
     if (session) {
         let id = session.UserID
-        console.log(id)
+        //1. 获取用户
         let user = await User.findOne({ UserID: id }).exec()
         if (user) {
-            return res.send(msg.genSuccessMsg('获取成功!', user))
+            //2. 获取部门
+            let userdepts_result = await UserDept.find({ UserID: user._id }).select('DeptID')
+            if (userdepts_result) {
+                let depts_result = await SysTable.find({ SysFieldID: "dept", _id: { $in: userdepts_result.map(i => i.DeptID) } })
+                user.Depts = depts_result.map(i => i.item0)
+                console.log(user)
+            }
+
+            //4. 获取角色
+            return res.send(msg.genSuccessMsg('获取成功!', {
+                _id: user._id,
+                UserID: user.UserID,
+                UserName: user.UserName,
+                UserSex: user.UserSex,
+                UserAge: user.UserAge,
+                UserPhoneNum: user.UserPhoneNum,
+                UserEmail: user.UserEmail,
+                UserCardID: user.UserCardID,
+                DeptNames: user.Depts
+            }))
         }
     }
     res.send(msg.genFailedMsg('无效session,请登录'))
 }
+
+/**
+ * 获取用户相关的省份
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.GetProvByUser = async (req, res) => {
+    let query = {
+        UserID: req.query.UserID
+    }
+    //1. 取得项目ID
+    let proj = await UserProj.find(query).select('ProjID').exec()
+    let projids = proj.map(i => i.ProjID)
+    //2. 取得所有市区
+    let cityids = await SysTable.find({ _id: { $in: projids } }).select('item1')
+    let ids = cityids.map(i => i.item1)
+    let cityinfos = await SysTable.find({ SysFieldID: 'city', _id: { $in: ids } })
+    let provids = cityinfos.map(i => i.item1)
+    //3. 取得所有省份
+    let provs = await SysTable.find({ SysFieldID: 'province', _id: { $in: provids } })
+    res.send(msg.genSuccessMsg('查询成功',
+        provs.map(i => {
+            return {
+                Name: i.item0,
+                _id: i._id,
+            }
+        })
+    ))
+}
+
+/**
+ * 根据用户获取相关项目
+ */
+exports.GetProjByUser = async (req, res) => {
+    let query = {
+        UserID: req.query.UserID
+    }
+    //1. 取得项目ID
+    let proj = await UserProj.find(query).select('ProjID').exec()
+    let projids = proj.map(i => i.ProjID)
+    //3. 取得所有项目
+    let projs = await SysTable.find({ SysFieldID: 'proj', _id: { $in: projids } })
+    res.send(msg.genSuccessMsg('查询成功',
+        projs.map(i => {
+            return {
+                Name: i.item0,
+                _id: i._id,
+            }
+        })
+    ))
+}
+
 
 //log out 注销
 /****************************************************************** */
@@ -336,7 +433,7 @@ exports.GetProv = async (req, res) => {
 //获取城市信息
 exports.GetCityByProvID = async (req, res) => {
     let query = {
-        item1: req.query.item1,
+        item1: req.query.ProvID,
         SysFieldID: "city"
     }
     if (!query.item1) return res.send(msg.genFailedMsg('请输入省份ID'))
@@ -440,6 +537,30 @@ exports.GetUserByDeptID = async (req, res) => {
     }
     res.send(msg.genFailedMsg("查询失败"))
 }
+
+/**
+ * 根据省份获取项目信息
+ */
+exports.GetProjByProvID = async (req, res) => {
+    let query = {
+        item1: req.query.item1,
+        SysFieldID: "proj"
+    }
+    if (!query.item1) return res.send(msg.genFailedMsg('请输入省份ID'))
+    try {
+        let proj = await SysTable.find(query)
+        let result = proj.map(i => {
+            return {
+                label: i.item0,
+                value: { id: i._id, type: "proj" },
+            }
+        })
+        res.send(msg.genMsg('获取成功', "", result))
+    } catch (error) {
+        res.send(msg.genFailedMsg("获取失败"))
+    }
+}
+
 /****************************************************************** */
 /**用户角色管理*******************************************************/
 /****************************************************************** */

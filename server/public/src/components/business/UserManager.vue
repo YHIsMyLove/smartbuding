@@ -26,6 +26,12 @@
                         </el-table-column>
                         <el-table-column prop="UserAge" label="年龄" >
                         </el-table-column>
+
+                        <el-table-column prop="UserCardID" label="身份证" >
+                        </el-table-column>
+                        <el-table-column prop="UserEmail" label="邮箱" >
+                        </el-table-column>
+
                         <el-table-column prop="UserPhoneNum" label="手机号">
                         </el-table-column>
                         <el-table-column label="操作" width="150">
@@ -56,6 +62,15 @@
                         <el-form-item label="姓名" prop="UserName">
                             <el-input v-model="editForm.UserName" auto-complete="off"></el-input>
                         </el-form-item>
+
+                        <el-form-item label="身份证" prop="UserCardID">
+                            <el-input v-model="editForm.UserCardID" auto-complete="off"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label="邮箱" prop="UserEmail">
+                            <el-input v-model="editForm.UserEmail" auto-complete="off"></el-input>
+                        </el-form-item>
+
                         <el-form-item label="性别" prop="UserSex">
                             <el-radio-group v-model="editForm.UserSex">
                                 <el-radio class="radio" :label="1">男</el-radio>
@@ -129,14 +144,16 @@ export default {
         UserSex: 1,
         UserAge: 0,
         UserPhoneNum: "",
-        UserPwd: "123456"
+        UserPwd: "123456",
+        UserEmail: "",
+        UserCardID: ""
       },
       editLoading: false,
       btnEditText: "提 交",
       editFormRules: {
         UserID: [{ validator: checkUserID, trigger: "blur" }],
         UserPwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        UserName: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        UserName: [{ required: true, message: "请输入姓名", trigger: "blur" }]
         // UserPhoneNum: [
         //   { required: true, message: "请输入手机号", trigger: "blur" }
         // ]
@@ -164,7 +181,9 @@ export default {
         UserSex: 1,
         UserAge: 0,
         UserPhoneNum: "",
-        UserPwd: "123456"
+        UserPwd: "123456",
+        UserEmail: "",
+        UserCardID: ""
       };
     },
     //显示编辑界面
@@ -177,6 +196,8 @@ export default {
       this.editForm.UserSex = row.UserSex;
       this.editForm.UserAge = row.UserAge;
       this.editForm.UserPhoneNum = row.UserPhoneNum;
+      this.editForm.UserEmail = row.UserEmail;
+      this.editForm.UserCardID = row.UserCardID;
     },
     //编辑 or 新增
     editSubmit: function() {
@@ -261,6 +282,8 @@ export default {
       this.editForm.UserBirth = "";
       this.editForm.UserAddr = "";
       this.editForm.UserPhoneNum = "";
+      this.editForm.UserEmail = "";
+      this.editForm.UserCardID = "";
     },
     //获取用户列表
     getUserList: function() {

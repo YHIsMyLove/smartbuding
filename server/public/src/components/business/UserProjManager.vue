@@ -130,7 +130,7 @@ export default {
       this.curCityID = -1;
       let cur_val = val[0];
       let that = this;
-      let url = `/api/GetCityByProvID?item1=${cur_val.id}`;
+      let url = `/api/GetCityByProvID?ProvID=${cur_val.id}`;
       axios
         .get(url)
         .then(res => {

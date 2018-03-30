@@ -4,11 +4,15 @@ const Schema = mongoose.Schema;
 //用户表
 const userSchema = new Schema({
     UserID: String,
-    UserPwd:String,
+    UserPwd: String,
     UserName: String,
     UserSex: Number,
     UserAge: Number,
     UserPhoneNum: Number,
+    UserEmail: String,
+    UserCardID: String,
+    UserHeadImage: String,
+    UserCertificate: mongoose.Schema.Types.Mixed,
     UserCreatedAt: { type: Date, default: Date.now },
 })
 
