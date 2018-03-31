@@ -18,7 +18,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
         {
             projectService = new ProjectService();
             FindProjectsCommand = new Command(execute: async () => { await FindProjects(); }, canExecute: () => { return IsFindProjectCommandCanExecute(); });
-            FetchProvincesCommand = new Command(execute: async () => { await FetchProvinces(); }, canExecute: () => { return IsFetchProvincesCommandCanExecute(); });
+            //FetchProvincesCommand = new Command(execute: async () => { await FetchProvinces(); }, canExecute: () => { return IsFetchProvincesCommandCanExecute(); });
             FetchCitiesCommand = new Command(execute: async () => { await FetchCities(); }, canExecute: () => { return IsFetchCitiesCommandCanExecute(); });
 
             //provinces = SimpleData.Instance.GetProvinces();
@@ -41,16 +41,20 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             {
                 HasError = true;
                 Error = result.Error;
+                IsBusy = false;
                 return;
             }
+            if (result.Model.Count != 0)
+            {
+                result.Model.Insert(0, null);
+            }
             Provinces = result.Model;
-            if (Provinces.Count != 0)
-                Provinces.Insert(0, null);
             var result1 = await projectService.FindProjects();
             if (result1.HasError)
             {
                 HasError = true;
                 Error = result1.Error;
+                IsBusy = false;
                 return;
             }
             Projects = result1.Model;
@@ -92,6 +96,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 {
                     HasError = true;
                     Error = result.Error;
+                    IsBusy = false;
                     return;
                 }
                 Cities = result.Model;
@@ -103,6 +108,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             {
                 HasError = true;
                 Error = result1.Error;
+                IsBusy = false;
                 return;
             }
             Projects = result1.Model;
@@ -170,6 +176,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             {
                 HasError = true;
                 Error = result.Error;
+                IsBusy = false;
                 return;
             }
             Projects = result.Model;
@@ -187,6 +194,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             {
                 HasError = true;
                 Error = result.Error;
+                IsBusy = false;
                 return;
             }
             Cities = result.Model;

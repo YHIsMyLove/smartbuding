@@ -10,7 +10,7 @@ namespace SmartConstructionSite.Core.Common
     {
         public const string debugHost = "http://192.168.43.216:3000/api/";
         public const string releaseHost = "http://118.89.237.172:3000/api/";
-        public const string host = debugHost;
+        public const string host = releaseHost;
         /// <summary>
         /// 用户登录（Post），参数：UserID=?&UserPwd=?
         /// </summary>
@@ -52,9 +52,9 @@ namespace SmartConstructionSite.Core.Common
         /// </summary>
         public const string getProjsByUser = host + "GetProjByUser?UserID={0}";
 
-        public const string getUsersByProjIDUrl = host + "GetUserByProjID";
+        public const string getUsersByProjIDUrl = host + "GetUserByProjID?ProjID={0}";
 
-        public const string getUsersByDeptIDUrl = host + "GetUserByDeptID";
+        public const string getUsersByDeptIDUrl = host + "GetUserByDeptID?DeptID={0}";
 
         public const string getUsersByRoleIDUrl = host + "GetUserByRoleID";
 

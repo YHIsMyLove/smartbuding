@@ -1,6 +1,9 @@
-﻿using SmartConstructionSite.Core.Common;
+﻿using SmartConstructionSite.Core.Account.Models;
+using SmartConstructionSite.Core.Common;
 using SmartConstructionSite.Core.PeopleManagement.Models;
 using SmartConstructionSite.Core.PeopleManagement.Services;
+using SmartConstructionSite.Core.ProjectManagement.Models;
+using SmartConstructionSite.Core.ProjectManagement.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +19,42 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
         public ContactsListViewModel()
         {
             contactsService = new ContactsService();
+            projectService = new ProjectService();
             FetchContactsCommand = new Command(execute: async () => { await FetchContacts(); }, canExecute: () => { return IsFetchContactsCommandCanExecute(); });
             FetchMoreContactsCommand = new Command(execute: async () => { await FetchMoreContacts(); }, canExecute: () => { return IsFetchMoreContactsCommandCanExecute(); });
 
-            projects = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region);
-            contacts = SimpleData.Instance.GetContacts(ServiceContext.Instance.CurrentProject);
+            //projects = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region);
+            //contacts = SimpleData.Instance.GetContacts(ServiceContext.Instance.CurrentProject);
+            InitData();
+        }
+
+        async Task InitData()
+        {
+            if (IsBusy) return;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
+
+            var result = await projectService.FindProjects();
+            if (result.HasError)
+            {
+                HasError = true;
+                Error = result.Error;
+                IsBusy = false;
+                return;
+            }
+            Projects = result.Model;
+            var result1 = await contactsService.Find(ServiceContext.Instance.CurrentProject);
+            if (result1.HasError)
+            {
+                HasError = true;
+                Error = result1.Error;
+                IsBusy = false;
+                return;
+            }
+            Contacts = result1.Model;
+            if (Projects.Count != 0)
+                SelectedProject = ServiceContext.Instance.CurrentProject;
         }
 
         #region Methods
@@ -39,17 +73,14 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             IsBusy = true;
             page = 1;
             var result = await contactsService.Find(SelectedProject, SelectedDepartment, 1, pageSize);
-            IsBusy = false;
             if (result.HasError)
             {
                 HasError = true;
                 Error = result.Error;
+                IsBusy = false;
+                return;
             }
-            else
-            {
-                List<Contacts> list = new List<Contacts>(result.Model);
-                Contacts = list;
-            }
+            Contacts = result.Model;
         }
 
         private bool IsFetchMoreContactsCommandCanExecute()
@@ -65,33 +96,31 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             HasError = false;
             Error = null;
             var result = await contactsService.Find(SelectedProject, SelectedDepartment, page, pageSize);
-            IsBusy = false;
             IsLoadingMoreData = false;
             if (result.HasError)
             {
                 HasError = true;
                 Error = result.Error;
+                IsBusy = false;
+                return;
+            }
+            if (result.Model.Count == 0)
+            {
+                NomoreData = true;
             }
             else
             {
-                if (result.Model.Count == 0)
-                {
-                    NomoreData = true;
-                }
-                else
-                {
-                    page++;
-                    List<Contacts> newContacts = new List<Contacts>(contacts);
-                    newContacts.AddRange(result.Model);
-                    Contacts = newContacts;
-                }
+                page++;
+                var newContacts = new List<User>(contacts);
+                newContacts.AddRange(result.Model);
+                Contacts = newContacts;
             }
         }
 
         #endregion
 
         #region Properties
-        public IList<Contacts> Contacts {
+        public IList<User> Contacts {
             get { return contacts; }
             private set {
                 if (contacts == value) return;
@@ -100,7 +129,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             }
         }
 
-        public IList<string> Projects {
+        public IList<Project> Projects {
             get { return projects; }
             private set {
                 if (projects == value) return;
@@ -109,7 +138,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             }
         }
 
-        public IList<string> Departments {
+        public IList<Department> Departments {
             get { return departments; }
             private set {
                 if (departments == value) return;
@@ -118,7 +147,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             }
         }
 
-        public string SelectedProject {
+        public Project SelectedProject {
             get { return selectedProject; }
             set {
                 if (selectedProject == value) return;
@@ -126,35 +155,65 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
                 NotifyPropertyChanged(nameof(SelectedProject));
 
                 //Update departments and contacts
-                if ("无".Equals(selectedProject))
-                {
-                    SelectedDepartment = "无";
-                    Contacts = SimpleData.Instance.GetContacts(ServiceContext.Instance.CurrentProject);
-                }
-                else
-                {
-                    Departments = SimpleData.Instance.GetDepartments(selectedProject);
-                    Contacts = SimpleData.Instance.GetContacts(selectedProject);
-                }
+                //if ("无".Equals(selectedProject))
+                //{
+                //    SelectedDepartment = "无";
+                //    Contacts = SimpleData.Instance.GetContacts(ServiceContext.Instance.CurrentProject);
+                //}
+                //else
+                //{
+                //    Departments = SimpleData.Instance.GetDepartments(selectedProject);
+                //    Contacts = SimpleData.Instance.GetContacts(selectedProject);
+                //}
+                UpdateDeptAndContacts();
             }
         }
 
-        public string SelectedDepartment {
+        private async Task UpdateDeptAndContacts()
+        {
+            if (IsBusy) return;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
+            var result = await contactsService.FetchDepartments(selectedProject);
+            if (result.HasError)
+            {
+                HasError = true;
+                Error = result.Error;
+                IsBusy = false;
+            }
+            if (result.Model.Count != 0)
+            {
+                result.Model.Insert(0, null);
+            }
+            Departments = result.Model;
+            var result1 = await contactsService.Find(selectedProject);
+            if (result1.HasError)
+            {
+                HasError = true;
+                Error = result1.Error;
+                IsBusy = false;
+            }
+            Contacts = result1.Model;
+        }
+
+        public Department SelectedDepartment {
             get { return selectedDepartment; }
             set {
                 if (selectedDepartment == value) return;
                 selectedDepartment = value;
                 NotifyPropertyChanged(nameof(SelectedDepartment));
 
-                if (!"无".Equals(selectedDepartment))
-                    Contacts = SimpleData.Instance.GetContacts(selectedProject, selectedDepartment);
-                else
-                {
-                    if (!"无".Equals(selectedProject))
-                    {
-                        Contacts = SimpleData.Instance.GetContacts(selectedProject);
-                    }
-                }
+                //if (!"无".Equals(selectedDepartment))
+                //    Contacts = SimpleData.Instance.GetContacts(selectedProject, selectedDepartment);
+                //else
+                //{
+                //    if (!"无".Equals(selectedProject))
+                //    {
+                //        Contacts = SimpleData.Instance.GetContacts(selectedProject);
+                //    }
+                //}
+                FetchContacts();
             }
         }
 
@@ -187,11 +246,12 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
         #endregion
 
         private ContactsService contactsService;
-        private IList<Contacts> contacts;
-        private IList<string> projects;
-        private IList<string> departments;
-        private string selectedProject;
-        private string selectedDepartment;
+        private ProjectService projectService;
+        private IList<User> contacts;
+        private IList<Project> projects;
+        private IList<Department> departments;
+        private Project selectedProject;
+        private Department selectedDepartment;
         private int page = 1;
         private int pageSize = 10;
         private bool nomoreData;

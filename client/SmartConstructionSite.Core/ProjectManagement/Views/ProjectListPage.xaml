@@ -5,7 +5,7 @@
              x:Class="SmartConstructionSite.Core.ProjectManagement.Views.ProjectListPage"
              Title="项目搜索" IsBusy="{Binding DataLoading}">
     <ContentPage.Content>
-        <ListView x:Name="listView" ItemSelected="listView_ItemSelected" ItemsSource="{Binding Projects}" SelectedItem="Binding_SelectedProject" ItemTapped="Handle_ItemTapped" SeparatorColor="#ccc">
+        <ListView x:Name="listView" ItemSelected="listView_ItemSelected" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" ItemTapped="Handle_ItemTapped" SeparatorColor="#ccc">
             <ListView.Header>
                 <Grid Padding="15,0,15,0">
                     <Grid.ColumnDefinitions>

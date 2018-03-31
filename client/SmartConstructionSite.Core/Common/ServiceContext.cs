@@ -1,4 +1,5 @@
 ﻿using SmartConstructionSite.Core.Account.Models;
+using SmartConstructionSite.Core.ProjectManagement.Models;
 using System;
 using Xamarin.Forms;
 
@@ -30,7 +31,7 @@ namespace SmartConstructionSite.Core.Common
 
         public string Region { get; set; }
 
-        public string CurrentProject { get; set; }
+        public Project CurrentProject { get; set; }
 
         public string SessionID
         {

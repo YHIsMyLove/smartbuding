@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,15 +39,19 @@ namespace SmartConstructionSite.Core.Common
         }
 
         public static readonly BindableProperty ItemsSourceProperty =
-            BindableProperty.Create(nameof(ItemsSource), typeof(IList<object>), typeof(MyPicker), null);
+            BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(MyPicker), null,
+                propertyChanged: (bindable, oldValue, newValue) =>
+                {
 
-        public IList<object> ItemsSource {
-            get { return (IList<object>)GetValue(ItemsSourceProperty); }
+                });
+
+        public IEnumerable ItemsSource {
+            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
         public static readonly BindableProperty SelectedItemProperty =
-            BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(MyPicker), null, BindingMode.TwoWay,
+            BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(MyPicker), null, BindingMode.OneWayToSource,
                                     propertyChanged: (bindable, oldValue, newValue) => { ((MyPicker)bindable).UpdateLabel(); });
 
         private void UpdateLabel()

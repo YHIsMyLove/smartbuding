@@ -1,4 +1,5 @@
 ﻿using Plugin.Messaging;
+using SmartConstructionSite.Core.Account.Models;
 using SmartConstructionSite.Core.Common;
 using SmartConstructionSite.Core.PeopleManagement.Models;
 using System;
@@ -28,12 +29,12 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             if (calling) return;
             var phoneDialer = CrossMessaging.Current.PhoneDialer;
             if (phoneDialer.CanMakePhoneCall)
-                phoneDialer.MakePhoneCall(contacts.PhoneNumber);
+                phoneDialer.MakePhoneCall(contacts.UserPhoneNum);
         }
 
         #region Properties
 
-        public Contacts Contacts {
+        public User Contacts {
             get { return contacts; }
             set {
                 if (contacts == value) return;
@@ -48,7 +49,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
 
         #region Fields
 
-        private Contacts contacts;
+        private User contacts;
         private bool calling;
 
         #endregion
