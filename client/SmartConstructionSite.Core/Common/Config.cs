@@ -52,7 +52,7 @@ namespace SmartConstructionSite.Core.Common
         /// </summary>
         public const string getProjsByUser = host + "GetProjByUser?UserID={0}";
 
-        public const string getUsersByProjIDUrl = host + "GetUserByProjID?ProjID={0}";
+        public const string getUsersByProjIDUrl = host + "GetUserByProjID?ProjID={0}&isEdit=true";
 
         public const string getUsersByDeptIDUrl = host + "GetUserByDeptID?DeptID={0}";
 

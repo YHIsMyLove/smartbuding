@@ -51,7 +51,7 @@ namespace SmartConstructionSite.Core.Common
         }
 
         public static readonly BindableProperty SelectedItemProperty =
-            BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(MyPicker), null, BindingMode.OneWayToSource,
+            BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(MyPicker), null, BindingMode.TwoWay,
                                     propertyChanged: (bindable, oldValue, newValue) => { ((MyPicker)bindable).UpdateLabel(); });
 
         private void UpdateLabel()
