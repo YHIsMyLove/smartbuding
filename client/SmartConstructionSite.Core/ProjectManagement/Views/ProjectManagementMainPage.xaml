@@ -24,7 +24,7 @@
                                 <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
                             </StackLayout.GestureRecognizers>
                             <Image Source="ic_location_little.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"></Image>
-                            <Label Text="湖北省|黄石《中建八局黄石奥体中心项目》" TextColor="White" FontSize="Micro" VerticalOptions="Center"></Label>
+                            <Label Text="{Binding ProjectInfo}" TextColor="White" FontSize="Micro" VerticalOptions="Center"></Label>
                             <BoxView HorizontalOptions="Fill" HeightRequest="1"></BoxView>
                             <Image Source="weather.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center"></Image>
                             <Label Text="3/12℃" FontSize="Micro" TextColor="White" VerticalOptions="Center"></Label>

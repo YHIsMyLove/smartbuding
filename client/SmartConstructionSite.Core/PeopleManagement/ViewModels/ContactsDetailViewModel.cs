@@ -21,12 +21,11 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
 
         private bool IsPhoneCallCommandCanExecute()
         {
-            return !calling && !IsBusy;
+            return !IsBusy;
         }
 
         private void MakePhoneCall()
         {
-            if (calling) return;
             var phoneDialer = CrossMessaging.Current.PhoneDialer;
             if (phoneDialer.CanMakePhoneCall)
                 phoneDialer.MakePhoneCall(contacts.UserPhoneNum);
@@ -50,7 +49,6 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
         #region Fields
 
         private User contacts;
-        private bool calling;
 
         #endregion
     }

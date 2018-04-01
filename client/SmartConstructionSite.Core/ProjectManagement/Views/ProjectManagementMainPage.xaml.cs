@@ -25,6 +25,20 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             InitializeComponent();
 
             Device.StartTimer(TimeSpan.FromMilliseconds(200), Rolling);
+
+            Appearing += ProjectManagementMainPage_Appearing;
+        }
+
+        private async void ProjectManagementMainPage_Appearing(object sender, EventArgs e)
+        {
+            if (ServiceContext.Instance.CurrentUser != null)
+            {
+                if (ServiceContext.Instance.CurrentProject == null)
+                {
+                    await Navigation.PushAsync(new ProjectListPage());
+                }
+            }
+            viewModel.ChangeProjectCommand.Execute(null);
         }
 
         private bool Rolling()

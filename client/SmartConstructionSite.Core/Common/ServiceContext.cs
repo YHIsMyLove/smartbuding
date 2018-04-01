@@ -31,14 +31,24 @@ namespace SmartConstructionSite.Core.Common
 
         public string Region { get; set; }
 
-        public Project CurrentProject { get; set; }
+        public Project CurrentProject
+        {
+            get
+            {
+                if (Application.Current.Properties.ContainsKey("CurrentProject"))
+                    return (Project)Application.Current.Properties["CurrentProject"];
+                else
+                    return null;
+            }
+            set { }
+        }
 
         public string SessionID
         {
             get
             {
                 if (Application.Current.Properties.ContainsKey("SessionID"))
-                    return Application.Current.Properties["SessionID"] as string;
+                    return (string)Application.Current.Properties["SessionID"];
                 else
                     return null;
             }
@@ -53,7 +63,7 @@ namespace SmartConstructionSite.Core.Common
             get
             {
                 if (Application.Current.Properties.ContainsKey("YSAccessToken"))
-                    return Application.Current.Properties["YSAccessToken"] as string;
+                    return (string)Application.Current.Properties["YSAccessToken"];
                 else
                     return null;
             }

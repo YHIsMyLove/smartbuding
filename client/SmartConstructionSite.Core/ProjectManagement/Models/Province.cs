@@ -9,6 +9,10 @@ namespace SmartConstructionSite.Core.ProjectManagement.Models
     {
         public string Name { get; set; }
 
+        public Province Prov { get; set; }
+
+        public City City { get; set; }
+
 		public override string ToString()
 		{
             return Name == null ? base.ToString() : Name;

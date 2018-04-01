@@ -42,6 +42,17 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             }
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            if (ServiceContext.Instance.CurrentProject == null)
+            {
+                UserDialogs.Instance.Toast("请选择一个项目");
+                return true;
+            }
+            else
+                return base.OnBackButtonPressed();
+        }
+
         private void pickerProvinces_SelectedIndexChanged(object sender, EventArgs e)
         {
             //if ("无".Equals(pickerProvinces.SelectedItem))

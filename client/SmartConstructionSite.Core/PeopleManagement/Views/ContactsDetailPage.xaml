@@ -44,36 +44,36 @@
 
                     <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Vertical" Padding="15">
                         <Label Text="手机"></Label>
-                        <Label Text="{Binding Contacts.PhoneNumber}" TextColor="#3670d4"></Label>
+                        <Label Text="{Binding Contacts.UserPhoneNum}" TextColor="#3670d4"></Label>
                     </StackLayout>
 
                     <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" Padding="15">
                         <Label Text="邮箱"></Label>
-                        <Label Text="{Binding Contacts.Email}" TextColor="#3670d4"></Label>
+                        <Label Text="{Binding Contacts.UserEmail}" TextColor="#3670d4"></Label>
                     </StackLayout>
 
                     <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="End" HeightRequest="1" BackgroundColor="#ccc"></BoxView>
 
                     <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Vertical" Padding="15">
                         <Label Text="身份证"></Label>
-                        <Label Text="{Binding Contacts.IdCard}" TextColor="#3670d4"></Label>
+                        <Label Text="{Binding Contacts.UserCardID}" TextColor="#3670d4"></Label>
                     </StackLayout>
 
                     <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Vertical" Padding="15">
                         <Label Text="考勤信息"></Label>
-                        <Label Text="22天" TextColor="#3670d4"></Label>
+                        <Label Text="--" TextColor="#3670d4"></Label>
                     </StackLayout>
 
                     <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="End" HeightRequest="1" BackgroundColor="#ccc"></BoxView>
 
                     <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Vertical" Padding="15">
                         <Label Text="部门"></Label>
-                        <Label Text="{Binding Contacts.Department}" TextColor="#3670d4"></Label>
+                        <Label Text="{Binding Contacts.DeptNames[0]}" TextColor="#3670d4"></Label>
                     </StackLayout>
 
                     <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Vertical" Padding="15">
                         <Label Text="职位"></Label>
-                        <Label Text="{Binding Contacts.Position}" TextColor="#3670d4"></Label>
+                        <Label Text="--" TextColor="#3670d4"></Label>
                     </StackLayout>
 
                     <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="End" HeightRequest="1" BackgroundColor="#ccc"></BoxView>

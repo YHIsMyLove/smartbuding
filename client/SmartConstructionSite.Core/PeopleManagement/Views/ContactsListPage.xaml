@@ -21,7 +21,7 @@
                     <!--<TextCell Text="{Binding Name}" Detail="{Binding Position}"></TextCell>-->
                     <ViewCell>
                         <StackLayout Orientation="Horizontal" Padding="15,0,15,0">
-                            <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center"></Label>
+                            <Label Text="{Binding UserName}" FontSize="Medium" VerticalOptions="Center"></Label>
                             <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="Center"></BoxView>
                             <Label Text="{Binding Position}" VerticalOptions="Center"></Label>
                         </StackLayout>

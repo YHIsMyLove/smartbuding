@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:common="clr-namespace:SmartConstructionSite.Core.Common"
              x:Class="SmartConstructionSite.Core.ProjectManagement.Views.ProjectListPage"
-             Title="项目搜索" IsBusy="{Binding DataLoading}">
+             Title="选择一个项目" IsBusy="{Binding DataLoading}">
     <ContentPage.Content>
         <ListView x:Name="listView" ItemSelected="listView_ItemSelected" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" ItemTapped="Handle_ItemTapped" SeparatorColor="#ccc">
             <ListView.Header>

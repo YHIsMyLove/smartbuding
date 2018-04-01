@@ -58,6 +58,8 @@ namespace SmartConstructionSite.Core.Common
         {
             if (SelectedItem != null)
                 label.Text = SelectedItem.ToString();
+            else
+                label.Text = "无";
         }
 
         public object SelectedItem {
@@ -96,7 +98,17 @@ namespace SmartConstructionSite.Core.Common
             var result = await OwnerPage.DisplayActionSheet(Title, null, null, buttons.ToArray());
             busy = false;
             if (result == null) return;
-            SelectedItem = result;
+            int selectedIndex = buttons.IndexOf(result);
+            int index = 0;
+            foreach (var item in ItemsSource)
+            {
+                if (index == selectedIndex)
+                {
+                    SelectedItem = item;
+                    break;
+                }
+                index++;
+            }
             UpdateLabel();
         }
 
