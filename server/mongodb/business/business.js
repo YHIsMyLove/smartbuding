@@ -145,6 +145,27 @@ exports.getUserInfo = async (req, res) => {
 }
 
 /**
+ * 根据项目获取省份/城市
+ */
+var getProvAndCity_byProj = async (ProjID) => {
+    //取得城市ID
+    let cityid = await SysTable.findOne({ SysFieldID: 'proj', _id: ProjID })
+    let cityinfo = await SysTable.findOne({ SysFieldID: 'city', _id: cityid })
+    let provinfo = await SysTable.findOne({ SysFieldID: 'province', _id: cityinfo.item1 })
+    let result = {
+        City: {
+            _id: cityinfo._id,
+            Name: cityinfo.item0
+        },
+        Prov: {
+            _id: provinfo._id,
+            Name: provinfo.item0
+        }
+    }
+    return result
+}
+
+/**
  * 获取用户相关的省份
  * @param {*} req 
  * @param {*} res 
@@ -183,18 +204,29 @@ exports.GetProjByUser = async (req, res) => {
     //1. 取得项目ID
     let proj = await UserProj.find(query).select('ProjID').exec()
     let projids = proj.map(i => i.ProjID)
+
+    //2. 根据项目获取 省/市    
+    getProvAndCity_byProj()
+
     //3. 取得所有项目
     let projs = await SysTable.find({ SysFieldID: 'proj', _id: { $in: projids } })
-    res.send(msg.genSuccessMsg('查询成功',
-        projs.map(i => {
-            return {
+
+    let result = projs.map(i => {
+        let prov_city = getProvAndCity_byProj(i._id)
+        return {
+            Proj: {
                 Name: i.item0,
                 _id: i._id,
+                City: prov_city.City,
+                Prov: prov_city.Prov
             }
-        })
+        }
+    })
+
+    res.send(msg.genSuccessMsg('查询成功',
+        result
     ))
 }
-
 
 //log out 注销
 /****************************************************************** */
