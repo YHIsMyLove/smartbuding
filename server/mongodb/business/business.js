@@ -149,9 +149,12 @@ exports.getUserInfo = async (req, res) => {
  */
 var getProvAndCity_byProj = async (ProjID) => {
     //取得城市ID
-    let cityid = await SysTable.findOne({ SysFieldID: 'proj', _id: ProjID })
+    let cityid = await SysTable.findOne({ _id: ProjID })
+    console.log(cityid)
     let cityinfo = await SysTable.findOne({ SysFieldID: 'city', _id: cityid })
+    console.log(cityinfo)
     let provinfo = await SysTable.findOne({ SysFieldID: 'province', _id: cityinfo.item1 })
+    console.log(provinfo)
     let result = {
         City: {
             _id: cityinfo._id,
