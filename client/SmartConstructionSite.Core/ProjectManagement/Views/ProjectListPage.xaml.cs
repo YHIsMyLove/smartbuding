@@ -69,7 +69,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            ServiceContext.Instance.CurrentProject = e.Item as Project;
+            ServiceContext.Instance.CurrentProject = (Project)e.Item;
             await Navigation.PopAsync();
         }
     }

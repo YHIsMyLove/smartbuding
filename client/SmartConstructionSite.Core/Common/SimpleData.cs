@@ -185,10 +185,10 @@ namespace SmartConstructionSite.Core.Common
 
             List<Meeting> meetings = new List<Meeting>()
             {
-                new Meeting(){ Name = "三月项目成本核算会议", Compere = "张三", Time = new DateTime(2017, 3, 6), RelationalContentCount = 2 },
-                new Meeting(){ Name = "安全生产培训会议", Compere = "张三", Time = new DateTime(2017, 3, 16), RelationalContentCount = 1 },
-                new Meeting(){ Name = "三月施工现场安全检查会议", Compere = "张三", Time = new DateTime(2017, 3, 6), RelationalContentCount = 0 },
-                new Meeting(){ Name = "三月施工现场安全检查会议", Compere = "张三", Time = new DateTime(2017, 2, 6), RelationalContentCount = 0 },
+                new Meeting(){ MettingName = "三月项目成本核算会议", Compere = "张三", MettingCreatedAt = new DateTime(2017, 3, 6), RelationalContentCount = 2 },
+                new Meeting(){ MettingName = "安全生产培训会议", Compere = "张三", MettingCreatedAt = new DateTime(2017, 3, 16), RelationalContentCount = 1 },
+                new Meeting(){ MettingName = "三月施工现场安全检查会议", Compere = "张三", MettingCreatedAt = new DateTime(2017, 3, 6), RelationalContentCount = 0 },
+                new Meeting(){ MettingName = "三月施工现场安全检查会议", Compere = "张三", MettingCreatedAt = new DateTime(2017, 2, 6), RelationalContentCount = 0 },
             };
             List<MeetingMinutes> minutes1 = new List<MeetingMinutes>()
             {

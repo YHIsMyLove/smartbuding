@@ -40,7 +40,10 @@ namespace SmartConstructionSite.Core.Common
                 else
                     return null;
             }
-            set { }
+            set
+            {
+                Application.Current.Properties["CurrentProject"] = value;
+            }
         }
 
         public string SessionID
