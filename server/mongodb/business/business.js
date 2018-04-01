@@ -266,12 +266,12 @@ exports.GetUserByProjID = async (req, res) => {
                 .exec()
             count = await User.find({ _id: { $in: q } }).count()
 
-            res.send(msg.genSuccessMsg("查询成功", users, { count: count }))
+            return res.send(msg.genSuccessMsg("查询成功", users, { count: count }))
         } catch (error) {
-            res.send(msg.genFailedMsg("查询失败"))
+            return res.send(msg.genFailedMsg("查询失败"))
         }
     }
-    res.send(msg.genFailedMsg("查询失败"))
+    return res.send(msg.genFailedMsg("查询失败"))
 }
 
 //设置用户项目表
@@ -445,7 +445,7 @@ exports.GetCityByProvID = async (req, res) => {
                 value: { id: i._id, type: "city" }
             }
         })
-        res.send(msg.genMsg('获取成功', "", result))
+        res.send(msg.genSuccessMsg('获取成功', result))
     } catch (error) {
         res.send(msg.genFailedMsg("获取失败"))
     }
