@@ -47,6 +47,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 project = value;
                 NotifyPropertyChanged(nameof(Project));
                 ProjectInfo = project.Name;
+                //ProjectInfo = string.Format("{0}{1}|{0}", project.);
             }
         }
 

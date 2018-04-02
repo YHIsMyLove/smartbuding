@@ -42,7 +42,7 @@ namespace SmartConstructionSite.Core.Common
             BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(MyPicker), null,
                 propertyChanged: (bindable, oldValue, newValue) =>
                 {
-
+                    ((MyPicker)bindable).UpdateLabel();
                 });
 
         public IEnumerable ItemsSource {
@@ -60,6 +60,8 @@ namespace SmartConstructionSite.Core.Common
                 label.Text = SelectedItem.ToString();
             else
                 label.Text = "无";
+            if (!ItemsSource.GetEnumerator().MoveNext())
+                label.Text = Title;
         }
 
         public object SelectedItem {

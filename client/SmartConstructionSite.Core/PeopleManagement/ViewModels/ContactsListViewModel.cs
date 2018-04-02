@@ -6,6 +6,7 @@ using SmartConstructionSite.Core.ProjectManagement.Models;
 using SmartConstructionSite.Core.ProjectManagement.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,16 +44,11 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
                 IsBusy = false;
                 return;
             }
-            Projects = result.Model;
-            var result1 = await contactsService.Find(ServiceContext.Instance.CurrentProject);
-            if (result1.HasError)
+            IsBusy = false;
+            foreach (var item in result.Model)
             {
-                HasError = true;
-                Error = result1.Error;
-                IsBusy = false;
-                return;
+                Projects.Add(item);
             }
-            Contacts = result1.Model;
             if (Projects.Count != 0)
                 SelectedProject = ServiceContext.Instance.CurrentProject;
         }
@@ -72,6 +68,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             Error = null;
             IsBusy = true;
             page = 1;
+            Contacts.Clear();
             var result = await contactsService.Find(SelectedProject, SelectedDepartment, 1, pageSize);
             if (result.HasError)
             {
@@ -80,7 +77,11 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
                 IsBusy = false;
                 return;
             }
-            Contacts = result.Model;
+            foreach (var item in result.Model)
+            {
+                Contacts.Add(item);
+            }
+            IsBusy = false;
         }
 
         private bool IsFetchMoreContactsCommandCanExecute()
@@ -111,16 +112,17 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             else
             {
                 page++;
-                var newContacts = new List<User>(contacts);
-                newContacts.AddRange(result.Model);
-                Contacts = newContacts;
+                foreach (var item in result.Model)
+                {
+                    Contacts.Add(item);
+                }
             }
         }
 
         #endregion
 
         #region Properties
-        public IList<User> Contacts {
+        public ObservableCollection<User> Contacts {
             get { return contacts; }
             private set {
                 if (contacts == value) return;
@@ -129,7 +131,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             }
         }
 
-        public IList<Project> Projects {
+        public ObservableCollection<Project> Projects {
             get { return projects; }
             private set {
                 if (projects == value) return;
@@ -138,7 +140,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             }
         }
 
-        public IList<Department> Departments {
+        public ObservableCollection<Department> Departments {
             get { return departments; }
             private set {
                 if (departments == value) return;
@@ -175,6 +177,8 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             IsBusy = true;
             HasError = false;
             Error = null;
+            Departments.Clear();
+            Contacts.Clear();
             var result = await contactsService.FetchDepartments(selectedProject);
             if (result.HasError)
             {
@@ -186,15 +190,23 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             {
                 result.Model.Insert(0, null);
             }
-            Departments = result.Model;
+            foreach (var item in result.Model)
+            {
+                Departments.Add(item);
+            }
             var result1 = await contactsService.Find(selectedProject);
             if (result1.HasError)
             {
                 HasError = true;
                 Error = result1.Error;
                 IsBusy = false;
+                return;
             }
-            Contacts = result1.Model;
+            foreach (var item in result1.Model)
+            {
+                Contacts.Add(item);
+            }
+            IsBusy = false;
         }
 
         public Department SelectedDepartment {
@@ -247,9 +259,9 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
 
         private ContactsService contactsService;
         private ProjectService projectService;
-        private IList<User> contacts;
-        private IList<Project> projects;
-        private IList<Department> departments;
+        private ObservableCollection<User> contacts = new ObservableCollection<User>();
+        private ObservableCollection<Project> projects = new ObservableCollection<Project>();
+        private ObservableCollection<Department> departments = new ObservableCollection<Department>();
         private Project selectedProject;
         private Department selectedDepartment;
         private int page = 1;

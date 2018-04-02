@@ -23,7 +23,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.Services
                 {
                     var url = string.Format(Config.getUsersByProjIDUrl, project._id);
                     if (department != null)
-                        url = string.Format(Config.getUsersByDeptIDUrl, department._id);
+                        url = string.Format(Config.getUsersByDeptIDUrl, project._id, department._id);
                     var msg = await httpClient.GetAsync(url);
                     var statJson = await msg.Content.ReadAsStringAsync();
                     var stat = JsonConvert.DeserializeObject<JObject>(statJson);

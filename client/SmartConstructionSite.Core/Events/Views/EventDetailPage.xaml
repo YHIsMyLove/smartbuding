@@ -4,7 +4,7 @@
             xmlns:views="clr-namespace:SmartConstructionSite.Core.Events.Views;assembly=SmartConstructionSite.Core"
             x:Class="SmartConstructionSite.Core.Events.Views.EventDetailPage"
             xmlns:xf="clr-namespace:BottomBar.XamarinForms;assembly=BottomBar.XamarinForms"
-            Title="{Binding Meeting.Name}"
+            Title="{Binding Meeting.MeetingName}"
             FixedMode="True">
 
     <views:MeetingMinutesListPage BindingContext="{Binding .}"></views:MeetingMinutesListPage>

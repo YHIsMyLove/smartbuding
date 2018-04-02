@@ -62,7 +62,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             else if (sender == btnEvents)
                 await Navigation.PushAsync(new EventListPage(), true);
             else if (sender == btnPeopleMgr)
-                await Navigation.PushAsync(new ContactsListPage(), true);
+                await Navigation.PushAsync(new PeopleManagementMainPage(), true);
             else if (sender == btnEnvMgr)
                 await Navigation.PushAsync(new PlaceholderPage() { Title = "环境监测" }, true);
             else if (sender == btnDevMgr)

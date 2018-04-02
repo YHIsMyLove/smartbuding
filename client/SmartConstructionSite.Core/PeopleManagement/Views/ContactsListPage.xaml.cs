@@ -25,7 +25,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.Views
             if (e.PropertyName == nameof(viewModel.IsBusy))
             {
                 if (viewModel.IsBusy)
-                    UserDialogs.Instance.ShowLoading("正在登陆。。。", MaskType.Black);
+                    UserDialogs.Instance.ShowLoading("正在查询。。。", MaskType.Black);
                 else
                     UserDialogs.Instance.HideLoading();
             }

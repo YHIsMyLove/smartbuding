@@ -23,10 +23,10 @@ namespace SmartConstructionSite.Core.ProjectManagement.Services
                 using (var httpClient = CreateHttpClient())
                 {
                     string url = string.Format(Config.getProjsByUser, ServiceContext.Instance.CurrentUser._id);
-                    if (province != null)
-                        url = string.Format(Config.getProjectsByProvIDUrl, province._id);
-                    else if (city != null)
+                    if (city != null)
                         url = string.Format(Config.getProjectsByCityIDUrl, city._id);
+                    else if (province != null)
+                        url = string.Format(Config.getProjectsByProvIDUrl, province._id);
                     var msg = await httpClient.GetAsync(url);
                     string json = await msg.Content.ReadAsStringAsync();
                     System.Diagnostics.Debug.WriteLine("Response:{0}", json);

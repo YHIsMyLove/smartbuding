@@ -10,7 +10,7 @@ namespace SmartConstructionSite.Core.Common
     {
         public const string debugHost = "http://192.168.43.216:3000/api/";
         public const string releaseHost = "http://118.89.237.172:3000/api/";
-        public const string host = releaseHost;
+        public const string host = debugHost;
         /// <summary>
         /// 用户登录（Post），参数：UserID=?&UserPwd=?
         /// </summary>
@@ -28,9 +28,9 @@ namespace SmartConstructionSite.Core.Common
         /// </summary>
         public const string checkSessionUrl = host + "CheckSession";
         /// <summary>
-        /// 获取部门列表（get），参数：ProjectID=?
+        /// 获取部门列表（get），参数：ProjID=?
         /// </summary>
-        public const string getDepartmentsUrl = host + "GetDeptByProjID";
+        public const string getDepartmentsUrl = host + "GetDeptByProjID?ProjID={0}";
         /// <summary>
         /// 获取与用户相关的省份列表（get），参数：UserID=?
         /// </summary>
@@ -51,14 +51,26 @@ namespace SmartConstructionSite.Core.Common
         /// 获取用户相关的项目列表（get），参数：UserID=?
         /// </summary>
         public const string getProjsByUser = host + "GetProjByUser?UserID={0}";
-
-        public const string getUsersByProjIDUrl = host + "GetUserByProjID?ProjID={0}&isEdit=true";
-
-        public const string getUsersByDeptIDUrl = host + "GetUserByDeptID?DeptID={0}";
-
+        /// <summary>
+        /// 获取指定项目的人员列表（get），参数：ProjID=?&isEdit=true
+        /// </summary>
+        public const string getUsersByProjIDUrl = host + "GetUserByProjID?ProjID={0}&isEdit=false";
+        /// <summary>
+        /// 获取指定部门的人员列表（get），参数：DeptID=?
+        /// </summary>
+        public const string getUsersByDeptIDUrl = host + "GetUserByDeptID?ProjID={0}&DeptID={1}&isEdit=false";
+        /// <summary>
+        /// todo
+        /// </summary>
         public const string getUsersByRoleIDUrl = host + "GetUserByRoleID";
-
-        public const string getMeetingsUrl = host + "GetMettings";
+        /// <summary>
+        /// 获取会议列表（get）
+        /// </summary>
+        public const string getMeetingsUrl = host + "GetMeetings";
+        /// <summary>
+        /// 获取会议纪要列表（get），参数：MeetingID=?
+        /// </summary>
+        public const string getMeetingMinutesUrl = host + "GetMeetingContentByMeetingID?MeetingID={0}";
 
         public const string getCamerasUrl = host + "GetYSDevs";
     }

@@ -13,25 +13,29 @@
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Spacing="0">
             <StackLayout Orientation="Vertical" HeightRequest="120" BackgroundColor="#3670d4">
-                <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand" Padding="15,0,0,15">
+                <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand" Padding="15,0,15,15">
                     <StackLayout Orientation="Horizontal">
                         <Label Text="工地项目助手" FontSize="Large"  TextColor="White"></Label>
                         <Label Text="1.0V" TextColor="White" VerticalOptions="End"></Label>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <StackLayout Orientation="Horizontal" x:Name="btnChangeProject">
-                            <StackLayout.GestureRecognizers>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Source="ic_location_little.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"></Image>
+                        <Label Grid.Column="1" Text="{Binding ProjectInfo}" TextColor="White" FontSize="Micro" VerticalOptions="Center" x:Name="btnChangeProject">
+                            <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
-                            </StackLayout.GestureRecognizers>
-                            <Image Source="ic_location_little.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"></Image>
-                            <Label Text="{Binding ProjectInfo}" TextColor="White" FontSize="Micro" VerticalOptions="Center"></Label>
-                            <BoxView HorizontalOptions="Fill" HeightRequest="1"></BoxView>
-                            <Image Source="weather.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center"></Image>
-                            <Label Text="3/12℃" FontSize="Micro" TextColor="White" VerticalOptions="Center"></Label>
-                        </StackLayout>
-                        <!--<Button x:Name="btnChangeProject" Text="湖北省|黄石《中建八局黄石奥体中心项目》" FontSize="Micro"  TextColor="White" BackgroundColor="#3670d4" Clicked="Handle_Clicked"></Button>-->
-                        <!--                    <Label Text="3/12摄氏度" HorizontalOptions="End"></Label>-->
-                    </StackLayout>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Image Grid.Column="2" Source="weather.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center"></Image>
+                        <Label Grid.Column="3" Text="3/12℃" FontSize="Micro" TextColor="White" VerticalOptions="Center"></Label>
+
+                    </Grid>
                 </StackLayout>
             </StackLayout>
             <Grid x:Name="billborard" HeightRequest="40" IsClippedToBounds="true">

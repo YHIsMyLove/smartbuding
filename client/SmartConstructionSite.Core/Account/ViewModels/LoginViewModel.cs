@@ -50,7 +50,7 @@ namespace SmartConstructionSite.Core.Account.ViewModels
                     ServiceContext.Instance.CurrentUser = result1.Model;
                     //ServiceContext.Instance.Region = SimpleData.Instance.GetProvinces()[0];
                     //ServiceContext.Instance.CurrentProject = SimpleData.Instance.GetProjects(ServiceContext.Instance.Region)[0];
-                    ServiceContext.Instance.CurrentProject = new ProjectManagement.Models.Project(){Name="黄石奥体中心项目"};
+                    //ServiceContext.Instance.CurrentProject = new ProjectManagement.Models.Project(){Name="黄石奥体中心项目"};
                     IsLoginSucceed = true;
                 }
             }

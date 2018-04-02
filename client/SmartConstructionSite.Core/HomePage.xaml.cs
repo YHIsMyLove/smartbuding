@@ -1,4 +1,5 @@
 ﻿using BottomBar.XamarinForms;
+using SmartConstructionSite.Core.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace SmartConstructionSite.Core
         {
             if (sender == btnScan)
             {
-                var scanPage = new ZXingScannerPage() { Title = "扫描" };
+                var scanPage = new ZXingScannerPage(customOverlay: new ScannerOverlay()) { Title = "扫描" };
 
                 scanPage.OnScanResult += (result) => {
                     // Stop scanning

@@ -3,6 +3,7 @@ using SmartConstructionSite.Core.ProjectManagement.Models;
 using SmartConstructionSite.Core.ProjectManagement.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -48,7 +49,10 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             {
                 result.Model.Insert(0, null);
             }
-            Provinces = result.Model;
+            foreach (var item in result.Model)
+            {
+                Provinces.Add(item);
+            }
             var result1 = await projectService.FindProjects();
             if (result1.HasError)
             {
@@ -57,7 +61,10 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 IsBusy = false;
                 return;
             }
-            Projects = result1.Model;
+            foreach (var item in result1.Model)
+            {
+                Projects.Add(item);
+            }
             IsBusy = false;
         }
 
@@ -82,14 +89,12 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
         async Task UpdateCityAndProject()
         {
             if (IsBusy) return;
+            Cities.Clear();
+            Projects.Clear();
             IsBusy = true;
             HasError = false;
             Error = null;
-            if (selectedProvince == null)
-            {
-                Cities = null;
-            }
-            else
+            if (selectedProvince != null)
             {
                 var result = await projectService.FetchCities(selectedProvince);
                 if (result.HasError)
@@ -99,7 +104,10 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                     IsBusy = false;
                     return;
                 }
-                Cities = result.Model;
+                foreach (var item in result.Model)
+                {
+                    Cities.Add(item);
+                }
                 if (Cities.Count != 0)
                     Cities.Insert(0, null);
             }
@@ -111,7 +119,10 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 IsBusy = false;
                 return;
             }
-            Projects = result1.Model;
+            foreach (var item in result1.Model)
+            {
+                Projects.Add(item);
+            }
             IsBusy = false;
         }
 
@@ -128,7 +139,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             }
         }
 
-        public IList<Project> Projects {
+        public ObservableCollection<Project> Projects {
             get => projects;
             private set {
                 if (projects == value) return;
@@ -137,7 +148,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             }
         }
 
-        public IList<Province> Provinces {
+        public ObservableCollection<Province> Provinces {
             get => provinces;
             private set {
                 if (provinces == value) return;
@@ -146,7 +157,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             }
         }
 
-        public IList<City> Cities {
+        public ObservableCollection<City> Cities {
             get => cities;
             private set {
                 if (cities == value) return;
@@ -171,6 +182,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             IsBusy = true;
             HasError = false;
             Error = null;
+            Projects.Clear();
             var result = await projectService.FindProjects(selectedProvince, selectedCity);
             if (result.HasError)
             {
@@ -179,7 +191,10 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 IsBusy = false;
                 return;
             }
-            Projects = result.Model;
+            foreach (var item in result.Model)
+            {
+                Projects.Add(item);
+            }
             IsBusy = false;
         }
 
@@ -189,6 +204,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             IsBusy = true;
             HasError = false;
             Error = null;
+            Cities.Clear();
             var result = await projectService.FetchCities(selectedProvince);
             if (result.HasError)
             {
@@ -197,7 +213,10 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 IsBusy = false;
                 return;
             }
-            Cities = result.Model;
+            foreach (var item in result.Model)
+            {
+                Cities.Add(item);
+            }
             IsBusy = false;
         }
 
@@ -219,8 +238,8 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
         private ProjectService projectService;
         private Province selectedProvince;
         private City selectedCity;
-        private IList<Project> projects;
-        private IList<Province> provinces;
-        private IList<City> cities;
+        private ObservableCollection<Project> projects = new ObservableCollection<Project>();
+        private ObservableCollection<Province> provinces = new ObservableCollection<Province>();
+        private ObservableCollection<City> cities = new ObservableCollection<City>();
     }
 }
