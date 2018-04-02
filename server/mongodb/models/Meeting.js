@@ -2,22 +2,22 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 //会议表
-const mettingSchema = new Schema({
-    MettingName: String,
-    MettingCreatedAt: { type: Date, default: Date.now },
+const MeetingSchema = new Schema({
+    MeetingName: String,
+    MeetingCreatedAt: { type: Date, default: Date.now },
     Compere: String,//主持人
     ProjID: String
 })
 
-mettingSchema.pre('save', function (next) {
+MeetingSchema.pre('save', function (next) {
     next()
 })
-mettingSchema.methods = {
+MeetingSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-mettingSchema.statics = {
+MeetingSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -34,4 +34,4 @@ mettingSchema.statics = {
             .exec();
     }
 }
-mongoose.model('Metting', mettingSchema);
+mongoose.model('Meeting', MeetingSchema);

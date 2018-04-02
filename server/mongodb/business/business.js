@@ -15,7 +15,7 @@ const UserDept = mongoose.model('UserDept')
 const UserProj = mongoose.model('UserProj')
 const UserRole = mongoose.model('UserRole')
 const Device = mongoose.model('Device')
-const Metting = mongoose.model('Metting')
+const Meeting = mongoose.model('Meeting')
 const MeetingMinutes = mongoose.model('MeetingMinutes')
 
 /****************************************************************** */
@@ -739,7 +739,7 @@ exports.GetYSDevs = async (req, res) => {
 /****************************************************************** */
 /**会议***********************************************************/
 /****************************************************************** */
-exports.GetMettings = async (req, res) => {
+exports.GetMeetings = async (req, res) => {
     let query = {
         ProjID: req.query.ProjID,
         page: parseInt(req.query.page) - 1,
@@ -747,16 +747,16 @@ exports.GetMettings = async (req, res) => {
     }
     console.log('获取会议')
     try {
-        let result = await Metting.list(query)
+        let result = await Meeting.list(query)
         let data = result.map(i => {
             return {
                 _id: i._id,
-                MettingName: i.MettingName,
-                MettingCreatedAt: moment(i.MettingCreatedAt).format('YYYY-MM-DD hh:mm:ss'),
+                MeetingName: i.MeetingName,
+                MeetingCreatedAt: moment(i.MeetingCreatedAt).format('YYYY-MM-DD hh:mm:ss'),
                 Compere: i.Compere
             }
         })
-        let count = await Metting.count()
+        let count = await Meeting.count()
         console.log(count)
         res.send(msg.genSuccessMsg('查询成功', data, { count: count }))
     } catch (error) {
@@ -775,19 +775,18 @@ exports.GetMeetingContentByMeetingID = async (req, res) => {
     } catch (error) {
         res.send(msg.genFailedMsg('获取失败' + error))
     }
-
 }
 
 //插入或修改会议信息
-exports.InsertOrUpdateMetting = async (req, res) => {
+exports.InsertOrUpdateMeeting = async (req, res) => {
     try {
         if (req.body._id == undefined) {
-            let metting = new Metting(req.body)
-            await metting.updateAndSave();
+            let meeting = new Meeting(req.body)
+            await meeting.updateAndSave();
         } else {
-            let metting = req.metting
-            metting = Object.assign(Metting, req.body);
-            await metting.updateAndSave();
+            let meeting = req.meeting
+            meeting = Object.assign(Meeting, req.body);
+            await meeting.updateAndSave();
         }
         res.send(msg.genSuccessMsg('保存成功'))
     } catch (error) {
@@ -795,10 +794,10 @@ exports.InsertOrUpdateMetting = async (req, res) => {
     }
 }
 
+//InsertOrUpdateMeeting
 //插入或修改会议内容
 exports.InsertOrUpdateMeetingContent = async (req, res) => {
     try {
-        console.log(req.body._id)
         if (req.body._id == '-1') {
             req.body._id = undefined
             let content = new MeetingMinutes(req.body)
@@ -814,12 +813,12 @@ exports.InsertOrUpdateMeetingContent = async (req, res) => {
     }
     // try {
     //     if (req.body._id == undefined) {
-    //         let metting = new Metting(req.body)
-    //         await metting.updateAndSave();
+    //         let meeting = new Meeting(req.body)
+    //         await meeting.updateAndSave();
     //     } else {
-    //         let metting = req.metting
-    //         metting = Object.assign(Metting, req.body);
-    //         await metting.updateAndSave();
+    //         let meeting = req.meeting
+    //         meeting = Object.assign(Meeting, req.body);
+    //         await meeting.updateAndSave();
     //     }
     //     res.send(msg.genSuccessMsg('保存成功'))
     // } catch (error) {
@@ -828,7 +827,7 @@ exports.InsertOrUpdateMeetingContent = async (req, res) => {
 }
 
 //删除会议内容
-exports.DelMettingContent = async (req, res) => {
+exports.DelMeetingContent = async (req, res) => {
 
 }
 

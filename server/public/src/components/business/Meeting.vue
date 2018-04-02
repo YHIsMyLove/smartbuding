@@ -1,6 +1,6 @@
 <template>
  <el-tabs v-model="activeTabName" style="width:100%;" @tab-click="changeActive">
-      <el-tab-pane name="metting"  label="会议管理">
+      <el-tab-pane name="meeting"  label="会议管理">
           <section>
             <el-col :span="24" class="toolbar">
                 <el-form :inline="true"  class="demo-form-inline">
@@ -9,7 +9,7 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button @click="refresh">查询</el-button>
-                        <el-button @click="newMetting" type="primary">新建会议</el-button>
+                        <el-button @click="newMeeting" type="primary">新建会议</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>
@@ -19,11 +19,11 @@
                     <el-table border fit stripe :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:100%">   
                         <el-table-column type="index" label="编号" width="85">
                         </el-table-column>
-                        <el-table-column  prop="MettingName" label="会议名称" >
+                        <el-table-column  prop="MeetingName" label="会议名称" >
                         </el-table-column>
                         <el-table-column prop="Compere" label="主持人" >
                         </el-table-column>
-                        <el-table-column prop="MettingCreatedAt" label="会议时间" >
+                        <el-table-column prop="MeetingCreatedAt" label="会议时间" >
                         </el-table-column>
                         <el-table-column label="操作" width="80">
                             <template scope="scope">
@@ -43,8 +43,8 @@
 
                 <el-dialog title="新建会议" v-model="editFormVisible" :close-on-click-modal="true">
                     <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-                      <el-form-item label="会议名称" prop="MettingName">
-                            <el-input :disabled="editForm._id"  v-model="editForm.MettingName" auto-complete="off"></el-input>
+                      <el-form-item label="会议名称" prop="MeetingName">
+                            <el-input :disabled="editForm._id"  v-model="editForm.MeetingName" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="主持人" prop="Compere">
                             <el-input :disabled="editForm._id"  v-model="editForm.Compere" auto-complete="off"></el-input>
@@ -56,8 +56,8 @@
                               change-on-select 
                               @change="handleItemChange"/> -->
                         </el-form-item>
-                        <el-form-item label="会议时间" prop="MettingCreatedAt">
-                            <el-date-picker :disabled="true" style="width:100%" placeholder="选择日期时间" type="datetime" v-model="editForm.MettingCreatedAt"></el-date-picker>
+                        <el-form-item label="会议时间" prop="MeetingCreatedAt">
+                            <el-date-picker :disabled="true" style="width:100%" placeholder="选择日期时间" type="datetime" v-model="editForm.MeetingCreatedAt"></el-date-picker>
                         </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
@@ -69,7 +69,7 @@
             </el-col>
           </section>
       </el-tab-pane>
-      <el-tab-pane v-if="editForm.MettingName" name="content" label="内容管理">
+      <el-tab-pane v-if="editForm.MeetingName" name="content" label="内容管理">
 
         <section>
             <el-col :span="24" class="toolbar">
@@ -130,12 +130,12 @@ export default {
       Visible: false,
       tableData: [], //会议列表
       tabContent: [], //会议内容列表
-      activeTabName: "metting",
+      activeTabName: "meeting",
       editLoading: false,
       dept_Users_options: [],
       editForm: {
-        MettingCreatedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-        MettingName: "",
+        MeetingCreatedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+        MeetingName: "",
         Compere: ""
       },
       curCompere: [],
@@ -148,7 +148,7 @@ export default {
             trigger: "change"
           }
         ],
-        MettingName: [
+        MeetingName: [
           { required: true, message: "请输入会议名称", trigger: "blur" }
         ]
       },
@@ -162,7 +162,7 @@ export default {
     };
   },
   created() {
-    this.getMetting();
+    this.getMeeting();
   },
   methods: {
     //取消编辑
@@ -243,14 +243,14 @@ export default {
     //更换激活tab
     changeActive(tab) {
       if (this.activeTabName == tab.name) {
-        this.editForm.MettingName = "";
+        this.editForm.MeetingName = "";
       }
     },
-    newMetting() {
+    newMeeting() {
       this.editFormVisible = true;
       this.editForm = {
-        MettingName: "",
-        MettingCreatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
+        MeetingName: "",
+        MeetingCreatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
       };
       this.getDeptData();
     },
@@ -266,14 +266,14 @@ export default {
           that.editLoading = true;
           NProgress.start();
           axios
-            .post("/api/InsertOrUpdateMetting", that.editForm)
+            .post("/api/InsertOrUpdateMeeting", that.editForm)
             .then(res => {
               if (res.data.success) {
                 that.$message({
                   message: "提交成功",
                   type: "success"
                 });
-                that.getMetting();
+                that.getMeeting();
               } else {
                 that.$message({
                   message: "提交失败",
@@ -299,8 +299,8 @@ export default {
     //编辑会议内容
     handleEdit(row) {
       this.editForm._id = row._id;
-      this.editForm.MettingName = row.MettingName;
-      this.editForm.MettingCreatedAt = row.MettingCreatedAt;
+      this.editForm.MeetingName = row.MeetingName;
+      this.editForm.MeetingCreatedAt = row.MeetingCreatedAt;
       this.editForm.Compere = row.Compere;
       this.activeTabName = "content";
 
@@ -352,7 +352,7 @@ export default {
     },
     //查询
     refresh() {
-      this.getMetting();
+      this.getMeeting();
     },
     getDeptData() {
       let that = this;
@@ -364,19 +364,19 @@ export default {
         .then(res => {
           if (res.data.success) {
             that.dept_Users_options = res.data.data;
-            that.getMetting();
+            that.getMeeting();
           }
         })
         .catch(err => console.log(err));
     },
     //获取会议
-    getMetting() {
+    getMeeting() {
       let that = this;
       let params = {
         item2: that.getProj
       };
       axios
-        .get(`/api/GetMettings?ProjID=${that.getProj}`)
+        .get(`/api/GetMeetings?ProjID=${that.getProj}`)
         .then(res => {
           if (res.data.success) {
             that.$data.tableData = res.data.data;

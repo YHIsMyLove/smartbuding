@@ -5,13 +5,13 @@
                 <el-col :span="24" class="toolbar">
                     <el-form :inline="true"  class="demo-form-inline">
                         <el-form-item>
-                            <el-select v-model="CurMetting" placeholder="请选择">
+                            <el-select v-model="CurMeeting" placeholder="请选择">
                                 <el-option
-                                    v-for="item in Metting_Options"
+                                    v-for="item in Meeting_Options"
                                     :key="item._id"
-                                    :label="item.MettingName"
+                                    :label="item.MeetingName"
                                     :value="item._id">
-                                    <span style="float: left">{{ item.MettingName }}</span>
+                                    <span style="float: left">{{ item.MeetingName }}</span>
                                     <span style="float: right; color: #8492a6; font-size: 13px">主持人->{{ item.Compere }}</span>
                                 </el-option>
                             </el-select>
@@ -32,7 +32,7 @@
                     <el-table border fit stripe :data="tableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:100%">   
                         <el-table-column type="index" label="编号" width="85">
                         </el-table-column>
-                        <el-table-column prop="MettingName" label="内容" >
+                        <el-table-column prop="MeetingName" label="内容" >
                         </el-table-column>
                         <el-table-column width="150" prop="Compere" label="执行部门" >
                         </el-table-column>
@@ -53,11 +53,11 @@
 
                 <el-dialog title="新建会议" v-model="editFormVisible" :close-on-click-modal="true">
                     <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-                        <el-form-item label="会议名称" prop="MettingName">
-                            <el-input :disabled="editForm._id"  v-model="editForm.MettingName" auto-complete="off"></el-input>
+                        <el-form-item label="会议名称" prop="MeetingName">
+                            <el-input :disabled="editForm._id"  v-model="editForm.MeetingName" auto-complete="off"></el-input>
                         </el-form-item>
-                        <el-form-item label="会议时间" prop="MettingCreatedAt">
-                            <el-date-picker style="width:100%" placeholder="选择日期时间" type="datetime" v-model="editForm.MettingCreatedAt"></el-date-picker>
+                        <el-form-item label="会议时间" prop="MeetingCreatedAt">
+                            <el-date-picker style="width:100%" placeholder="选择日期时间" type="datetime" v-model="editForm.MeetingCreatedAt"></el-date-picker>
                         </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
@@ -83,8 +83,8 @@ export default {
   data() {
     return {
       editFormRules: [],
-      Metting_Options: [],
-      CurMetting: "",
+      Meeting_Options: [],
+      CurMeeting: "",
       tableData: [],
       editForm: {},
       editFormVisible: false,
@@ -97,7 +97,7 @@ export default {
     };
   },
   created() {
-    this.getMetting();
+    this.getMeeting();
   },
   methods: {
     handleItemChange() {},
@@ -105,27 +105,27 @@ export default {
     handleEdit() {},
     Search() {},
     //获取会议
-    getMetting() {
+    getMeeting() {
       let that = this;
       let params = {
         item2: that.getProj
       };
       axios
-        .get(`/api/GetMettings?ProjID=${that.getProj}`)
+        .get(`/api/GetMeetings?ProjID=${that.getProj}`)
         .then(res => {
           if (res.data.success) {
             console.log(res.data.data);
-            that.Metting_Options = res.data.data;
-            if (that.Metting_Options.length > 0) {
-              that.CurMetting = that.Metting_Options[0]._id;
+            that.Meeting_Options = res.data.data;
+            if (that.Meeting_Options.length > 0) {
+              that.CurMeeting = that.Meeting_Options[0]._id;
             }
           }
         })
         .catch(err => console.log(err));
     },
     //获取会议内容
-    getMettingMinutes() {
-      if (!this.CurMetting) return
+    getMeetingMinutes() {
+      if (!this.CurMeeting) return
       
     }
   }
