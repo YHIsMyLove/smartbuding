@@ -53,7 +53,34 @@
 
                 <el-dialog :title="editFormTtile" v-model="editFormVisible" :close-on-click-modal="true">
                     <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-                      <el-form-item label="账号" prop="UserID">
+
+                      <el-form-item label="用户头像" prop="UserHeadImage"> 
+                        <!-- <el-upload
+                          class="avatar-uploader"
+                          action="/api/UploadFile"
+                          :show-file-list="false"
+                          :on-success="handleAvatarSuccess"
+                          <img v-if="editForm.UserHeadImage" :src="editForm.UserHeadImage" class="avatar">
+                          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload> -->
+
+                        <el-upload
+                          list-type='picture'
+                          class="avatar-uploader"
+                          action="/api/UploadFile"
+                          :show-file-list="false"
+                          :on-success="handleAvatarSuccess"
+                          :before-upload="beforeAvatarUpload">
+                          <img v-if="editForm.UserHeadImage" :src="editForm.UserHeadImage" class="avatar">
+                          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+
+                        <!-- <img v-if="editForm.UserHeadImage" :src="editForm.UserHeadImage" class="avatar"> -->
+
+                      </el-form-item>
+
+
+                        <el-form-item label="账号" prop="UserID">
                             <el-input :disabled="editFormTtile.id == 0" v-model="editForm.UserID" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="密码" prop="UserPwd">
@@ -77,6 +104,7 @@
                                 <el-radio class="radio" :label="0">女</el-radio>
                             </el-radio-group>
                         </el-form-item>
+
                         <el-form-item label="年龄" prop="UserAge">
                             <el-input v-model="editForm.UserAge" auto-complete="off"></el-input>
                         </el-form-item>
@@ -170,6 +198,20 @@ export default {
     //根据区域查询部门,职位表...
   },
   methods: {
+    /**
+     * 上传用户头像
+     * */
+    handleAvatarSuccess(res, file) {
+      this.editForm.UserHeadImage = URL.createObjectURL(file.raw);
+
+      //console.log(file);
+      this.editForm.UserHeadImage = file.response.data;
+      console.log(this.editForm.UserHeadImage);
+    },
+    /**
+     * 检查上传图片
+     */
+    beforeAvatarUpload() {},
     //新建用户
     newCustomTable() {
       this.editFormTtile = "新建用户";
@@ -318,5 +360,29 @@ export default {
 .toolbar {
   background: #fff;
   padding-top: 10px;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

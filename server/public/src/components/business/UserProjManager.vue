@@ -138,17 +138,24 @@ export default {
             let cur = that.prov_city_options.filter(
               i => i.value.id == cur_val.id
             )[0].children;
-            res.data.data.forEach(item => {
-              if (cur.filter(i => i.label == item.label).length == 0)
-                cur.push(item);
-            });
+            res.data.data
+              .map(i => {
+                return {
+                  label: i.Name,
+                  value: i.data
+                };
+              })
+              .forEach(item => {
+                if (cur.filter(i => i.label == item.label).length == 0)
+                  cur.push(item);
+              });
             //完成后 查询项目列表
             let firstcity = val[1];
             if (!firstcity) return;
             this.curCityID = firstcity.id;
             if (firstcity) {
               axios
-                .get(`/api/GetProjByCityID?item1=${firstcity.id}`)
+                .get(`/api/GetProjByCityID?CityID=${firstcity.id}`)
                 .then(res => {
                   if (res.data.success) {
                     that.proj_data = res.data.data;

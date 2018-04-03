@@ -55,4 +55,13 @@ router.get("/GetCityByProvID", business.GetCityByProvID)
 router.get("/GetProjByCityID", business.GetProjByCityID)
 router.get("/GetProjByProvID", business.GetProjByProvID)
 
+
+/*********************************************************************************************** */
+/*********************************************************************************************** */
+/*********************************************************************************************** */
+router.get("/APP/GetMeetingContents", business.GetMeetingContents_APP)
+router.get("/APP/GetMeetings", business.GetMeetings_APP)
+
+
+
 module.exports = router;

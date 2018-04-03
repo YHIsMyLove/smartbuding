@@ -39,22 +39,24 @@ exports.Login = async (req, res) => {
             //1. 查询session
             var sessionid = ''
             let session = await UserSession.findOne({ UserID: query.UserID }).exec()
-            if (session)
-                sessionid = session._id
+            //console.log('1-----' + session)
+            if (session) sessionid = session._id
 
             //2. 匹配账号密码
             let _user = await User.findOne({ UserID: query.UserID }).exec()
-            console.log(_user)
+            //console.log('2-----' + _user)
             if (!_user) return res.send(msg.genFailedMsg('该账号不存在!'))
             if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!'))
 
             //2. 查询匹配项目 若没有则不允许登录
             let haveProj = await UserProj.findOne({ UserID: _user._id })
+            //console.log('3-----')
             if (!haveProj) {
                 return res.send(msg.genFailedMsg('没权限登录'))
             }
             //3. 将数据存进/更新session表
             if (sessionid == '') {
+                //console.log('4-----' + sessionid)
                 let _usersession = new UserSession({
                     UserID: _user.UserID
                 })
@@ -97,6 +99,7 @@ exports.LogOut = async (req, res) => {
         _id: req.body.SessionID
     }
     try {
+        console.log(query._id)
         await UserSession.findOne(query).remove()
         res.send(msg.genSuccessMsg('注销成功'))
     } catch (error) {
@@ -150,11 +153,8 @@ exports.getUserInfo = async (req, res) => {
 var getProvAndCity_byProj = async (ProjID) => {
     //取得城市ID
     let cityid = await SysTable.findOne({ _id: ProjID })
-    console.log(cityid)
-    let cityinfo = await SysTable.findOne({ SysFieldID: 'city', _id: cityid })
-    console.log(cityinfo)
-    let provinfo = await SysTable.findOne({ SysFieldID: 'province', _id: cityinfo.item1 })
-    console.log(provinfo)
+    let cityinfo = await SysTable.findOne({ _id: cityid.item1 })
+    let provinfo = await SysTable.findOne({ _id: cityinfo.item1 })
     let result = {
         City: {
             _id: cityinfo._id,
@@ -208,27 +208,23 @@ exports.GetProjByUser = async (req, res) => {
     let proj = await UserProj.find(query).select('ProjID').exec()
     let projids = proj.map(i => i.ProjID)
 
-    //2. 根据项目获取 省/市    
-    getProvAndCity_byProj()
-
     //3. 取得所有项目
     let projs = await SysTable.find({ SysFieldID: 'proj', _id: { $in: projids } })
 
-    let result = projs.map(i => {
-        let prov_city = getProvAndCity_byProj(i._id)
-        return {
-            Proj: {
-                Name: i.item0,
-                _id: i._id,
-                City: prov_city.City,
-                Prov: prov_city.Prov
-            }
+    //组装数据
+    var result2 = []
+    projs.forEach(async i => {
+        var prov_city = await getProvAndCity_byProj(i._id)
+        result2.push({
+            _id: i._id,
+            Name: i.item0,
+            City: prov_city.City,
+            Prov: prov_city.Prov
+        })
+        if (result2.length == projs.length) {
+            return res.send(msg.genSuccessMsg('查询成功', result2))
         }
     })
-
-    res.send(msg.genSuccessMsg('查询成功',
-        result
-    ))
 }
 
 //log out 注销
@@ -245,6 +241,11 @@ exports.GetUserByProjID = async (req, res) => {
     //to do..............................
     let isEdit = req.query.isEdit
     let ProjID = req.query.ProjID
+
+    if (!ProjID) {
+        return res.send(msg.genFailedMsg('请输入项目ID'))
+    }
+
     let count = query.limit
     if (isEdit == 'true' && ProjID != -1) {// 
         console.log('编辑模式且有项目ID')
@@ -265,6 +266,7 @@ exports.GetUserByProjID = async (req, res) => {
                 UserSex: i.UserSex,
                 UserAge: i.UserAge,
                 UserPhoneNum: i.UserPhoneNum,
+                UserCardID: i.UserCardID,
                 UserInProj: userprojlist.find(d => d.UserID == i._id) != undefined
             }
             return r
@@ -401,17 +403,24 @@ exports.GetDeptByProjID = async (req, res) => {
         if (!query) return res.send(msg.genFailedMsg('请输入项目ID'))
         let result = await SysTable.find(query)
 
-        let data = result.filter(i => i.item0 != 'Root').map(i => {
-            return {
-                label: i.item0,
-                value: { id: i._id, type: "dept" },
-                children: []
-            }
-        })
+        let data = result//.filter(i => i.item0 != 'Root')
+            .map(i => {
+                return {
+                    label: i.item0,
+                    value: { id: i._id, type: "dept" },
+                    _id: i._id,
+                    Name: i.item0,
+                    children: [],
+                }
+            })
         res.send(msg.genSuccessMsg("获取成功", data))
     } catch (error) {
         return res.send(msg.genFailedMsg('未知错误'))
     }
+}
+
+exports.GetDeptListByProjID = async (req, res) => {
+
 }
 
 //设置用户部门表
@@ -476,8 +485,9 @@ exports.GetCityByProvID = async (req, res) => {
         let city = await SysTable.find(query)
         let result = city.map(i => {
             return {
-                label: i.item0,
-                value: { id: i._id, type: "city" }
+                Name: i.item0,
+                data: { id: i._id, type: "city" },
+                _id: i._id
             }
         })
         res.send(msg.genSuccessMsg('获取成功', result))
@@ -489,21 +499,44 @@ exports.GetCityByProvID = async (req, res) => {
 //根据城市获取项目信息
 exports.GetProjByCityID = async (req, res) => {
     let query = {
-        item1: req.query.item1,
+        item1: req.query.CityID,
         SysFieldID: "proj"
     }
-    if (!query.item1) return res.send(msg.genFailedMsg('请输入城市ID'))
+    if (query.item1 == undefined) return res.send(msg.genFailedMsg('请输入城市ID'))
     try {
-        let proj = await SysTable.find(query)
-        let result = proj.map(i => {
-            return {
-                label: i.item0,
-                value: { id: i._id, type: "proj" },
+        let projs = await SysTable.find({ SysFieldID: "proj", item1: query.item1 })
+        // let result = projs.map(i => {
+        //     return {
+        //         label: i.item0,
+        //         value: { id: i._id, type: "proj" },
+        //         children: [],
+        //         _id: i._id,
+        //         Name: i.item0
+        //     }
+        // })
+        // res.send(msg.genSuccessMsg('获取成功', result))
+
+        var result2 = []
+        projs.forEach(async i => {
+            var prov_city = await getProvAndCity_byProj(i._id)
+            result2.push({
+                _id: i._id,
+                Name: i.item0,
+                City: prov_city.City,
+                Prov: prov_city.Prov
+            })
+            if (result2.length == projs.length) {
+                // console.log('*******************')
+                // console.log(result2)
+                return res.send(msg.genSuccessMsg('查询成功', result2))
             }
         })
-        res.send(msg.genMsg('获取成功', "", result))
+
+
+
+
     } catch (error) {
-        res.send(msg.genFailedMsg("获取失败"))
+        res.send(msg.genFailedMsg("获取失败->" + error))
     }
 }
 
@@ -532,6 +565,8 @@ exports.GetUserByDeptID = async (req, res) => {
         let data = list
             .filter(item => userinproj.filter(p => p.UserID == item._id).length > 0)
             .map(i => {
+                let userdeptinfo = userdeptlist.find(d => d.UserID == i._id)
+                //查询部门数据
                 let r = {
                     _id: i._id,
                     UserID: i.UserID,
@@ -540,7 +575,7 @@ exports.GetUserByDeptID = async (req, res) => {
                     UserSex: i.UserSex,
                     UserAge: i.UserAge,
                     UserPhoneNum: i.UserPhoneNum,
-                    UserInDept: userdeptlist.find(d => d.UserID == i._id) != undefined
+                    UserInDept: userdeptinfo != undefined,
                 }
                 return r
             })
@@ -554,18 +589,37 @@ exports.GetUserByDeptID = async (req, res) => {
             let result = await UserDept.find({ ProjID: ProjID, DeptID: DeptID }).select('UserID')
                 .limit(query.limit)
                 .skip(query.limit * query.page)
-            count = await UserDept.find({ ProjID: ProjID, DeptID: DeptID }).count()
 
+            let udept = await UserDept.find({ ProjID: ProjID, DeptID: DeptID })
+            count = udept.length
             let q = result.map(i => {
                 return {
                     "_id": i.UserID
                 }
             })
+
+
+            //查询用户数据
             let users = await User.find({ _id: { $in: q } })
                 .sort({ createdAt: -1 })
                 .exec()
-            console.log(users)
+
+            // let q2 = result.map(i => {
+            //     i.DeptID
+            // })
+            //let depts = await SysTable.find({ _id: { $id: q2 } })
+            //console.log(depts)
+            // let result2 = []
+            // users.forEach(async i => {
+            //     let foritem = i
+            //     let _u = udept.filter(ditem => ditem.UserID == i._id)
+            //     let dinfo = await SysTable.findOne({ SysFieldID: 'dept', _id: _u.DeptID })
+            //     console.log(dinfo)
+            // })
+
             return res.send(msg.genSuccessMsg("查询成功", users, { count: count }))
+
+
         } catch (error) {
             return res.send(msg.genFailedMsg("查询失败"))
         }
@@ -578,19 +632,39 @@ exports.GetUserByDeptID = async (req, res) => {
  */
 exports.GetProjByProvID = async (req, res) => {
     let query = {
-        item1: req.query.item1,
-        SysFieldID: "proj"
+        item1: req.query.ProvID,
     }
     if (!query.item1) return res.send(msg.genFailedMsg('请输入省份ID'))
     try {
-        let proj = await SysTable.find(query)
-        let result = proj.map(i => {
-            return {
-                label: i.item0,
-                value: { id: i._id, type: "proj" },
+        let citys = await SysTable.find(query).select('_id')
+        let q = citys.map(i => i._id)
+        let projs = await SysTable.find({ item1: { $in: q } })
+
+        // let result = projs.map(i => {
+        //     return {
+        //         Name: i.item0,
+        //         _id: i._id
+        //     }
+        // })
+        // res.send(msg.genSuccessMsg('获取成功', result))
+
+        var result2 = []
+        projs.forEach(async i => {
+            var prov_city = await getProvAndCity_byProj(i._id)
+            result2.push({
+                _id: i._id,
+                Name: i.item0,
+                City: prov_city.City,
+                Prov: prov_city.Prov
+            })
+            if (result2.length == projs.length) {
+                // console.log('*******************')
+                // console.log(result2)
+                return res.send(msg.genSuccessMsg('查询成功', result2))
             }
         })
-        res.send(msg.genMsg('获取成功', "", result))
+
+
     } catch (error) {
         res.send(msg.genFailedMsg("获取失败"))
     }
@@ -780,9 +854,10 @@ exports.GetMeetings = async (req, res) => {
         page: parseInt(req.query.page) - 1,
         limit: parseInt(req.query.limit)
     }
-    console.log('获取会议')
+    if (!query.ProjID) return res.send(msg.genFailedMsg('项目ID不允许为空'))
     try {
         let result = await Meeting.list(query)
+
         let data = result.map(i => {
             return {
                 _id: i._id,
@@ -792,7 +867,6 @@ exports.GetMeetings = async (req, res) => {
             }
         })
         let count = await Meeting.count()
-        console.log(count)
         res.send(msg.genSuccessMsg('查询成功', data, { count: count }))
     } catch (error) {
         res.send(msg.genFailedMsg('查询失败->' + error))
@@ -864,6 +938,91 @@ exports.InsertOrUpdateMeetingContent = async (req, res) => {
 //删除会议内容
 exports.DelMeetingContent = async (req, res) => {
 
+}
+
+/**
+ * 获取会议内容信息
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.GetMeetingContents_APP = async (req, res) => {
+    let query = {
+        MeetingID: req.query.MeetingID
+    }
+    try {
+        let result = await MeetingMinutes.find(query)
+        let deptids = await UserDept.find({ UserID: req.query.UserID }).select('DeptID')
+        let depts = deptids.map(i => i.DeptID)
+        console.log(depts)
+        let data = result.map(i => {
+            // console.log(i.Depts)
+            // console.log(depts.indexOf(i.Depts[0].DeptID))
+            // console.log(i.Depts.filter(d => { return depts.indexOf(d.DeptID) }))
+            // console.log('*****************')
+            return {
+                _id: i._id,
+                MeetingID: i.MeetingID,
+                MeetingTitle: i.MeetingTitle,
+                Content: i.Content,
+                Depts: i.Depts.map(dept => {
+                    return {
+                        _id: dept.DeptID,
+                        Name: dept.DeptName
+                    }
+                }),
+                IsRelational: i.Depts.filter(d => depts.indexOf(d.DeptID) >= 0).length > 0
+            }
+        })
+        res.send(msg.genSuccessMsg('获取成功', data))
+    } catch (error) {
+        res.send(msg.genFailedMsg('获取失败' + error))
+    }
+}
+
+/**
+ * 获取会议信息
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.GetMeetings_APP = async (req, res) => {
+    let query = {
+        ProjID: req.query.ProjID,
+        page: parseInt(req.query.page) - 1,
+        limit: parseInt(req.query.limit)
+    }
+    if (!query.ProjID) return res.send(msg.genFailedMsg('项目ID不允许为空'))
+    try {
+        let result = await Meeting.list(query)
+
+        let deptids = await UserDept.find({ UserID: req.query.UserID }).select('DeptID')
+        let depts = deptids.map(i => i.DeptID)
+        console.log(depts)
+
+        let meetingids = result.map(i => i._id)
+        let result2 = await MeetingMinutes.find({ MeetingID: { $in: meetingids } }).select("Depts")
+
+        let count2 = 0;
+        result2.forEach(i => {
+            if (i.Depts.filter(d => depts.indexOf(d.DeptID) >= 0).length > 0) {
+                count2++
+            }
+        })
+
+        let data = result.map(i => {
+            return {
+                _id: i._id,
+                MeetingName: i.MeetingName,
+                MeetingCreatedAt: moment(i.MeetingCreatedAt).format('YYYY-MM-DD hh:mm:ss'),
+                Compere: i.Compere,
+                RelationalCount: count2
+            }
+        })
+
+        let count = await Meeting.count()
+        res.send(msg.genSuccessMsg('查询成功', data, { count: count }))
+    } catch (error) {
+        res.send(msg.genFailedMsg('查询失败->' + error))
+    }
 }
 
 /****************************************************************** */
