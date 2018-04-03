@@ -1,12 +1,15 @@
 ﻿using SmartConstructionSite.Core.Common;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace SmartConstructionSite.Core.ProjectManagement.Models
 {
+    [DataContract]
     public class City : ModelBase
     {
+        [DataMember]
         public string Name { get; set; }
 
 		public override string ToString()

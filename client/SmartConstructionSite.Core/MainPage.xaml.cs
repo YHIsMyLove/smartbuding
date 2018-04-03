@@ -7,6 +7,7 @@ using SmartConstructionSite.Core.Account.Views;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using SmartConstructionSite.Core.ProjectManagement.Views;
 
 namespace SmartConstructionSite.Core
 {
@@ -88,9 +89,9 @@ namespace SmartConstructionSite.Core
         {
             if (ServiceContext.Instance.CurrentUser == null)
             {
-                if (Application.Current.Properties.ContainsKey("SessionId"))
+                if (Application.Current.Properties.ContainsKey("SessionID"))
                 {
-                    string sessionId = (string)Application.Current.Properties["SessionId"];
+                    string sessionId = (string)Application.Current.Properties["SessionID"];
                     await CheckSession(sessionId);
                 }
                 else
@@ -108,7 +109,7 @@ namespace SmartConstructionSite.Core
 
         private async Task CheckSession(string sessionId)
         {
-            var result = await new UserService().CheckSession(sessionId);
+            var result = await new UserService().GetUserInfo(sessionId);
             if (result.HasError)
             {
                 Navigation.InsertPageBefore(new LoginPage(), this);
@@ -117,6 +118,7 @@ namespace SmartConstructionSite.Core
             }
             else
             {
+                ServiceContext.Instance.CurrentUser = result.Model;
                 await CheckPermissions();
             }
         }

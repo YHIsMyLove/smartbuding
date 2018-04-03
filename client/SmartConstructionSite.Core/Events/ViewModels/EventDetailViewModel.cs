@@ -13,12 +13,12 @@ namespace SmartConstructionSite.Core.Events.ViewModels
 {
     public class EventDetailViewModel : ViewModelBase
     {
-        public EventDetailViewModel()
+        public EventDetailViewModel(Meeting meeting)
         {
+            this.meeting = meeting;
             eventService = new EventService();
             RefreshCommand = new Command(execute: async () => { await Refresh(); }, canExecute: () => { return IsRefreshCommandCanExecute(); });
             FetchMoreCommand = new Command(execute: async () => { await FetchMore(); }, canExecute: () => { return IsFetchMoreCommandCanExecute(); });
-            Refresh();
         }
 
         private bool IsFetchMoreCommandCanExecute()

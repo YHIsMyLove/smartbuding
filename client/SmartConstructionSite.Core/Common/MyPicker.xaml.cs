@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,8 +43,36 @@ namespace SmartConstructionSite.Core.Common
             BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(MyPicker), null,
                 propertyChanged: (bindable, oldValue, newValue) =>
                 {
-                    ((MyPicker)bindable).UpdateLabel();
+                    ((MyPicker)bindable).HandleItemsSourceChanged();
                 });
+
+        private void HandleItemsSourceChanged()
+        {
+            if (ItemsSource == null)
+            {
+                label.Text = Title;
+                if (observableCollection != null)
+                {
+                    observableCollection.CollectionChanged -= Observable_CollectionChanged;
+                    observableCollection = null;
+                }
+            }
+            else
+            {
+                observableCollection = ItemsSource as INotifyCollectionChanged;
+                if (observableCollection != null)
+                    observableCollection.CollectionChanged += Observable_CollectionChanged;
+            }
+        }
+
+        private void Observable_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (!ItemsSource.GetEnumerator().MoveNext())
+            {
+                label.Text = Title;
+                SelectedItem = null;
+            }
+        }
 
         public IEnumerable ItemsSource {
             get { return (IEnumerable)GetValue(ItemsSourceProperty); }
@@ -52,16 +81,14 @@ namespace SmartConstructionSite.Core.Common
 
         public static readonly BindableProperty SelectedItemProperty =
             BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(MyPicker), null, BindingMode.TwoWay,
-                                    propertyChanged: (bindable, oldValue, newValue) => { ((MyPicker)bindable).UpdateLabel(); });
+                                    propertyChanged: (bindable, oldValue, newValue) => { ((MyPicker)bindable).HandleSelectedItemChanged(); });
 
-        private void UpdateLabel()
+        private void HandleSelectedItemChanged()
         {
             if (SelectedItem != null)
                 label.Text = SelectedItem.ToString();
             else
                 label.Text = "无";
-            if (!ItemsSource.GetEnumerator().MoveNext())
-                label.Text = Title;
         }
 
         public object SelectedItem {
@@ -111,7 +138,7 @@ namespace SmartConstructionSite.Core.Common
                 }
                 index++;
             }
-            UpdateLabel();
+            HandleSelectedItemChanged();
         }
 
         private Page OwnerPage {
@@ -133,5 +160,6 @@ namespace SmartConstructionSite.Core.Common
 
         private Page ownerPage;
         private bool busy;
+        private INotifyCollectionChanged observableCollection;
     }
 }

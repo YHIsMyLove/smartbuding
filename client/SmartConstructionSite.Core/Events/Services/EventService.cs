@@ -18,7 +18,7 @@ namespace SmartConstructionSite.Core.Events.Services
             try
             {
                 var httpClient = CreateHttpClient();
-                var msg = await httpClient.GetAsync(Config.getMeetingsUrl);
+                var msg = await httpClient.GetAsync(string.Format(Config.getMeetingsUrl, ServiceContext.Instance.CurrentUser._id, ServiceContext.Instance.CurrentProject._id));
                 var statJson = await msg.Content.ReadAsStringAsync();
                 System.Diagnostics.Debug.WriteLine($"url: {Config.getMeetingsUrl} Response: {statJson}");
                 var stat = JsonConvert.DeserializeObject<JObject>(statJson);
@@ -54,7 +54,7 @@ namespace SmartConstructionSite.Core.Events.Services
             try
             {
                 var httpClient = CreateHttpClient();
-                var msg = await httpClient.GetAsync(string.Format(Config.getMeetingMinutesUrl, meeting._id));
+                var msg = await httpClient.GetAsync(string.Format(Config.getMeetingMinutesUrl, ServiceContext.Instance.CurrentUser._id, meeting._id));
                 var statJson = await msg.Content.ReadAsStringAsync();
                 System.Diagnostics.Debug.WriteLine($"url: {Config.getMeetingMinutesUrl} Response: {statJson}");
                 var stat = JsonConvert.DeserializeObject<JObject>(statJson);

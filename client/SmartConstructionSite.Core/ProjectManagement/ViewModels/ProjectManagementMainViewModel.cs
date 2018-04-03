@@ -3,6 +3,7 @@ using SmartConstructionSite.Core.Events.Models;
 using SmartConstructionSite.Core.ProjectManagement.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,11 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
         public ProjectManagementMainViewModel()
         {
             ChangeProjectCommand = new Command(execute: () => { ChangeProject(); }, canExecute: () => { return IsChangeProjectCommandCanExecute(); });
+
+            LatestMeetings = new ObservableCollection<Meeting>();
+            LatestMeetings.Add(new Meeting() { MeetingName = "会议1" });
+            LatestMeetings.Add(new Meeting() { MeetingName = "会议2" });
+            LatestMeetings.Add(new Meeting() { MeetingName = "会议3" });
             InitData();
         }
 
@@ -47,7 +53,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 project = value;
                 NotifyPropertyChanged(nameof(Project));
                 ProjectInfo = project.Name;
-                //ProjectInfo = string.Format("{0}{1}|{0}", project.);
+                ProjectInfo = string.Format("{0}{1} | {2}", project.Prov.Name, project.City.Name, project.Name);
             }
         }
 
@@ -61,6 +67,8 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
                 NotifyPropertyChanged(nameof(ProjectInfo));
             }
         }
+
+        public ObservableCollection<Meeting> LatestMeetings { get; private set; }
 
         #endregion
 
@@ -79,7 +87,6 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
         #region Fields
 
         private Project project;
-        private IList<Meeting> latestMeetings;
         private string projectInfo;
 
         #endregion

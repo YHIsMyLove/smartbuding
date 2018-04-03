@@ -37,9 +37,9 @@
                             <Label Grid.Column="0" Text="{Binding MeetingName}" VerticalOptions="Center"></Label>
                             <Label Grid.Column="1" Text="{Binding MeetingCreatedAt, StringFormat='{0:yyyy/MM/dd}'}" FontSize="Micro" HorizontalOptions="End" VerticalOptions="Center"></Label>
 
-                            <Grid Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding RelationalContentCount, Converter={StaticResource NumToBoolConv}}">
+                            <Grid Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding RelationalCount, Converter={StaticResource NumToBoolConv}}">
                                 <Image Source="common_number_bg.png" WidthRequest="24" HeightRequest="24"></Image>
-                                <Label Text="{Binding RelationalContentCount}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                                <Label Text="{Binding RelationalCount}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
                             </Grid>
                         </Grid>
                     </ViewCell>

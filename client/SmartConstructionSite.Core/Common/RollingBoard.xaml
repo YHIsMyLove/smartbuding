@@ -4,7 +4,7 @@
              x:Class="SmartConstructionSite.Core.Common.RollingBoard">
   <ContentView.Content>
         <Grid>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout x:Name="container" Orientation="Horizontal" HorizontalOptions="Start">
                 <Image Source="ic_warnning_2.png" HeightRequest="16" WidthRequest="16"></Image>
                 <Label x:Name="label" VerticalOptions="Center" LineBreakMode="NoWrap"></Label>
             </StackLayout>

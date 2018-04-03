@@ -2,16 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartConstructionSite.Core.ProjectManagement.Models
 {
+    [DataContract]
     public class Project : ModelBase
     {
+        [DataMember]
         public string Name { get; set; }
+        [DataMember]
+        public Province Prov { get; set; }
+        [DataMember]
+        public City City { get; set; }
 
-		public override string ToString()
+        public override string ToString()
 		{
             return Name == null ? base.ToString() : Name;
 		}

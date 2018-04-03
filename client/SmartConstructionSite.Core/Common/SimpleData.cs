@@ -185,17 +185,17 @@ namespace SmartConstructionSite.Core.Common
 
             List<Meeting> meetings = new List<Meeting>()
             {
-                new Meeting(){ MeetingName = "三月项目成本核算会议", Compere = "张三", MeetingCreatedAt = new DateTime(2017, 3, 6), RelationalContentCount = 2 },
-                new Meeting(){ MeetingName = "安全生产培训会议", Compere = "张三", MeetingCreatedAt = new DateTime(2017, 3, 16), RelationalContentCount = 1 },
-                new Meeting(){ MeetingName = "三月施工现场安全检查会议", Compere = "张三", MeetingCreatedAt = new DateTime(2017, 3, 6), RelationalContentCount = 0 },
-                new Meeting(){ MeetingName = "三月施工现场安全检查会议", Compere = "张三", MeetingCreatedAt = new DateTime(2017, 2, 6), RelationalContentCount = 0 },
+                new Meeting(){ MeetingName = "三月项目成本核算会议", Compere = "张三", MeetingCreatedAt = new DateTime(2017, 3, 6), RelationalCount = 2 },
+                new Meeting(){ MeetingName = "安全生产培训会议", Compere = "张三", MeetingCreatedAt = new DateTime(2017, 3, 16), RelationalCount = 1 },
+                new Meeting(){ MeetingName = "三月施工现场安全检查会议", Compere = "张三", MeetingCreatedAt = new DateTime(2017, 3, 6), RelationalCount = 0 },
+                new Meeting(){ MeetingName = "三月施工现场安全检查会议", Compere = "张三", MeetingCreatedAt = new DateTime(2017, 2, 6), RelationalCount = 0 },
             };
             List<MeetingMinutes> minutes1 = new List<MeetingMinutes>()
             {
-                new MeetingMinutes(){ Content = "作为一个跨平台开发框架，Xamarin.Mobile有很多优点。在这一框架内，开发iOS、Android、Windows Phone和Mac App应用可以不用转到Eclipse 或者额外购买Mac并使用Xcode，而继续在Visual Studio之中使用C#与.NET Framework进行。", ExecuteDepartments = "经营部", IsRelational = true },
-                new MeetingMinutes(){ Content = "作为一个跨平台开发框架，Xamarin.Mobile有很多优点。在这一框架内，开发iOS、Android、Windows Phone和Mac App应用可以不用转到Eclipse 或者额外购买Mac并使用Xcode，而继续在Visual Studio之中使用C#与.NET Framework进行。", ExecuteDepartments = "经营部 工程部", IsRelational = true },
-                new MeetingMinutes(){ Content = "作为一个跨平台开发框架，Xamarin.Mobile有很多优点。在这一框架内，开发iOS、Android、Windows Phone和Mac App应用可以不用转到Eclipse 或者额外购买Mac并使用Xcode，而继续在Visual Studio之中使用C#与.NET Framework进行。", ExecuteDepartments = "经营部", IsRelational = false },
-                new MeetingMinutes(){ Content = "作为一个跨平台开发框架，Xamarin.Mobile有很多优点。在这一框架内，开发iOS、Android、Windows Phone和Mac App应用可以不用转到Eclipse 或者额外购买Mac并使用Xcode，而继续在Visual Studio之中使用C#与.NET Framework进行。", ExecuteDepartments = "经营部 工程部" }
+                new MeetingMinutes(){ Content = "作为一个跨平台开发框架，Xamarin.Mobile有很多优点。在这一框架内，开发iOS、Android、Windows Phone和Mac App应用可以不用转到Eclipse 或者额外购买Mac并使用Xcode，而继续在Visual Studio之中使用C#与.NET Framework进行。", IsRelational = true },
+                new MeetingMinutes(){ Content = "作为一个跨平台开发框架，Xamarin.Mobile有很多优点。在这一框架内，开发iOS、Android、Windows Phone和Mac App应用可以不用转到Eclipse 或者额外购买Mac并使用Xcode，而继续在Visual Studio之中使用C#与.NET Framework进行。", IsRelational = true },
+                new MeetingMinutes(){ Content = "作为一个跨平台开发框架，Xamarin.Mobile有很多优点。在这一框架内，开发iOS、Android、Windows Phone和Mac App应用可以不用转到Eclipse 或者额外购买Mac并使用Xcode，而继续在Visual Studio之中使用C#与.NET Framework进行。", IsRelational = false },
+                new MeetingMinutes(){ Content = "作为一个跨平台开发框架，Xamarin.Mobile有很多优点。在这一框架内，开发iOS、Android、Windows Phone和Mac App应用可以不用转到Eclipse 或者额外购买Mac并使用Xcode，而继续在Visual Studio之中使用C#与.NET Framework进行。" }
             };
             meetingMinutesDic.Add(meetings[0], minutes1);
             meetingMinutesDic.Add(meetings[1], minutes1);

@@ -64,13 +64,13 @@ namespace SmartConstructionSite.Core.Common
         /// </summary>
         public const string getUsersByRoleIDUrl = host + "GetUserByRoleID";
         /// <summary>
-        /// 获取会议列表（get）
+        /// 获取会议列表（get），参数：UserID=?&ProjID=?
         /// </summary>
-        public const string getMeetingsUrl = host + "GetMeetings";
+        public const string getMeetingsUrl = host + "APP/GetMeetings?UserID={0}&ProjID={1}";
         /// <summary>
-        /// 获取会议纪要列表（get），参数：MeetingID=?
+        /// 获取会议纪要列表（get），参数：UserID=?&MeetingID=?
         /// </summary>
-        public const string getMeetingMinutesUrl = host + "GetMeetingContentByMeetingID?MeetingID={0}";
+        public const string getMeetingMinutesUrl = host + "APP/GetMeetingContents?UserID={0}&MeetingID={1}";
 
         public const string getCamerasUrl = host + "GetYSDevs";
     }
