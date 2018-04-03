@@ -155,17 +155,21 @@ var getProvAndCity_byProj = async (ProjID) => {
     let cityid = await SysTable.findOne({ _id: ProjID })
     let cityinfo = await SysTable.findOne({ _id: cityid.item1 })
     let provinfo = await SysTable.findOne({ _id: cityinfo.item1 })
-    let result = {
-        City: {
-            _id: cityinfo._id,
-            Name: cityinfo.item0
-        },
-        Prov: {
-            _id: provinfo._id,
-            Name: provinfo.item0
+    try {
+        let result = {
+            City: {
+                _id: cityinfo._id,
+                Name: cityinfo.item0
+            },
+            Prov: {
+                _id: provinfo._id,
+                Name: provinfo.item0
+            }
         }
+        return result
+    } catch (error) {
+        return {}
     }
-    return result
 }
 
 /**
@@ -505,16 +509,10 @@ exports.GetProjByCityID = async (req, res) => {
     if (query.item1 == undefined) return res.send(msg.genFailedMsg('请输入城市ID'))
     try {
         let projs = await SysTable.find({ SysFieldID: "proj", item1: query.item1 })
-        // let result = projs.map(i => {
-        //     return {
-        //         label: i.item0,
-        //         value: { id: i._id, type: "proj" },
-        //         children: [],
-        //         _id: i._id,
-        //         Name: i.item0
-        //     }
-        // })
-        // res.send(msg.genSuccessMsg('获取成功', result))
+
+        if (projs.length == 0) {
+            return res.send(msg.genSuccessMsg('查询成功'))
+        }
 
         var result2 = []
         projs.forEach(async i => {
@@ -526,15 +524,9 @@ exports.GetProjByCityID = async (req, res) => {
                 Prov: prov_city.Prov
             })
             if (result2.length == projs.length) {
-                // console.log('*******************')
-                // console.log(result2)
                 return res.send(msg.genSuccessMsg('查询成功', result2))
             }
         })
-
-
-
-
     } catch (error) {
         res.send(msg.genFailedMsg("获取失败->" + error))
     }
