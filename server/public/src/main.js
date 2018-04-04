@@ -127,7 +127,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.redirectAuth) {
         NProgress.start();
-        if (store.state.sessionid || sessionStorage.getItem('SessionID')) {
+        var session = sessionStorage.getItem('Session')
+        if (store.state.sessionid || session) {
             next()
         } else {
             next({ path: '/login' })

@@ -25,25 +25,30 @@ const state = {
 // 定义所需的 mutations
 const mutations = {
     INCREMENT(state) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
         state.count++
     },
     DECREMENT(state) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
         state.count--
     },
     //请求选择的项目
     GETPROJ(state) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
         state.proj
     },
     GETSESSION(state) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
         state.sessionid
     },
     GETYSTOKEN(state) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
         state.ystoken
     },
     SETLOGIN(state, LOGINSTATE) {
         state.sessionid = LOGINSTATE.SessionID
-        sessionStorage.setItem("SessionID", state.sessionid); //存入session
         state.ystoken = LOGINSTATE.YSToken
+        sessionStorage.setItem("Session", JSON.stringify(state))
     }
 }
 

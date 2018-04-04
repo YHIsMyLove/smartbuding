@@ -196,7 +196,8 @@ export default {
         page: that.$data.currentPage,
         token: that.getYSToken
       };
-      //console.log(that.getYSToken)
+      console.log('*****************************')
+      console.log(that.getYSToken)
       axios.get("/api/GetYSDevs", { params: params }).then(function(res) {
         that.$data.tableData = res.data.data;
         that.$data.tableDataLength = res.data.meta.count;
