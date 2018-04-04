@@ -30,7 +30,7 @@
                         </el-table-column>
                         <el-table-column width="120" label="系统设备库">
                             <template scope="scope">
-                                <el-switch v-model="scope.row.InSytemDevs"></el-switch>
+                                <el-switch v-model="scope.row.InSytemDevs" @change="changeDev(scope.row)"></el-switch>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" width="80">
@@ -66,9 +66,9 @@
                         <el-form-item label="系统设备名称" prop="DevName">
                             <el-input v-model="editForm.DevSystemName" auto-complete="off"></el-input>
                         </el-form-item>
-                        <el-form-item label="加入系统库" prop="InSytemDevs">
+                        <!-- <el-form-item label="加入系统库" prop="InSytemDevs">
                             <el-switch ></el-switch>
-                        </el-form-item>
+                        </el-form-item> -->
                     </el-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button @click="editFormVisible = false">取 消</el-button>
@@ -135,6 +135,12 @@ export default {
     //根据区域查询部门,职位表...
   },
   methods: {
+    /**
+     * 加入/删除系统库
+     */
+    changeDev(row) {
+      console.log(JSON.stringify(row));
+    },
     //显示编辑界面
     handleEdit: function(row) {
       this.editFormVisible = true;
@@ -196,8 +202,6 @@ export default {
         page: that.$data.currentPage,
         token: that.getYSToken
       };
-      console.log('*****************************')
-      console.log(that.getYSToken)
       axios.get("/api/GetYSDevs", { params: params }).then(function(res) {
         that.$data.tableData = res.data.data;
         that.$data.tableDataLength = res.data.meta.count;

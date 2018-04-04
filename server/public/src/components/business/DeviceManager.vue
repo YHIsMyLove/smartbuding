@@ -217,12 +217,12 @@ export default {
         .get(url, { params: params })
         .then(res => {
           if (res.data.success) {
-            that.$data.tableUserData = res.data.data;
+            that.$data.tableDeviceData = res.data.data;
             that.$data.tableDataLength = res.data.meta.count;
             that.listLoading = false;
             NProgress.done();
           } else {
-            that.$data.tableUserData = [];
+            that.$data.tableDeviceData = [];
             that.$data.tableDataLength = 0;
             that.listLoading = false;
             NProgress.done();
