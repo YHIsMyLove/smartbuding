@@ -24,8 +24,6 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             BindingContext = viewModel;
             InitializeComponent();
 
-            //Device.StartTimer(TimeSpan.FromMilliseconds(200), Rolling);
-
             Appearing += ProjectManagementMainPage_Appearing;
         }
 
@@ -52,14 +50,6 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             base.OnDisappearing();
             rollingBoard.Stop();
         }
-
-        //private bool Rolling()
-        //{
-        //    message.Margin = new Thickness(message.Margin.Left - 5, 0, 0, 0);
-        //    if (message.Margin.Left <= -message.Width)
-        //        message.Margin = new Thickness(billborard.Width, 0, 0, 0);
-        //    return true;
-        //}
 
         async void Handle_Clicked(object sender, System.EventArgs e)
         {

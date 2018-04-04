@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 
 namespace SmartConstructionSite.Core.Common
 {
-    [DataContract]
+    
     [KnownType(typeof(Project))]
     [KnownType(typeof(Meeting))]
     [KnownType(typeof(MeetingMinutes))]
@@ -17,7 +17,7 @@ namespace SmartConstructionSite.Core.Common
     [KnownType(typeof(Department))]
     public abstract class ModelBase
     {
-        [DataMember]
+        
         public string _id
         {
             get;

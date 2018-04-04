@@ -1,4 +1,5 @@
-﻿using SmartConstructionSite.Core.Account.Models;
+﻿using Newtonsoft.Json;
+using SmartConstructionSite.Core.Account.Models;
 using SmartConstructionSite.Core.ProjectManagement.Models;
 using System;
 using Xamarin.Forms;
@@ -35,14 +36,21 @@ namespace SmartConstructionSite.Core.Common
         {
             get
             {
-                if (Application.Current.Properties.ContainsKey("CurrentProject"))
-                    return (Project)Application.Current.Properties["CurrentProject"];
+                if (Application.Current.Properties.ContainsKey("Proj"))
+                {
+                    var projJson = Application.Current.Properties["Proj"] as string;
+                    return JsonConvert.DeserializeObject<Project>(projJson);
+                }
                 else
                     return null;
             }
             set
             {
-                Application.Current.Properties["CurrentProject"] = value;
+                if (value != null)
+                {
+                    var projJson = JsonConvert.SerializeObject(value);
+                    Application.Current.Properties["Proj"] = projJson;
+                }
             }
         }
 

@@ -9,18 +9,20 @@ using System.Threading.Tasks;
 
 namespace SmartConstructionSite.Core.Events.Models
 {
-    [DataContract]
+    
     public class MeetingMinutes : ModelBase
     {
         private IList<Department> depts;
 
-        [DataMember]
+        
         public string MeetingID { get; set; }
-        [DataMember]
+        
         public string MeetingTitle { get; set; }
-        [DataMember]
+        
         public string Content { get; set; }
-        [DataMember]
+
+        public bool IsFavorite { get; set; }
+
         public IList<Department> Depts
         {
             get { return depts; }
@@ -43,7 +45,7 @@ namespace SmartConstructionSite.Core.Events.Models
         /// 是否与当前用户相关
         /// </summary>
         /// 
-        [DataMember]
+        
         public bool IsRelational { get; set; }
 
         public override string ToString()

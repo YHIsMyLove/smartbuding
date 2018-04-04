@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:SmartConstructionSite.Core.Common"
              x:Class="SmartConstructionSite.Core.Events.Views.MeetingMinutesListPage"
              Title="会议纪要">
     <ContentPage.Content>
@@ -18,32 +19,35 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid MinimumHeightRequest="150">
+                            <Grid x:Name="item" MinimumHeightRequest="150" Padding="15">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <Switch IsToggled="{Binding IsRelational}" IsVisible="False" x:Name="switch"></Switch>
-                                <Label Text="{Binding Content}" Margin="15, 15, 0, 10" Grid.Row="0" Grid.Column="0"></Label>
-                                <!--<Image Source="icon.png" Grid.Row="0" Grid.Column="1" WidthRequest="64" HeightRequest="64" VerticalOptions="Start"></Image>-->
-                                <!--<Label Text="1" TextColor="White" Grid.Row="0" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" FontSize="Large"></Label>-->
-                                <Image Margin="15,0,0,15" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" WidthRequest="24" HeightRequest="24" HorizontalOptions="Start">
-                                    <Image.Triggers>
-                                        <DataTrigger TargetType="Image" Binding="{Binding Source={x:Reference switch}, Path=IsToggled}" Value="True">
-                                            <Setter Property="Source" Value="ic_star_highlighted.png" />
+                                <Label Text="{Binding Content}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"></Label>
+
+                                <Image Source="common_number_bg.png" WidthRequest="24" HeightRequest="24" IsVisible="{Binding IsRelational}" Grid.Row="1" Grid.Column="1"></Image>
+
+                                <Switch x:Name="switch" IsVisible="False" IsToggled="{Binding IsFavorite}"></Switch>
+                                <common:ListButton Grid.Row="1" Grid.Column="0" Image="ic_star_highlighted.png" BackgroundColor="White" BindingContext="{Binding Source={x:Reference listView}, Path=BindingContext}" Command="{Binding ToggleFavoriteCommand}" CommandParameter="{Binding Source={x:Reference item}, Path=BindingContext}">
+                                    <common:ListButton.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Source={x:Reference switch}, Path=IsToggled}" Value="true">
+                                            <Setter Property="Image" Value="ic_star_highlighted.png"></Setter>
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Image" Binding="{Binding Source={x:Reference switch}, Path=IsToggled}" Value="False">
-                                            <Setter Property="Source" Value="ic_star.png" />
+                                        <DataTrigger TargetType="Button" Binding="{Binding Source={x:Reference switch}, Path=IsToggled}" Value="false">
+                                            <Setter Property="Image" Value="ic_star.png"></Setter>
                                         </DataTrigger>
-                                    </Image.Triggers>
-                                </Image>
+                                    </common:ListButton.Triggers>
+                                </common:ListButton>
                                 
-                                <Label Text="{Binding DepartmentInfo, StringFormat='执行部门：{0}'}" Margin="0,0,15,15" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="EndAndExpand"></Label>
+                                <Label Text="{Binding DepartmentInfo, StringFormat='执行部门：{0}'}" Grid.Row="1" Grid.Column="3" VerticalOptions="Center"></Label>
 
                             </Grid>
                         </ViewCell>

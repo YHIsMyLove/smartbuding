@@ -103,7 +103,7 @@ namespace SmartConstructionSite.Core
             }
             else
             {
-                await CheckPermissions();
+                //await CheckPermissions();
             }
         }
 
@@ -119,7 +119,7 @@ namespace SmartConstructionSite.Core
             else
             {
                 ServiceContext.Instance.CurrentUser = result.Model;
-                await CheckPermissions();
+                //await CheckPermissions();
             }
         }
     }
