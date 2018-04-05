@@ -39,9 +39,26 @@ var getProvAndCity_byProj = async (ProjID) => {
 }
 
 /**
- * POST 登录
- * @param {*} req {UserID,UserPwd}
- * @param {*} res 
+ * @api {POST} /api/Login?UserID
+ * @apiName 登录
+ * @apiGroup User
+ * @apiParam {String} UserID 用户登录ID.
+ * @apiParam {String} UserPwd 用户登录密码.
+ * @apiError UserNotFound code:-1 用户没有找到
+ * @apiError PassWorldErr code:-2 密码错误
+ * @apiError NoAuth code:-3 没有权限
+ * @apiError Other code:-4 未知错误
+ * 
+ * @apiSuccess {String} UserID 用户ID
+ * @apiSuccess {String} SessionID 用户Session
+ * @apiSuccess {String} YSToken 萤石的Token
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *  "UserID":"xx"
+ *  "SessionID":"xx"
+ *  "YSToken":"xx"
+ * }
  */
 exports.Login = async (req, res) => {
     var query = {
@@ -66,14 +83,14 @@ exports.Login = async (req, res) => {
             //2. 匹配账号密码
             let _user = await User.findOne({ UserID: query.UserID }).exec()
             //console.log('2-----' + _user)
-            if (!_user) return res.send(msg.genFailedMsg('该账号不存在!'))
-            if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!'))
+            if (!_user) return res.send(msg.genFailedMsg('该账号不存在!', { code: -1 }))
+            if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!', { code: -2 }))
 
             //2. 查询匹配项目 若没有则不允许登录
             let haveProj = await UserProj.findOne({ UserID: _user._id })
             //console.log('3-----')
             if (!haveProj) {
-                return res.send(msg.genFailedMsg('没权限登录'))
+                return res.send(msg.genFailedMsg('没权限登录', { code: -3 }))
             }
             //3. 将数据存进/更新session表
             if (sessionid == '') {
@@ -83,7 +100,6 @@ exports.Login = async (req, res) => {
                 })
                 await _usersession.updateAndSave()
                 sessionid = _usersession._id
-                console.log(sessionid)
             }
             //4. 取出萤石的token
             let ys_result = await YS.getaccessToken()
@@ -95,7 +111,7 @@ exports.Login = async (req, res) => {
                 YSToken: ystoken
             }))
         } catch (error) {
-            return res.send(msg.genFailedMsg('未知错误!' + error))
+            return res.send(msg.genFailedMsg('未知错误!' + error, { code: -4 }))
         }
     }
 }

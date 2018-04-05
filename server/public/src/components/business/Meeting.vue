@@ -83,7 +83,7 @@
                     </el-form-item>
                 </el-form>
             </el-col>
-            <div v-for="i,index in tabContent" :key="index">
+            <div v-for="(i,index) in tabContent" :key="index">
               <el-card class="box-card">
               <div slot="header" class="clearfix">
                 <span>
@@ -92,7 +92,7 @@
                 <span>{{i._id=='-1'?'未上传':'已上传'}}</span>
               </div>
                 <el-input type="textarea" v-model="i.content"  placeholder="输入内容"></el-input>
-                <el-tag type="success" v-for="item in i.Depts">{{item.DeptName}}</el-tag>
+                <el-tag type="success" v-for="(item,index2) in i.Depts" :key="index2">{{item.DeptName}}</el-tag>
                 
                 <el-button  style="float: right;" type="info" @click="submitContent(index)" >提交</el-button>
                 <el-button  @click="Send2Person(index)" style="float: right;" type="warning">推送部门</el-button>

@@ -25,6 +25,7 @@ fs.readdirSync(models)
 /************************************************************************************* */
 /************************************************************************************* */
 const admin = require('./routes/admin');
+const apidoc = require('./routes/apidoc');
 const api = require('./routes/api');
 const business = require('./routes/business');
 // view engine setup
@@ -40,9 +41,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', index);
-// app.use('/users', users);
-app.use('/admin', admin);
+//app.use('/', index);
+//app.use('/users', users);
+app.use('/apidoc', apidoc);
+app.use('/', admin);
 app.use('/api', api);
 app.use('/api', business);
 
