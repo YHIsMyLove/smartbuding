@@ -13,7 +13,7 @@
                     </el-form-item>
                 </el-form>
             </el-col>
-            <el-col :span="3" v-for="i,index in tableData" :key="index">
+            <el-col :span="3" v-for="(i,index) in tableData" :key="index">
                 <el-card class="img-card" :body-style="{ padding: '0px' }">
                     <img style="width:100%,height:100%;" alt="(✺ω✺)" :src="i.url" class="image">
                     <div style="padding: 14px;">

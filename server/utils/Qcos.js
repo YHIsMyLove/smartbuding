@@ -33,6 +33,30 @@ exports.uploadSync = function (key, callback) {
     });
 }
 
+/**
+ * 上传图片
+ * @param {*} key 图片名称
+ * @param {*} dir 上传路径 默认static
+ */
+exports.uploadPromise = function (key, dir = "static") {
+    return new Promise((res, rej) => {
+        cos.sliceUploadFile({
+            Bucket: config.Qcos_Bucket,
+            Region: config.Qcos_Region,
+            Key: key,
+            FilePath: `./${key}`
+        }, function (err, data) {
+            if (err) {
+                rej(err)
+            }
+            res({ Path: data.Location })
+        });
+    })
+}
+
+
+
+
 function getBucket() {
     cos.getBucket({
         Bucket: config.Qcos_Bucket,

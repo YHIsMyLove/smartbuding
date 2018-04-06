@@ -7,6 +7,14 @@ function padding(s, len) {
 };
 
 export default {
+    renameFile: function (oldname, newname) {
+        return new Promise((res, rej) => {
+            require('fs').rename(oldname, newname, (err) => {
+                if (err) rej(err)
+                res()
+            })
+        })
+    },
     getQueryStringByName: function (name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
