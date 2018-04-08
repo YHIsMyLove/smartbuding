@@ -29,6 +29,7 @@ namespace SmartConstructionSite.Core.Events.Services
 
                     foreach (var item in meetings)
                     {
+                        if (item.IsReaded) continue;
                         result.Model += item.RelationalCount;
                     }
                 }
@@ -86,7 +87,35 @@ namespace SmartConstructionSite.Core.Events.Services
             return result;
         }
 
-        public async Task<Result<IList<Meeting>>> FetchMeetings(int year = -1, int month = -1, int day = -1)
+        internal async Task<Result<bool>> SetMeetingReaded(Meeting meeting)
+		{
+            var result = new Result<bool>();
+            try
+            {
+                var httpClient = CreateHttpClient();
+                var msg = await httpClient.GetAsync(string.Format(Config.setMeetingReaded, meeting._id));
+                var statJson = await msg.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine($"url: {Config.setMeetingReaded}, params:{meeting._id}, Response: {statJson}");
+                var stat = JsonConvert.DeserializeObject<JObject>(statJson);
+                if ((bool)stat["success"])
+                {
+                    result.Model = true;
+                }
+                else
+                {
+                    result.HasError = true;
+                    result.Error = new Error() { Description = stat["msg"].ToString() };
+                }
+            }
+            catch (Exception e)
+            {
+                result.HasError = true;
+                result.Error = new Error() { Description = e.Message, Exception = e };
+            }
+            return result;
+		}
+
+		public async Task<Result<IList<Meeting>>> FetchMeetings(int year = -1, int month = -1, int day = -1)
         {
             var result = new Result<IList<Meeting>>();
             try

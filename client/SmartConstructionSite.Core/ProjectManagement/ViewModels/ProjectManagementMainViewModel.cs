@@ -20,6 +20,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             InitCommand = new Command(execute: async () => { await InitData(); });
             ChangeProjectCommand = new Command(execute: () => { ChangeProject(); }, canExecute: () => { return IsChangeProjectCommandCanExecute(); });
 
+
             project = ServiceContext.Instance.CurrentProject;
             LatestMeetings = new ObservableCollection<Meeting>();
         }
@@ -106,6 +107,25 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             }
             RelationalCount = result1.Model;
             initilized = true;
+            IsBusy = false;
+        }
+
+        public async Task UpdateRelationalCount()
+        {
+            if (ServiceContext.Instance.CurrentUser == null || ServiceContext.Instance.CurrentProject == null) return;
+            if (IsBusy) return;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
+            var result = await eventService.GetRelationalCount();
+            if (result.HasError)
+            {
+                HasError = true;
+                Error = result.Error;
+                IsBusy = false;
+                return;
+            }
+            RelationalCount = result.Model;
             IsBusy = false;
         }
 

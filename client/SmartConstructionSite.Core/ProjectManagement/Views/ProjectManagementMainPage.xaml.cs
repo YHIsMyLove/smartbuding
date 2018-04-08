@@ -32,6 +32,8 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             BindingContext = viewModel;
             InitializeComponent();
             //Appearing += ProjectManagementMainPage_Appearing;
+            rollingBoard.IsVisible = false;
+            rollingBoard.HeightRequest = 0;
         }
 
         private void LatestMeetings_Changed(object sender, NotifyCollectionChangedEventArgs e)
@@ -115,6 +117,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             {
                 viewModel.ChangeProjectCommand.Execute(null);
                 viewModel.InitCommand.Execute(null);
+                viewModel.UpdateRelationalCount();
             }
         }
 

@@ -47,6 +47,9 @@ namespace SmartConstructionSite.Core.Events.Views
             Meeting meeting = e.Item as Meeting;
             if (meeting == null) return;
 
+            bool result = await viewModel.SetMeetingReaded(meeting);
+            if (!result) return;
+
             EventDetailViewModel detailViewModel = new EventDetailViewModel(meeting);
             EventDetailPage detailPage = new EventDetailPage();
             detailPage.BindingContext = detailViewModel;

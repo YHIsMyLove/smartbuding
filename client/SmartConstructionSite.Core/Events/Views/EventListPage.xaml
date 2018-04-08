@@ -6,7 +6,7 @@
              Title="日历事件">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <commons:NumberToBooleanConverter x:Key="NumToBoolConv"></commons:NumberToBooleanConverter>
+            <commons:NotConverter x:Key="NotConv"></commons:NotConverter>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -37,7 +37,7 @@
                             <Label Grid.Column="0" Text="{Binding MeetingName}" VerticalOptions="Center"></Label>
                             <Label Grid.Column="1" Text="{Binding MeetingCreatedAt, StringFormat='{0:yyyy/MM/dd}'}" FontSize="Micro" HorizontalOptions="End" VerticalOptions="Center"></Label>
 
-                            <Grid Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding RelationalCount, Converter={StaticResource NumToBoolConv}}">
+                            <Grid Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding IsReaded, Converter={StaticResource NotConv}}">
                                 <Image Source="common_number_bg.png" WidthRequest="24" HeightRequest="24"></Image>
                                 <Label Text="{Binding RelationalCount}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
                             </Grid>

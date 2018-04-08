@@ -19,6 +19,12 @@ namespace SmartConstructionSite.Core.Events.Models
         
         public DateTime MeetingCreatedAt { get; set; }
 
+        public bool IsReaded
+        {
+            get;
+            set;
+        }
+
         //与当前用户相关的会议内容数量
         
         public int RelationalCount { get; set; }

@@ -72,6 +72,8 @@ namespace SmartConstructionSite.Core.Common
         /// </summary>
         public const string getMeetingMinutesUrl = host + "APP/GetMeetingContents?UserID={0}&MeetingID={1}";
 
+        public const string setMeetingReaded = host + "SetMeetingReaded?MeetingID={0}";
+
         public const string getCamerasUrl = host + "GetYSDevs";
     }
 }

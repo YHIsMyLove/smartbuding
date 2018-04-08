@@ -60,9 +60,45 @@ namespace SmartConstructionSite.Core.Events.ViewModels
             }
         }
 
-        #region Properties
+        internal async Task<bool> SetMeetingReaded(Meeting meeting)
+		{
+            if (IsBusy) return false;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
+            Result<bool> result = await eventService.SetMeetingReaded(meeting);
+            if (result.HasError)
+            {
+                HasError = true;
+                Error = result.Error;
+            }
+            else
+            {
+                if (result.Model)
+                {
+                    meeting.IsReaded = true;
+                    PageTypeGroup selectedGroup = null;
+                    int index = 0;
+                    foreach (var group in meetings)
+                    {
+                        if (group.Contains(meeting))
+                        {
+                            selectedGroup = group;
+                            break;
+                        }
+                        index++;
+                    }
+                    meetings.RemoveAt(index);
+                    meetings.Insert(index, selectedGroup);
+                }
+            }
+            IsBusy = false;
+            return result.Model;
+		}
 
-        public ObservableCollection<PageTypeGroup> Meetings {
+		#region Properties
+
+		public ObservableCollection<PageTypeGroup> Meetings {
             get { return meetings; }
             private set {
                 if (meetings == value) return;
