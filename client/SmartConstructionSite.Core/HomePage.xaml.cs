@@ -26,6 +26,11 @@ namespace SmartConstructionSite.Core
             get { return projMgtPage; }
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
+
         async void Button_Clicked(object sender, EventArgs args)
         {
             if (sender == btnScan)

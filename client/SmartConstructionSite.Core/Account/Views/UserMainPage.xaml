@@ -18,6 +18,9 @@
                     </Image>-->
                     <ffimageloading:CachedImage WidthRequest="96" HeightRequest="96" DownsampleToViewSize="true"
                                                 Source="{Binding User.UserHeadImg}" ErrorPlaceholder="user.png" LoadingPlaceholder="user.png">
+                        <ffimageloading:CachedImage.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Hand_Tapped"></TapGestureRecognizer>
+                        </ffimageloading:CachedImage.GestureRecognizers>
                         <ffimageloading:CachedImage.Transformations>
                             <fftransformations:CircleTransformation></fftransformations:CircleTransformation>
                         </ffimageloading:CachedImage.Transformations>

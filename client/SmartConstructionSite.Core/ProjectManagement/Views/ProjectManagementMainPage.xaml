@@ -6,13 +6,11 @@
              Title="项目管理">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="Button">
-                <Setter Property="BackgroundColor" Value="White" />
-            </Style>
+            <common:NumberToBooleanConverter x:Key="NumToBoolConv"></common:NumberToBooleanConverter>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" Spacing="0">
+        <StackLayout x:Name="root" Orientation="Vertical" Spacing="0">
             <StackLayout Orientation="Vertical" HeightRequest="120" BackgroundColor="#3670d4">
                 <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand" Padding="15,0,15,15">
                     <StackLayout Orientation="Horizontal">
@@ -44,7 +42,7 @@
                     <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
                 </common:RollingBoard.GestureRecognizers>
             </common:RollingBoard>
-            <Grid VerticalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
+            <Grid x:Name="grid" VerticalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
@@ -114,6 +112,11 @@
                     </Grid.GestureRecognizers>
                     <Image Source="ic_forklift.png"></Image>
                     <Label Grid.Row="1" Text="机械设备监测"></Label>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="1" VerticalOptions="Start" HorizontalOptions="End" Margin="8" IsVisible="{Binding RelationalCount, Converter={StaticResource NumToBoolConv}}">
+                    <Image Source="common_number_bg.png" WidthRequest="24" HeightRequest="24"></Image>
+                    <Label Text="{Binding RelationalCount}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="1" x:Name="btnEvents" Padding="4" VerticalOptions="Center" HorizontalOptions="Center">

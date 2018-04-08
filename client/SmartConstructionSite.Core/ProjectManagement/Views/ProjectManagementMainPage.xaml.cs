@@ -52,42 +52,70 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
 
         private async void ProjectManagementMainPage_Appearing(object sender, EventArgs e)
         {
-            if (ServiceContext.Instance.CurrentUser == null)
-            {
-                if (Application.Current.Properties.ContainsKey("SessionID"))
-                {
-                    string sessionId = (string)Application.Current.Properties["SessionID"];
-                    var result = await new UserService().GetUserInfo(sessionId);
-                }
-                else
-                {
-                    Navigation.InsertPageBefore(new LoginPage(), this);
-                    await Task.Delay(200);
-                    await Navigation.PopAsync();
-                }
-            }
-            else
-            {
-                if (ServiceContext.Instance.CurrentProject == null)
-                {
-                    await Task.Delay(200);
-                    await Navigation.PushAsync(new ProjectListPage());
-                }
-            }
-            viewModel.ChangeProjectCommand.Execute(null);
-            viewModel.InitCommand.Execute(null);
+            //root.Layout(Bounds);
+            //if (ServiceContext.Instance.CurrentUser == null)
+            //{
+            //    if (Application.Current.Properties.ContainsKey("SessionID"))
+            //    {
+            //        string sessionId = (string)Application.Current.Properties["SessionID"];
+            //        var result = await new UserService().GetUserInfo(sessionId);
+            //    }
+            //    else
+            //    {
+            //        Navigation.InsertPageBefore(new LoginPage(), this);
+            //        await Task.Delay(200);
+            //        await Navigation.PopAsync();
+            //    }
+            //}
+            //else
+            //{
+            //    if (ServiceContext.Instance.CurrentProject == null)
+            //    {
+            //        await Task.Delay(200);
+            //        await Navigation.PushAsync(new ProjectListPage());
+            //    }
+            //}
+            //viewModel.ChangeProjectCommand.Execute(null);
+            //viewModel.InitCommand.Execute(null);
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
             rollingBoard.Start();
+            root.Children.Remove(grid);
+            root.Children.Add(grid);
+
+            MessagingCenter.Subscribe<Application>(this, "NewMeeting", (sender) => {
+                Device.BeginInvokeOnMainThread(async () => {
+                    await viewModel.UpdateMessageAndRelationalCount();
+                });
+            });
+
+            CheckProject();
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
             rollingBoard.Stop();
+
+            MessagingCenter.Unsubscribe<Application>(this, "NewMeeting");
+        }
+
+        private async Task CheckProject()
+        {
+            if (ServiceContext.Instance.CurrentUser == null) return;
+            if (ServiceContext.Instance.CurrentProject == null)
+            {
+                await Task.Delay(200);
+                await Navigation.PushAsync(new ProjectListPage());
+            }
+            else
+            {
+                viewModel.ChangeProjectCommand.Execute(null);
+                viewModel.InitCommand.Execute(null);
+            }
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -145,24 +173,6 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
                 var eventDetailViewModel = new EventDetailViewModel((Meeting)rollingBoard.CurrentMessage);
                 eventDetailPage.BindingContext = eventDetailViewModel;
                 await Navigation.PushAsync(eventDetailPage);
-            }
-        }
-
-        private async Task<bool> CheckSession(string sessionId)
-        {
-            var result = await new UserService().GetUserInfo(sessionId);
-            if (result.HasError)
-            {
-                Navigation.InsertPageBefore(new LoginPage(), this);
-                await Task.Delay(200);
-                await Navigation.PopAsync(true);
-                return false;
-            }
-            else
-            {
-                ServiceContext.Instance.CurrentUser = result.Model;
-                //await CheckPermissions();
-                return true;
             }
         }
     }

@@ -22,10 +22,42 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
 
             project = ServiceContext.Instance.CurrentProject;
             LatestMeetings = new ObservableCollection<Meeting>();
-            //LatestMeetings.Add(new Meeting() { MeetingName = "会议1" });
-            //LatestMeetings.Add(new Meeting() { MeetingName = "会议2" });
-            //LatestMeetings.Add(new Meeting() { MeetingName = "会议3" });
-            //InitData();
+        }
+
+        public async Task UpdateMessageAndRelationalCount()
+        {
+            if (IsBusy) return;
+            IsBusy = true;
+            HasError = false;
+            Error = null;
+            LatestMeetings.Clear();
+            var result = await eventService.FetchLatestEvent();
+            if (result.HasError)
+            {
+                HasError = true;
+                Error = result.Error;
+                IsBusy = false;
+                return;
+            }
+            var latestMeetings = result.Model.Where((meeting) =>
+            {
+                var span = DateTime.Now - meeting.MeetingCreatedAt;
+                return span.Days <= 5;
+            });
+            foreach (var item in latestMeetings)
+            {
+                LatestMeetings.Add(item);
+            }
+            var result1 = await eventService.GetRelationalCount();
+            if (result1.HasError)
+            {
+                HasError = true;
+                Error = result1.Error;
+                IsBusy = false;
+                return;
+            }
+            RelationalCount = result1.Model;
+            IsBusy = false;
         }
 
         private bool IsChangeProjectCommandCanExecute()
@@ -48,11 +80,11 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             HasError = false;
             Error = null;
             var result = await eventService.FetchLatestEvent();
-            IsBusy = false;
             if (result.HasError)
             {
                 HasError = true;
                 Error = result.Error;
+                IsBusy = false;
                 return;
             }
             var latestMeetings = result.Model.Where((meeting) =>
@@ -64,7 +96,17 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             {
                 LatestMeetings.Add(item);
             }
+            var result1 = await eventService.GetRelationalCount();
+            if (result1.HasError)
+            {
+                HasError = true;
+                Error = result1.Error;
+                IsBusy = false;
+                return;
+            }
+            RelationalCount = result1.Model;
             initilized = true;
+            IsBusy = false;
         }
 
         #region Properties
@@ -93,6 +135,17 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
             }
         }
 
+        public int RelationalCount
+        {
+            get { return relationalCount; }
+            set
+            {
+                if (relationalCount == value) return;
+                relationalCount = value;
+                NotifyPropertyChanged(nameof(RelationalCount));
+            }
+        }
+
         public ObservableCollection<Meeting> LatestMeetings { get; private set; }
 
         #endregion
@@ -117,6 +170,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.ViewModels
         private string projectInfo;
         private EventService eventService = new EventService();
         private bool initilized;
+        private int relationalCount;
 
         #endregion
     }

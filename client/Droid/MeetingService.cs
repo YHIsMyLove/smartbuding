@@ -10,6 +10,8 @@ using SmartConstructionSite.Core.Events.Services;
 using SmartConstructionSite.Core.Events.Models;
 using SmartConstructionSite.Core.Common;
 using System.Linq;
+using Xamarin.Forms;
+using SmartConstructionSite.Core;
 
 namespace SmartConstructionSite.Droid
 {
@@ -84,6 +86,8 @@ namespace SmartConstructionSite.Droid
                                 notification.Flags |= NotificationFlags.AutoCancel;// 点击通知的时候cancel掉  
                                 NotificationManager manager = (NotificationManager)GetSystemService(NotificationService);
                                 manager.Notify(1, notification);
+
+                                MessagingCenter.Send(Xamarin.Forms.Application.Current, "NewMeeting");
                             }
                         }
                         try

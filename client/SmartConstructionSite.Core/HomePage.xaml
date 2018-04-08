@@ -14,16 +14,4 @@
 
     <common:PlaceholderPage Title="人员记录" Icon="ic_pepole_disable.png"></common:PlaceholderPage>
 
-    <!--<NavigationPage Title="项目管理" Icon="ic_pepole_disable.png">
-        <x:Arguments>
-            
-        </x:Arguments>
-    </NavigationPage>
-
-    <NavigationPage Title="人员记录" Icon="ic_pepole_disable.png">
-        <x:Arguments>
-            <common:PlaceholderPage></common:PlaceholderPage>
-        </x:Arguments>
-    </NavigationPage>-->
-
 </xf:BottomBarPage>

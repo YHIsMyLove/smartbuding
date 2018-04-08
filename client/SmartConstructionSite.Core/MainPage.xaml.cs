@@ -121,7 +121,7 @@ namespace SmartConstructionSite.Core
             else
             {
                 //await CheckPermissions();
-                await CheckProject();
+                //await CheckProject();
             }
         }
 

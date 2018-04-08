@@ -120,7 +120,7 @@ namespace SmartConstructionSite.Core.Common
 
         private void Observable_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems.Count > 0)
+            if (e.NewItems != null && e.NewItems.Count > 0)
                 Start();
         }
 

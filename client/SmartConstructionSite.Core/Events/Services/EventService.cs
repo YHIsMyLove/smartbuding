@@ -12,7 +12,40 @@ namespace SmartConstructionSite.Core.Events.Services
 {
     public class EventService : ServiceBase
     {
-        
+        public async Task<Result<int>> GetRelationalCount()
+        {
+            var result = new Result<int>();
+            try
+            {
+                var httpClient = CreateHttpClient();
+                var msg = await httpClient.GetAsync(string.Format(Config.getMeetingsUrl, ServiceContext.Instance.CurrentUser._id, ServiceContext.Instance.CurrentProject._id));
+                var statJson = await msg.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine($"url: {Config.getMeetingsUrl} Response: {statJson}");
+                var stat = JsonConvert.DeserializeObject<JObject>(statJson);
+                if ((bool)stat["success"])
+                {
+                    var meetingsJson = stat["data"].ToString();
+                    var meetings = JsonConvert.DeserializeObject<IList<Meeting>>(meetingsJson);
+
+                    foreach (var item in meetings)
+                    {
+                        result.Model += item.RelationalCount;
+                    }
+                }
+                else
+                {
+                    result.HasError = true;
+                    result.Error = new Error() { Description = stat["msg"].ToString() };
+                }
+            }
+            catch (Exception e)
+            {
+                result.HasError = true;
+                result.Error = new Error() { Description = e.Message, Exception = e };
+            }
+            return result;
+        }
+
         public async Task<Result<IList<Meeting>>> FetchLatestEvent()
         {
             var result = new Result<IList<Meeting>>();

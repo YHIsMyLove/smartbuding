@@ -51,6 +51,22 @@ namespace SmartConstructionSite.Core.Account.Views
             }
         }
 
+        private async void Hand_Tapped(object sender, EventArgs args)
+        {
+            string[] buttons = new string[2];
+            buttons[0] = "拍照";
+            buttons[1] = "从相册选取";
+            var button = await DisplayActionSheet("更换头像", "取消", null, buttons);
+            if (button == buttons[0])
+            {
+                //todo
+            }
+            else if (button == buttons[1])
+            {
+                //todo
+            }
+        }
+
         public ListView ListView {
             get { return listView; }
         }
