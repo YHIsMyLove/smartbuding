@@ -39,13 +39,11 @@
                     </Grid>
                 </StackLayout>
             </StackLayout>
-            <!--<Grid x:Name="billborard" HeightRequest="40" IsClippedToBounds="true">
-                <StackLayout x:Name="message" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Center">
-                    <Image Source="ic_warnning_2.png" HeightRequest="16" WidthRequest="16"></Image>
-                    <Label Text="项目助手就要发布1.0版本啦" VerticalOptions="Center" LineBreakMode="NoWrap"></Label>
-                </StackLayout>
-            </Grid>-->
-            <common:RollingBoard ItemsSource="{Binding LatestMeetings}" x:Name="rollingBoard" HeightRequest="40"></common:RollingBoard>
+            <common:RollingBoard ItemsSource="{Binding LatestMeetings}" x:Name="rollingBoard" CloseRequested="Handle_Clicked" HeightRequest="40" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                <common:RollingBoard.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
+                </common:RollingBoard.GestureRecognizers>
+            </common:RollingBoard>
             <Grid VerticalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>

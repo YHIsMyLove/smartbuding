@@ -1,17 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customs="clr-namespace:Naxam.Controls.Forms;assembly=Naxam.CarouselView.Forms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              x:Class="SmartConstructionSite.Core.PeopleManagement.Views.ContactsDetailPage"
              Title="人员监管">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Orientation="Vertical" Spacing="0">
-                <StackLayout Orientation="Vertical" BackgroundColor="#E0E0E0" Padding="15">
-                    <Image HorizontalOptions="Center" WidthRequest="96" HeightRequest="96" Source="user.png">
-                        <!--<Image.Source>
-                            <UriImageSource CachingEnabled="True" Uri="{Binding Contacts.PhotoUrl}"></UriImageSource>
-                        </Image.Source>-->
-                    </Image>
+                <StackLayout Orientation="Vertical" BackgroundColor="#E0E0E0" Padding="15"><!--
+                    <Image HorizontalOptions="Center" WidthRequest="96" HeightRequest="96">
+                        <Image.Source>
+                            <UriImageSource CachingEnabled="True" Uri="{Binding Contacts.UserHeadImg}"></UriImageSource>
+                        </Image.Source>
+                    </Image>-->
+                    <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="96" HeightRequest="96"
+                        DownsampleToViewSize="true" Source = "{Binding Contacts.UserHeadImg}" ErrorPlaceholder="user.png" LoadingPlaceholder="user.png">
+                        <ffimageloading:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation></fftransformations:CircleTransformation>
+                        </ffimageloading:CachedImage.Transformations>
+                    </ffimageloading:CachedImage>
                     <Label HorizontalOptions="Center" Text="{Binding Contacts.Name}" FontSize="Medium"></Label>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                         <StackLayout x:Name="btnCall" Orientation="Vertical" Margin="10">
@@ -80,9 +89,23 @@
 
                     <StackLayout Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Padding="15">
                         <Label Text="资格证书"></Label>
-                        <Image Source="certificate.png"></Image>
+                        <customs:CarouselView ItemSource="{Binding Contacts.Certificates}" HeightRequest="150">
+                            <customs:CarouselView.ItemTemlate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <!--<Image HorizontalOptions="Fill" VerticalOptions="Fill">
+                                            <Image.Source>
+                                                <UriImageSource Uri="{Binding .}"></UriImageSource>
+                                            </Image.Source>
+                                        </Image>-->
+                                        <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "{Binding Contacts.UserHeadImg}"
+                                                                    ErrorPlaceholder="error.png">
+                                        </ffimageloading:CachedImage>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </customs:CarouselView.ItemTemlate>
+                        </customs:CarouselView>
                     </StackLayout>
-
                 </Grid>
             </StackLayout>
         </ScrollView>

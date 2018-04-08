@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <xf:BottomBarPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:projectManagement="clr-namespace:SmartConstructionSite.Core.ProjectManagement.Views"
@@ -10,7 +10,7 @@
         <ToolbarItem x:Name="btnScan" Icon="action_scan_2.png" Clicked="Button_Clicked"></ToolbarItem>
     </xf:BottomBarPage.ToolbarItems>
 
-    <projectManagement:ProjectManagementMainPage Title="项目管理" Icon="ic_points.png"></projectManagement:ProjectManagementMainPage>
+    <projectManagement:ProjectManagementMainPage x:Name="projMgtPage" Title="项目管理" Icon="ic_points.png"></projectManagement:ProjectManagementMainPage>
 
     <common:PlaceholderPage Title="人员记录" Icon="ic_pepole_disable.png"></common:PlaceholderPage>
 

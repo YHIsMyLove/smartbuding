@@ -26,11 +26,17 @@ namespace SmartConstructionSite.Core.PeopleManagement.Services
                         url = string.Format(Config.getUsersByDeptIDUrl, project._id, department._id);
                     var msg = await httpClient.GetAsync(url);
                     var statJson = await msg.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.Write($"url: {url}, response: {statJson}");
                     var stat = JsonConvert.DeserializeObject<JObject>(statJson);
                     if ((bool)stat["success"])
                     {
                         var usersJson = stat["data"].ToString();
                         result.Model = JsonConvert.DeserializeObject<IList<User>>(usersJson);
+                        foreach (var item in result.Model)
+                        {
+                            if (string.IsNullOrEmpty(item.UserHeadImg))
+                                item.UserHeadImg = "user.png";
+                        }
                     }
                     else
                     {

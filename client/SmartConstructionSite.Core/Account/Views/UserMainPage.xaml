@@ -1,26 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SmartConstructionSite.Core"
+             xmlns:account="clr-namespace:SmartConstructionSite.Core.Account.Views"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              x:Class="SmartConstructionSite.Core.Account.Views.UserMainPage"
-             Title="用户">
+             Title="用户信息">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
             <Grid HeightRequest="200">
                 <StackLayout Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Image x:Name="imageUserPhoto" Source="user.png" WidthRequest="96" HeightRequest="96">
-                        <!--<Image.Source>
-                        <UriImageSource CachingEnabled="True" Uri="{Binding User.UserHeadImg}">
-                            -->
-                        <!--<UriImageSource.CacheValidity>
-                                <x:TimeSpan>
-
-                                </x:TimeSpan>
-                            </UriImageSource.CacheValidity>-->
-                        <!--
-                        </UriImageSource>
-                    </Image.Source>-->
-                    </Image>
+                    <!--<Image x:Name="imageUserPhoto" WidthRequest="96" HeightRequest="96">
+                        <Image.Source>
+                            <UriImageSource Uri="{Binding User.UserHeadImg}"></UriImageSource>
+                        </Image.Source>
+                    </Image>-->
+                    <ffimageloading:CachedImage WidthRequest="96" HeightRequest="96" DownsampleToViewSize="true"
+                                                Source="{Binding User.UserHeadImg}" ErrorPlaceholder="user.png" LoadingPlaceholder="user.png">
+                        <ffimageloading:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation></fftransformations:CircleTransformation>
+                        </ffimageloading:CachedImage.Transformations>
+                    </ffimageloading:CachedImage>
                     <Label Text="{Binding User.UserName}" HorizontalOptions="Center" FontSize="Medium"></Label>
                 </StackLayout>
             </Grid>
@@ -28,7 +29,12 @@
             <ListView x:Name="listView">
                 <ListView.ItemsSource>
                     <x:Array Type="{x:Type local:MasterPageItem}">
-                        <local:MasterPageItem Title="项目管理" IconSource="icon.png" TargetType="{x:Type local:HomePage}" />
+<!--                        <local:MasterPageItem Title="主页" IconSource="icon.png" TargetType="{x:Type local:HomePage}" />-->
+                        <local:MasterPageItem Title="文件夹" IconSource="ic_folder.png" TargetType="{x:Type account:MyFolderPage}" />
+                        <local:MasterPageItem Title="消息中心" IconSource="ic_msg_center.png" TargetType="{x:Type account:MyMessagePage}" />
+                        <local:MasterPageItem Title="收藏夹" IconSource="ic_favorite.png" TargetType="{x:Type account:MyFavoritesPage}" />
+                        <local:MasterPageItem Title="设置" IconSource="ic_settings.png" TargetType="{x:Type account:SettingsPage}" />
+                        <local:MasterPageItem Title="帮助" IconSource="ic_help.png" TargetType="{x:Type account:QuestionsPage}" />
                     </x:Array>
                 </ListView.ItemsSource>
                 <ListView.ItemTemplate>

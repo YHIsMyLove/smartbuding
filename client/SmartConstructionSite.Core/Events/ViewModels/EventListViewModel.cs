@@ -34,7 +34,11 @@ namespace SmartConstructionSite.Core.Events.ViewModels
             IsBusy = true;
             HasError = false;
             Error = null;
-            var result = await eventService.FetchLatestEvent();
+            meetings.Clear();
+            int year = (selectedYear == "无" || selectedYear == null) ? -1 : int.Parse(selectedYear);
+            int month = (selectedMonth == "无" || selectedMonth == null) ? -1 : int.Parse(selectedMonth);
+            int day = (selectedDay == "无" || selectedDay == null) ? -1 : int.Parse(selectedDay);
+            var result = await eventService.FetchMeetings(year, month, day);
             IsBusy = false;
             if (result.HasError)
             {
@@ -43,7 +47,13 @@ namespace SmartConstructionSite.Core.Events.ViewModels
             }
             else
             {
-                foreach (var item in result.Model)
+                var groups = result.Model.GroupBy(i => i.MeetingCreatedAt.ToString("yyyy年MM月"))
+                    .Select(i => {
+                        var group = new PageTypeGroup(i.Key, "");
+                        group.AddRange(i);
+                        return group;
+                    }).ToList();
+                foreach (var item in groups)
                 {
                     meetings.Add(item);
                 }
@@ -103,6 +113,7 @@ namespace SmartConstructionSite.Core.Events.ViewModels
                 selectedYear = value;
                 NotifyPropertyChanged(nameof(SelectedYear));
                 UpdateDays();
+                FetchLatestEvents();
             }
         }
 
@@ -121,6 +132,7 @@ namespace SmartConstructionSite.Core.Events.ViewModels
                 selectedMonth = value;
                 NotifyPropertyChanged(nameof(SelectedMonth));
                 UpdateDays();
+                FetchLatestEvents();
             }
         }
 
@@ -132,6 +144,7 @@ namespace SmartConstructionSite.Core.Events.ViewModels
                 if (selectedDay == value) return;
                 selectedDay = value;
                 NotifyPropertyChanged(nameof(SelectedDay));
+                FetchLatestEvents();
             }
         }
 

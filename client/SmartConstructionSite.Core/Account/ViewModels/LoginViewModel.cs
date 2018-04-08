@@ -102,8 +102,8 @@ namespace SmartConstructionSite.Core.Account.ViewModels
         }
 
         private UserService userService;
-        private string username = "admin";
-        private string password = "admin";
+        private string username = "lbgongfu";
+        private string password = "123456";
         private bool isLoginSucceed;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SmartConstructionSite.Core.Common;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,7 +21,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.Views
         {
             if (sender == btnCheckout)
             {
-                //todo
+                await Navigation.PushAsync(new PlaceholderPage() { Title = "人员核验" });
             }
             else if (sender == btnContacts)
             {
@@ -29,7 +29,7 @@ namespace SmartConstructionSite.Core.PeopleManagement.Views
             }
             else if (sender == btnSaftyEducation)
             {
-                //todo
+                await Navigation.PushAsync(new PlaceholderPage() { Title = "安全教育" });
             }
         }
 	}

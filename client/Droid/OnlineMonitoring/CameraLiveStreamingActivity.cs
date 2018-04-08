@@ -129,7 +129,7 @@ namespace SmartConstructionSite.Droid.OnlineMonitoring
             EZUIKit.InitWithAppKey(Application, ServiceContext.AppKey);
             EZUIKit.SetAccessToken(ServiceContext.Instance.YSAccessToken);
             player.SetCallBack(new PlayerCallBack(this));
-            string url = string.Format("ezopen://open.ys7.com/{0}/{1}.live", camera.DeviceSerial, camera.CameraNo);
+            string url = string.Format("ezopen://AES:fv0dNq0McdVR4lHlm2DpSg@open.ys7.com/{0}/{1}.live", camera.DeviceSerial, camera.CameraNo);
             player.SetUrl(url);
             UpdatePlayerSurfaceSize();
 

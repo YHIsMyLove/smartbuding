@@ -9,13 +9,25 @@ using Xamarin.Forms;
 using Android.Runtime;
 using Plugin.Permissions;
 using SmartConstructionSite.Core;
+using FFImageLoading.Forms.Droid;
 
 namespace SmartConstructionSite.Droid
 {
     [Activity(Label = "@string/app_name", Icon = "@drawable/icon", Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        public const string ActionMeetingListPage = "cn.yooling.scs.SmartConstructionSite.MeetingListPage";
+        [BroadcastReceiver]
+        public class MeetingListPageReceiver : BroadcastReceiver
+        {
+            public override void OnReceive(Context context, Intent intent)
+            {
+                ((App)Xamarin.Forms.Application.Current).GotoMeetingListPage();
+            }
+        }
+
         App app;
+        private MeetingListPageReceiver meetingListPageReceiver;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -38,6 +50,17 @@ namespace SmartConstructionSite.Droid
             app.ShowCameraListRequested += CameraHelper_ShowCameraListRequested;
 
             LoadApplication(app);
+
+            StartService(new Intent(this, typeof(MeetingService)));
+
+            meetingListPageReceiver = new MeetingListPageReceiver();
+            IntentFilter intentFilter = new IntentFilter(ActionMeetingListPage);
+            RegisterReceiver(meetingListPageReceiver, intentFilter);
+
+            if (ActionMeetingListPage == Intent.Action)
+                app.GotoMeetingListPage();
+
+            CachedImageRenderer.Init(true);
         }
 
         protected void HideBottomUIMenu()
@@ -66,6 +89,7 @@ namespace SmartConstructionSite.Droid
         protected override void OnDestroy()
         {
             base.OnDestroy();
+            UnregisterReceiver(meetingListPageReceiver);
             app.FullScreenRequested -= App_FullScreenRequested;
             app.LandscapeRequested -= App_LandscapeRequested;
             //app.CameraHelper.ShowCameraListRequested -= CameraHelper_ShowCameraListRequested;

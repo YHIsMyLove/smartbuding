@@ -8,12 +8,15 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using SmartConstructionSite.Core.ProjectManagement.Views;
+using Acr.UserDialogs;
+using SmartConstructionSite.Core.ProjectManagement.ViewModels;
 
 namespace SmartConstructionSite.Core
 {
     public partial class MainPage : MasterDetailPage
     {
         UserMainPage userMainPage;
+        HomePage homePage;
 
         public MainPage()
         {
@@ -22,7 +25,8 @@ namespace SmartConstructionSite.Core
             userMainPage = new UserMainPage();
             userMainPage.ListView.ItemSelected += OnItemSelected;
             Master = userMainPage;
-            Detail = new NavigationPage(new HomePage());
+            homePage = new HomePage();
+            Detail = new NavigationPage(homePage);
             Appearing += MainPage_Appearing;
             ((UserMainViewModel)userMainPage.BindingContext).PropertyChanged += UserMainViewModel_PropertyChanged;
         }
@@ -63,14 +67,14 @@ namespace SmartConstructionSite.Core
             }
         }
 
-        void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as MasterPageItem;
             if (item != null)
             {
-                Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
                 userMainPage.ListView.SelectedItem = null;
                 IsPresented = false;
+                await Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType));
             }
         }
 
@@ -92,35 +96,54 @@ namespace SmartConstructionSite.Core
                 if (Application.Current.Properties.ContainsKey("SessionID"))
                 {
                     string sessionId = (string)Application.Current.Properties["SessionID"];
-                    await CheckSession(sessionId);
+                    var result = await new UserService().GetUserInfo(sessionId);
+                    if (result.HasError)
+                    {
+                        var toastConfig = new ToastConfig(result.Error.Description);
+                        toastConfig.SetDuration(3000);
+                        UserDialogs.Instance.Toast(toastConfig);
+                        await Task.Delay(1000);
+                        await GotoLoginPage();
+                    }
+                    else
+                    {
+                        ServiceContext.Instance.CurrentUser = result.Model;
+                        ((UserMainViewModel)userMainPage.BindingContext).User = result.Model;
+                        await CheckProject();
+                    }
                 }
                 else
                 {
-                    Navigation.InsertPageBefore(new LoginPage(), this);
-                    await Task.Delay(200);
-                    await Navigation.PopAsync();
+                    await Task.Delay(1000);
+                    await GotoLoginPage();
                 }
             }
             else
             {
                 //await CheckPermissions();
+                await CheckProject();
             }
         }
 
-        private async Task CheckSession(string sessionId)
+        private async Task CheckProject()
         {
-            var result = await new UserService().GetUserInfo(sessionId);
-            if (result.HasError)
+            if (ServiceContext.Instance.CurrentProject == null)
             {
-                Navigation.InsertPageBefore(new LoginPage(), this);
                 await Task.Delay(200);
-                await Navigation.PopAsync(true);
+                await Navigation.PushAsync(new ProjectListPage());
             }
             else
             {
-                ServiceContext.Instance.CurrentUser = result.Model;
-                //await CheckPermissions();
+                ((ProjectManagementMainViewModel)homePage.ProjMgtPage.BindingContext).ChangeProjectCommand.Execute(null);
+                ((ProjectManagementMainViewModel)homePage.ProjMgtPage.BindingContext).InitCommand.Execute(null);
             }
+        }
+
+        private async Task GotoLoginPage()
+        {
+            Navigation.InsertPageBefore(new LoginPage(), this);
+            await Task.Delay(200);
+            await Navigation.PopAsync();
         }
     }
 }

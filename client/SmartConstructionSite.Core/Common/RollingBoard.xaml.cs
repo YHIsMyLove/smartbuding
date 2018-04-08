@@ -15,6 +15,8 @@ namespace SmartConstructionSite.Core.Common
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RollingBoard : ContentView
 	{
+        public event EventHandler CloseRequested;
+
         public static readonly BindableProperty ItemsSourceProperty =
             BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(RollingBoard), null,
                 propertyChanged: (bindable, oldValue, newValue) =>
@@ -39,8 +41,15 @@ namespace SmartConstructionSite.Core.Common
             if (count == 0) return;
             var msg = Enumerable.ElementAt(Enumerable.Cast<object>(ItemsSource), 0);
             label.Text = msg.ToString();
+            CurrentMessage = msg;
             Device.StartTimer(TimeSpan.FromSeconds(1.0 / 30), Rolling);
             running = true;
+        }
+
+        public object CurrentMessage
+        {
+            get;
+            private set;
         }
 
         private bool Rolling()
@@ -62,6 +71,7 @@ namespace SmartConstructionSite.Core.Common
                 {
                     var msg = Enumerable.ElementAt(Enumerable.Cast<object>(ItemsSource), currentIdnex);
                     label.Text = msg.ToString();
+                    CurrentMessage = msg;
                     currentIdnex++;
                 }
                 else
@@ -69,6 +79,7 @@ namespace SmartConstructionSite.Core.Common
                     currentIdnex = 0;
                     var msg = Enumerable.ElementAt(Enumerable.Cast<object>(ItemsSource), 0);
                     label.Text = msg.ToString();
+                    CurrentMessage = msg;
                 }
             }
 
@@ -79,6 +90,12 @@ namespace SmartConstructionSite.Core.Common
         {
             firstFrame = true;
             running = false;
+        }
+
+        void Handle_Tapped(object sender, System.EventArgs e)
+        {
+            Stop();
+            CloseRequested?.Invoke(this, EventArgs.Empty);
         }
 
         private void HandleItemsSourceChanged()
@@ -101,14 +118,10 @@ namespace SmartConstructionSite.Core.Common
             }
         }
 
-        private void UpdateStat()
-        {
-            
-        }
-
         private void Observable_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //todo
+            if (e.NewItems.Count > 0)
+                Start();
         }
 
         private bool running;

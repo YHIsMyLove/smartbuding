@@ -38,6 +38,19 @@ namespace SmartConstructionSite.Core.PeopleManagement.ViewModels
             set {
                 if (contacts == value) return;
                 contacts = value;
+                //if (contacts != null)
+                //{
+                //    //contacts.Certificates = new List<string>()
+                //    //{
+                //    //    "icon.png", "ic_forklift.png", "ic_chimneys.png"
+                //    //};
+                //    //contacts.Certificates = new List<string>()
+                //    //{
+                //    //    "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1672829216,536804227&fm=27&gp=0.jpg",
+                //    //    "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3288225748,2297060601&fm=27&gp=0.jpg",
+                //    //    "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522997762119&di=bf175aadf4be9979dfc0f7f04fd12d2b&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F7%2F58b0f624125c1.jpg%3Fdown"
+                //    //};
+                //}
                 NotifyPropertyChanged(nameof(Contacts));
             }
         }

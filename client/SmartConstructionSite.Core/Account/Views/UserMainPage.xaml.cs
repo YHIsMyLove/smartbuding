@@ -39,7 +39,7 @@ namespace SmartConstructionSite.Core.Account.Views
             if (e.PropertyName == nameof(viewModel.IsBusy))
             {
                 if (viewModel.IsBusy)
-                    UserDialogs.Instance.ShowLoading("正在登陆。。。", MaskType.Black);
+                    UserDialogs.Instance.ShowLoading("正在注销。。。", MaskType.Black);
                 else
                     UserDialogs.Instance.HideLoading();
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using SmartConstructionSite.Core.Common;
 using Xamarin.Forms;
 
 namespace SmartConstructionSite.Core
@@ -14,6 +15,7 @@ namespace SmartConstructionSite.Core
             InitializeComponent();
 
             MainPage = new NavigationPage(new MainPage());
+            //MainPage = new ContentPage();
         }
 
         //public CameraHelper CameraHelper
@@ -35,7 +37,14 @@ namespace SmartConstructionSite.Core
             }
         }
 
-        public void SetLandscape(bool landscape)
+        public async void GotoMeetingListPage()
+		{
+            if (ServiceContext.Instance.CurrentUser == null || ServiceContext.Instance.CurrentProject == null) return;
+            await ((NavigationPage)MainPage).Navigation.PopToRootAsync();
+            await ((NavigationPage)MainPage).Navigation.PushAsync(new Events.Views.EventListPage());
+		}
+
+		public void SetLandscape(bool landscape)
         {
             if (this.landscape != landscape)
             {

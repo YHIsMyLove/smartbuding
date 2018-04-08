@@ -1,5 +1,6 @@
 ﻿using BottomBar.XamarinForms;
 using SmartConstructionSite.Core.Common;
+using SmartConstructionSite.Core.ProjectManagement.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,11 @@ namespace SmartConstructionSite.Core
 		{
 			InitializeComponent ();
 		}
+
+        public ProjectManagementMainPage ProjMgtPage
+        {
+            get { return projMgtPage; }
+        }
 
         async void Button_Clicked(object sender, EventArgs args)
         {

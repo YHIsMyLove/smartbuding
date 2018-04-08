@@ -17,6 +17,10 @@
     <PackageReference Include="Xam.Plugins.Messaging" Version="5.1.0" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.3.2" />
+    <PackageReference Include="Naxam.CarouselView" Version="0.0.1" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.3.6" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.3.6" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.3.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,4 +62,18 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Account\Views\MyMessagePage.xaml.cs">
+      <DependentUpon>MyMessagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Account\Views\MyFavoritesPage.xaml.cs">
+      <DependentUpon>MyFavoritesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Account\Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Account\Views\QuestionsPage.xaml.cs">
+      <DependentUpon>QuestionsPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

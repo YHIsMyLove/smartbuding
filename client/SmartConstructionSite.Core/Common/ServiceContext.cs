@@ -81,6 +81,25 @@ namespace SmartConstructionSite.Core.Common
             set { Application.Current.Properties["YSAccessToken"] = value; }
         }
 
+        /// <summary>
+        /// 当前最新会议的时间
+        /// </summary>
+        /// <value>The latest meeting time.</value>
+        public DateTime LatestMeetingTime
+        {
+            get
+            {
+                if (Application.Current.Properties.ContainsKey("LatestMeetingTime"))
+                    return DateTime.Parse((string)Application.Current.Properties["LatestMeetingTime"]);
+                else
+                    return DateTime.MinValue;
+            }
+            set
+            {
+                Application.Current.Properties["LatestMeetingTime"] = value.ToString();
+            }
+        }
+
 		public bool IsLogin()
         {
             return CurrentUser != null;

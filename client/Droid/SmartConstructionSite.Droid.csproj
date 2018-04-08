@@ -32,11 +32,6 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-    <AndroidSupportedAbis>armeabi-v7a;x86_64;x86</AndroidSupportedAbis>
-    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -199,6 +194,42 @@
     <Reference Include="ZXingNetMobile, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ZXing.Net.Mobile.2.3.2\lib\MonoAndroid403\ZXingNetMobile.dll</HintPath>
     </Reference>
+    <Reference Include="Com.ViewPagerIndicator">
+      <HintPath>..\packages\Xamarin.Android.CirclePageIndicator.1.0.2\lib\MonoAndroid\Com.ViewPagerIndicator.dll</HintPath>
+    </Reference>
+    <Reference Include="Com.Android.DeskClock">
+      <HintPath>..\packages\Xamarin.Android.VerticalViewPager.1.0.1\lib\MonoAndroid\Com.Android.DeskClock.dll</HintPath>
+    </Reference>
+    <Reference Include="Naxam.CarouselView.Forms">
+      <HintPath>..\packages\Naxam.CarouselView.0.0.1\lib\MonoAndroid10\Naxam.CarouselView.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Naxam.CarouselView.Platform.Droid">
+      <HintPath>..\packages\Naxam.CarouselView.0.0.1\lib\MonoAndroid10\Naxam.CarouselView.Platform.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading">
+      <HintPath>..\packages\Xamarin.FFImageLoading.2.3.6\lib\MonoAndroid10\FFImageLoading.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading.Platform">
+      <HintPath>..\packages\Xamarin.FFImageLoading.2.3.6\lib\MonoAndroid10\FFImageLoading.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading.Forms">
+      <HintPath>..\packages\Xamarin.FFImageLoading.Forms.2.3.6\lib\MonoAndroid10\FFImageLoading.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading.Forms.Droid">
+      <HintPath>..\packages\Xamarin.FFImageLoading.Forms.2.3.6\lib\MonoAndroid10\FFImageLoading.Forms.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp">
+      <HintPath>..\packages\SkiaSharp.1.60.0\lib\MonoAndroid\SkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading.Svg.Platform">
+      <HintPath>..\packages\Xamarin.FFImageLoading.Svg.2.3.6\lib\MonoAndroid10\FFImageLoading.Svg.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading.Svg.Forms">
+      <HintPath>..\packages\Xamarin.FFImageLoading.Svg.Forms.2.3.6\lib\MonoAndroid10\FFImageLoading.Svg.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading.Transformations">
+      <HintPath>..\packages\Xamarin.FFImageLoading.Transformations.2.3.6\lib\MonoAndroid10\FFImageLoading.Transformations.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -215,6 +246,8 @@
     <Compile Include="Renderers\BorderedPickerRenderer.cs" />
     <Compile Include="Renderers\BorderedEntryRenderer.cs" />
     <Compile Include="SplashScreen.cs" />
+    <Compile Include="MeetingService.cs" />
+    <Compile Include="MeetingReceiver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -289,6 +322,15 @@
     <AndroidResource Include="Resources\drawable-xhdpi\device_other.png" />
     <AndroidResource Include="Resources\layout\layout_splash_screen.axml" />
     <AndroidResource Include="Resources\drawable-xhdpi\timg.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\action_close.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\error.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_help.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_msg_center.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_update.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_favorite.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_settings.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_wallet.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_folder.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />

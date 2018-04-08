@@ -20,6 +20,12 @@ namespace SmartConstructionSite.Core.PeopleManagement.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 如果为true，表示页面提供选择联系人的功能
+        /// </summary>
+        /// <value><c>true</c> if select contacts; otherwise, <c>false</c>.</value>
+        public bool SelectContacts { get; set; }
+
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(viewModel.IsBusy))
@@ -44,11 +50,19 @@ namespace SmartConstructionSite.Core.PeopleManagement.Views
 
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            ContactsDetailViewModel detailViewModel = new ContactsDetailViewModel();
-            detailViewModel.Contacts = (User)e.Item;
-            ContactsDetailPage detailPage = new ContactsDetailPage();
-            detailPage.BindingContext = detailViewModel;
-            await Navigation.PushAsync(detailPage);
+            if (SelectContacts)
+            {
+                Application.Current.Properties["SelectedContacts"] = e.Item;
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                ContactsDetailViewModel detailViewModel = new ContactsDetailViewModel();
+                detailViewModel.Contacts = (User)e.Item;
+                ContactsDetailPage detailPage = new ContactsDetailPage();
+                detailPage.BindingContext = detailViewModel;
+                await Navigation.PushAsync(detailPage);
+            }
         }
 
         private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

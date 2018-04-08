@@ -65,6 +65,8 @@ namespace SmartConstructionSite.Core.Account.Services
                     var userJson = stat["data"].ToString();
                     System.Diagnostics.Debug.WriteLine($"user json: {userJson}");
                     result.Model = JsonConvert.DeserializeObject<User>(userJson);
+                    if (string.IsNullOrEmpty(result.Model.UserHeadImg))
+                        result.Model.UserHeadImg = "user.png";
                 }
                 else
                 {

@@ -1,6 +1,8 @@
 ﻿using SmartConstructionSite.Core.Common;
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Xamarin.Forms;
 
 namespace SmartConstructionSite.Core.Account.Models
 {
@@ -30,7 +32,6 @@ namespace SmartConstructionSite.Core.Account.Models
         /// <summary>
         /// 证书图像地址数组
         /// </summary>
-        
-        public string[] Certificates { get; set; }
+        public IList<string> Certificates { get; set; }
     }
 }
