@@ -11,7 +11,7 @@ const state = {
     count: 10,
     //系统总变量区域
     //项目ID
-    proj: "5aa905ae9b5dad48ecd2bb89",
+    proj: "5ac9d8dbe629f6134823c938",//临时替换成柳州项目
     //城市ID
     cityid: '',
     //省份ID
