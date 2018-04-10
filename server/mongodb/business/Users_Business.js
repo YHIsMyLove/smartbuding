@@ -144,7 +144,7 @@ exports.SetUserImage = async (req, res) => {
     }
 
     var form = new multiparty.Form({ uploadDir: './static' });
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, async (err, fields, files) => {
         if (!files.file && files.file.length > 0) {
             return res.send(msg.genFailedMsg('上传失败', { code: -1, msg: '请输入文件' }))
         }
@@ -188,7 +188,7 @@ exports.SetUserImage = async (req, res) => {
  * @param {*} oldname 旧的地址
  * @param {*} newname 新的地址
  */
-let renameFile = function (oldname, newname) {
+let renameFile = async (oldname, newname) => {
     return new Promise((res, rej) => {
         require('fs').rename(oldname, newname, (err) => {
             if (err) rej(err)
@@ -196,9 +196,6 @@ let renameFile = function (oldname, newname) {
         })
     })
 }
-
-
-
 
 
 /**
