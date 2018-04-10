@@ -48,6 +48,7 @@ const mutations = {
     SETLOGIN(state, LOGINSTATE) {
         state.sessionid = LOGINSTATE.SessionID
         state.ystoken = LOGINSTATE.YSToken
+        state.proj = "5ac9d8dbe629f6134823c938"
         sessionStorage.setItem("Session", JSON.stringify(state))
     }
 }

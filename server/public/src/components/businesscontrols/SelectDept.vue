@@ -2,7 +2,7 @@
     <el-dialog title="选择部门" v-model="Visible" :close-on-click-modal="true">
 
           <el-form :inline="true" class="demo-form-inline">
-            <el-form-item v-for="i,index in Depts" :key="index" :label="i.label">
+            <el-form-item v-for="(i,index) in Depts" :key="index" :label="i.label">
               <el-switch v-model="i.Selected"  active-color="#13ce66" inactive-color="#ff4949"/>
             </el-form-item>
           </el-form>
@@ -52,6 +52,7 @@ export default {
       let params = {
         item2: that.getProj
       };
+      consolle.log(that.getProj);
       axios
         .get(`/api/GetDeptByProjID?ProjID=${that.getProj}`)
         .then(res => {
