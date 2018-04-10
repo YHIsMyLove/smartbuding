@@ -65,7 +65,6 @@ exports.Login = async (req, res) => {
         UserID: req.body.UserID,
         UserPwd: req.body.UserPwd
     }
-    console.log(query)
     if (query.UserID == 'admin') {
         if ((query.UserID === SystemConfig.Admin_User) &&
             (query.UserPwd === SystemConfig.Admin_Pwd)) {
@@ -239,6 +238,7 @@ exports.LogOut = async (req, res) => {
  * @param {*} res 
  */
 exports.getUserInfo = async (req, res) => {
+    console.log('获取用户数据')
     let query = {
         _id: req.query.SessionID
     }

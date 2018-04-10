@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/', index);
 //app.use('/users', users);
 app.use('/apidoc', apidoc);
-app.use('/', admin);
+app.use('/admin', admin);
 app.use('/api', api);
 app.use('/api', business);
 
