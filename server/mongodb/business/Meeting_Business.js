@@ -185,3 +185,44 @@ exports.GetMeetings_APP = async (req, res) => {
         res.send(msg.genFailedMsg('查询失败->' + error))
     }
 }
+
+
+getProvAndCity_byProj = async (ProjID) => {
+    return new Promise(async (res, rej) => {
+        let cityid = await SysTable.findOne({ _id: ProjID })
+        let cityinfo = await SysTable.findOne({ _id: cityid.item1 })
+        let provinfo = await SysTable.findOne({ _id: cityinfo.item1 })
+        try {
+            let result = {
+                City: {
+                    _id: cityinfo._id,
+                    Name: cityinfo.item0
+                },
+                Prov: {
+                    _id: provinfo._id,
+                    Name: provinfo.item0
+                }
+            }
+            res(result)
+        } catch (error) {
+            rej(error)
+        }
+    })
+}
+
+/**
+ * @api {POST} /api/SetMeetingReaded 设置会议以读未读状态
+ * @apiGroup Meeting
+ * @apiParam {String} MeetingID 会议ID.
+ */
+exports.SetMeetingReaded = async (req, res) => {
+    let query = {
+        _id: req.query.MeetingID
+    }
+    try {
+        await Meeting.update(query, { IsReaded: 1 })
+        res.send(msg.genSuccessMsg('更新成功!'))
+    } catch (error) {
+        res.send(msg.genFailedMsg('设置已读失败->' + error))
+    }
+}

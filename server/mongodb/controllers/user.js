@@ -76,6 +76,7 @@ exports.delete = async(function* (req, res) {
 
 //分页获取人员数据
 exports.list = async(function* (req, res) {
+    console.log('test')
     var query = {
         page: parseInt(req.query.page) - 1,
         limit: parseInt(req.query.limit)

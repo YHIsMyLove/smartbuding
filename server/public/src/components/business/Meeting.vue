@@ -90,6 +90,7 @@
                     <el-input style="float: left; width:30%" v-model="i.label"></el-input>
                 </span>
                 <span>{{i._id=='-1'?'未上传':'已上传'}}</span>
+                <span>{{i.IsReaded=='0'?'未读':'已读'}}</span>
               </div>
                 <el-input type="textarea" v-model="i.content"  placeholder="输入内容"></el-input>
                 <el-tag type="success" v-for="(item,index2) in i.Depts" :key="index2">{{item.DeptName}}</el-tag>
@@ -195,7 +196,8 @@ export default {
         Content: this.tabContent[index].content,
         Depts: this.tabContent[index].Depts.map(i => {
           return { DeptID: i.DeptID, DeptName: i.DeptName };
-        })
+        }),
+        IsReaded: 0 //0代表未读
       };
       axios
         .post("/api/InsertOrUpdateMeetingContent", MeetingMinutes)

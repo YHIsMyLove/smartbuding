@@ -250,6 +250,7 @@ exports.InsertOrDelUserDept = async (req, res) => {
 
 //获取省份资料
 exports.GetProv = async (req, res) => {
+    console.log('获取省份资料')
     try {
         let prov = await SysTable.find({ SysFieldID: "province" })
         let result = prov.map(i => {

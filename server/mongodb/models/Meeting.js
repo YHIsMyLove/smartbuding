@@ -6,7 +6,8 @@ const MeetingSchema = new Schema({
     MeetingName: String,
     MeetingCreatedAt: { type: Date, default: Date.now },
     Compere: String,//主持人
-    ProjID: String
+    ProjID: String,
+    IsReaded: Number//
 })
 
 MeetingSchema.pre('save', function (next) {
