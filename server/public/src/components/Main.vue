@@ -2,16 +2,15 @@
   <section class="chart">
     <el-row>
       <el-col :span="24">
-          <el-checkbox-group v-model="checkList">
-            <el-checkbox v-model="checkList" v-for="i in showList" :key="i.id" :label="i.label"></el-checkbox>
-          </el-checkbox-group>
+          <el-checkbox v-model="i.checked" v-for="i in showList" :key="i.id" :label="i.label">
+          </el-checkbox>
       </el-col>
     </el-row>
 
     <el-row>
-        <el-col :span="12" v-for="i in showList" v-show="checkList.filter(item=>item == i.label).length > 0">
+        <el-col :span="24" v-for="(i,index) in showList" :key="index" v-show="i.checked">
           <el-card :body-style="{ padding: '0px' }">
-            <div :id="i.id" style="width:100%; height:400px;"></div>
+            <div :id="i.id" style="width:100%; height:600px;"></div>
             <div style="padding: 14px;">
               <div class="bottom clearfix">
                 <time class="time">{{ currentDate }}</time>
@@ -30,17 +29,18 @@ import echarts from "echarts";
 export default {
   data() {
     return {
-      checkList: ["柱状图", "条状图", "线状图", "饼图"],
       showList: [
-        { id: "chartColumn", label: "柱状图" },
-        { id: "chartBar", label: "条状图" },
-        { id: "chartLine", label: "线状图" },
-        { id: "chartPie", label: "饼图" }
+        { id: "chartColumn", label: "柱状图", checked: false },
+        { id: "chartBar", label: "条状图", checked: false },
+        { id: "chartLine", label: "线状图", checked: false },
+        { id: "chartPie", label: "饼图", checked: false },
+        { id: "chartCustom", label: "自定义", checked: true }
       ],
       currentDate: new Date(),
       chartColumn: null,
       chartBar: null,
       chartLine: null,
+      chartCustom: null,
       chartPie: null
     };
   },
@@ -48,13 +48,9 @@ export default {
     var _this = this;
     //基于准备好的dom，初始化echarts实例
     this.chartColumn = echarts.init(document.getElementById("chartColumn"));
-    console.log("3");
     this.chartBar = echarts.init(document.getElementById("chartBar"));
-    console.log("4");
     this.chartLine = echarts.init(document.getElementById("chartLine"));
-    console.log("5");
     this.chartPie = echarts.init(document.getElementById("chartPie"));
-    console.log("6");
 
     this.chartColumn.setOption({
       title: { text: "Column Chart" },
@@ -67,7 +63,7 @@ export default {
         {
           name: "销量",
           type: "bar",
-          data: [5, 20, 36, 10, 10, 20]
+          data: [20, 10, 12, 23, 45, 65]
         }
       ]
     });
@@ -198,6 +194,91 @@ export default {
         }
       ]
     });
+
+    /************************************************************************ */
+    /************************************************************************ */
+    /************************************************************************ */
+
+    this.chartCustom = echarts.init(document.getElementById("chartCustom"));
+
+    this.chartCustom.setOption({
+      title: {
+        text: "动物基因",
+        subtext: "动物基因曲线图"
+      },
+      dataZoom: {
+        show: true,
+        start: 0,
+        end: 10
+      },
+      calculable: true,
+      xAxis: [
+        {
+          type: "value",
+          splitNumber: 10
+        }
+      ],
+      yAxis: [
+        {
+          type: "value"
+        }
+      ],
+      series: []
+    });
+
+    //异步加载数据
+    let allcount = 1000;
+    let data = [];
+    for (let index = 2; index < allcount + 2; index++) {
+      let item = {
+        name: "jy" + index,
+        type: "line",
+        smooth: true,
+        symbolSize: 0,
+        data: (function() {
+          let lst = [];
+          lst.push([index - 2, 0]);
+          lst.push([
+            index - 1,
+            Math.random() > 0.5 ? Math.random() * 10 : -Math.random() * 10
+          ]);
+          lst.push([index, 0]);
+          return lst;
+        })()
+      };
+      data.push(item);
+    }
+
+    let data2 = [];
+    for (let index = 2; index < allcount + 2; index++) {
+      data2.push([index - 2, 0]);
+      data2.push([
+        index - 1,
+        Math.random() > 0.5 ? Math.random() * 10 : -Math.random() * 10
+      ]);
+      data2.push([index, 0]);
+    }
+
+    //console.log(data);
+    // this.chartCustom.setOption({
+    //   series: data
+    // });
+
+    this.chartCustom.setOption({
+      series: [
+        {
+          name: "jy",
+          type: "line",
+          smooth: true,
+          symbolSize: 0,
+          data: data2
+        }
+      ]
+    });
+
+    /************************************************************************ */
+    /************************************************************************ */
+    /************************************************************************ */
   }
 };
 </script>
