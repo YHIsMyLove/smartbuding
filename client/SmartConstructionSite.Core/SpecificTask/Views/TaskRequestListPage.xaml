@@ -5,7 +5,7 @@
              x:Class="SmartConstructionSite.Core.SpecificTask.Views.TaskRequestListPage"
              Title="特种作业审批">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="action_add.png"></ToolbarItem>
+        <ToolbarItem Icon="action_add.png" Clicked="Handle_Clicked"></ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">

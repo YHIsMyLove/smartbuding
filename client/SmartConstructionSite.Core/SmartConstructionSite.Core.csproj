@@ -87,6 +87,9 @@
     <Compile Update="Rankings\Views\NormalRankingListPage.xaml.cs">
       <DependentUpon>NormalRankingListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="SpecificTask\Views\DongHuoRequest.xaml.cs">
+      <DependentUpon>DongHuoRequest.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DoorMonitor\" />
@@ -104,5 +107,10 @@
     <Folder Include="Rankings\Views\" />
     <Folder Include="Rankings\ViewModels\" />
     <Folder Include="Rankings\Services\" />
+    <Folder Include="EnvMonitor\" />
+    <Folder Include="EnvMonitor\Models\" />
+    <Folder Include="EnvMonitor\Services\" />
+    <Folder Include="EnvMonitor\Views\" />
+    <Folder Include="EnvMonitor\ViewModels\" />
   </ItemGroup>
 </Project>

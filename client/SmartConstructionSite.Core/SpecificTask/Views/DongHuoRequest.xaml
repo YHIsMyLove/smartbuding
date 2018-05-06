@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:commons="clr-namespace:SmartConstructionSite.Core.Common"
+             x:Class="SmartConstructionSite.Core.SpecificTask.Views.DongHuoRequest">
+    <ContentPage.Content>
+        <ScrollView Padding="15">
+            <StackLayout Orientation="Vertical" Spacing="8">
+                <StackLayout Orientation="Horizontal" Spacing="8">
+                    <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6" HorizontalOptions="FillAndExpand">
+                        <Label Text="申 请 人：张三"></Label>
+                    </Frame>
+                    <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6" HorizontalOptions="FillAndExpand">
+                        <Label Text="申请时间：2018-05-06 23:00"></Label>
+                    </Frame>
+                </StackLayout>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="8"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <commons:MyPicker Title="动火级别：三级"></commons:MyPicker>
+                    <commons:MyPicker Grid.Column="2" Title="动火种类：电焊"></commons:MyPicker>
+                    
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="8"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <commons:MyPicker Title="申请单位：打桩队"></commons:MyPicker>
+                    <commons:MyPicker Grid.Column="2" Title="动火部位：打桩焊接"></commons:MyPicker>
+                    
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="8"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <commons:MyPicker Title="审 批 人：陈小春"></commons:MyPicker>
+                    <commons:MyPicker Grid.Column="2" Title="监 管 人：李四"></commons:MyPicker>
+                    
+                </Grid>
+                <StackLayout Orientation="Vertical" Spacing="0">
+                    <Frame OutlineColor="#ccc" CornerRadius="0" BackgroundColor="Olive" Padding="6">
+                        <Label Text="动火原因、防火主要安全措施和配备的消防器材："></Label>
+                    </Frame>
+                    <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6">
+                        <Label Text="动火原因、防火主要安全措施和配备的消防器材："></Label>
+                    </Frame>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

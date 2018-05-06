@@ -7,6 +7,8 @@
 
             <local:NormalRankingListPage></local:NormalRankingListPage>
 
-            <local:RedRankingListPage></local:RedRankingListPage>
+            <local:RedRankingListPage Title="红榜"></local:RedRankingListPage>
+
+            <local:RedRankingListPage Title="黑榜"></local:RedRankingListPage>
     
 </TabbedPage>

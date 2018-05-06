@@ -16,7 +16,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Image Grid.Column="0" Grid.ColumnSpan="3" Source="user.png" WidthRequest="96" HeightRequest="96" HorizontalOptions="Center"></Image>
+                <Image Grid.Column="0" Grid.ColumnSpan="3" Source="user.png" WidthRequest="48" HeightRequest="48" HorizontalOptions="Center"></Image>
                 <Label Grid.Row="1" TextColor="#3670d4" Text="第4名" HorizontalOptions="Center"></Label>
                 <Label Grid.Row="1" Grid.Column="1" TextColor="#3670d4" Text="陈小春" HorizontalOptions="Center"></Label>
                 <Label Grid.Row="1" Grid.Column="2" TextColor="#3670d4" Text="积分110" HorizontalOptions="Center"></Label>

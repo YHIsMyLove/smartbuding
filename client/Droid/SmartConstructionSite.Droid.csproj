@@ -230,6 +230,9 @@
     <Reference Include="FFImageLoading.Transformations">
       <HintPath>..\packages\Xamarin.FFImageLoading.Transformations.2.3.6\lib\MonoAndroid10\FFImageLoading.Transformations.dll</HintPath>
     </Reference>
+    <Reference Include="MPAndroidChart">
+      <HintPath>..\packages\MPAndroidChart.3.0.2\lib\MonoAndroid\MPAndroidChart.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

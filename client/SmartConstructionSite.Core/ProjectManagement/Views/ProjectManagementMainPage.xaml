@@ -176,7 +176,7 @@
                         <TapGestureRecognizer Tapped="Handle_Clicked"></TapGestureRecognizer>
                     </Grid.GestureRecognizers>
                     <Image Source="action_add.png"></Image>
-                    <Label Grid.Row="1" Text="项目进度" HorizontalOptions="Center" ></Label>
+                    <Label Grid.Row="1" Text="" HorizontalOptions="Center" ></Label>
                 </Grid>
                 
             </Grid>
