@@ -75,5 +75,34 @@
     <Compile Update="Account\Views\QuestionsPage.xaml.cs">
       <DependentUpon>QuestionsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="SpecificTask\Views\TaskRequestListPage.xaml.cs">
+      <DependentUpon>TaskRequestListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Rankings\Views\RankingsMainPage.xaml.cs">
+      <DependentUpon>RankingsMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Rankings\Views\RankingListPage.xaml.cs">
+      <DependentUpon>NormalRankingListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Rankings\Views\NormalRankingListPage.xaml.cs">
+      <DependentUpon>NormalRankingListPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DoorMonitor\" />
+    <Folder Include="DoorMonitor\Models\" />
+    <Folder Include="DoorMonitor\Services\" />
+    <Folder Include="DoorMonitor\Views\" />
+    <Folder Include="DoorMonitor\ViewModels\" />
+    <Folder Include="SpecificTask\" />
+    <Folder Include="SpecificTask\Models\" />
+    <Folder Include="SpecificTask\Services\" />
+    <Folder Include="SpecificTask\ViewModels\" />
+    <Folder Include="SpecificTask\Views\" />
+    <Folder Include="Rankings\" />
+    <Folder Include="Rankings\Models\" />
+    <Folder Include="Rankings\Views\" />
+    <Folder Include="Rankings\ViewModels\" />
+    <Folder Include="Rankings\Services\" />
   </ItemGroup>
 </Project>

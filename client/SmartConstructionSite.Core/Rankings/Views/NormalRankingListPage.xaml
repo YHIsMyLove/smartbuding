@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.Core.Rankings.Views.NormalRankingListPage"
+             Title="排行榜">
+   <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Column="0" Grid.ColumnSpan="3" Source="user.png" WidthRequest="96" HeightRequest="96" HorizontalOptions="Center"></Image>
+                <Label Grid.Row="1" TextColor="#3670d4" Text="第4名" HorizontalOptions="Center"></Label>
+                <Label Grid.Row="1" Grid.Column="1" TextColor="#3670d4" Text="陈小春" HorizontalOptions="Center"></Label>
+                <Label Grid.Row="1" Grid.Column="2" TextColor="#3670d4" Text="积分110" HorizontalOptions="Center"></Label>
+                
+            </Grid>
+            <ListView x:Name="listView" ItemSelected="Handle_ItemSelected" ItemsSource="{Binding Rankings}" VerticalOptions="FillAndExpand" HasUnevenRows="true" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical" Padding="15">
+                                <Frame OutlineColor="#ccc" CornerRadius="0" Padding="10">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="{Binding Owner.UserHeadImg}" WidthRequest="32" HeightRequest="32"></Image>
+                                        <Label Text="{Binding Owner.UserName}" VerticalOptions="Center"></Label>
+                                        <BoxView WidthRequest="1" HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                                        <Label Text="{Binding Points,StringFormat='积分{0}'}" VerticalOptions="Center"></Label>
+                                    </StackLayout>
+                                </Frame>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                    <Image Source="ic_star_highlighted.png" WidthRequest="24" HeightRequest="24"></Image>
+                                    <Label Text="{Binding Stars,StringFormat='({0:D2})'}" VerticalOptions="Center"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

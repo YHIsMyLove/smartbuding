@@ -2,7 +2,7 @@
 <xf:BottomBarPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:projectManagement="clr-namespace:SmartConstructionSite.Core.ProjectManagement.Views"
-            xmlns:common="clr-namespace:SmartConstructionSite.Core.Common"
+            xmlns:doorMonitor="clr-namespace:SmartConstructionSite.Core.DoorMonitor.Views"
             xmlns:xf="clr-namespace:BottomBar.XamarinForms;assembly=BottomBar.XamarinForms"
             x:Class="SmartConstructionSite.Core.HomePage">
 
@@ -12,6 +12,6 @@
 
     <projectManagement:ProjectManagementMainPage x:Name="projMgtPage" Title="项目管理" Icon="ic_points.png"></projectManagement:ProjectManagementMainPage>
 
-    <common:PlaceholderPage Title="人员记录" Icon="ic_pepole_disable.png"></common:PlaceholderPage>
+    <doorMonitor:DoorMonitorRecordPage Title="门禁记录" Icon="ic_pepole_disable.png"></doorMonitor:DoorMonitorRecordPage>
 
 </xf:BottomBarPage>

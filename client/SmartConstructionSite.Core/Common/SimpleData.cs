@@ -1,5 +1,7 @@
 ﻿using SmartConstructionSite.Core.Events.Models;
 using SmartConstructionSite.Core.PeopleManagement.Models;
+using SmartConstructionSite.Core.Rankings.Models;
+using SmartConstructionSite.Core.SpecificTask.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +12,6 @@ namespace SmartConstructionSite.Core.Common
 {
     internal class SimpleData
     {
-
-        private readonly Dictionary<string, List<string>> projectDic = new Dictionary<string, List<string>>();
-        private readonly Dictionary<string, List<string>> departmentDic = new Dictionary<string, List<string>>();
-        private readonly Dictionary<string, List<Contacts>> projectContactsDic = new Dictionary<string, List<Contacts>>();
-        private readonly Dictionary<string, List<Contacts>> departmentContactsDic = new Dictionary<string, List<Contacts>>();
-        private readonly Dictionary<Meeting, List<MeetingMinutes>> meetingMinutesDic = new Dictionary<Meeting, List<MeetingMinutes>>();
-        private readonly Dictionary<string, List<string>> cityDic = new Dictionary<string, List<string>>();
-        private readonly List<string> years = new List<string>();
-        private readonly List<string> months = new List<string>();
 
         public static SimpleData Instance
         {
@@ -120,6 +113,21 @@ namespace SmartConstructionSite.Core.Common
             return days;
         }
 
+        public IList<TaskRequest> GetTaskRequests()
+        {
+            return taskRequests;
+        }
+
+        public IList<NormalRankingItem> GetNormalRankingItems()
+        {
+            return normalRankingItems;
+        }
+
+        public IList<RedRankingItem> GetRedRankingItems()
+        {
+            return redRankingItems;
+        }
+
         private SimpleData()
         {
             List<string> cities1 = new List<string>() { "黄石市", "武汉市" };
@@ -212,8 +220,88 @@ namespace SmartConstructionSite.Core.Common
             {
                 months.Add(i.ToString());
             }
+
+            taskRequests.Add(new TaskRequest() {
+                Name = "一级动火作业审批申请",
+                Icon = "ic_fire.png",
+                Unit = "打桩对",
+                State = TaskRequest.States.Passed
+            });
+            taskRequests.Add(new TaskRequest()
+            {
+                Name = "一级动火作业审批申请",
+                Icon = "ic_fire.png",
+                Unit = "打桩对",
+                State = TaskRequest.States.CheckPending
+            });
+            taskRequests.Add(new TaskRequest()
+            {
+                Name = "一级动火作业审批申请",
+                Icon = "ic_fire.png",
+                Unit = "打桩对",
+                State = TaskRequest.States.Refused
+            });
+
+            normalRankingItems.Add(new NormalRankingItem() {
+                Owner = new Account.Models.User(){ UserName = "张三", UserHeadImg = "user.png"},
+                Points = 110,
+                Stars = 10
+            });
+
+            normalRankingItems.Add(new NormalRankingItem()
+            {
+                Owner = new Account.Models.User() { UserName = "李四", UserHeadImg = "user.png" },
+                Points = 109,
+                Stars = 9
+            });
+
+            normalRankingItems.Add(new NormalRankingItem()
+            {
+                Owner = new Account.Models.User() { UserName = "王五", UserHeadImg = "user.png" },
+                Points = 100,
+                Stars = 7
+            });
+
+            redRankingItems.Add(new RedRankingItem() {
+                Owner = new Account.Models.User() { UserName = "张三", UserHeadImg = "user.png" },
+                Name = "安全文明奖",
+                Points = 110,
+                Stars = 10
+            });
+
+            redRankingItems.Add(new RedRankingItem()
+            {
+                _id = "01668",
+                Owner = new Account.Models.User() { UserName = "张三", UserHeadImg = "user.png" },
+                Name = "安全文明奖",
+                Detail = "疯啦快速的减肥啦的弗拉索夫打开数据大幅拉升空间都发了仨江东父老卡劳动法发送到发了快递放假啦快疯掉啦",
+                Points = 110,
+                Stars = 10
+            });
+
+            redRankingItems.Add(new RedRankingItem()
+            {
+                _id = "01668",
+                Owner = new Account.Models.User() { UserName = "李四", UserHeadImg = "user.png" },
+                Name = "安全文明奖",
+                Detail = "疯啦快速的减肥啦的弗拉索夫打开数据大幅拉升空间都发了仨江东父老卡劳动法发送到发了快递放假啦快疯掉啦",
+                Points = 110,
+                Stars = 10
+            });
         }
 
         private static SimpleData instance;
+
+        private readonly Dictionary<string, List<string>> projectDic = new Dictionary<string, List<string>>();
+        private readonly Dictionary<string, List<string>> departmentDic = new Dictionary<string, List<string>>();
+        private readonly Dictionary<string, List<Contacts>> projectContactsDic = new Dictionary<string, List<Contacts>>();
+        private readonly Dictionary<string, List<Contacts>> departmentContactsDic = new Dictionary<string, List<Contacts>>();
+        private readonly Dictionary<Meeting, List<MeetingMinutes>> meetingMinutesDic = new Dictionary<Meeting, List<MeetingMinutes>>();
+        private readonly Dictionary<string, List<string>> cityDic = new Dictionary<string, List<string>>();
+        private readonly List<string> years = new List<string>();
+        private readonly List<string> months = new List<string>();
+        private readonly List<TaskRequest> taskRequests = new List<TaskRequest>();
+        private readonly List<NormalRankingItem> normalRankingItems = new List<NormalRankingItem>();
+        private readonly List<RedRankingItem> redRankingItems = new List<RedRankingItem>();
     }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.Core.Rankings.Views.RedRankingListPage"
+             Title="红榜">
+    <ContentPage.Content>
+        <ListView x:Name="listView" ItemsSource="{Binding Rankings}" ItemSelected="Handle_ItemSelected" HasUnevenRows="true" SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" Padding="15">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Time,StringFormat='{0:yyyy年MM月dd日}'}" VerticalOptions="Center"></Label>
+                                <BoxView WidthRequest="1" HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                                <Image Source="{Binding Owner.UserHeadImg}" WidthRequest="24" HeightRequest="24"></Image>
+                                <Label Text="{Binding Owner.UserName}" VerticalOptions="Center"></Label>
+                            </StackLayout>
+                            <Frame OutlineColor="#ccc" CornerRadius="0" Padding="10">
+                                <StackLayout Orientation="Vertical">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Name}" TextColor="Red" FontSize="Large" TranslationY="6"></Label>
+                                        <Label Text="{Binding _id,StringFormat='ID: {0}'}" VerticalTextAlignment="End"></Label>
+                                        <BoxView WidthRequest="1" HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                                        <Label Text="{Binding Points,StringFormat='积分+{0}'}" VerticalTextAlignment="End"></Label>
+                                    </StackLayout>
+                                    <Label Text="{Binding Detail}" LineBreakMode="WordWrap"></Label>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                        <Image Source="ic_star_highlighted.png" WidthRequest="24" HeightRequest="24"></Image>
+                                        <Label Text="{Binding Stars,StringFormat='({0})'}" VerticalOptions="Center"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

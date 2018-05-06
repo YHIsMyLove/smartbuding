@@ -1,21 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:common="clr-namespace:SmartConstructionSite.Core.Common"
              x:Class="SmartConstructionSite.Core.Events.Views.MeetingMinutesListPage"
              Title="会议纪要">
     <ContentPage.Content>
-        <StackLayout>
-            <ListView x:Name="listView" ItemsSource="{Binding MeetingMinutes}" HasUnevenRows="true" RowHeight="-1" ItemSelected="ListView_ItemSelected" SeparatorColor="#ccc">
-                <ListView.Header>
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Fill" Spacing="0">
-                        <StackLayout Orientation="Horizontal" Padding="15">
-                            <Label Text="{Binding Meeting.Compere, StringFormat='会议主持人：{0}'}"></Label>
-                            <Label Text="{Binding Meeting.MeetingCreatedAt, StringFormat='{0:yyyy/MM/dd}'}" HorizontalOptions="EndAndExpand"></Label>
-                        </StackLayout>
-                        <BoxView HeightRequest="1" BackgroundColor="#ccc"></BoxView>
-                    </StackLayout>
-                </ListView.Header>
+        <StackLayout Orientation="Vertical">
+            <Frame OutlineColor="#ccc" CornerRadius="0" Padding="15">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Meeting.Compere, StringFormat='会议主持人：{0}'}"></Label>
+                    <Label Text="{Binding Meeting.MeetingCreatedAt, StringFormat='{0:yyyy/MM/dd}'}" HorizontalOptions="EndAndExpand"></Label>
+                </StackLayout>
+            </Frame>
+            <ListView x:Name="listView" ItemsSource="{Binding MeetingMinutes}" HasUnevenRows="true" RowHeight="-1" ItemSelected="ListView_ItemSelected" SeparatorColor="#ccc" VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

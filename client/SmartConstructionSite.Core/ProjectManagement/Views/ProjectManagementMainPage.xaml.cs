@@ -16,6 +16,8 @@ using SmartConstructionSite.Core.Events.ViewModels;
 using SmartConstructionSite.Core.Events.Models;
 using SmartConstructionSite.Core.Account.Views;
 using SmartConstructionSite.Core.Account.Services;
+using SmartConstructionSite.Core.SpecificTask.Views;
+using SmartConstructionSite.Core.Rankings.Views;
 
 namespace SmartConstructionSite.Core.ProjectManagement.Views
 {
@@ -142,12 +144,12 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
         {
             if (sender == btnSceneMgr)
                 ((App)Application.Current).ShowCameraList();
-            else if (sender == btnProductionMgr)
-                await Navigation.PushAsync(new PlaceholderPage() { Title = "生产管理" }, true);
+            else if (sender == btnRankings)
+                await Navigation.PushAsync(new RankingsMainPage(), true);
             else if (sender == btnSpecialTaskCheck)
-                await Navigation.PushAsync(new PlaceholderPage() { Title = "特种作业审批" }, true);
+                await Navigation.PushAsync(new TaskRequestListPage(), true);
             else if (sender == btnAssetMgr)
-                await Navigation.PushAsync(new PlaceholderPage() { Title = "资产管理" }, true);
+                await Navigation.PushAsync(new PlaceholderPage() { Title = "大事件" }, true);
             else if (sender == btnEvents)
                 await Navigation.PushAsync(new EventListPage(), true);
             else if (sender == btnPeopleMgr)
