@@ -18,6 +18,7 @@ using SmartConstructionSite.Core.Account.Views;
 using SmartConstructionSite.Core.Account.Services;
 using SmartConstructionSite.Core.SpecificTask.Views;
 using SmartConstructionSite.Core.Rankings.Views;
+using SmartConstructionSite.Core.EnvMonitor.Views;
 
 namespace SmartConstructionSite.Core.ProjectManagement.Views
 {
@@ -147,7 +148,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             else if (sender == btnRankings)
                 await Navigation.PushAsync(new RankingsMainPage(), true);
             else if (sender == btnSpecialTaskCheck)
-                await Navigation.PushAsync(new TaskRequestListPage(), true);
+                await Navigation.PushAsync(new SpecificTaskMainPage(), true);
             else if (sender == btnAssetMgr)
                 await Navigation.PushAsync(new PlaceholderPage() { Title = "大事件" }, true);
             else if (sender == btnEvents)
@@ -155,7 +156,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             else if (sender == btnPeopleMgr)
                 await Navigation.PushAsync(new PeopleManagementMainPage(), true);
             else if (sender == btnEnvMgr)
-                await Navigation.PushAsync(new PlaceholderPage() { Title = "环境监测" }, true);
+                await Navigation.PushAsync(new EnvMonitorMainPage(), true);
             else if (sender == btnDevMgr)
                 await Navigation.PushAsync(new PlaceholderPage() { Title = "机械设备监测" }, true);
             else if (sender == btnProjectProgress)

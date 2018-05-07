@@ -32,7 +32,15 @@ namespace SmartConstructionSite.Core.SpecificTask.Views
                 "申请安全防护拆除作业审批"
             };
             var button = await DisplayActionSheet("创建", null, null, buttons);
-            await DisplayAlert("提示", "定制开发内容", null, "知道了");
+            if (string.IsNullOrEmpty(button)) return;
+            if (button == buttons[0])
+            {
+                await Navigation.PushAsync(new DongHuoRequestPage(), true);
+            }
+            else
+            {
+                await DisplayAlert("提示", "定制开发内容", null, "知道了");
+            }
         }
     }
 }

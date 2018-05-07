@@ -88,7 +88,10 @@
       <DependentUpon>NormalRankingListPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="SpecificTask\Views\DongHuoRequest.xaml.cs">
-      <DependentUpon>DongHuoRequest.xaml</DependentUpon>
+      <DependentUpon>DongHuoRequestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="SpecificTask\Views\DongHuoRequestPage.xaml.cs">
+      <DependentUpon>DongHuoRequestPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

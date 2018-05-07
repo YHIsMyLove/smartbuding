@@ -5,10 +5,10 @@
             xmlns:local="clr-namespace:SmartConstructionSite.Core.SpecificTask.Views"
             x:Class="SmartConstructionSite.Core.SpecificTask.Views.SpecificTaskMainPage">
     
-            <local:TaskRequestListPage Title="我发起的"></local:TaskRequestListPage>
+    <local:TaskRequestListPage Title="我发起的"></local:TaskRequestListPage>
 
-            <local:TaskRequestListPage Title="我审批的"></local:TaskRequestListPage>
+    <local:TaskRequestListPage Title="我审批的"></local:TaskRequestListPage>
 
-            <local:TaskRequestListPage Title="抄送我的"></local:TaskRequestListPage>
-    
+    <local:TaskRequestListPage Title="抄送我的"></local:TaskRequestListPage>
+
 </xf:BottomBarPage>

@@ -335,6 +335,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_wallet.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_folder.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\arrow_next.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\palyback_date_down_sel.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
