@@ -112,6 +112,38 @@ exports.Login = async (req, res) => {
 }
 
 /**
+ * @api {POST} /api/CreateUser
+ * @apiname CreateUser
+ * @apiGroup User
+ * @apiDescription api to create user info
+ * @apiParam {String} UserID 用户登录ID.
+ * @apiParam {String} UserName 用户登录ID.
+ * @apiParam {String} UserSex 用户登录ID.
+ * @apiParam {String} UserAge 用户登录ID.
+ * @apiParam {String} UserPhoneNum 用户登录ID.
+ * @apiParam {String} UserEmail 用户登录ID.
+ * @apiParam {String} UserCardID 用户登录ID.
+ * 
+ * @apiSuccess {String} OK 保存成功
+ * 
+ * @apiError Other code:-4 未知错误
+ */
+exports.create = async (req, res) => {
+    if (Object.keys(req.body).length === 0) {
+        return res.send(msg.genFailedMsg('body不能为空'))
+    }
+    let user = new User(req.body);
+    try {
+        await user.updateAndSave();
+        res.send(msg.genSuccessMsg('OK'))
+    } catch (error) {
+        console.log(error);
+        res.send(msg.genFailedMsg('未知错误', { code: -4 }))
+    }
+}
+
+
+/**
  * POST 检查Session
  * @param {*} req {SessionID}
  * @param {*} res 
@@ -250,26 +282,6 @@ exports.GetProjByUser = async (req, res) => {
 
 
 
-// /**
-//  * @api {POST} /api/SetUserHeadImage
-//  * @apiName 设置用户头像
-//  * @apiGroup User
-//  * @apiParam {File} file 用户上传的文件.
-//  * @apiParam {String} Type 用户上传的文件类型,默认用户头像.
-//  * 
-//  * @apiError FilleNotFound code:-1 文件没有找到
-//  * @apiError Other code:-2 未知错误
-//  * @apiError ReNameFileErr code:-3 更新文件名称失败
-//  * @apiError ReNameFileErr code:-4 压缩图片大小失败
-//  * @apiError UpLoadErr code:-5 上传图片失败
-//  * 
-//  * @apiSuccess {String} Path 云端图片路径
-//  * 
-//  * @apiSuccessExample {json} Success-Response:
-//  * {
-//  *  "Path":"https://xxxxxxxx.com/xxx.jpg"
-//  * }
-//  */
 // exports.SetUserImage = async (req, res) => {
 
 //     let query = {
@@ -316,11 +328,6 @@ exports.GetProjByUser = async (req, res) => {
 //     })
 // }
 
-// /**
-//  * 更新文件名
-//  * @param {*} oldname 旧的地址
-//  * @param {*} newname 新的地址
-//  */
 // let renameFile = async (oldname, newname) => {
 //     return new Promise((res, rej) => {
 //         require('fs').rename(oldname, newname, (err) => {

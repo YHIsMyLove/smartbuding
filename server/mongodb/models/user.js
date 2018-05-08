@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 //用户表
 const userSchema = new Schema({
     UserID: String,
-    UserPwd: String,
+    UserPwd: { type: String, default: '123456' },
     UserName: String,
     UserSex: Number,
     UserAge: Number,

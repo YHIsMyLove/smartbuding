@@ -10,8 +10,8 @@ const DoorIOInfo = mongoose.model('DoorIOInfo')
  * @apiGroup DoorIO
  * @apiParam {String} UserID 用户登录ID.
  * @apiParam {String} DoorID 门禁ID.
- * @apiParam {String} I/OTime 进出时间.
- * @apiParam {String} I/O 进/出.
+ * @apiParam {String} IOTime 进出时间.
+ * @apiParam {String} IO 进/出.
  * @apiError UserNotFound code:-1 用户没有找到
  * @apiError DoorNotFound code:-2 门禁设备没找到
  * @apiError NoAuth code:-3 没有权限

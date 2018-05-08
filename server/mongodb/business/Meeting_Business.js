@@ -215,7 +215,8 @@ getProvAndCity_byProj = async (ProjID) => {
 }
 
 /**
- * @api {POST} /api/SetMeetingReaded 设置会议以读未读状态
+ * @api {POST} /api/SetMeetingReaded 
+ * @apiname 设置会议以读未读状态
  * @apiGroup Meeting
  * @apiParam {String} MeetingID 会议ID.
  */
