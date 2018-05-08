@@ -40,3 +40,4 @@ Thumbs.db
 *.dotCover
 
 .vs/
+client/Droid/Resources/Resource.designer.cs

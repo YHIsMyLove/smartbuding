@@ -6,7 +6,7 @@
              Title="环境监测">
     <ContentPage.Content>
         <Grid>
-            <!--<StackLayout Orientation="Vertical">
+            <!--<StackLayout x:Name="sumaryView" Orientation="Vertical">
                 <Image Source="playback_more_down.png" HorizontalOptions="Center"></Image>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -102,7 +102,7 @@
                     
                 </Grid>
             </StackLayout>-->
-            <StackLayout Orientation="Vertical">
+            <StackLayout x:Name="detailView" Orientation="Vertical">
                 <Label Text="湿度" HorizontalOptions="Center" TextColor="Red"></Label>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -113,15 +113,15 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <commons:MyPicker Grid.Column="0" Title="日期"></commons:MyPicker>
+                    <commons:MyPicker Grid.Column="0" Title="年"></commons:MyPicker>
 
-                    <commons:MyPicker Grid.Column="1" Title="日期"></commons:MyPicker>
+                    <commons:MyPicker Grid.Column="2" Title="月"></commons:MyPicker>
 
-                    <commons:MyPicker Grid.Column="2" Title="日期"></commons:MyPicker>
+                    <commons:MyPicker Grid.Column="4" Title="日"></commons:MyPicker>
                     
                 </Grid>
                 <Grid VerticalOptions="FillAndExpand">
-                    
+                    <WebView x:Name="chartContainer"></WebView>
                 </Grid>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -138,7 +138,7 @@
                         <Label Text="155.0ug/m3" HorizontalOptions="Center"></Label>
                     </StackLayout>
 
-                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
                         <Image Source="icon.png" WidthRequest="32" HeightRequest="32"></Image>
                         <Label Text="155.0ug/m3" HorizontalOptions="Center"></Label>
                     </StackLayout>
@@ -148,12 +148,12 @@
                         <Label Text="155.0ug/m3" HorizontalOptions="Center"></Label>
                     </StackLayout>
 
-                    <StackLayout Grid.Row="1" Grid.Column="3" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout Grid.Row="0" Grid.Column="3" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
                         <Image Source="icon.png" WidthRequest="32" HeightRequest="32"></Image>
                         <Label Text="155.0ug/m3" HorizontalOptions="Center"></Label>
                     </StackLayout>
 
-                    <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
                         <Image Source="icon.png" WidthRequest="32" HeightRequest="32"></Image>
                         <Label Text="155.0ug/m3" HorizontalOptions="Center"></Label>
                     </StackLayout>
@@ -163,7 +163,7 @@
                         <Label Text="155.0ug/m3" HorizontalOptions="Center"></Label>
                     </StackLayout>
 
-                    <StackLayout Grid.Row="0" Grid.Column="2" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
                         <Image Source="icon.png" WidthRequest="32" HeightRequest="32"></Image>
                         <Label Text="155.0ug/m3" HorizontalOptions="Center"></Label>
                     </StackLayout>
@@ -172,7 +172,6 @@
                         <Image Source="icon.png" WidthRequest="32" HeightRequest="32"></Image>
                         <Label Text="155.0ug/m3" HorizontalOptions="Center"></Label>
                     </StackLayout>
-                    
                     
                 </Grid>
             </StackLayout>
