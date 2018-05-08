@@ -251,6 +251,8 @@
     <Compile Include="SplashScreen.cs" />
     <Compile Include="MeetingService.cs" />
     <Compile Include="MeetingReceiver.cs" />
+    <Compile Include="BaseUrl_Android.cs" />
+    <Compile Include="SaveAndLoad.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -566,6 +568,10 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\scan_line.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\echarts.common.min.js" />
+    <AndroidAsset Include="Assets\BarChart.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -29,12 +29,16 @@ namespace SmartConstructionSite.Droid
         App app;
         private MeetingListPageReceiver meetingListPageReceiver;
 
+        public static MainActivity instance;
+
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+
+            instance = this;
 
             
             //Window.AddFlags(WindowManagerFlags.Fullscreen);

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-
+using SmartConstructionSite.Core.Common;
 using Xamarin.Forms;
 
 namespace SmartConstructionSite.Core.EnvMonitor.Views
@@ -46,9 +46,22 @@ namespace SmartConstructionSite.Core.EnvMonitor.Views
         public EnvMonitorMainPage()
         {
             InitializeComponent();
+<<<<<<< HEAD
             var htmlWebViewSource = new HtmlWebViewSource();
             htmlWebViewSource.Html = @"";
             chartContainer.Source = htmlWebViewSource;
+=======
+
+            var source = new HtmlWebViewSource();
+            source.Html = LoadHtml();
+            source.BaseUrl = DependencyService.Get<IBaseUrl>().Get();
+            chartContainer.Source = source;
+        }
+
+        private string LoadHtml()
+        {
+            return DependencyService.Get<ISaveAndLoad>().LoadAsset("BarChart.html");
+>>>>>>> 7925ba3... 环境监测添加柱状图表
         }
     }
 }

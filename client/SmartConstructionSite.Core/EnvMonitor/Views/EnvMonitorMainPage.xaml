@@ -107,17 +107,23 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="15"></ColumnDefinition>
+                        <ColumnDefinition Width="6"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="15"></ColumnDefinition>
+                        <ColumnDefinition Width="6"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
                     <commons:MyPicker Grid.Column="0" Title="年"></commons:MyPicker>
 
+<<<<<<< HEAD
                     <commons:MyPicker Grid.Column="2" Title="月"></commons:MyPicker>
 
                     <commons:MyPicker Grid.Column="4" Title="日"></commons:MyPicker>
+=======
+                    <commons:MyPicker Grid.Column="2" Title="日期"></commons:MyPicker>
+
+                    <commons:MyPicker Grid.Column="4" Title="日期"></commons:MyPicker>
+>>>>>>> 7925ba3... 环境监测添加柱状图表
                     
                 </Grid>
                 <Grid VerticalOptions="FillAndExpand">
