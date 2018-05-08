@@ -43,6 +43,10 @@ exports.GetMeetings = async (req, res) => {
     }
 }
 
+exports.DelMeetingByID = async (req, res) => {
+
+}
+
 
 /**
  * GET 获取会议内容

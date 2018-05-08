@@ -102,7 +102,8 @@ async function getBuketPromise(query = { startKey: 'static/', pageCount: 10 }) {
             MaxKeys: query.pageCount == undefined ? 10 : query.pageCount
         }, function (err, data) {
             // console.log('**********************************')
-            // console.log(query)
+            if (err) reject(err)
+
             let result = data.Contents
             let count = 0
             let resultData = []

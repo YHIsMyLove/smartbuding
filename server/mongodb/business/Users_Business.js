@@ -39,7 +39,7 @@ var getProvAndCity_byProj = async (ProjID) => {
 }
 
 /**
- * @api {POST} /api/Login?UserID
+ * @api {POST} /api/Login
  * @apiName 登录
  * @apiGroup User
  * @apiParam {String} UserID 用户登录ID.
@@ -76,24 +76,20 @@ exports.Login = async (req, res) => {
             //1. 查询session
             var sessionid = ''
             let session = await UserSession.findOne({ UserID: query.UserID }).exec()
-            //console.log('1-----' + session)
             if (session) sessionid = session._id
 
             //2. 匹配账号密码
             let _user = await User.findOne({ UserID: query.UserID }).exec()
-            //console.log('2-----' + _user)
             if (!_user) return res.send(msg.genFailedMsg('该账号不存在!', { code: -1 }))
             if (_user.UserPwd != query.UserPwd) return res.send(msg.genFailedMsg('密码错误!', { code: -2 }))
 
             //2. 查询匹配项目 若没有则不允许登录
             let haveProj = await UserProj.findOne({ UserID: _user._id })
-            //console.log('3-----')
             if (!haveProj) {
                 return res.send(msg.genFailedMsg('没权限登录', { code: -3 }))
             }
             //3. 将数据存进/更新session表
             if (sessionid == '') {
-                //console.log('4-----' + sessionid)
                 let _usersession = new UserSession({
                     UserID: _user.UserID
                 })
@@ -114,88 +110,6 @@ exports.Login = async (req, res) => {
         }
     }
 }
-
-
-// /**
-//  * @api {POST} /api/SetUserHeadImage
-//  * @apiName 设置用户头像
-//  * @apiGroup User
-//  * @apiParam {File} file 用户上传的文件.
-//  * @apiParam {String} Type 用户上传的文件类型,默认用户头像.
-//  * 
-//  * @apiError FilleNotFound code:-1 文件没有找到
-//  * @apiError Other code:-2 未知错误
-//  * @apiError ReNameFileErr code:-3 更新文件名称失败
-//  * @apiError ReNameFileErr code:-4 压缩图片大小失败
-//  * @apiError UpLoadErr code:-5 上传图片失败
-//  * 
-//  * @apiSuccess {String} Path 云端图片路径
-//  * 
-//  * @apiSuccessExample {json} Success-Response:
-//  * {
-//  *  "Path":"https://xxxxxxxx.com/xxx.jpg"
-//  * }
-//  */
-// exports.SetUserImage = async (req, res) => {
-
-//     let query = {
-//         uploadType: req.Type || "UserHeadImage",
-//     }
-
-//     var form = new multiparty.Form({ uploadDir: './static' });
-//     form.parse(req, async (err, fields, files) => {
-//         if (!files.file && files.file.length > 0) {
-//             return res.send(msg.genFailedMsg('上传失败', { code: -1, msg: '请输入文件' }))
-//         }
-//         if (err) {
-//             return res.send(msg.genFailedMsg('上传失败', { code: -2, msg: err }))
-//         }
-//         var inputFile = files.file[0];
-//         var uploadedPath = inputFile.path;
-//         var dstPath = './static/' + inputFile.originalFilename;
-
-//         let rename_err = await renameFile(uploadedPath, dstPath)
-//         if (rename_err) {
-//             return res.send(msg.genFailedMsg('上传失败', { code: -3, msg: rename_err }))
-//         }
-//         else {
-//             files.file.path = dstPath;
-//             let data = files;
-//             let resizeimg_result = await ImageMagick.ResizeImg(dstPath)
-//             if (resizeimg_result.err) {
-//                 fs.unlinkSync(resizeimg_result.data)
-//                 fs.unlinkSync(files.file.path)
-//                 return res.send(msg.genFailedMsg('上传失败', { code: -4, msg: resizeimg_result.err }))
-//             } else {
-//                 let upload_result = await Qcos.uploadPromise(resizeimg_result.data)
-//                 if (upload_result.err) {
-//                     fs.unlinkSync(resizeimg_result.data)
-//                     fs.unlinkSync(files.file.path)
-//                     return res.send(msg.genFailedMsg('上传失败', { code: -5, msg: upload_result.err }))
-//                 } else {
-//                     fs.unlinkSync(resizeimg_result.data)
-//                     fs.unlinkSync(files.file.path)
-//                     res.send(genSuccessMsg('上传成功', upload_result))
-//                 }
-//             }
-//         }
-//     })
-// }
-
-// /**
-//  * 更新文件名
-//  * @param {*} oldname 旧的地址
-//  * @param {*} newname 新的地址
-//  */
-// let renameFile = async (oldname, newname) => {
-//     return new Promise((res, rej) => {
-//         require('fs').rename(oldname, newname, (err) => {
-//             if (err) rej(err)
-//             res()
-//         })
-//     })
-// }
-
 
 /**
  * POST 检查Session
@@ -333,3 +247,85 @@ exports.GetProjByUser = async (req, res) => {
         }
     })
 }
+
+
+
+// /**
+//  * @api {POST} /api/SetUserHeadImage
+//  * @apiName 设置用户头像
+//  * @apiGroup User
+//  * @apiParam {File} file 用户上传的文件.
+//  * @apiParam {String} Type 用户上传的文件类型,默认用户头像.
+//  * 
+//  * @apiError FilleNotFound code:-1 文件没有找到
+//  * @apiError Other code:-2 未知错误
+//  * @apiError ReNameFileErr code:-3 更新文件名称失败
+//  * @apiError ReNameFileErr code:-4 压缩图片大小失败
+//  * @apiError UpLoadErr code:-5 上传图片失败
+//  * 
+//  * @apiSuccess {String} Path 云端图片路径
+//  * 
+//  * @apiSuccessExample {json} Success-Response:
+//  * {
+//  *  "Path":"https://xxxxxxxx.com/xxx.jpg"
+//  * }
+//  */
+// exports.SetUserImage = async (req, res) => {
+
+//     let query = {
+//         uploadType: req.Type || "UserHeadImage",
+//     }
+
+//     var form = new multiparty.Form({ uploadDir: './static' });
+//     form.parse(req, async (err, fields, files) => {
+//         if (!files.file && files.file.length > 0) {
+//             return res.send(msg.genFailedMsg('上传失败', { code: -1, msg: '请输入文件' }))
+//         }
+//         if (err) {
+//             return res.send(msg.genFailedMsg('上传失败', { code: -2, msg: err }))
+//         }
+//         var inputFile = files.file[0];
+//         var uploadedPath = inputFile.path;
+//         var dstPath = './static/' + inputFile.originalFilename;
+
+//         let rename_err = await renameFile(uploadedPath, dstPath)
+//         if (rename_err) {
+//             return res.send(msg.genFailedMsg('上传失败', { code: -3, msg: rename_err }))
+//         }
+//         else {
+//             files.file.path = dstPath;
+//             let data = files;
+//             let resizeimg_result = await ImageMagick.ResizeImg(dstPath)
+//             if (resizeimg_result.err) {
+//                 fs.unlinkSync(resizeimg_result.data)
+//                 fs.unlinkSync(files.file.path)
+//                 return res.send(msg.genFailedMsg('上传失败', { code: -4, msg: resizeimg_result.err }))
+//             } else {
+//                 let upload_result = await Qcos.uploadPromise(resizeimg_result.data)
+//                 if (upload_result.err) {
+//                     fs.unlinkSync(resizeimg_result.data)
+//                     fs.unlinkSync(files.file.path)
+//                     return res.send(msg.genFailedMsg('上传失败', { code: -5, msg: upload_result.err }))
+//                 } else {
+//                     fs.unlinkSync(resizeimg_result.data)
+//                     fs.unlinkSync(files.file.path)
+//                     res.send(genSuccessMsg('上传成功', upload_result))
+//                 }
+//             }
+//         }
+//     })
+// }
+
+// /**
+//  * 更新文件名
+//  * @param {*} oldname 旧的地址
+//  * @param {*} newname 新的地址
+//  */
+// let renameFile = async (oldname, newname) => {
+//     return new Promise((res, rej) => {
+//         require('fs').rename(oldname, newname, (err) => {
+//             if (err) rej(err)
+//             res()
+//         })
+//     })
+// }
