@@ -6,7 +6,7 @@
              Title="环境监测">
     <ContentPage.Content>
         <Grid>
-            <!--<StackLayout x:Name="sumaryView" Orientation="Vertical">
+            <!--<StackLayout Orientation="Vertical">
                 <Image Source="playback_more_down.png" HorizontalOptions="Center"></Image>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -102,7 +102,7 @@
                     
                 </Grid>
             </StackLayout>-->
-            <StackLayout x:Name="detailView" Orientation="Vertical">
+            <StackLayout Orientation="Vertical">
                 <Label Text="湿度" HorizontalOptions="Center" TextColor="Red"></Label>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -113,17 +113,11 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <commons:MyPicker Grid.Column="0" Title="年"></commons:MyPicker>
+                    <commons:MyPicker Grid.Column="0" Title="日期"></commons:MyPicker>
 
-<<<<<<< HEAD
-                    <commons:MyPicker Grid.Column="2" Title="月"></commons:MyPicker>
-
-                    <commons:MyPicker Grid.Column="4" Title="日"></commons:MyPicker>
-=======
                     <commons:MyPicker Grid.Column="2" Title="日期"></commons:MyPicker>
 
                     <commons:MyPicker Grid.Column="4" Title="日期"></commons:MyPicker>
->>>>>>> 7925ba3... 环境监测添加柱状图表
                     
                 </Grid>
                 <Grid VerticalOptions="FillAndExpand">
@@ -178,6 +172,7 @@
                         <Image Source="icon.png" WidthRequest="32" HeightRequest="32"></Image>
                         <Label Text="155.0ug/m3" HorizontalOptions="Center"></Label>
                     </StackLayout>
+                    
                     
                 </Grid>
             </StackLayout>
