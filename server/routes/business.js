@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const business = require('../mongodb/business/business')
-const USER_BUSINESS =require('../mongodb/business/Users_Business.js')
-const MEETING_BUSINESS =require('../mongodb/business/Meeting_Business.js')
+const USER_BUSINESS = require('../mongodb/business/Users_Business.js')
+const MEETING_BUSINESS = require('../mongodb/business/Meeting_Business.js')
 
 /***************************************************************************************/
 /*用户相关业务***************************************************************************/
@@ -53,6 +53,11 @@ router.get("/GetProv", business.GetProv)
 router.get("/GetCityByProvID", business.GetCityByProvID)
 router.get("/GetProjByCityID", business.GetProjByCityID)
 router.get("/GetProjByProvID", business.GetProjByProvID)
+
+
+
+const DOORIOINFO = require('../mongodb/business/DoorIO_Business')
+router.post('/SetDoorIOInfo', DOORIOINFO.SetDoorIOInfo)
 
 
 

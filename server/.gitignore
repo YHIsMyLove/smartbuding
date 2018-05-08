@@ -44,3 +44,5 @@ jspm_packages
 
 # 过滤config文件
 /config/config.js
+
+/db
