@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SmartConstructionSite.Core.Common;
 using Xamarin.Forms;
 //using Microcharts;
 //using SkiaSharp;
@@ -12,19 +13,10 @@ namespace SmartConstructionSite.Core.DoorMonitor.Views
         {
             InitializeComponent();
 
-            //var entries = new[]
-            //{
-            //    new Microcharts.Entry(923)
-            //    {
-            //        Color = SKColor.Parse("#3670d4")
-            //    },
-            //    new Microcharts.Entry(27)
-            //    {
-            //        Color = SKColor.Parse("#ccc")
-            //    }
-            //};
-            //var chart = new DonutChart() { Entries = entries };
-            //chartView.Chart = chart;
+            var source = new HtmlWebViewSource();
+            source.BaseUrl = DependencyService.Get<IBaseUrl>().Get();
+            source.Html = DependencyService.Get<ISaveAndLoad>().LoadAsset("PieChart.html");
+            webView.Source = source;
         }
     }
 }

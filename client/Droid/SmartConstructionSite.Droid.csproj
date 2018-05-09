@@ -572,6 +572,7 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\echarts.common.min.js" />
     <AndroidAsset Include="Assets\BarChart.html" />
+    <AndroidAsset Include="Assets\PieChart.html" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\MachineMonitorPage.html" />

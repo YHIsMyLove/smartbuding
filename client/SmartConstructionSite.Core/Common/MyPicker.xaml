@@ -7,7 +7,7 @@
         <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
     </ContentView.GestureRecognizers>
     <ContentView.Content>
-        <Frame OutlineColor="#ccc" CornerRadius="0" Padding="5">
+        <Frame OutlineColor="#999" CornerRadius="0" Padding="5" HasShadow="false">
             <StackLayout Orientation="Horizontal">
                 <Label x:Name="label" LineBreakMode="NoWrap" VerticalOptions="Center" HorizontalOptions="FillAndExpand"></Label>
                 <Image Source="playback_more_down.png" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"></Image>
