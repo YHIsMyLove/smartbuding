@@ -17,6 +17,11 @@ namespace SmartConstructionSite.Core.EnvMonitor.Views
             chartContainer.Source = source;
         }
 
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+        }
+
         private string LoadHtml()
         {
             return DependencyService.Get<ISaveAndLoad>().LoadAsset("BarChart.html");

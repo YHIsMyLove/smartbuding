@@ -573,6 +573,9 @@
     <AndroidAsset Include="Assets\echarts.common.min.js" />
     <AndroidAsset Include="Assets\BarChart.html" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\MachineMonitorPage.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

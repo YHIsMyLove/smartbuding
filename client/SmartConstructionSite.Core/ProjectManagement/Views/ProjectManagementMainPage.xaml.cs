@@ -19,6 +19,7 @@ using SmartConstructionSite.Core.Account.Services;
 using SmartConstructionSite.Core.SpecificTask.Views;
 using SmartConstructionSite.Core.Rankings.Views;
 using SmartConstructionSite.Core.EnvMonitor.Views;
+using SmartConstructionSite.Core.MachineMonitor.Views;
 
 namespace SmartConstructionSite.Core.ProjectManagement.Views
 {
@@ -158,7 +159,7 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             else if (sender == btnEnvMgr)
                 await Navigation.PushAsync(new EnvMonitorMainPage(), true);
             else if (sender == btnDevMgr)
-                await Navigation.PushAsync(new PlaceholderPage() { Title = "机械设备监测" }, true);
+                await Navigation.PushAsync(new MachineMonitorMainPage(), true);
             else if (sender == btnProjectProgress)
                 await Navigation.PushAsync(new PlaceholderPage() { Title = "项目进度" }, true);
             else if (sender == btnChangeProject)
