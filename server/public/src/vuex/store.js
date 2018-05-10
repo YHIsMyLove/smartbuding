@@ -45,6 +45,12 @@ const mutations = {
         state = state || JSON.parse(sessionStorage.getItem("Session"))
         state.ystoken
     },
+    SETPROJ(state, newproj) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
+        state.proj = newproj
+        sessionStorage.setItem('Session', JSON.stringify(state))
+        console.log('vuex 值更新成功->' + state.proj)
+    },
     SETLOGIN(state, LOGINSTATE) {
         state.sessionid = LOGINSTATE.SessionID
         state.ystoken = LOGINSTATE.YSToken

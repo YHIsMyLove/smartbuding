@@ -25,7 +25,7 @@
                         </el-table-column>
                         <el-table-column prop="MeetingCreatedAt" label="会议时间" >
                         </el-table-column>
-                        <el-table-column label="操作" width="80">
+                        <el-table-column label="操作" width="150">
                             <template scope="scope">
                                 <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
                                 <el-button type="text" size="small" @click="handleDel(scope.row)">删除</el-button>

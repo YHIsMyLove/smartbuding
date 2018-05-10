@@ -3,6 +3,7 @@ export const getCount = state => {
     state = JSON.parse(sessionStorage.getItem("Session"))
     return state.count
 }
+
 export const getProj = state => {
     state = JSON.parse(sessionStorage.getItem("Session"))
     return state.proj

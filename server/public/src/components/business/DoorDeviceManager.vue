@@ -1,6 +1,6 @@
 <template>
     <el-tabs style="width:100%;">
-        <el-tab-pane label="萤石设备管理">
+        <el-tab-pane label="门禁设备管理">
             <section>
                 <el-col :span="24" class="toolbar">
                     <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -65,9 +65,6 @@
                         <el-form-item label="系统设备名称" prop="DevName">
                             <el-input v-model="editForm.DevSystemName" auto-complete="off"></el-input>
                         </el-form-item>
-                        <!-- <el-form-item label="加入系统库" prop="InSytemDevs">
-                            <el-switch ></el-switch>
-                        </el-form-item> -->
                     </el-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button @click="editFormVisible = false">取 消</el-button>

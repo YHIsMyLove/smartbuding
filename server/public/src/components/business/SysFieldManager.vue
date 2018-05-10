@@ -1,5 +1,37 @@
 <template>
     <el-tabs v-model="activeName" style="width:100%;" @tab-click="handleClick">
+        <el-tab-pane label="用户配置" name='userManager'>
+          <el-row>
+            <el-col :span="8">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span>用户信息</span>
+                </div>
+                <el-form  label-width="80px">
+                  <el-form-item label="当前区域">
+                    {{getProj}}
+                  </el-form-item>
+                  <el-form-item label="角色">
+                      <el-tag>测试用户</el-tag>
+                      <el-tag>管理员</el-tag>
+                  </el-form-item>
+                  <el-form-item label="选择区域">
+                      <el-cascader :options="prov_city_options" change-on-select @change="handleItemChange"></el-cascader>
+                  </el-form-item>
+                </el-form>
+              </el-card>
+            </el-col>
+            <el-col :span="8"> 
+              <el-card class="boox-card">
+                 <div slot="header" class="clearfix">
+                  <span>用户配置</span>
+                </div>
+
+              </el-card>
+            </el-col>
+          </el-row>
+         
+        </el-tab-pane>
         <el-tab-pane name="BusinessManager" label="自定义表管理">
             <section>
                 <el-col :span="24" class="toolbar">
@@ -88,6 +120,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import util from "../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
@@ -95,10 +129,18 @@ import moment from "moment";
 import SysFieldManager_Child from "./SysFieldManager_Child.vue";
 
 export default {
+  computed: {
+    // 使用对象展开运算符将 getters 混入 computed 对象中
+    ...mapGetters([
+      "getProj"
+      // ...
+    ])
+  },
   data() {
     return {
+      prov_city_options: [],
       activeCollapseNames: "1",
-      activeName: "BusinessManager",
+      activeName: "userManager",
       formInline: {
         user: ""
       },
@@ -125,14 +167,86 @@ export default {
       BusinessTitle: "",
       BusinessTitleDesc: "",
       currentField: "",
-      currentFieldNames: []
+      currentFieldNames: [],
+
+      prov_city_options: [],
+      proj_data: [],
+      curProjID: ""
     };
   },
   created: function() {
     this.getSysFieldList();
     this.getAllFieldList();
+    this.getProvData();
   },
   methods: {
+    ...mapActions(["setProj"]),
+    //切换区域
+    handleItemChange(val) {
+      this.curCityID = -1;
+      let cur_val = val[0];
+      let that = this;
+      let url = `/api/GetCityByProvID?ProvID=${cur_val.id}`;
+      axios
+        .get(url)
+        .then(res => {
+          if (res.data.success) {
+            let cur = that.prov_city_options.filter(
+              i => i.value.id == cur_val.id
+            )[0].children;
+            res.data.data
+              .map(i => {
+                return {
+                  label: i.Name,
+                  value: i.data
+                };
+              })
+              .forEach(item => {
+                if (cur.filter(i => i.label == item.label).length == 0)
+                  cur.push(item);
+              });
+            let firstcity = val[1];
+            if (!firstcity) return;
+            this.curCityID = firstcity.id;
+            if (firstcity) {
+              axios
+                .get(`/api/GetProjByCityID?CityID=${firstcity.id}`)
+                .then(res => {
+                  if (res.data.success) {
+                    that.proj_data = res.data.data;
+                    that.default_active = "0";
+                    if (that.proj_data[0]) {
+                      that.curProjID = that.proj_data[0].value.id;
+                      //that.setProj(that.curProjID);
+                    } else {
+                      this.curProjID = -1;
+                    }
+                  }
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            } else {
+              that.getUserData();
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    //获取省份资料
+    getProvData() {
+      let that = this;
+      axios
+        .get("/api/GetProv")
+        .then(res => {
+          if (res.data.success) {
+            that.prov_city_options = res.data.data;
+          }
+        })
+        .catch(err => console.log(err));
+    },
     //删除记录
     handleDel: function(row) {
       var _this = this;
@@ -346,5 +460,26 @@ export default {
 .toolbar {
   background: #fff;
   padding-top: 10px;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.box-card {
+  width: 480px;
 }
 </style>
