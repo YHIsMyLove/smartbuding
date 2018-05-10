@@ -235,6 +235,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DoorMonitor\MainActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="OnlineMonitoring\CameraHelpers.cs" />
@@ -338,6 +339,9 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_folder.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\arrow_next.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\palyback_date_down_sel.png" />
+    <AndroidResource Include="Resources\layout\layout_door_monitor_main.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
