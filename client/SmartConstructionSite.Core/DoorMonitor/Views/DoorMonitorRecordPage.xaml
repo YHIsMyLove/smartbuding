@@ -35,29 +35,29 @@
                                 </Grid>
                                 <BoxView WidthRequest="1" Color="#ccc"></BoxView>
                                 <StackLayout Orientation="Vertical">
-                                    <Label Text="950" HorizontalOptions="Center" TextColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Jc}" HorizontalOptions="Center" TextColor="#3670d4"></Label>
                                     <Label Text="累计进场" HorizontalOptions="Center"></Label>
                                     <BoxView HeightRequest="20" WidthRequest="80"></BoxView>
-                                    <Label Text="950" HorizontalOptions="Center" TextColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Cc}" HorizontalOptions="Center" TextColor="#3670d4"></Label>
                                     <Label Text="出场人数" HorizontalOptions="Center"></Label>
                                 </StackLayout>
                                 <BoxView WidthRequest="1" Color="#ccc"></BoxView>
                                 <StackLayout Orientation="Vertical">
-                                    <Label Text="950" HorizontalOptions="Center" TextColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Zc}" HorizontalOptions="Center" TextColor="#3670d4"></Label>
                                     <Label Text="在场人数" HorizontalOptions="Center"></Label>
                                     <BoxView HeightRequest="20" WidthRequest="80"></BoxView>
-                                    <Label Text="950" HorizontalOptions="Center" TextColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Xc}" HorizontalOptions="Center" TextColor="#3670d4"></Label>
                                     <Label Text="现场人数" HorizontalOptions="Center"></Label>
                                 </StackLayout>
                             </StackLayout>
                             <BoxView HeightRequest="1" Color="#ccc" Margin="0,15,0,15"></BoxView>
                             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                                 <Label Text="应出场"></Label>
-                                <Label Text="{Binding Statistics.Total}"></Label>
+                                <Label Text="{Binding Statistics.Ycq}"></Label>
                                 <Label Text="人"></Label>
                                 <BoxView WidthRequest="8" HeightRequest="1"></BoxView>
                                 <Label Text="实出场"></Label>
-                                <Label Text="{Binding Statistics.Real}"></Label>
+                                <Label Text="{Binding Statistics.Scq}"></Label>
                                 <Label Text="人"></Label>
                             </StackLayout>
                         </StackLayout>
@@ -68,7 +68,7 @@
                             <StackLayout Orientation="Vertical">
                                 <Label Text="正常" HorizontalOptions="Center"></Label>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Label Text="{Binding Statistics.Normal}" ForegroundColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Cqzc}" ForegroundColor="#3670d4"></Label>
                                     <Label Text="人"></Label>
                                 </StackLayout>
                             </StackLayout>
@@ -78,7 +78,7 @@
                             <StackLayout Orientation="Vertical">
                                 <Label Text="迟到" HorizontalOptions="Center"></Label>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Label Text="{Binding Statistics.Tardy}" ForegroundColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Cd}" ForegroundColor="#3670d4"></Label>
                                     <Label Text="人"></Label>
                                 </StackLayout>
                             </StackLayout>
@@ -88,7 +88,7 @@
                             <StackLayout Orientation="Vertical">
                                 <Label Text="早退" HorizontalOptions="Center"></Label>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Label Text="{Binding Statistics.LeaveEarly}" ForegroundColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Zt}" ForegroundColor="#3670d4"></Label>
                                     <Label Text="人"></Label>
                                 </StackLayout>
                             </StackLayout>
@@ -98,7 +98,7 @@
                             <StackLayout Orientation="Vertical">
                                 <Label Text="缺勤" HorizontalOptions="Center"></Label>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Label Text="{Binding Statistics.Absenteeism}" ForegroundColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Qq}" ForegroundColor="#3670d4"></Label>
                                     <Label Text="人"></Label>
                                 </StackLayout>
                             </StackLayout>

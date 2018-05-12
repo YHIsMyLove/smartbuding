@@ -13,20 +13,60 @@ namespace SmartConstructionSite.Core.DoorMonitor.Models
         }
 
         /// <summary>
-        /// 获取或设置应出场人数
+        /// 获取或设置进场人次
         /// </summary>
-        /// <value>The total.</value>
-		public int Total
+        /// <value>The jin chang.</value>
+		public int Jc
+		{
+			get;
+			set;
+		}
+
+        /// <summary>
+        /// 获取和设置出场人数
+        /// </summary>
+        /// <value>The leave.</value>
+		public int Cc
+		{
+			get;
+			set;
+		}
+        
+        /// <summary>
+        /// 获取或设置在场人数
+        /// </summary>
+        /// <value>The zai chang.</value>
+        public int Zc
+		{
+			get;
+			set;
+		}
+
+        /// <summary>
+        /// 获取或设置现场人数
+        /// </summary>
+        /// <value>The xc.</value>
+		public int Xc
 		{
 			get;
 			set;
 		}
 
 		/// <summary>
-        /// 获取或设置实出场人数
+		/// 获取或设置应出勤人数
+		/// </summary>
+		/// <value>The total.</value>
+		public int Ycq
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+        /// 获取或设置实出勤人数
         /// </summary>
         /// <value>The total.</value>
-        public int Real
+        public int Scq
         {
             get;
             set;
@@ -36,7 +76,7 @@ namespace SmartConstructionSite.Core.DoorMonitor.Models
         /// 获取或设置出勤正常人数
         /// </summary>
         /// <value>The total.</value>
-        public int Normal
+        public int Cqzc
         {
             get;
             set;
@@ -46,7 +86,7 @@ namespace SmartConstructionSite.Core.DoorMonitor.Models
         /// 获取或设置迟到人数
         /// </summary>
         /// <value>The total.</value>
-        public int Tardy
+        public int Cd
         {
             get;
             set;
@@ -56,7 +96,7 @@ namespace SmartConstructionSite.Core.DoorMonitor.Models
         /// 获取或设置早退人数
         /// </summary>
         /// <value>The total.</value>
-        public int LeaveEarly
+        public int Zt
         {
             get;
             set;
@@ -66,7 +106,7 @@ namespace SmartConstructionSite.Core.DoorMonitor.Models
         /// 获取或设置缺勤人数
         /// </summary>
         /// <value>The total.</value>
-		public int Absenteeism
+		public int Qq
         {
             get;
             set;

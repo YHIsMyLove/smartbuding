@@ -254,6 +254,7 @@
     <Compile Include="MeetingReceiver.cs" />
     <Compile Include="BaseUrl_Android.cs" />
     <Compile Include="SaveAndLoad.cs" />
+    <Compile Include="Renderers\PieChartRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
