@@ -6,33 +6,15 @@
              Title="门禁记录">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
-            <Frame OutlineColor="#ccc" CornerRadius="0" HasShadow="false" Padding="15,10,15,10">
-                <StackLayout Orientation="Horizontal">
-                    <commons:MyPicker Title="年" HorizontalOptions="FillAndExpand"></commons:MyPicker>
-                    <commons:MyPicker Title="月" HorizontalOptions="FillAndExpand"></commons:MyPicker>
-                    <commons:MyPicker Title="日" HorizontalOptions="FillAndExpand"></commons:MyPicker>
-                </StackLayout>
+            <Frame OutlineColor="Red" CornerRadius="0" HasShadow="false" Padding="15,10,15,10">
+                <DatePicker></DatePicker>
             </Frame>
             <ScrollView>
                 <StackLayout Orientation="Vertical" Spacing="15">
                     <Frame OutlineColor="#ccc" HasShadow="false" CornerRadius="0" Padding="15">
                         <StackLayout Orientation="Vertical" Spacing="0">
                             <StackLayout Orientation="Horizontal">
-                                <Grid HorizontalOptions="FillAndExpand" BackgroundColor="Red">
-<!--                                    <WebView x:Name="webView"></WebView>-->
-                                    <StackLayout Orientation="Vertical" Spacing="0" HorizontalOptions="Center" VerticalOptions="Center">
-                                        <Label HorizontalOptions="Center">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="930" FontSize="Large" ForegroundColor="#3670d4"></Span>
-                                                    <Span Text="/"></Span>
-                                                    <Span Text="950"></Span>
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                        <Label Text="出勤人次" HorizontalOptions="Center"></Label>
-                                    </StackLayout>
-                                </Grid>
+                                <WebView x:Name="webView" WidthRequest="100" HeightRequest="100" HorizontalOptions="FillAndExpand"></WebView>
                                 <BoxView WidthRequest="1" Color="#ccc"></BoxView>
                                 <StackLayout Orientation="Vertical">
                                     <Label Text="{Binding Statistics.Jc}" HorizontalOptions="Center" TextColor="#3670d4"></Label>
@@ -68,7 +50,7 @@
                             <StackLayout Orientation="Vertical">
                                 <Label Text="正常" HorizontalOptions="Center"></Label>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Label Text="{Binding Statistics.Cqzc}" ForegroundColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Cqzc}" TextColor="#3670d4"></Label>
                                     <Label Text="人"></Label>
                                 </StackLayout>
                             </StackLayout>
@@ -78,7 +60,7 @@
                             <StackLayout Orientation="Vertical">
                                 <Label Text="迟到" HorizontalOptions="Center"></Label>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Label Text="{Binding Statistics.Cd}" ForegroundColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Cd}" TextColor="#3670d4"></Label>
                                     <Label Text="人"></Label>
                                 </StackLayout>
                             </StackLayout>
@@ -88,7 +70,7 @@
                             <StackLayout Orientation="Vertical">
                                 <Label Text="早退" HorizontalOptions="Center"></Label>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Label Text="{Binding Statistics.Zt}" ForegroundColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Zt}" TextColor="#3670d4"></Label>
                                     <Label Text="人"></Label>
                                 </StackLayout>
                             </StackLayout>
@@ -98,22 +80,22 @@
                             <StackLayout Orientation="Vertical">
                                 <Label Text="缺勤" HorizontalOptions="Center"></Label>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                    <Label Text="{Binding Statistics.Qq}" ForegroundColor="#3670d4"></Label>
+                                    <Label Text="{Binding Statistics.Qq}" TextColor="#3670d4"></Label>
                                     <Label Text="人"></Label>
                                 </StackLayout>
                             </StackLayout>
                         </StackLayout>
                     </Frame>
                     
-                    <!--<Frame OutlineColor="#ccc" HasShadow="true" CornerRadius="0" Padding="15,10,10,10">
+                    <Frame OutlineColor="#ccc" HasShadow="true" CornerRadius="0" Padding="15,10,10,10">
                         <StackLayout Orientation="Horizontal">
                             <Label Text="统计数据" TextColor="#3670d4" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                             <Label Text=">" FontAttributes="Bold" FontSize="Large" VerticalOptions="Center"></Label>                            
                         </StackLayout>
-                    </Frame>-->
+                    </Frame>
                     
                     <Frame OutlineColor="#ccc" HasShadow="true" CornerRadius="0" Padding="15,10,10,10">
-                        <ListView ItemsSource="{Binding DoorStates}">
+                        <ListView x:Name="listView" ItemsSource="{Binding DoorStates}" ItemSelected="Handle_ItemSelected">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
@@ -131,10 +113,10 @@
                                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
 
-                                            <Label Grid.Column="0" Text="{Binding DoorNumber}"></Label>
-                                            <Label Grid.Column="2" Text="{Binding User}" TextColor="#3670d4"></Label>
-                                            <Label Grid.Column="4" Text="{Binding Time,StringFormat='{0:HH:mm:ss}'}"></Label>
-                                            <Label Grid.Column="6" Text="{Binding Direction}"></Label>
+                                            <Label Grid.Column="0" Text="{Binding DoorNumber}" VerticalOptions="Center"></Label>
+                                            <Label Grid.Column="2" Text="{Binding Who}" TextColor="#3670d4" VerticalOptions="Center"></Label>
+                                            <Label Grid.Column="4" Text="{Binding Time,StringFormat='{0:HH:mm:ss}'}" VerticalOptions="Center"></Label>
+                                            <Label Grid.Column="6" Text="{Binding Action}" VerticalOptions="Center"></Label>
                                             
                                         </Grid>
                                     </ViewCell>

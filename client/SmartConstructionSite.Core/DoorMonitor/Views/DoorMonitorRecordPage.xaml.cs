@@ -17,13 +17,17 @@ namespace SmartConstructionSite.Core.DoorMonitor.Views
 			viewModel = new DoorMonitorRecordViewModel();
             BindingContext = viewModel;
 
-            InitializeComponent();
+			InitializeComponent();
 
-			//var source = new HtmlWebViewSource();
-			//source.BaseUrl = DependencyService.Get<IBaseUrl>().Get();
-			//source.Html = DependencyService.Get<ISaveAndLoad>().LoadAsset("PieChart.html");
-			//webView.Source = source;
-            
+			var source = new HtmlWebViewSource();
+			source.BaseUrl = DependencyService.Get<IBaseUrl>().Get();
+			source.Html = DependencyService.Get<ISaveAndLoad>().LoadAsset("PieChart.html");
+			webView.Source = source;
         }
+
+		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+		{
+			listView.SelectedItem = null;
+		}
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Android.Content;
 using MikePhil.Charting.Charts;
+using MikePhil.Charting.Data;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -20,7 +22,13 @@ namespace SmartConstructionSite.Droid.Renderers
 			if (Control == null)
 			{
 				var chart = new PieChart(Context);
-
+				var entries = new List<PieEntry>();
+				entries.Add(new PieEntry(90));
+				entries.Add(new PieEntry(10));
+				var dataSet = new PieDataSet(entries, "Label");
+				var pieData = new PieData(dataSet);
+				chart.Data = pieData;
+				chart.Invalidate();
 				SetNativeControl(chart);
 			}
 		}
