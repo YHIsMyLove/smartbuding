@@ -16,10 +16,10 @@ namespace SmartConstructionSite.Core.MachineMonitor.Views
 		public MachineMonitorMainPage ()
 		{
 			InitializeComponent ();
-            //var source = new HtmlWebViewSource();
-            //source.BaseUrl = DependencyService.Get<IBaseUrl>().Get();
-            //source.Html = DependencyService.Get<ISaveAndLoad>().LoadAsset("MachineMonitorPage.html");
-            //webView.Source = source;
-		}
+            var source = new HtmlWebViewSource();
+            source.BaseUrl = DependencyService.Get<IBaseUrl>().Get();
+            source.Html = DependencyService.Get<ISaveAndLoad>().LoadAsset("MachineMonitorPage.html");
+            webView.Source = source;
+        }
 	}
 }

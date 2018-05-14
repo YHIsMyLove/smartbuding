@@ -5,7 +5,7 @@
              Title="机械设备监测">
     <ContentPage.Content>
         <Grid>
-<!--            <WebView x:Name="webView"/>-->
+            <WebView x:Name="webView"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
