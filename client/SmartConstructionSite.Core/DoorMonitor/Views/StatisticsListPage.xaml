@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:SmartConstructionSite.Core.Common"
+             x:Class="SmartConstructionSite.Core.DoorMonitor.Views.StatisticsListPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Frame HasShadow="false" OutlineColor="Red" CornerRadius="0" Padding="15">
+                <StackLayout Orientation="Horizontal">
+                    <DatePicker Date="{Binding QueryDate}"></DatePicker>
+                    <BoxView WidthRequest="1" HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                    <common:MyPicker Title="部门" ItemsSource="{Binding Departments}" SelectedItem="{Binding QueryDepartment}"></common:MyPicker>
+                    <common:MyPicker Title="班组" ItemsSource="{Binding Groups}" SelectedItem="{Binding QueryGroup}"></common:MyPicker>
+                </StackLayout>
+            </Frame>
+            <Frame HasShadow="false" OutlineColor="Red" CornerRadius="0" Parent="15" BackgroundColor="Silver">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding QueryDepartment, StringFormat='部门：{0}'}"></Label>
+                        <Label Text="{Binding QueryGroup, StringFormat='班组：{0}'}"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding TotalPepole, StringFormat='共计人数：{0}（人）'}"></Label>
+                        <BoxView WidthRequest="1" HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                        <Label Text="{Binding TotalTime, StringFormat='共计时长：{0}(分钟)'}"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <ListView ItemsSource="{Binding Imtes}"></ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

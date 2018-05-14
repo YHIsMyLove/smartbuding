@@ -66,6 +66,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="DoorMonitor\Views\DetailList.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Account\Views\MyMessagePage.xaml.cs">
       <DependentUpon>MyMessagePage.xaml</DependentUpon>
     </Compile>
