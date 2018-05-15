@@ -88,6 +88,9 @@
                     </Frame>
                     
                     <Frame OutlineColor="#ccc" HasShadow="true" CornerRadius="0" Padding="15,10,10,10">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="统计数据" TextColor="#3670d4" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                             <Label Text=">" FontAttributes="Bold" FontSize="Large" VerticalOptions="Center"></Label>                            

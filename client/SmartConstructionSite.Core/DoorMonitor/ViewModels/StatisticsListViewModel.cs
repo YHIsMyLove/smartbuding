@@ -25,7 +25,7 @@ namespace SmartConstructionSite.Core.DoorMonitor.ViewModels
 			totalTime = 1023;
 			items = new ObservableCollection<StatisticsItem>();
 			items.Add(new StatisticsItem() {
-				User = new User() { UserName = "张三", UserHeadImg = "user.png" },
+				User = new User() { UserName = "ZhangSan", UserHeadImg = "user.png", WorkNumber = "001" },
 				Time = 202,
 				TimeIn = new DateTime(2018, 5, 14, 7, 30, 00),
 				TimeOut = new DateTime(2018, 5, 14, 18, 30, 00),
@@ -33,7 +33,7 @@ namespace SmartConstructionSite.Core.DoorMonitor.ViewModels
 			});
 			items.Add(new StatisticsItem()
             {
-                User = new User() { UserName = "李四", UserHeadImg = "user.png" },
+				User = new User() { UserName = "LiSi", UserHeadImg = "user.png", WorkNumber = "002" },
                 Time = 202,
                 TimeIn = new DateTime(2018, 5, 14, 7, 30, 00),
                 TimeOut = new DateTime(2018, 5, 14, 18, 30, 00),

@@ -33,5 +33,11 @@ namespace SmartConstructionSite.Core.Account.Models
         /// 证书图像地址数组
         /// </summary>
         public IList<string> Certificates { get; set; }
+
+		public string WorkNumber
+		{
+			get;
+			set;
+		}
     }
 }
