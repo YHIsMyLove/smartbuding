@@ -94,10 +94,8 @@
               </div>
                 <el-input type="textarea" v-model="i.content"  placeholder="输入内容"></el-input>
                 <el-tag type="success" v-for="(item,index2) in i.Depts" :key="index2">{{item.DeptName}}</el-tag>
-                
                 <el-button  style="float: right;" type="info" @click="submitContent(index)" >提交</el-button>
                 <el-button  @click="Send2Person(index)" style="float: right;" type="warning">推送部门</el-button>
-                <!-- <el-button  @click="delcontent(index)" style="float: right;" type="warning">删除</el-button> -->
               </el-card>
             </div>
             <SelectDept :Visible="Visible" @cancelEdit="cancelEdit" @submitEdit="submitEdit" ref="dept_select"/>
@@ -313,9 +311,7 @@ export default {
       //调用api删除会议
       axios
         .post("/api/")
-        .then(res => {
-
-        })
+        .then(res => {})
         .catch(err => console.log(err));
     },
     handleCurrentChange() {},

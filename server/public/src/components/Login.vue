@@ -25,7 +25,6 @@ export default {
     ...mapGetters(["getProj", "getSession", "getYSToken"])
   },
   data() {
-    //检查是否登录成功
     var checkLogin = (rule, value, callback) => {};
     return {
       Loginloading: false,
@@ -34,12 +33,8 @@ export default {
         UserPwd: ""
       },
       rules2: {
-        UserID: [
-          { required: true, message: "请输入账号", trigger: "blur" }
-        ],
-        UserPwd: [
-          { required: true, message: "请输入密码", trigger: "blur" }
-        ]
+        UserID: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        UserPwd: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
       checked: true
     };
