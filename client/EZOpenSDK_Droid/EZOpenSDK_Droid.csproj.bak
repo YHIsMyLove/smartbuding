@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -56,7 +56,9 @@
   <ItemGroup>
     <TransformFile Include="Transforms\EnumFields.xml" />
     <TransformFile Include="Transforms\EnumMethods.xml" />
-    <TransformFile Include="Transforms\Metadata.xml" />
+    <TransformFile Include="Transforms\Metadata.xml">
+      <SubType>Designer</SubType>
+    </TransformFile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedJar Include="Jars\lib\EZOpenSDK_V4.7.1.20171109.jar" />
@@ -92,9 +94,6 @@
     <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libSystemTransform.so" />
     <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libUdpClient.so" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Jars\lib\" />
-    <Folder Include="Jars\lib\armeabi-v7a\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
 </Project>

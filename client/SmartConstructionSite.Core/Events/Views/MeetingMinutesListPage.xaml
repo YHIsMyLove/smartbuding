@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:SmartConstructionSite.Core.Common"
+             x:Class="SmartConstructionSite.Core.Events.Views.MeetingMinutesListPage"
+             Title="会议纪要">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Frame OutlineColor="#ccc" CornerRadius="0" Padding="15">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Meeting.Compere, StringFormat='会议主持人：{0}'}"></Label>
+                    <Label Text="{Binding Meeting.MeetingCreatedAt, StringFormat='{0:yyyy/MM/dd}'}" HorizontalOptions="EndAndExpand"></Label>
+                </StackLayout>
+            </Frame>
+            <ListView x:Name="listView" ItemsSource="{Binding MeetingMinutes}" HasUnevenRows="true" RowHeight="-1" ItemSelected="ListView_ItemSelected" SeparatorColor="#ccc" VerticalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid x:Name="item" MinimumHeightRequest="150" Padding="15">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding Content}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"></Label>
+
+                                <Image Source="common_number_bg.png" WidthRequest="24" HeightRequest="24" IsVisible="{Binding IsRelational}" Grid.Row="1" Grid.Column="1"></Image>
+
+                                <Switch x:Name="switch" IsVisible="False" IsToggled="{Binding IsFavorite}"></Switch>
+                                <common:ListButton Grid.Row="1" Grid.Column="0" Image="ic_star_highlighted.png" BackgroundColor="White" BindingContext="{Binding Source={x:Reference listView}, Path=BindingContext}" Command="{Binding ToggleFavoriteCommand}" CommandParameter="{Binding Source={x:Reference item}, Path=BindingContext}">
+                                    <common:ListButton.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Source={x:Reference switch}, Path=IsToggled}" Value="true">
+                                            <Setter Property="Image" Value="ic_star_highlighted.png"></Setter>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Source={x:Reference switch}, Path=IsToggled}" Value="false">
+                                            <Setter Property="Image" Value="ic_star.png"></Setter>
+                                        </DataTrigger>
+                                    </common:ListButton.Triggers>
+                                </common:ListButton>
+                                
+                                <Label Text="{Binding DepartmentInfo, StringFormat='执行部门：{0}'}" Grid.Row="1" Grid.Column="3" VerticalOptions="Center"></Label>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

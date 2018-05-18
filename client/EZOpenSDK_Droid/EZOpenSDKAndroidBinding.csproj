@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{91AE5369-90EB-4B08-958B-B35C01C00AFF}</ProjectGuid>
+    <ProjectTypeGuids>{10368E6C-D01B-4462-8E8B-01FC667A7035};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>EZOpenSDKAndroidBinding</RootNamespace>
+    <AssemblyName>EZOpenSDKAndroidBinding</AssemblyName>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+    <AndroidClassParser>class-parse</AndroidClassParser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Additions\AboutAdditions.txt" />
+    <None Include="Jars\AboutJars.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <TransformFile Include="Transforms\EnumFields.xml" />
+    <TransformFile Include="Transforms\EnumMethods.xml" />
+    <TransformFile Include="Transforms\Metadata.xml">
+      <SubType>Designer</SubType>
+    </TransformFile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedJar Include="Jars\lib\EZOpenSDK_V4.7.1.20171109.jar" />
+    <EmbeddedJar Include="Jars\lib\EZUIKit_1.4.jar" />
+    <EmbeddedJar Include="Jars\lib\gson-2.7.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libAnalyzeData.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libAudioEngine.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libCpuFeatures.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libcurl.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libencryptprotect.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libezstreamclient.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libgnustl_shared.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libHCAlarm.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libHCCore.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libHCCoreDevCfg.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libHCDisplay.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libHCGeneralCfgMgr.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libHCIndustry.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libhcnetsdk.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libHCPlayBack.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libHCPreview.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libHCVoiceTalk.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libhpr.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libminiupnpc.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libopensslwrap.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libPlayCtrl.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libPlayCtrl_L.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libprotobuf-lite.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libsadp.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libStunClientSDK.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libSystemTransform.so" />
+    <EmbeddedNativeLibrary Include="Jars\lib\armeabi-v7a\libUdpClient.so" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
+</Project>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SmartConstructionSite.Core"
+    xmlns:account="clr-namespace:SmartConstructionSite.Core.Account.Views"
+    x:Class="SmartConstructionSite.Core.MainPage">
+
+    <!--<MasterDetailPage.ToolbarItems>
+        <ToolbarItem x:Name="barItemSearch" Icon="search.png"></ToolbarItem>
+    </MasterDetailPage.ToolbarItems>-->
+
+    <!--<MasterDetailPage.Master>
+        <account:UserMainPage></account:UserMainPage>
+    </MasterDetailPage.Master>
+
+    <MasterDetailPage.Detail>
+        <local:HomePage></local:HomePage>
+    </MasterDetailPage.Detail>-->
+    
+</MasterDetailPage>

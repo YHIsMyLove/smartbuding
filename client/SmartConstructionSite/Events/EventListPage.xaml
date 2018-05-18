@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:SmartConstructionSite.Common"
+    xmlns:common="clr-namespace:SmartConstructionServices.Common;assembly=SmartConstructionServices"
+    x:Class="SmartConstructionSite.Events.EventListPage"
+    Title="日历事件">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <common:NumberToBooleanConverter x:Key="NumToBoolConv"></common:NumberToBooleanConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+	<ContentPage.Content>
+        <ListView x:Name="listView" IsGroupingEnabled="True" GroupDisplayBinding="{Binding Title}" GroupShortNameBinding="{Binding ShortName}"
+            ItemsSource="{Binding Meetings}" ItemTapped="ListView_ItemTapped" ItemSelected="ListView_ItemSelected" SeparatorColor="#ccc">
+            <ListView.Header>
+                <Grid Padding="15,0,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <controls:MyPicker Title="年" VerticalOptions="Center" ItemsSource="{Binding Years}" SelectedItem="{Binding SelectedYear}" HorizontalOptions="FillAndExpand"></controls:MyPicker>
+                    <controls:MyPicker Grid.Column="1" VerticalOptions="Center" Title="月" ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedMonth}" HorizontalOptions="FillAndExpand"></controls:MyPicker>
+                    <controls:MyPicker Grid.Column="2" VerticalOptions="Center" Title="日" ItemsSource="{Binding Days}" SelectedItem="{Binding SelectedDay}" HorizontalOptions="FillAndExpand"></controls:MyPicker>
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="15,0,15,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="26"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"></Label>
+                            <Label Grid.Column="1" Text="{Binding Time, StringFormat='{0:yyyy/MM/dd}'}" FontSize="Micro" HorizontalOptions="End" VerticalOptions="Center"></Label>
+
+                            <Grid Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding RelationalContentCount, Converter={StaticResource NumToBoolConv}}">
+                                <Image Source="common_number_bg.png" WidthRequest="24" HeightRequest="24"></Image>
+                                <Label Text="{Binding RelationalContentCount}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                            </Grid>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Title}" TextColor="#f35e20" />
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>
+        </ListView>
+	</ContentPage.Content>
+</ContentPage>

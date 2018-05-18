@@ -1,0 +1,125 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="6.5.1" />
+    <PackageReference Include="Ideine.ModernHttpClient" Version="3.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Plugin.Permissions" Version="2.2.1" />
+    <PackageReference Include="ThriveGmbH.BottomNavigationBar.XF" Version="1.0.2" />
+    <PackageReference Include="Xam.Plugins.Messaging" Version="5.1.0" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.3.2" />
+    <PackageReference Include="Naxam.CarouselView" Version="0.0.1" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.3.6" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.3.6" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.3.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Account\Views\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Account\Views\UserMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\MyPicker.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\PlaceholderPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\RollingBoard.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\ScannerOverlay.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Events\Views\EventDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Events\Views\EventListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Events\Views\MeetingMinutesListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Events\Views\MeetingPictureListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MachineMonitor\Views\MachineMonitorMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PeopleManagement\Views\PeopleManagementMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="DoorMonitor\Views\DetailList.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Account\Views\MyMessagePage.xaml.cs">
+      <DependentUpon>MyMessagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Account\Views\MyFavoritesPage.xaml.cs">
+      <DependentUpon>MyFavoritesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Account\Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Account\Views\QuestionsPage.xaml.cs">
+      <DependentUpon>QuestionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="SpecificTask\Views\TaskRequestListPage.xaml.cs">
+      <DependentUpon>TaskRequestListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Rankings\Views\RankingsMainPage.xaml.cs">
+      <DependentUpon>RankingsMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Rankings\Views\RankingListPage.xaml.cs">
+      <DependentUpon>NormalRankingListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Rankings\Views\NormalRankingListPage.xaml.cs">
+      <DependentUpon>NormalRankingListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="SpecificTask\Views\DongHuoRequest.xaml.cs">
+      <DependentUpon>DongHuoRequestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="SpecificTask\Views\DongHuoRequestPage.xaml.cs">
+      <DependentUpon>DongHuoRequestPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DoorMonitor\" />
+    <Folder Include="DoorMonitor\Models\" />
+    <Folder Include="DoorMonitor\Services\" />
+    <Folder Include="DoorMonitor\Views\" />
+    <Folder Include="DoorMonitor\ViewModels\" />
+    <Folder Include="SpecificTask\" />
+    <Folder Include="SpecificTask\Models\" />
+    <Folder Include="SpecificTask\Services\" />
+    <Folder Include="SpecificTask\ViewModels\" />
+    <Folder Include="SpecificTask\Views\" />
+    <Folder Include="Rankings\" />
+    <Folder Include="Rankings\Models\" />
+    <Folder Include="Rankings\Views\" />
+    <Folder Include="Rankings\ViewModels\" />
+    <Folder Include="Rankings\Services\" />
+    <Folder Include="EnvMonitor\" />
+    <Folder Include="EnvMonitor\Models\" />
+    <Folder Include="EnvMonitor\Services\" />
+    <Folder Include="EnvMonitor\Views\" />
+    <Folder Include="EnvMonitor\ViewModels\" />
+  </ItemGroup>
+</Project>

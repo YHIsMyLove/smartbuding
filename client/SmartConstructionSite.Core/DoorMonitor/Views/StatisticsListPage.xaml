@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:SmartConstructionSite.Core.Common"
+             x:Class="SmartConstructionSite.Core.DoorMonitor.Views.StatisticsListPage"
+             Title="统计数据">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Frame HasShadow="false" OutlineColor="#000" CornerRadius="0" Padding="15">
+                <StackLayout Orientation="Horizontal">
+                    <DatePicker Date="{Binding QueryDate}"></DatePicker>
+                    <BoxView WidthRequest="1" HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                    <common:MyPicker Title="部门" MinimumWidthRequest="100" ItemsSource="{Binding Departments}" SelectedItem="{Binding QueryDepartment}"></common:MyPicker>
+                    <common:MyPicker Title="班组" MinimumWidthRequest="100" ItemsSource="{Binding Groups}" SelectedItem="{Binding QueryGroup}"></common:MyPicker>
+                </StackLayout>
+            </Frame>
+            <Frame HasShadow="false" OutlineColor="#000" CornerRadius="0" Padding="15" BackgroundColor="Silver">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding QueryDepartment, StringFormat='部门：{0}'}"></Label>
+                        <Label Text="{Binding QueryGroup, StringFormat='班组：{0}'}"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding TotalPepole, StringFormat='共计人数：{0}(人)'}"></Label>
+                        <BoxView WidthRequest="1" HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                        <Label Text="{Binding TotalTime, StringFormat='共计时长：{0}(分钟)'}"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <ListView ItemsSource="{Binding Items}" HasUnevenRows="true" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame OutlineColor="#000" CornerRadius="0" Padding="15" Margin="0,0,0,10">
+                                <StackLayout Orientation="Vertical">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="{Binding User.UserHeadImg}" WidthRequest="40" HeightRequest="40"></Image>
+                                        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding User.UserName}" FontSize="Large"></Label>
+                                                <BoxView HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                                                <Label Text="{Binding User.WorkNumber,StringFormat='GongHao: {0}'}"></Label>
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Unit,StringFormat='DanWei: {0}'}"></Label>
+                                                <BoxView HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                                                <Label Text="{Binding Time,StringFormat='ShiChang: {0}'}"></Label>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <BoxView HeightRequest="1" Color="#ccc"></BoxView>
+                                    <StackLayout Orientation="Horizontal" Margin="40,0,0,0">
+                                        <Label Text="{Binding TimeIn,StringFormat='Jcsj: {0:yyyy-MM-dd hh:mm}'}"></Label>
+                                        <BoxView WidthRequest="1" HeightRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                                        <Label Text="{Binding TimeIn,StringFormat='Ccsj: {0:yyyy-MM-dd hh:mm}'}"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

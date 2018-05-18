@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#222222">
+    <ImageButton
+        android:src="@drawable/play_play_selector"
+        android:background="@android:color/transparent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/btnPlay" />
+    <View
+        android:layout_width="1px"
+        android:layout_height="20px"
+        android:background="@android:color/darker_gray"
+        android:layout_gravity="center_vertical" />
+    <ImageButton
+        android:src="@drawable/vertical_preview_sound_selector"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/btnMute"
+        android:background="@android:color/transparent" />
+    <View
+        android:layout_width="1px"
+        android:layout_height="20px"
+        android:background="@android:color/darker_gray"
+        android:layout_gravity="center_vertical" />
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/btnVideoLevel"
+        android:text="@string/quality_flunet"
+        android:textColor="@android:color/white"
+        android:background="@android:color/transparent" />
+    <View
+        android:layout_width="1px"
+        android:layout_height="20px"
+        android:background="@android:color/darker_gray"
+        android:layout_gravity="center_vertical" />
+    <ImageButton
+        android:src="@drawable/preview_enlarge_selector"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/btnMaximize"
+        android:background="@android:color/transparent" />
+</LinearLayout>

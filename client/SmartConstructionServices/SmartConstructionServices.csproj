@@ -44,6 +44,30 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Account\Services\UserService.cs" />
+    <Compile Include="Account\ViewModels\UserMainViewModel.cs" />
+    <Compile Include="Common\BehaviorBase.cs" />
+    <Compile Include="Common\Config.cs" />
+    <Compile Include="Common\Error.cs" />
+    <Compile Include="Common\EventToCommandBehavior.cs" />
+    <Compile Include="Common\NumberToBooleanConverter.cs" />
+    <Compile Include="Common\Result.cs" />
+    <Compile Include="Common\SimpleData.cs" />
+    <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="Events\Models\Event.cs" />
+    <Compile Include="Events\Models\Meeting.cs" />
+    <Compile Include="Events\Models\MeetingMinutes.cs" />
+    <Compile Include="Events\Models\PageTypeGroup.cs" />
+    <Compile Include="Events\Services\EventService.cs" />
+    <Compile Include="Events\ViewModels\EventDetailViewModel.cs" />
+    <Compile Include="Events\ViewModels\EventListViewModel.cs" />
+    <Compile Include="PeopleManagement\Models\Contacts.cs" />
+    <Compile Include="PeopleManagement\Services\ContactsService.cs" />
+    <Compile Include="PeopleManagement\ViewModels\ContactsDetailViewModel.cs" />
+    <Compile Include="PeopleManagement\ViewModels\ContactsListViewModel.cs" />
+    <Compile Include="ProjectManagement\Models\Project.cs" />
+    <Compile Include="ProjectManagement\ViewModels\ProjectListViewModel.cs" />
+    <Compile Include="ProjectManagement\ViewModels\ProjectManagementMainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\ModelBase.cs" />
     <Compile Include="OnlineMonitoring\Models\Camera.cs" />
@@ -52,12 +76,32 @@
     <Compile Include="OnlineMonitoring\ViewModels\CameraListViewModel.cs" />
     <Compile Include="Common\ServiceContext.cs" />
     <Compile Include="OnlineMonitoring\ViewModels\CameraLiveStreamingViewModel.cs" />
+    <Compile Include="ProjectManagement\Services\ProjectService.cs" />
+    <Compile Include="Account\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Common\NotConverter.cs" />
+    <Compile Include="Properties\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ServiceBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Account\Services\" />
-    <Folder Include="Account\ViewModels\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Reference Include="ModernHttpClient, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ideine.ModernHttpClient.3.2.2\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugins.Messaging.5.1.0\lib\netstandard1.0\Plugin.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Messaging.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugins.Messaging.5.1.0\lib\netstandard1.0\Plugin.Messaging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\packages\Xamarin.Forms.2.5.0.280555\lib\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
@@ -70,6 +114,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.5.0.280555\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.5.0.280555\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />
