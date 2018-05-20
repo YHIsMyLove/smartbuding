@@ -1,47 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SmartConstructionSite.Core.PeopleManagement.Views.PeopleManagementMainPage"
-             Title="人员监管">
-    <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Orientation="Vertical">
-                <Grid Margin="0,20,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+<xf:BottomBarPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:xf="clr-namespace:BottomBar.XamarinForms;assembly=BottomBar.XamarinForms"
+                  xmlns:local="clr-namespace:SmartConstructionSite.Core.PeopleManagement.Views"
+                  xmlns:common="clr-namespace:SmartConstructionSite.Core.Common"
+                  x:Class="SmartConstructionSite.Core.PeopleManagement.Views.PeopleManagementMainPage">
 
-                    <StackLayout Grid.Row="0" Grid.Column="0" Margin="8" Orientation="Vertical" x:Name="btnContacts">
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                        <Image Source="action_call.png"></Image>
-                        <Label Text="通讯录" HorizontalOptions="Center"></Label>
-                    </StackLayout>
 
-                    <StackLayout Grid.Row="0" Grid.Column="1" Margin="8" Orientation="Vertical" x:Name="btnSaftyEducation">
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                        <Image Source="ic_worker.png"></Image>
-                        <Label Text="安全教育" HorizontalOptions="Center"></Label>
-                    </StackLayout>
+    <local:ContactsListPage Icon="action_call.png" Title="通讯录"></local:ContactsListPage>
 
-                    <StackLayout Grid.Row="1" Grid.Column="0" Margin="8" Orientation="Vertical" x:Name="btnCheckout">
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                        <Image Source="ic_pepole_double.png"></Image>
-                        <Label Text="人员核验" HorizontalOptions="Center"></Label>
-                    </StackLayout>
+    <common:PlaceholderPage Icon="action_call.png" Title="安全教育"></common:PlaceholderPage>
 
-                </Grid>
-            </StackLayout>
-        </ScrollView>
-    </ContentPage.Content>
-</ContentPage>
+    <common:PlaceholderPage Icon="action_call.png" Title="人员核验"></common:PlaceholderPage>
+
+    <local:LocationPage Icon="ic_location_little.png" Title="人员定位"></local:LocationPage>
+    
+</xf:BottomBarPage>

@@ -14,7 +14,11 @@ namespace SmartConstructionSite.Core.DoorMonitor.Views
 			viewModel = new StatisticsListViewModel();
 			BindingContext = viewModel;
             InitializeComponent();
-
         }
+
+		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+		{
+			listView.SelectedItem = null;
+		}
     }
 }

@@ -25,6 +25,11 @@ namespace SmartConstructionSite.Core.DoorMonitor.Views
 			//webView.Source = source;
         }
 
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+		}
+
 		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
 		{
 			listView.SelectedItem = null;

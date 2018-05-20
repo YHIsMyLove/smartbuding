@@ -37,6 +37,13 @@
                             <Image WidthRequest="32" HeightRequest="32" Source="ic_send.png"></Image>
                             <Label Text="发送" HorizontalOptions="Center"></Label>
                         </StackLayout>
+                        <StackLayout x:Name="btnLocation" Orientation="Vertical" Margin="10">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                            <Image WidthRequest="32" HeightRequest="32" Source="ic_send.png"></Image>
+                            <Label Text="定位" HorizontalOptions="Center"></Label>
+                        </StackLayout>
                     </StackLayout>
                 </StackLayout>
                 <Grid>

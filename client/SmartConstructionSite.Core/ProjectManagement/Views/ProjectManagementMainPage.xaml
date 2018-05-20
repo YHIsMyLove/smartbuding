@@ -9,6 +9,11 @@
             <common:NumberToBooleanConverter x:Key="NumToBoolConv"></common:NumberToBooleanConverter>
         </ResourceDictionary>
     </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="btnScan" Icon="action_scan_2.png" Clicked="Button_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <StackLayout x:Name="root" Orientation="Vertical" Spacing="0">
             <StackLayout Orientation="Vertical" HeightRequest="120" BackgroundColor="#3670d4">
