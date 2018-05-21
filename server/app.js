@@ -9,7 +9,6 @@ const config = require('./config/config')
 const fs = require('fs');
 const models = path.join(__dirname, 'mongodb/models');
 const app = express();
-
 /************************************************************************************* */
 /************************************************************************************* */
 /************************************************************************************* */
@@ -24,15 +23,19 @@ fs.readdirSync(models)
 /************************************************************************************* */
 /************************************************************************************* */
 /************************************************************************************* */
+//socket io
+/************************************************************************************* */
+/************************************************************************************* */
+/************************************************************************************* */
 const admin = require('./routes/admin');
 const apidoc = require('./routes/apidoc');
 const api = require('./routes/api');
 const business = require('./routes/business');
+const tp_business = require('./routes/tp_business');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -41,19 +44,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));
-
 //app.use('/apidoc', apidoc);
 app.use('/admin', admin);
 app.use('/api', api);
 app.use('/api', business);
-
+app.use('/api/tp/', tp_business)
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
@@ -63,5 +64,4 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
-
 module.exports = app;

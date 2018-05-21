@@ -70,7 +70,6 @@
           </section>
       </el-tab-pane>
       <el-tab-pane v-if="editForm.MeetingName" name="content" label="内容管理">
-
         <section>
             <el-col :span="24" class="toolbar">
                 <el-form :inline="true"  class="demo-form-inline">
