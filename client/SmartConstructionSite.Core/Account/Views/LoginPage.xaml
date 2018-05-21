@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:commons="clr-namespace:SmartConstructionSite.Core.Common;assembly=SmartConstructionSite.Core"
+             x:Class="SmartConstructionSite.Core.Account.Views.LoginPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <commons:NotConverter x:Key="notConverter"></commons:NotConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="15" BackgroundColor="#3670d4">
+            <Image Source="logo.png" HorizontalOptions="Center" Margin="0,50,0,50"></Image>
+            <StackLayout Orientation="Vertical" IsEnabled="{Binding Path=IsBusy, Converter={StaticResource notConverter}}">
+                <!--<Label Text="{Binding Error.Description}" TextColor="Red" HorizontalOptions="Center" IsVisible="{Binding HasError}"></Label>-->
+                <commons:AccountEntry Margin="3,0,3,0" Placeholder="用户名" Text="{Binding Username}" TextColor="White" PlaceholderColor="White"></commons:AccountEntry>
+                <commons:AccountEntry Margin="3,0,3,0" Placeholder="密码" IsPassword="True" Text="{Binding Password}" PlaceholderColor="White" TextColor="White"></commons:AccountEntry>
+                <!--                <Entry Placeholder="用户名" Text="{Binding Username}" TextColor="White" PlaceholderColor="White"></Entry>-->
+                <!--                <Entry Placeholder="密码" IsPassword="True" Text="{Binding Password}" PlaceholderColor="White" TextColor="White"></Entry>-->
+                <Button Text="登录" Command="{Binding LoginCommand}" Margin="0, 15, 0, 0" HeightRequest="60" BackgroundColor="White" TextColor="#3670d4"></Button>
+            </StackLayout>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

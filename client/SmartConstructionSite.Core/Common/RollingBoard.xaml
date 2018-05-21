@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.Core.Common.RollingBoard">
+  <ContentView.Content>
+        <Grid>
+            <StackLayout x:Name="container" Orientation="Horizontal" HorizontalOptions="Start">
+                <Image Source="ic_warnning_2.png" HeightRequest="16" WidthRequest="16"></Image>
+                <Label x:Name="label" VerticalOptions="Center" LineBreakMode="NoWrap"></Label>
+            </StackLayout>
+            <Image x:Name="btnClose" Source="action_close" HorizontalOptions="End" VerticalOptions="Center" Margin="8">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+  </ContentView.Content>
+</ContentView>

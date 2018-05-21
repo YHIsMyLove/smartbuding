@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.Core.Events.Views.MeetingPictureListPage"
+             Title="会议照片">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="没有照片" HorizontalOptions="Center" Margin="15"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

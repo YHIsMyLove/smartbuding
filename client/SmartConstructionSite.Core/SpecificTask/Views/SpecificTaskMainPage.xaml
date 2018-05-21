@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xf:BottomBarPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:xf="clr-namespace:BottomBar.XamarinForms;assembly=BottomBar.XamarinForms"
+            xmlns:local="clr-namespace:SmartConstructionSite.Core.SpecificTask.Views"
+            x:Class="SmartConstructionSite.Core.SpecificTask.Views.SpecificTaskMainPage">
+    
+    <local:TaskRequestListPage Title="我发起的"></local:TaskRequestListPage>
+
+    <local:TaskRequestListPage Title="我审批的"></local:TaskRequestListPage>
+
+    <local:TaskRequestListPage Title="抄送我的"></local:TaskRequestListPage>
+
+</xf:BottomBarPage>

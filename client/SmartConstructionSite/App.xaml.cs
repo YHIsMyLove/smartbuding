@@ -1,5 +1,5 @@
-﻿using System;
-using SmartConstructionSite.OnlineMonitoring;
+﻿using SmartConstructionSite.OnlineMonitoring;
+using System;
 using Xamarin.Forms;
 
 namespace SmartConstructionSite
@@ -13,13 +13,7 @@ namespace SmartConstructionSite
         {
             InitializeComponent();
 
-            //MainPage = new NavigationPage(new CameraListPage());
-            StackLayout root = new StackLayout();
-            Button button = new Button();
-            button.Text = "Click me";
-            button.Clicked += (sender, e) => { CameraHelper.ShowCameraList(); };
-            root.Children.Add(button);
-            MainPage = new ContentPage() { Content = root };
+            MainPage = new NavigationPage(new MainPage());
         }
 
         public CameraHelper CameraHelper
@@ -53,11 +47,13 @@ namespace SmartConstructionSite
         protected override void OnStart()
         {
             // Handle when your app starts
+
+
         }
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            Application.Current.SavePropertiesAsync();
         }
 
         protected override void OnResume()

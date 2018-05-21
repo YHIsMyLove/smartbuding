@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:commons="clr-namespace:SmartConstructionSite.Core.Common"
+             x:Class="SmartConstructionSite.Core.DoorMonitor.Views.DoorMonitorRecordPage"
+             Title="门禁记录">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Frame OutlineColor="Red" CornerRadius="0" HasShadow="false" Padding="15,10,15,10">
+                <DatePicker></DatePicker>
+            </Frame>
+            <ScrollView>
+                <StackLayout Orientation="Vertical" Spacing="15">
+                    <Frame OutlineColor="#ccc" HasShadow="false" CornerRadius="0" Padding="15">
+                        <StackLayout Orientation="Vertical" Spacing="0">
+                            <StackLayout Orientation="Horizontal">
+                                <WebView x:Name="webView" WidthRequest="100" HeightRequest="100" HorizontalOptions="FillAndExpand"></WebView>
+                                <BoxView WidthRequest="1" Color="#ccc"></BoxView>
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding Statistics.Jc}" HorizontalOptions="Center" TextColor="#3670d4"></Label>
+                                    <Label Text="累计进场" HorizontalOptions="Center"></Label>
+                                    <BoxView HeightRequest="20" WidthRequest="80"></BoxView>
+                                    <Label Text="{Binding Statistics.Cc}" HorizontalOptions="Center" TextColor="#3670d4"></Label>
+                                    <Label Text="出场人数" HorizontalOptions="Center"></Label>
+                                </StackLayout>
+                                <BoxView WidthRequest="1" Color="#ccc"></BoxView>
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding Statistics.Zc}" HorizontalOptions="Center" TextColor="#3670d4"></Label>
+                                    <Label Text="在场人数" HorizontalOptions="Center"></Label>
+                                    <BoxView HeightRequest="20" WidthRequest="80"></BoxView>
+                                    <Label Text="{Binding Statistics.Xc}" HorizontalOptions="Center" TextColor="#3670d4"></Label>
+                                    <Label Text="现场人数" HorizontalOptions="Center"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                            <BoxView HeightRequest="1" Color="#ccc" Margin="0,15,0,15"></BoxView>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="应出场"></Label>
+                                <Label Text="{Binding Statistics.Ycq}"></Label>
+                                <Label Text="人"></Label>
+                                <BoxView WidthRequest="8" HeightRequest="1"></BoxView>
+                                <Label Text="实出场"></Label>
+                                <Label Text="{Binding Statistics.Scq}"></Label>
+                                <Label Text="人"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame OutlineColor="#ccc" HasShadow="false" CornerRadius="0" Padding="15">
+                        <StackLayout Orientation="Horizontal">
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="正常" HorizontalOptions="Center"></Label>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label Text="{Binding Statistics.Cqzc}" TextColor="#3670d4"></Label>
+                                    <Label Text="人"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                            <BoxView HeightRequest="1" WidthRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                            <BoxView WidthRequest="1" Color="#ccc"></BoxView>
+                            <BoxView HeightRequest="1" WidthRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="迟到" HorizontalOptions="Center"></Label>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label Text="{Binding Statistics.Cd}" TextColor="#3670d4"></Label>
+                                    <Label Text="人"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                            <BoxView HeightRequest="1" WidthRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                            <BoxView WidthRequest="1" Color="#ccc"></BoxView>
+                            <BoxView HeightRequest="1" WidthRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="早退" HorizontalOptions="Center"></Label>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label Text="{Binding Statistics.Zt}" TextColor="#3670d4"></Label>
+                                    <Label Text="人"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                            <BoxView HeightRequest="1" WidthRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                            <BoxView WidthRequest="1" Color="#ccc"></BoxView>
+                            <BoxView HeightRequest="1" WidthRequest="1" HorizontalOptions="FillAndExpand"></BoxView>
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="缺勤" HorizontalOptions="Center"></Label>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label Text="{Binding Statistics.Qq}" TextColor="#3670d4"></Label>
+                                    <Label Text="人"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                    
+                    <Frame OutlineColor="#ccc" HasShadow="true" CornerRadius="0" Padding="15,10,10,10">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Handle_Tapped"></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="统计数据" TextColor="#3670d4" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                            <Label Text=">" FontAttributes="Bold" FontSize="Large" VerticalOptions="Center"></Label>                            
+                        </StackLayout>
+                    </Frame>
+                    
+                    <Frame OutlineColor="#ccc" HasShadow="true" CornerRadius="0" Padding="15,10,10,10">
+                        <ListView x:Name="listView" ItemsSource="{Binding DoorStates}" ItemSelected="Handle_ItemSelected">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Column="0" Text="{Binding DoorNumber}" VerticalOptions="Center"></Label>
+                                            <Label Grid.Column="2" Text="{Binding Who}" TextColor="#3670d4" VerticalOptions="Center"></Label>
+                                            <Label Grid.Column="4" Text="{Binding Time,StringFormat='{0:HH:mm:ss}'}" VerticalOptions="Center"></Label>
+                                            <Label Grid.Column="6" Text="{Binding Action}" VerticalOptions="Center"></Label>
+                                            
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

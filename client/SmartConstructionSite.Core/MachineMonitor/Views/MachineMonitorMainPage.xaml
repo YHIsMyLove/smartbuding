@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartConstructionSite.Core.MachineMonitor.Views.MachineMonitorMainPage"
+             Title="机械设备监测">
+    <ContentPage.Content>
+        <Grid>
+            <WebView x:Name="webView"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

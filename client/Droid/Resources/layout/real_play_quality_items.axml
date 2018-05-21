@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="105dp"
+    android:background="@drawable/preview_selection_bg"
+    android:paddingBottom="10dp">
+    <Button
+        android:text="@string/quality_hd"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:id="@+id/btnQualityHigh"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/white"
+        android:layout_weight="1" />
+    <Button
+        android:text="@string/quality_balanced"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:id="@+id/btnBalance"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/white"
+        android:layout_weight="1" />
+    <Button
+        android:text="@string/quality_flunet"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:id="@+id/btnQualityFlunet"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/white"
+        android:layout_weight="1" />
+</LinearLayout>

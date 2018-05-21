@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:commons="clr-namespace:SmartConstructionSite.Core.Common"
+             x:Class="SmartConstructionSite.Core.SpecificTask.Views.DongHuoRequestPage"
+             Title="动火作业">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="action_edit.png"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="0">
+            <ScrollView Padding="15">
+                <StackLayout Orientation="Vertical" Spacing="8">
+                    <StackLayout Orientation="Horizontal" Spacing="8">
+                        <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6" HorizontalOptions="FillAndExpand">
+                            <Label Text="申 请 人：张三"></Label>
+                        </Frame>
+                        <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6" HorizontalOptions="FillAndExpand">
+                            <Label Text="申请时间：2018-05-06 23:00"></Label>
+                        </Frame>
+                    </StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="8"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <commons:MyPicker Title="动火级别：三级"></commons:MyPicker>
+                        <commons:MyPicker Grid.Column="2" Title="动火种类：电焊"></commons:MyPicker>
+                        
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="8"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <commons:MyPicker Title="申请单位：打桩队"></commons:MyPicker>
+                        <commons:MyPicker Grid.Column="2" Title="动火部位：打桩焊接"></commons:MyPicker>
+                        
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="8"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <commons:MyPicker Title="审 批 人：陈小春"></commons:MyPicker>
+                        <commons:MyPicker Grid.Column="2" Title="监 管 人：李四"></commons:MyPicker>
+                        
+                    </Grid>
+                    <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="开始时间：2018/08/16 08:30" HorizontalOptions="FillAndExpand"></Label>
+                            <Image Source="playback_more_down.png" WidthRequest="12" HeightRequest="12"></Image>
+                        </StackLayout>
+                    </Frame>
+                    <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="结束时间：2018/08/16 18:30" HorizontalOptions="FillAndExpand"></Label>
+                            <Image Source="playback_more_down.png" WidthRequest="12" HeightRequest="12"></Image>
+                        </StackLayout>
+                    </Frame>
+                    <StackLayout Orientation="Vertical" Spacing="0">
+                        <Frame OutlineColor="#ccc" CornerRadius="0" BackgroundColor="#ddd" Padding="6">
+                            <Label Text="动火原因、防火主要安全措施和配备的消防器材："></Label>
+                        </Frame>
+                        <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6">
+                            <Label Text="1、动火作业应注意周围易燃物。"></Label>
+                            <Label Text="2、焊接作业时，做好安全防护措施。"></Label>
+                            <Label Text="3、施工现场已配置2个灭火器。"></Label>
+                            <Label Text="4、动火前已指定现场安全责任人。"></Label>
+                        </Frame>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" Spacing="0">
+                        <Frame OutlineColor="#ccc" CornerRadius="0" BackgroundColor="#ddd" Padding="6">
+                            <Label Text="现场照片"></Label>
+                        </Frame>
+                        <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6">
+                            <Image Source="action_add.png" BackgroundColor="#ddd" HorizontalOptions="Start"></Image>
+                        </Frame>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout Orientation="Vertical" Spacing="0" HorizontalOptions="FillAndExpand">
+                            <Frame OutlineColor="#ccc" CornerRadius="0" BackgroundColor="#ddd" Padding="6">
+                                <Label Text="申请人签字："></Label>
+                            </Frame>
+                            <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6">
+                                <Image Source="action_add.png" BackgroundColor="#ddd" HorizontalOptions="Center"></Image>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" Spacing="0" HorizontalOptions="FillAndExpand">
+                            <Frame OutlineColor="#ccc" CornerRadius="0" BackgroundColor="#ddd" Padding="6">
+                                <Label Text="监管人签字："></Label>
+                            </Frame>
+                            <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6">
+                                <Image Source="action_add.png" BackgroundColor="#ddd" HorizontalOptions="Center"></Image>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" Spacing="0" HorizontalOptions="FillAndExpand">
+                            <Frame OutlineColor="#ccc" CornerRadius="0" BackgroundColor="#ddd" Padding="6">
+                                <Label Text="审批人签字："></Label>
+                            </Frame>
+                            <Frame OutlineColor="#ccc" CornerRadius="0" Padding="6">
+                                <Image Source="action_add.png" BackgroundColor="#ddd" HorizontalOptions="Center"></Image>
+                            </Frame>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <Button Text="提交" TextColor="White" BackgroundColor="Blue" CornerRadius="0" Clicked="Handle_Clicked"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

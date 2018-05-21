@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customs="clr-namespace:Naxam.Controls.Forms;assembly=Naxam.CarouselView.Forms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             x:Class="SmartConstructionSite.Core.PeopleManagement.Views.ContactsDetailPage"
+             Title="人员监管">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical" Spacing="0">
+                <StackLayout Orientation="Vertical" BackgroundColor="#E0E0E0" Padding="15"><!--
+                    <Image HorizontalOptions="Center" WidthRequest="96" HeightRequest="96">
+                        <Image.Source>
+                            <UriImageSource CachingEnabled="True" Uri="{Binding Contacts.UserHeadImg}"></UriImageSource>
+                        </Image.Source>
+                    </Image>-->
+                    <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="96" HeightRequest="96"
+                        DownsampleToViewSize="true" Source = "{Binding Contacts.UserHeadImg}" ErrorPlaceholder="user.png" LoadingPlaceholder="user.png">
+                        <ffimageloading:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation></fftransformations:CircleTransformation>
+                        </ffimageloading:CachedImage.Transformations>
+                    </ffimageloading:CachedImage>
+                    <Label HorizontalOptions="Center" Text="{Binding Contacts.Name}" FontSize="Medium"></Label>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <StackLayout x:Name="btnCall" Orientation="Vertical" Margin="10">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                            <Image WidthRequest="32" HeightRequest="32" Source="ic_call.png"></Image>
+                            <Label Text="呼叫" HorizontalOptions="Center"></Label>
+                        </StackLayout>
+                        <StackLayout x:Name="btnSend" Orientation="Vertical" Margin="10">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                            <Image WidthRequest="32" HeightRequest="32" Source="ic_send.png"></Image>
+                            <Label Text="发送" HorizontalOptions="Center"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Vertical" Padding="15">
+                        <Label Text="手机"></Label>
+                        <Label Text="{Binding Contacts.UserPhoneNum}" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" Padding="15">
+                        <Label Text="邮箱"></Label>
+                        <Label Text="{Binding Contacts.UserEmail}" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="End" HeightRequest="1" BackgroundColor="#ccc"></BoxView>
+
+                    <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Vertical" Padding="15">
+                        <Label Text="身份证"></Label>
+                        <Label Text="{Binding Contacts.UserCardID}" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Vertical" Padding="15">
+                        <Label Text="考勤信息"></Label>
+                        <Label Text="--" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="End" HeightRequest="1" BackgroundColor="#ccc"></BoxView>
+
+                    <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Vertical" Padding="15">
+                        <Label Text="部门"></Label>
+                        <Label Text="{Binding Contacts.DeptNames[0]}" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Vertical" Padding="15">
+                        <Label Text="职位"></Label>
+                        <Label Text="--" TextColor="#3670d4"></Label>
+                    </StackLayout>
+
+                    <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="End" HeightRequest="1" BackgroundColor="#ccc"></BoxView>
+
+                    <StackLayout Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Padding="15">
+                        <Label Text="资格证书"></Label>
+                        <customs:CarouselView ItemSource="{Binding Contacts.Certificates}" HeightRequest="150">
+                            <customs:CarouselView.ItemTemlate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <!--<Image HorizontalOptions="Fill" VerticalOptions="Fill">
+                                            <Image.Source>
+                                                <UriImageSource Uri="{Binding .}"></UriImageSource>
+                                            </Image.Source>
+                                        </Image>-->
+                                        <ffimageloading:CachedImage DownsampleToViewSize="true" Source = "{Binding Contacts.UserHeadImg}"
+                                                                    ErrorPlaceholder="error.png">
+                                        </ffimageloading:CachedImage>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </customs:CarouselView.ItemTemlate>
+                        </customs:CarouselView>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
