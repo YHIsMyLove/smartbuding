@@ -169,7 +169,7 @@ exports.LogOut = async (req, res) => {
     let query = {
         _id: req.body.SessionID
     }
-    if (!_id) return res.send(msg.genFailedMsg('请输入SessionID'))
+    if (!query._id) return res.send(msg.genFailedMsg('请输入SessionID'))
     try {
         await UserSession.findOne(query).remove()
         res.send(msg.genSuccessMsg('注销成功'))
