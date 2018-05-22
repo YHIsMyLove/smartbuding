@@ -11,7 +11,15 @@
     </f7-panel>
 
     <!-- Main View -->
-    <f7-view id="main-view" url="/" main></f7-view>
+    <!-- <f7-view id="main-view" url="/" main></f7-view> -->
+    <f7-views tabs>
+      <f7-view id="view-1" url="/form/" main tab active></f7-view>
+      <f7-view id="view-2" url="/about/" tab></f7-view>
+      <f7-toolbar tabbar>
+        <f7-link text="Tab 1" tab-link="#view-1"></f7-link>
+        <f7-link text="Tab 2" tab-link="#view-2"></f7-link>
+      </f7-toolbar>
+    </f7-views>
 
     <!-- Popup -->
     <f7-popup id="popup">
@@ -56,5 +64,14 @@
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    isiOS() {
+      return this.$theme.ios;
+    },
+    isMaterial() {
+      return this.$theme.md;
+    }
+  }
+}
 </script>
