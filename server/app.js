@@ -48,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use('/admin', admin);
 app.use('/api', api);
 app.use('/api', business);
-app.use('/api/tp/', tp_business)
+app.use('/api/tp', tp_business)
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   let err = new Error('Not Found');

@@ -25,7 +25,7 @@
                 <span>项目列表</span>
               </div>
               <el-menu :default-active="default_active" @select="handleselect" >
-                <el-menu-item v-for="i,index in proj_data" :index="(index+'')">{{i.label}}</el-menu-item>
+                <el-menu-item v-for="(i,index) in proj_data" :key="index" :index="(index+'')">{{i.label}}</el-menu-item>
               </el-menu>
             </el-card>
           </el-col>
@@ -250,5 +250,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>
