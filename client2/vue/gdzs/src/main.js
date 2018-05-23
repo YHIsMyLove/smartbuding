@@ -31,7 +31,7 @@ new Vue({
   framework7: {
     id: 'io.framework7.testapp', // App bundle ID
     name: 'Framework7', // App name
-    theme: 'auto', // Automatic theme detection
+    theme: 'ios', // Automatic theme detection
     // App routes
     routes: Routes,
   },

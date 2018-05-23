@@ -6,6 +6,9 @@ import NotFoundPage from './pages/not-found.vue';
 
 import PanelLeftPage from './pages/panel-left.vue';
 import PanelRightPage from './pages/panel-right.vue';
+import ProjectMain from './pages/main.vue';
+import AccountMain from './pages/account/main.vue';
+import DoorsMain from './pages/doors/main.vue';
 
 export default [
   {
@@ -36,4 +39,16 @@ export default [
     path: '(.*)',
     component: NotFoundPage,
   },
+  {
+    path: '/project-main/',
+    component: ProjectMain,
+  },
+  {
+    path: '/account-main/',
+    component: AccountMain,
+  },
+  {
+    path: '/doors-main/',
+    component: DoorsMain,
+  }
 ];
