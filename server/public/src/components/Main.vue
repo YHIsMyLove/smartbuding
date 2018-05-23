@@ -1,26 +1,27 @@
-<template>        
-  <section class="chart">
+<template>
+  <section class="main">
     <el-row>
       <el-col :span="24">
-          <el-checkbox v-model="i.checked" v-for="i in showList" :key="i.id" :label="i.label">
-          </el-checkbox>
+        <div class="head">
+        </div>
       </el-col>
     </el-row>
-
     <el-row>
-        <el-col :span="24" v-for="(i,index) in showList" :key="index" v-show="i.checked">
-          <el-card :body-style="{ padding: '0px' }">
-            <div :id="i.id" style="width:100%; height:600px;"></div>
-            <div style="padding: 14px;">
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
+      <el-col :span="12">
+        <div class="approve"></div>
+      </el-col>
+      <el-col :span="12">
+        <div class="normal"></div>
+      </el-col>
     </el-row>
-    
+    <el-row>
+      <el-col :span="18">
+        <div class="action"></div>
+      </el-col>
+      <el-col :span="6">
+        <div class="weather"></div>
+      </el-col>
+    </el-row>
   </section>
 </template>
 
@@ -33,7 +34,6 @@ export default {
         // { id: "chartColumn", label: "柱状图", checked: false },
       ],
       currentDate: new Date()
-      // chartColumn: null,
     };
   },
   mounted: function() {
@@ -45,40 +45,31 @@ export default {
 </script>
 
 <style scoped>
-.chart {
-  width: 100%;
-  float: left;
+.main {
 }
-.el-col {
-  padding: 30px 20px;
+.head {
+  background: #e6a23c;
+  height: 100px;
+  margin: 5px;
 }
-.time {
-  font-size: 13px;
-  color: #999;
+.approve {
+  background: #67c23a;
+  height: 380px;
+  margin: 5px;
 }
-
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
+.normal {
+  background: #f56c6c;
+  height: 380px;
+  margin: 5px;
 }
-
-.button {
-  padding: 0;
-  float: right;
+.action {
+  background: #ebeef5;
+  height: 280px;
+  margin: 5px;
 }
-
-.image {
-  width: 100%;
-  display: block;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
+.weather {
+  background: #909399;
+  height: 280px;
+  margin: 5px;
 }
 </style>

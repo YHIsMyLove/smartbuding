@@ -80,7 +80,6 @@ const routes = [
                 name: '用户角色管理',
                 meta: { redirectAuth: true }
             },
-            // { path: '/vuex', component: VuexComp, name: 'Vuex' }
         ],
         meta: { redirectAuth: true }
     },

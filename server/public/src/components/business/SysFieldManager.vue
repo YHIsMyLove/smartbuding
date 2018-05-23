@@ -1,6 +1,6 @@
 <template>
     <el-tabs v-model="activeName" style="width:100%;" @tab-click="handleClick">
-        <el-tab-pane label="用户配置" name='userManager'>
+        <!-- <el-tab-pane label="用户配置" name='userManager'>
           <el-row>
             <el-col :span="8">
               <el-card class="box-card">
@@ -31,7 +31,7 @@
             </el-col>
           </el-row>
          
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane name="BusinessManager" label="自定义表管理">
             <section>
                 <el-col :span="24" class="toolbar">
@@ -140,7 +140,7 @@ export default {
     return {
       prov_city_options: [],
       activeCollapseNames: "1",
-      activeName: "userManager",
+      activeName: "BusinessManager",
       formInline: {
         user: ""
       },
