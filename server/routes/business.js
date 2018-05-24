@@ -36,7 +36,6 @@ router.post('/SetDoorIOInfo', DOORIOINFO.SetDoorIOInfo)
 /***************************************************************************************/
 /***************************************************************************************/
 /***************************************************************************************/
-
 router.post("/InsertOrDelUserProj", business.InsertOrDelUserProj)
 router.post("/InsertOrDelUserDept", business.InsertOrDelUserDept)
 router.post("/InsertOrDelUserRole", business.InsertOrDelUserRole)
@@ -45,28 +44,13 @@ router.get("/GetDeptByProjID", business.GetDeptByProjID)
 router.get("/GetUserByProjID", business.GetUserByProjID)
 router.get("/GetUserByDeptID", business.GetUserByDeptID)
 router.get("/GetUserByRoleID", business.GetUserByRoleID)
-
-
-
 router.get("/GetYSDevs", business.GetYSDevs)
-
-
 router.post("/UploadFile", business.UploadFile)
-
 router.get("/GetFiles", business.GetFiles)
 router.get("/GetFileKeyByIndex", business.GetFileKeyByIndex)
-
 router.get("/GetRole", business.GetRoleByRoleID)
 router.get("/GetProv", business.GetProv)
-
-
 router.get("/GetCityByProvID", business.GetCityByProvID)
 router.get("/GetProjByCityID", business.GetProjByCityID)
 router.get("/GetProjByProvID", business.GetProjByProvID)
-
-
-
-
-
-
 module.exports = router;

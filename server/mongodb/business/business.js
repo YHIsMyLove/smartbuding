@@ -282,6 +282,7 @@ exports.GetCityByProvID = async (req, res) => {
                 _id: i._id
             }
         })
+        console.log(result)
         res.send(msg.genSuccessMsg('获取成功', result))
     } catch (error) {
         res.send(msg.genFailedMsg("获取失败"))

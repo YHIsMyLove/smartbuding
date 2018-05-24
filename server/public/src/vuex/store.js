@@ -12,30 +12,39 @@ const state = {
     //系统总变量区域
     //项目ID
     proj: "5ac9d8dbe629f6134823c938",//临时替换成柳州项目
-    //城市ID
-    cityid: '',
-    //省份ID
-    provid: '',
     //萤石Token
     ystoken: '',
     //人员session
-    sessionid: ''
+    sessionid: '',
+    //用户
+    User: {
+        UserID: '',
+        SessionID: ''
+    },
+    //项目
+    Proj: {
+        ProjID: '',
+        CityID: '',
+        ProvID: ''
+    },
 }
 
 // 定义所需的 mutations
 const mutations = {
-    INCREMENT(state) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.count++
+    /********************************************************************** */
+    /**用户相关************************************************************* */
+    /********************************************************************** */
+    SETLOGIN(state, LOGINSTATE) {
+        state.proj = "5ac9d8dbe629f6134823c938"
+        state.sessionid = LOGINSTATE.SessionID
+        state.ystoken = LOGINSTATE.YSToken
+        state.User.UserID = LOGINSTATE.UserID
+        state.User.SessionID = LOGINSTATE.SessionID
+        sessionStorage.setItem("Session", JSON.stringify(state))
     },
-    DECREMENT(state) {
+    GETUSER(state) {
         state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.count--
-    },
-    //请求选择的项目
-    GETPROJ(state) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.proj
+        state.User
     },
     GETSESSION(state) {
         state = state || JSON.parse(sessionStorage.getItem("Session"))
@@ -45,18 +54,44 @@ const mutations = {
         state = state || JSON.parse(sessionStorage.getItem("Session"))
         state.ystoken
     },
+    /********************************************************************** */
+    /**项目相关************************************************************* */
+    /********************************************************************** */
+    GETPROJ(state) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
+        state.proj
+    },
     SETPROJ(state, newproj) {
         state = state || JSON.parse(sessionStorage.getItem("Session"))
         state.proj = newproj
+        state.Proj.ProjID = newproj
         sessionStorage.setItem('Session', JSON.stringify(state))
-        console.log('vuex 值更新成功->' + state.proj)
     },
-    SETLOGIN(state, LOGINSTATE) {
-        state.sessionid = LOGINSTATE.SessionID
-        state.ystoken = LOGINSTATE.YSToken
-        state.proj = "5ac9d8dbe629f6134823c938"
-        sessionStorage.setItem("Session", JSON.stringify(state))
-    }
+    SETCITY(state, city) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
+        state.Proj.CityID = city
+        sessionStorage.setItem('Session', JSON.stringify(state))
+    },
+    SETPROV(state, prov) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
+        state.Proj.ProvID = prov
+        sessionStorage.setItem('Session', JSON.stringify(state))
+    },
+    GETPROJINFO(state, PROJINFO) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
+        state.Proj
+    },
+    /********************************************************************** */
+    /********************************************************************** */
+    /********************************************************************** */
+    INCREMENT(state) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
+        state.count++
+    },
+    DECREMENT(state) {
+        state = state || JSON.parse(sessionStorage.getItem("Session"))
+        state.count--
+    },
 }
 
 // 创建 store 实例

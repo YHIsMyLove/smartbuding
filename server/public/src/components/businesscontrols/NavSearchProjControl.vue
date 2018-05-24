@@ -8,12 +8,15 @@
             <div class="nav">
                 <div class="center">
                     <el-col :span=8>
-                        <SelectProv/>
+                        <SelectProv />
                     </el-col>
                     <el-col :span=8>
-                        <SelectCity/>
+                        <SelectCity @ChangeCity="ChangeCity"/>
                     </el-col>
                     <el-col :span=8>
+                    </el-col>
+                    <el-col :span="24">
+                      <ProjMenu :CityID="SelectCityID" @SelectProjChange="SelectProjChange"/>
                     </el-col>
                 </div>
             </div>
@@ -24,19 +27,31 @@
 <script>
 import SelectCity from "./SelectCity.vue";
 import SelectProv from "./SelectProv.vue";
+import ProjMenu from "./ProjMenu.vue";
 export default {
   components: {
     SelectCity,
-    SelectProv
+    SelectProv,
+    ProjMenu
   },
   data() {
     return {
-      SelectProj: "湖北|黄石「黄石奥体中心建设项目」",
+      SelectProj: "XX|XX「XXXXXXXX」",
       EditProj: {},
-      isOpenDialog: false
+      isOpenDialog: false,
+      SelectCityID: ""
     };
   },
   methods: {
+    //更新项目的ID
+    SelectProjChange(proj) {
+      //console.log(proj);
+      this.SelectProj = `${proj.ProvName}|${proj.CityName}「${proj.ProjName}」`;
+      this.isOpenDialog = false;
+    },
+    ChangeCity(val) {
+      this.SelectCityID = val;
+    },
     Logout() {
       var _this = this;
       this.$confirm("确认退出吗?", "提示", {
@@ -64,9 +79,6 @@ export default {
   margin-right: 30px;
 }
 
-.el-input__inner {
-  /* border-radius: 25px; */
-}
 .el-input-group__append {
   border-bottom-right-radius: 25px;
   border-top-right-radius: 25px;
@@ -93,7 +105,7 @@ export default {
 
 .center {
   margin-left: 20px;
-  width: 80%;
+  width: 95%;
 }
 
 el-menu {

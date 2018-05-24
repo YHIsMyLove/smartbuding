@@ -69,7 +69,7 @@
                         return false;
                     }
                     _this.setLogin(res.data.data);
-                    console.log(_this.getYSToken);
+                    console.log(res.data.data);
                     _this.$router.replace("/table");
                 });
             }

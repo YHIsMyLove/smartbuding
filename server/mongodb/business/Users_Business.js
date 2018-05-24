@@ -101,7 +101,7 @@ exports.Login = async (req, res) => {
             let ystoken = ys_result.data.code == '200' ? ys_result.data.data.accessToken : ''
 
             return res.send(msg.genSuccessMsg('登录成功', {
-                UserID: query.UserID,
+                UserID: _user._id,
                 SessionID: sessionid,
                 YSToken: ystoken
             }))
@@ -141,7 +141,6 @@ exports.create = async (req, res) => {
         res.send(msg.genFailedMsg('未知错误', { code: -4 }))
     }
 }
-
 
 /**
  * POST 检查Session
@@ -230,9 +229,11 @@ exports.GetProvByUser = async (req, res) => {
     }
     //1. 取得项目ID
     let proj = await UserProj.find(query).select('ProjID').exec()
-    let projids = proj.map(i => i.ProjID)
+    let projids = proj.map(i => i.ProjID) 
     //2. 取得所有市区
+    console.log(proj)
     let cityids = await SysTable.find({ _id: { $in: projids } }).select('item1')
+    
     let ids = cityids.map(i => i.item1)
     let cityinfos = await SysTable.find({ SysFieldID: 'city', _id: { $in: ids } })
     let provids = cityinfos.map(i => i.item1)
@@ -279,60 +280,3 @@ exports.GetProjByUser = async (req, res) => {
         }
     })
 }
-
-
-
-// exports.SetUserImage = async (req, res) => {
-
-//     let query = {
-//         uploadType: req.Type || "UserHeadImage",
-//     }
-
-//     var form = new multiparty.Form({ uploadDir: './static' });
-//     form.parse(req, async (err, fields, files) => {
-//         if (!files.file && files.file.length > 0) {
-//             return res.send(msg.genFailedMsg('上传失败', { code: -1, msg: '请输入文件' }))
-//         }
-//         if (err) {
-//             return res.send(msg.genFailedMsg('上传失败', { code: -2, msg: err }))
-//         }
-//         var inputFile = files.file[0];
-//         var uploadedPath = inputFile.path;
-//         var dstPath = './static/' + inputFile.originalFilename;
-
-//         let rename_err = await renameFile(uploadedPath, dstPath)
-//         if (rename_err) {
-//             return res.send(msg.genFailedMsg('上传失败', { code: -3, msg: rename_err }))
-//         }
-//         else {
-//             files.file.path = dstPath;
-//             let data = files;
-//             let resizeimg_result = await ImageMagick.ResizeImg(dstPath)
-//             if (resizeimg_result.err) {
-//                 fs.unlinkSync(resizeimg_result.data)
-//                 fs.unlinkSync(files.file.path)
-//                 return res.send(msg.genFailedMsg('上传失败', { code: -4, msg: resizeimg_result.err }))
-//             } else {
-//                 let upload_result = await Qcos.uploadPromise(resizeimg_result.data)
-//                 if (upload_result.err) {
-//                     fs.unlinkSync(resizeimg_result.data)
-//                     fs.unlinkSync(files.file.path)
-//                     return res.send(msg.genFailedMsg('上传失败', { code: -5, msg: upload_result.err }))
-//                 } else {
-//                     fs.unlinkSync(resizeimg_result.data)
-//                     fs.unlinkSync(files.file.path)
-//                     res.send(genSuccessMsg('上传成功', upload_result))
-//                 }
-//             }
-//         }
-//     })
-// }
-
-// let renameFile = async (oldname, newname) => {
-//     return new Promise((res, rej) => {
-//         require('fs').rename(oldname, newname, (err) => {
-//             if (err) rej(err)
-//             res()
-//         })
-//     })
-// }

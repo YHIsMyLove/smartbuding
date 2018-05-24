@@ -21,7 +21,7 @@ export default {
   props: ["iscollapse"],
   data() {
     return {
-      iscollapse: true
+      
     };
   },
   methods: {

@@ -29,7 +29,7 @@
                         <hr style="height:.5px;border:none;border-top:1px solid #ffff;" />
                     </el-col>
                 </div>
-                <el-menu :collapse='iscollapse' :default-active="$route.path" :default-openeds="openedArr" collapse-transition class="aside-menu" @open="handleopen" @close="handleclose" @select="handleselect" theme="dark" unique-opened router>
+                <el-menu :collapse='iscollapse' :default-active="$route.path" :default-openeds="openedArr" collapse-transition class="aside-menu"  theme="dark" unique-opened router>
                     <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
                                         <el-submenu
                                             :key="index"
