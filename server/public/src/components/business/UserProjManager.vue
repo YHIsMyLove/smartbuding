@@ -5,31 +5,18 @@
         <section>
           <el-col :span="24" class="toolbar">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
-              <el-form-item label="区域选择">
-                <el-cascader :options="prov_city_options" change-on-select @change="handleItemChange"></el-cascader>
-              </el-form-item>
               <el-form-item label="人员搜索">
                 <el-input placeholder="工号/姓名"></el-input>
               </el-form-item>
               <el-form-item >
-                <el-button round>查询</el-button>
+                <el-button @click="getUserData" round>查询</el-button>
               </el-form-item>
               <el-form-item >
                  <el-button @click="changeEdit" type="primary" round>{{isEditText}}</el-button>
               </el-form-item>
             </el-form>
           </el-col>
-          <el-col :span="8">
-            <el-card class="box-card" :body-style="{ padding: '0px' }">
-              <div slot="header" class="clearfix">
-                <span>项目列表</span>
-              </div>
-              <el-menu :default-active="default_active" @select="handleselect" >
-                <el-menu-item v-for="(i,index) in proj_data" :key="index" :index="(index+'')">{{i.label}}</el-menu-item>
-              </el-menu>
-            </el-card>
-          </el-col>
-          <el-col :span="16">
+          <el-col :span="24">
             <el-table border fit stripe :data="tableUserData" highlight-current-row v-loading="listLoading" style="width: 100%; height:100%">
               <el-table-column type="index" label="编号" width="85">
               </el-table-column>
@@ -68,7 +55,17 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters(["getProj"])
+    ...mapGetters(["getProj"]),
+    CurrentProj() {
+      return this.getProj;
+    }
+  },
+  watch: {
+    CurrentProj(val) {
+      this.curProjID = val.ProjID;
+      console.log(`项目已切换,当前项目为:${val.ProjName}`);
+      this.getUserData();
+    }
   },
   data() {
     return {
@@ -92,7 +89,7 @@ export default {
   },
   created() {
     //this.getUserData();
-    this.getProvData();
+    //this.getProvData();
   },
   methods: {
     //设置用户项目
@@ -194,19 +191,26 @@ export default {
     handleCurrentChange() {},
     //切换编辑/查看模式
     changeEdit() {
-      if (this.isEdit == false && this.curCityID == -1) {
+      if (this.isEdit == false && !this.curProjID) {
         this.$message({
           message: "请先选择项目",
           type: "error"
         });
-      } else {
-        this.isEdit = !this.isEdit;
-        this.isEditText = this.isEdit ? "编辑模式" : "查看模式";
-        this.getUserData();
+        return;
       }
+      this.isEdit = !this.isEdit;
+      this.isEditText = this.isEdit ? "编辑模式" : "查看模式";
+      this.getUserData();
     },
     //获取人员资料
     getUserData() {
+      if (this.curProjID == -1) {
+        this.$message({
+          message: "请先选择项目",
+          type: "error"
+        });
+        return;
+      }
       let that = this;
       let url = `/api/GetUserByProjID`;
       let params = {

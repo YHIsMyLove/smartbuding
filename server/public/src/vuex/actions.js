@@ -11,20 +11,12 @@ export const setLogin = ({ commit }, loginState) => {
 export const setProj = ({ commit }, newProj) => {
     commit('SETPROJ', newProj)
 }
-
 export const setCity = ({ commit }, city) => {
     commit('SETCITY', city)
 }
-
 export const setProv = ({ commit }, prov) => {
     commit('SETPROV', prov)
 }
 /********************************************************************** */
 /********************************************************************** */
 /********************************************************************** */
-export const increment = ({ commit }) => {
-    commit('INCREMENT')
-}
-export const decrement = ({ commit }) => {
-    commit('DECREMENT')
-}

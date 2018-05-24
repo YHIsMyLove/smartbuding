@@ -217,7 +217,6 @@ export default {
                     that.default_active = "0";
                     if (that.proj_data[0]) {
                       that.curProjID = that.proj_data[0].value.id;
-                      //that.setProj(that.curProjID);
                     } else {
                       this.curProjID = -1;
                     }

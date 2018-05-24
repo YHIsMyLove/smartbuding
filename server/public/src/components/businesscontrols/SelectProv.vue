@@ -24,13 +24,18 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   props: ["refdata"],
   computed: {
-    ...mapGetters(["getUser"])
+    ...mapGetters(["getUser"]),
+    CurrentUser() {
+      return this.$store.state.User;
+    }
+  },
+  watch: {
+    CurrentUser(val) {
+      console.log(val);
+    }
   },
   created() {
     this.GetProvs();
-  },
-  watch: {
-    refdata(old) {}
   },
   methods: {
     ...mapActions(["setProv"]),

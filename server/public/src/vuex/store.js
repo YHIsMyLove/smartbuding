@@ -8,24 +8,20 @@ Vue.use(Vuex)
 
 // 应用初始状态
 const state = {
-    count: 10,
-    //系统总变量区域
-    //项目ID
-    proj: "5ac9d8dbe629f6134823c938",//临时替换成柳州项目
-    //萤石Token
-    ystoken: '',
-    //人员session
-    sessionid: '',
     //用户
     User: {
         UserID: '',
-        SessionID: ''
+        SessionID: '',
+        YSToken: ''
     },
     //项目
     Proj: {
         ProjID: '',
+        ProjName: '',
         CityID: '',
-        ProvID: ''
+        CityName: '',
+        ProvID: '',
+        ProvName: ''
     },
 }
 
@@ -35,63 +31,50 @@ const mutations = {
     /**用户相关************************************************************* */
     /********************************************************************** */
     SETLOGIN(state, LOGINSTATE) {
-        state.proj = "5ac9d8dbe629f6134823c938"
-        state.sessionid = LOGINSTATE.SessionID
-        state.ystoken = LOGINSTATE.YSToken
+        state.User.YSToken = LOGINSTATE.YSToken
         state.User.UserID = LOGINSTATE.UserID
         state.User.SessionID = LOGINSTATE.SessionID
-        sessionStorage.setItem("Session", JSON.stringify(state))
+        sessionStorage.setItem("User", JSON.stringify(state.User))
+        //sessionStorage.setItem("Proj", JSON.stringify(state.Proj))
+        console.log(JSON.stringify(state.Proj))
+        state.User = JSON.parse(sessionStorage.getItem("User"))
+        //state.Proj = JSON.parse(sessionStorage.getItem("Proj"))
     },
     GETUSER(state) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
+        state.User = state.User || JSON.parse(sessionStorage.getItem("User"))
         state.User
-    },
-    GETSESSION(state) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.sessionid
-    },
-    GETYSTOKEN(state) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.ystoken
     },
     /********************************************************************** */
     /**项目相关************************************************************* */
     /********************************************************************** */
     GETPROJ(state) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.proj
-    },
-    SETPROJ(state, newproj) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.proj = newproj
-        state.Proj.ProjID = newproj
-        sessionStorage.setItem('Session', JSON.stringify(state))
-    },
-    SETCITY(state, city) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.Proj.CityID = city
-        sessionStorage.setItem('Session', JSON.stringify(state))
-    },
-    SETPROV(state, prov) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.Proj.ProvID = prov
-        sessionStorage.setItem('Session', JSON.stringify(state))
-    },
-    GETPROJINFO(state, PROJINFO) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
+        state.Proj = state.Proj || JSON.parse(sessionStorage.getItem("Proj"))
         state.Proj
     },
-    /********************************************************************** */
-    /********************************************************************** */
-    /********************************************************************** */
-    INCREMENT(state) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.count++
+    SETPROJ(state, newproj) {
+        state.Proj.ProjID = newproj.ProjID
+        state.Proj.ProjName = newproj.ProjName
+        state.Proj.CityName = newproj.CityName
+        state.Proj.ProvName = newproj.ProvName
+        sessionStorage.setItem('Proj', JSON.stringify(state.Proj))
+        state.Proj = JSON.parse(sessionStorage.getItem("Proj"))
+        console.log(`设置项目后:${sessionStorage.getItem("Proj")}`)
     },
-    DECREMENT(state) {
-        state = state || JSON.parse(sessionStorage.getItem("Session"))
-        state.count--
+    SETCITY(state, city) {
+        state.Proj = state.Proj || JSON.parse(sessionStorage.getItem("Proj"))
+        state.Proj.CityID = city
+        sessionStorage.setItem('Proj', JSON.stringify(state.Proj))
+        state.Proj = JSON.parse(sessionStorage.getItem("Proj"))
     },
+    SETPROV(state, prov) {
+        state.Proj = state.Proj || JSON.parse(sessionStorage.getItem("Proj"))
+        state.Proj.ProvID = prov
+        sessionStorage.setItem('Proj', JSON.stringify(state.Proj))
+        state.Proj = JSON.parse(sessionStorage.getItem("Proj"))
+    },
+    /********************************************************************** */
+    /********************************************************************** */
+    /********************************************************************** */
 }
 
 // 创建 store 实例

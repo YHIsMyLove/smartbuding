@@ -42,7 +42,12 @@ export default {
         CityName: proj.City.Name,
         ProvName: proj.Prov.Name
       });
-      this.setProj(proj._id);
+      this.setProj({
+        ProjID: proj._id,
+        ProjName: proj.Name,
+        CityName: proj.City.Name,
+        ProvName: proj.Prov.Name
+      });
     },
     getProj() {
       let that = this;

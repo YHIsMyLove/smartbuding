@@ -23,7 +23,6 @@ import NProgress from "nprogress";
 import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
-    ...mapGetters(["getProjInfo"]),
     CurrentProvID() {
       return this.$store.state.Proj.ProvID;
     }

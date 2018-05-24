@@ -28,11 +28,15 @@
 import SelectCity from "./SelectCity.vue";
 import SelectProv from "./SelectProv.vue";
 import ProjMenu from "./ProjMenu.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     SelectCity,
     SelectProv,
     ProjMenu
+  },
+  computed: {
+    ...mapGetters(["getProj"])
   },
   data() {
     return {
@@ -42,10 +46,16 @@ export default {
       SelectCityID: ""
     };
   },
+  created() {
+    if (this.getProj) {
+      this.SelectProj = `${this.getProj.ProvName}|${this.getProj.CityName}「${
+        this.getProj.ProjName
+      }」`;
+    }
+  },
   methods: {
     //更新项目的ID
     SelectProjChange(proj) {
-      //console.log(proj);
       this.SelectProj = `${proj.ProvName}|${proj.CityName}「${proj.ProjName}」`;
       this.isOpenDialog = false;
     },
