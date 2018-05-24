@@ -1,26 +1,23 @@
 <template>
   <!-- App -->
+  
   <div id="app">
-
     <!-- Statusbar -->
     <f7-statusbar></f7-statusbar>
-
     <!-- Left Panel -->
     <f7-panel left reveal>
-      <f7-view url="/account-main/"></f7-view>
+      <f7-view url="/account/main/"></f7-view>
     </f7-panel>
-
     <!-- Main View -->
     <!-- <f7-view id="main-view" url="/" main></f7-view> -->
     <f7-views tabs>
-      <f7-view id="view-1" url="/project-main/" main tab active></f7-view>
-      <f7-view id="view-2" url="/doors-main/" tab></f7-view>
-      <f7-toolbar tabbar>
-        <f7-link text="Tab 1" tab-link="#view-1"></f7-link>
-        <f7-link text="Tab 2" tab-link="#view-2"></f7-link>
+      <f7-view id="view-project-main" url="/project/main/" main tab active></f7-view>
+      <f7-view id="view-doors-main" url="/doors/main/" tab></f7-view>
+      <f7-toolbar tabbar labels bottom-md>
+        <f7-link icon-if-ios="f7:menu" icon-if-md="material:menu" text="项目管理" tab-link="#view-project-main"></f7-link>
+        <f7-link icon-if-ios="f7:menu" icon-if-md="material:menu" text="门禁记录" tab-link="#view-doors-main"></f7-link>
       </f7-toolbar>
     </f7-views>
-
     <!-- Popup -->
     <f7-popup id="popup">
       <f7-view>
@@ -34,7 +31,6 @@
         </f7-page>
       </f7-view>
     </f7-popup>
-
     <!-- Login Screen -->
     <f7-login-screen id="login-screen">
       <f7-view>
@@ -59,7 +55,6 @@
         </f7-page>
       </f7-view>
     </f7-login-screen>
-
   </div>
 </template>
 
@@ -69,9 +64,13 @@ export default {
     isiOS() {
       return this.$theme.ios;
     },
+
     isMaterial() {
       return this.$theme.md;
     }
   }
-}
+};
 </script>
+<style scoped>
+
+</style>
