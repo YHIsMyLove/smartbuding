@@ -2,14 +2,14 @@
 /**用户相关************************************************************* */
 /********************************************************************** */
 export const getUser = state => {
-    state.User = JSON.parse(sessionStorage.getItem("User"))
+    //state = JSON.parse(sessionStorage.getItem("Session"))
     return state.User
 }
 /********************************************************************** */
 /**项目相关************************************************************* */
 /********************************************************************** */
 export const getProj = state => {
-    state.Proj = JSON.parse(sessionStorage.getItem("Proj"))
+    //state = JSON.parse(sessionStorage.getItem("Session"))
     return state.Proj
 }
 /********************************************************************** */

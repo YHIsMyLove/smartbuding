@@ -180,12 +180,10 @@
                 this.editForm.birth = row.birth;
                 this.editForm.addr = row.addr;
                 this.editForm.phonenum = row.phonenum;
-                console.log(this.editForm)
             },
             //编辑 or 新增
             editSubmit: function () {
                 var _this = this;
-                console.log(_this.editForm.id)
                 _this.$refs.editForm.validate((valid) => {
                     if (valid) {
                         _this.$confirm('确认提交吗？', '提示', {}).then(() => {
@@ -201,7 +199,6 @@
                                 phonenum: _this.editForm.phonenum
                             }
                             let url = _this.editForm.id ? `/api/user/${_this.editForm.id}` : '/api/user'
-                            console.log(url)
                             axios.post(url, userData).then(function (res) {
                                 if (res.data.success) {
                                     _this.$message({
@@ -246,7 +243,6 @@
                 axios.get('/api/user', { params: params }).then(function (res) {
                     vm.$data.tableData = res.data.data;
                     vm.$data.tableDataLength = res.data.meta.count;
-                    console.log(res.data.data)
                 })
             },
             handleSizeChange(val) {

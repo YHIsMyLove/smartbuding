@@ -182,7 +182,6 @@ export default {
         });
         return;
       }
-
       //1. 验证部门,内容是否为空
       //2. 组装数据
       //3. post提交
@@ -314,59 +313,14 @@ export default {
         .catch(err => console.log(err));
     },
     handleCurrentChange() {},
-    //选择主持人[部门/人员关联]
-    handleItemChange(val) {
-      // if (val.length > 1) {
-      //   this.editForm.Compere = val[1];
-      //   return;
-      // }
-      // this.editForm.Compere = "";
-      // let that = this;
-      // let cur_val = val[0];
-      // let url = `/api/GetUserByDeptID?item1=${cur_val.id}`;
-      // let params = {
-      //   isEdit: "false",
-      //   DeptID: cur_val.id,
-      //   ProjID: that.getProj,
-      //   limit: that.$data.currentPageSize,
-      //   page: that.$data.currentPage
-      // };
-      // axios
-      //   .get(url, { params: params })
-      //   .then(res => {
-      //     if (res.data.success) {
-      //       let cur = that.dept_Users_options.filter(
-      //         i => i.value.id == cur_val.id
-      //       )[0].children;
-      //       let tmpdata = res.data.data
-      //         .map(i => {
-      //           return {
-      //             label: i.UserName,
-      //             ID: i.UserID,
-      //             value: i._id,
-      //             type: "user"
-      //           };
-      //         })
-      //         .forEach(item => {
-      //           if (cur.filter(i => i.label == item.label).length == 0)
-      //             cur.push(item);
-      //         });
-      //     } else {
-      //     }
-      //   })
-      //   .catch(err => console.log(err));
-    },
     //查询
     refresh() {
       this.getMeeting();
     },
     getDeptData() {
       let that = this;
-      let params = {
-        item2: that.getProj
-      };
       axios
-        .get(`/api/GetDeptByProjID?ProjID=${that.getProj}`)
+        .get(`/api/GetDeptByProjID?ProjID=${that.getProj.ProjID}`)
         .then(res => {
           if (res.data.success) {
             that.dept_Users_options = res.data.data;
@@ -378,11 +332,8 @@ export default {
     //获取会议
     getMeeting() {
       let that = this;
-      let params = {
-        item2: that.getProj
-      };
       axios
-        .get(`/api/GetMeetings?ProjID=${that.getProj}`)
+        .get(`/api/GetMeetings?ProjID=${that.getProj.ProjID}`)
         .then(res => {
           if (res.data.success) {
             that.$data.tableData = res.data.data;

@@ -22,7 +22,7 @@
                 <span>角色列表</span>
               </div>
               <el-menu :default-active="default_active" @select="handleselect" >
-                <el-menu-item v-for="i,index in role_data" :index="(index+'')">
+                <el-menu-item v-for="(i,index) in role_data" :key="index" :index="(index+'')">
                     {{i.label}}
                 </el-menu-item>
               </el-menu>
@@ -93,7 +93,7 @@ export default {
       let that = this;
       let query = {
         UserID: row._id,
-        ProjID: that.getProj,
+        ProjID: that.getProj.ProjID,
         RoleID: that.curRoleID,
         insertOrDel: row.UserInRole ? "insert" : "del"
       };
@@ -142,7 +142,7 @@ export default {
       let params = {
         limit: that.$data.currentPageSize,
         page: that.$data.currentPage,
-        ProjID: that.getProj,
+        ProjID: that.getProj.ProjID,
         RoleID: that.curRoleID,
         isEdit: that.isEdit
       };
@@ -167,20 +167,17 @@ export default {
     },
     //获取角色信息
     getRoleData() {
-      //console.log("请求role");
       let that = this;
       axios
-        .get(`/api/GetRole?ProjID=${that.getProj}`)
+        .get(`/api/GetRole?ProjID=${that.getProj.ProjID}`)
         .then(res => {
           if (res.data.success) {
             that.role_data = res.data.data;
-            //console.log(that.role_data);
             if (that.role_data[0]) {
               that.curRoleID = that.role_data[0].value;
               that.getUserData();
             }
           }
-          //console.log(res.data);
         })
         .catch(err => console.log(err));
     }
@@ -188,5 +185,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>

@@ -60,7 +60,6 @@ exports.create = async(function* (req, res) {
         return res.send(msg.genFailedMsg('body不能为空'))
     }
     try {
-        console.log(req.body)
         let sysTable = new SysTable(req.body);
         yield sysTable.updateAndSave();
         res.send(msg.genSuccessMsg('插入列表成功'))
@@ -77,8 +76,11 @@ exports.update = async(function* (req, res) {
 })
 exports.delete = async(function* (req, res) {
     try {
-        res.send(msg.genSuccessMsg('读取列表成功', list, { count: count }))
+        console.log(req.body._id)
+        var id = req.body._id
+        yield SysTable.findOne({ _id: id }).remove()
+        res.send(msg.genSuccessMsg('删除成功'))
     } catch (error) {
-        res.send(msg.genFailedMsg('获取列表失败', error))
+        res.send(msg.genSuccessMsg('删除失败', error))
     }
 })

@@ -88,11 +88,8 @@ import moment from "moment";
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    // 使用对象展开运算符将 getters 混入 computed 对象中
     ...mapGetters([
-      "getProj",
-      "getYSToken"
-      // ...
+      "getUser",
     ])
   },
   data() {
@@ -199,7 +196,7 @@ export default {
       var params = {
         limit: that.$data.currentPageSize,
         page: that.$data.currentPage,
-        token: that.getYSToken
+        token: that.getUser.YSToken
       };
       axios.get("/api/GetYSDevs", { params: params }).then(function(res) {
         that.$data.tableData = res.data.data;

@@ -22,6 +22,7 @@ import util from "../../common/util";
 import NProgress from "nprogress";
 import { mapGetters, mapActions } from "vuex";
 export default {
+  ...mapGetters(["getProj"]),
   computed: {
     CurrentProvID() {
       return this.$store.state.Proj.ProvID;
@@ -49,8 +50,8 @@ export default {
             that.selecter.datas = data;
             if (data.length > 0) {
               that.selecter.value = data[0].value;
+              that.$emit("ChangeCity", that.selecter.value);
               that.setCity(that.selecter.value);
-              this.$emit("ChangeCity", that.selecter.value);
             }
           } else {
             that.$message({

@@ -13,8 +13,17 @@
           <el-col :span="8">
             <el-input placeholder="输入关键字进行过滤" v-model="filterText">
             </el-input>
-            <el-tree accordion default-expand-all :expand-on-click-node="expand" highlight-current @current-change="selectDeptTreeChange"
-              class="filter-tree" :data="treeDeptData" :props="defaultProps" :filter-node-method="filterNode" ref="deptTree">
+            <el-tree 
+              accordion default-expand-all 
+              :expand-on-click-node="expand" 
+              highlight-current 
+              @current-change="selectDeptTreeChange"
+              class="filter-tree" 
+              :data="treeDeptData" 
+              :props="defaultProps" 
+              :filter-node-method="filterNode"
+              :default-checked-keys="defaultKey" 
+              ref="deptTree">
             </el-tree>
           </el-col>
           <el-col :span="16">
@@ -57,6 +66,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      defaultKey: [0],
       formInline: {
         user: ""
       },
@@ -81,21 +91,15 @@ export default {
     this.getDeptsData();
   },
   computed: {
-    // 使用对象展开运算符将 getters 混入 computed 对象中
-    ...mapGetters([
-      "getProj"
-      // ...
-    ])
+    ...mapGetters(["getProj"])
   },
   methods: {
     //设置用户部门
     changeUserDept(row) {
-      console.log(row);
-
       let that = this;
       let query = {
         UserID: row._id,
-        ProjID: that.getProj,
+        ProjID: that.getProj.ProjID,
         DeptID: that.curDeptID,
         insertOrDel: row.UserInDept ? "insert" : "del"
       };
@@ -140,17 +144,29 @@ export default {
     //获取部门数据
     getDeptsData() {
       let that = this;
+      if (!this.getProj) {
+        this.$message({
+          message: "请先选择项目",
+          type: "error"
+        });
+        return;
+      }
       that.listLoading = true;
       NProgress.start();
       axios
-        .get(`/api/GetDeptTreeByProjID?ProjID=${that.getProj}`)
+        .get(`/api/GetDeptTreeByProjID?ProjID=${that.getProj.ProjID}`)
         .then(res => {
           if (res.data.success) {
             that.treeDeptData = res.data.data;
-            //this.curDeptID = this.treeDeptData[0].ID;
+            if (that.treeDeptData.length > 0) {
+              that.defaultKey = [that.treeDeptData[0].ID];
+            }
             this.getUserData();
           } else {
-            //获取失败
+            this.$message({
+              message: "请先选择项目",
+              type: "error"
+            });
           }
           that.listLoading = false;
           NProgress.done();
@@ -169,7 +185,7 @@ export default {
       let params = {
         limit: that.$data.currentPageSize,
         page: that.$data.currentPage,
-        ProjID: that.getProj,
+        ProjID: that.getProj.ProjID,
         DeptID: that.curDeptID,
         isEdit: that.isEdit
       };
@@ -201,5 +217,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>

@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="ProjName">
-            <i @click="changeMenu" :class="MenuIcon">&nbsp&nbsp&nbsp&nbsp</i>
+            <i @click="changeMenu" :class="MenuIcon"></i>
             <span class="logo-txt">		<b>项目助手</b>后台管理系统    	</span>
         </div>
         <div class="SearchBar">
@@ -20,9 +20,7 @@ import NavSearchProjControl from "./NavSearchProjControl";
 export default {
   props: ["iscollapse"],
   data() {
-    return {
-      
-    };
+    return {};
   },
   methods: {
     changeMenu() {
@@ -69,7 +67,7 @@ export default {
   margin-left: 12px;
   margin-top: 12px;
   border-radius: 50%;
-  widht: 32px;
+  width: 32px;
   height: 32px;
 }
 

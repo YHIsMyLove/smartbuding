@@ -57,13 +57,15 @@ export default {
   computed: {
     ...mapGetters(["getProj"]),
     CurrentProj() {
-      return this.getProj;
+      return this.$store.state.Proj;
     }
+  },
+  created() {
+    this.getUserData();
   },
   watch: {
     CurrentProj(val) {
       this.curProjID = val.ProjID;
-      console.log(`项目已切换,当前项目为:${val.ProjName}`);
       this.getUserData();
     }
   },
@@ -86,10 +88,6 @@ export default {
       currentPageSize: 0,
       curentDeptID: -1
     };
-  },
-  created() {
-    //this.getUserData();
-    //this.getProvData();
   },
   methods: {
     //设置用户项目
@@ -115,80 +113,10 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    //选择项目
-    handleselect(index) {
-      if (this.proj_data) {
-        this.curProjID = this.proj_data[index].value.id;
-        this.getUserData();
-      }
-    },
-    //省市项目级联选择
-    handleItemChange(val) {
-      this.curCityID = -1;
-      let cur_val = val[0];
-      let that = this;
-      let url = `/api/GetCityByProvID?ProvID=${cur_val.id}`;
-      axios
-        .get(url)
-        .then(res => {
-          if (res.data.success) {
-            let cur = that.prov_city_options.filter(
-              i => i.value.id == cur_val.id
-            )[0].children;
-            res.data.data
-              .map(i => {
-                return {
-                  label: i.Name,
-                  value: i.data
-                };
-              })
-              .forEach(item => {
-                if (cur.filter(i => i.label == item.label).length == 0)
-                  cur.push(item);
-              });
-            //完成后 查询项目列表
-            let firstcity = val[1];
-            if (!firstcity) return;
-            this.curCityID = firstcity.id;
-            if (firstcity) {
-              axios
-                .get(`/api/GetProjByCityID?CityID=${firstcity.id}`)
-                .then(res => {
-                  if (res.data.success) {
-                    that.proj_data = res.data.data;
-                    that.default_active = "0";
-                    if (that.proj_data[0]) {
-                      that.curProjID = that.proj_data[0].value.id;
-                    } else {
-                      that.isEdit = false;
-                      that.isEditText = "查看模式";
-                      this.curProjID = -1;
-                    }
-                    that.getUserData();
-                  }
-                })
-                .catch(err => {
-                  console.log(err);
-                });
-            } else {
-              that.isEdit = false;
-              that.isEditText = "查看模式";
-              that.getUserData();
-            }
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     //性别显示转换
     formatSex: function(row, column) {
       return row.UserSex == 1 ? "男" : row.UserSex == 0 ? "女" : "未知";
     },
-    handleEdit(row) {},
-    handleDel(row) {},
-    handleSizeChange() {},
-    handleCurrentChange() {},
     //切换编辑/查看模式
     changeEdit() {
       if (this.isEdit == false && !this.curProjID) {
@@ -204,6 +132,9 @@ export default {
     },
     //获取人员资料
     getUserData() {
+      if (this.getProj) {
+        this.curProjID = this.getProj.ProjID;
+      }
       if (this.curProjID == -1) {
         this.$message({
           message: "请先选择项目",
@@ -238,18 +169,10 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    //获取省份资料
-    getProvData() {
-      let that = this;
-      axios
-        .get("/api/GetProv")
-        .then(res => {
-          if (res.data.success) {
-            that.prov_city_options = res.data.data;
-          }
-        })
-        .catch(err => console.log(err));
-    }
+    handleEdit(row) {},
+    handleDel(row) {},
+    handleSizeChange() {},
+    handleCurrentChange() {}
   }
 };
 </script>

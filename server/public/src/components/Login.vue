@@ -58,7 +58,6 @@ export default {
       this.Loginloading = true;
       axios.post("/api/login", this.ruleForm2).then(function(res, err) {
         if (err || !res.data.success) {
-          console.log("登录失败");
           _this.$message({
             type: "error",
             message: res.data.msg
@@ -67,7 +66,6 @@ export default {
           return false;
         }
         _this.setLogin(res.data.data);
-        console.log(res.data.data);
         _this.$router.replace("/table");
       });
     }

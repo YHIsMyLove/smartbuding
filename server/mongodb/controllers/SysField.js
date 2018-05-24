@@ -54,7 +54,6 @@ exports.delete = async(function* (req, res) {
         let id = req.body.id;
         if (!id) return res.send(msg.genFailedMsg('删除失败,ID不允许为空'))
         let fieldinfo = yield SysField.load(id)
-        console.log(fieldinfo)
         yield fieldinfo.remove()
         res.send(msg.genSuccessMsg('删除成功'))
     } catch (error) {
@@ -71,4 +70,3 @@ exports.GetAllFieldName = async(function* (req, res) {
         res.send(msg.genFailedMsg('获取字段管理列表失败', error))
     }
 })
-

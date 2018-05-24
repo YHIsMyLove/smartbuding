@@ -13,7 +13,7 @@
                 </div>
                 <el-table-column label="操作" width="150">
                     <template scope="scope">
-                        <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                        <!-- <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button> -->
                         <el-button type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -128,7 +128,25 @@ export default {
       });
     },
     handleEdit(row) {},
-    handleDel(row) {},
+    //删除系统表内容
+    handleDel(row) {
+      this.$confirm("确认删除该记录吗?", "提示", {
+        type: "warning"
+      }).then(() => {
+        var that = this;
+        var jsonstr = `{"_id":"${row._id}"}`;
+        var query = JSON.parse(jsonstr);
+        axios
+          .post("/api/SysTable/delete", query)
+          .then(res => {
+            console.log(res.data)
+            if (res.data.success) {
+              that.getTabelData();
+            }
+          })
+          .catch(err => console.log(err));
+      });
+    },
     newLine() {
       this.editFormVisible = true;
     },
@@ -184,5 +202,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

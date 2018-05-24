@@ -1,37 +1,5 @@
 <template>
     <el-tabs v-model="activeName" style="width:100%;" @tab-click="handleClick">
-        <!-- <el-tab-pane label="用户配置" name='userManager'>
-          <el-row>
-            <el-col :span="8">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span>用户信息</span>
-                </div>
-                <el-form  label-width="80px">
-                  <el-form-item label="当前区域">
-                    {{getProj}}
-                  </el-form-item>
-                  <el-form-item label="角色">
-                      <el-tag>测试用户</el-tag>
-                      <el-tag>管理员</el-tag>
-                  </el-form-item>
-                  <el-form-item label="选择区域">
-                      <el-cascader :options="prov_city_options" change-on-select @change="handleItemChange"></el-cascader>
-                  </el-form-item>
-                </el-form>
-              </el-card>
-            </el-col>
-            <el-col :span="8"> 
-              <el-card class="boox-card">
-                 <div slot="header" class="clearfix">
-                  <span>用户配置</span>
-                </div>
-
-              </el-card>
-            </el-col>
-          </el-row>
-         
-        </el-tab-pane> -->
         <el-tab-pane name="BusinessManager" label="自定义表管理">
             <section>
                 <el-col :span="24" class="toolbar">
@@ -180,7 +148,6 @@ export default {
     this.getProvData();
   },
   methods: {
-    ...mapActions(["setProj"]),
     //切换区域
     handleItemChange(val) {
       this.curCityID = -1;

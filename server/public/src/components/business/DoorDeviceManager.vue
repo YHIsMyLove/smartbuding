@@ -1,6 +1,6 @@
 <template>
     <el-tabs style="width:100%;">
-        <el-tab-pane label="门禁设备管理">
+        <el-tab-pane label="萤石设备管理">
             <section>
                 <el-col :span="24" class="toolbar">
                     <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -65,6 +65,9 @@
                         <el-form-item label="系统设备名称" prop="DevName">
                             <el-input v-model="editForm.DevSystemName" auto-complete="off"></el-input>
                         </el-form-item>
+                        <!-- <el-form-item label="加入系统库" prop="InSytemDevs">
+                            <el-switch ></el-switch>
+                        </el-form-item> -->
                     </el-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button @click="editFormVisible = false">取 消</el-button>
@@ -85,12 +88,7 @@ import moment from "moment";
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    // 使用对象展开运算符将 getters 混入 computed 对象中
-    ...mapGetters([
-      "getProj",
-      "getYSToken"
-      // ...
-    ])
+    ...mapGetters(["getUser"])
   },
   data() {
     return {
@@ -196,7 +194,7 @@ export default {
       var params = {
         limit: that.$data.currentPageSize,
         page: that.$data.currentPage,
-        token: that.getYSToken
+        token: that.getUser.YSToken
       };
       axios.get("/api/GetYSDevs", { params: params }).then(function(res) {
         that.$data.tableData = res.data.data;
@@ -218,12 +216,3 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbar .el-form-item {
-  margin-bottom: 10px;
-}
-
-.toolbar {
-  background: #fff;
-  padding-top: 10px;
-}
-</style>

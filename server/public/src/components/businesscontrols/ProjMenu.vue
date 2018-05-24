@@ -22,6 +22,7 @@ export default {
   },
   watch: {
     CurrentCityID(val) {
+      console.log("检测到城市发生改变");
       this.getProj();
     }
   },
@@ -34,9 +35,7 @@ export default {
   methods: {
     ...mapActions(["setProj"]),
     SelectProjChange(index) {
-      console.log(index);
       var proj = this.ProjData.filter(i => i._id == index)[0];
-      console.log(proj);
       this.$emit("SelectProjChange", {
         ProjName: proj.Name,
         CityName: proj.City.Name,
@@ -57,7 +56,12 @@ export default {
           if (res.data.success) {
             that.ProjData = res.data.data;
             if (that.ProjData.length > 0) {
-              that.setProj(that.ProjData[0]._id);
+              this.setProj({
+                ProjID: that.ProjData[0]._id,
+                ProjName: that.ProjData[0].Name,
+                CityName: that.ProjData[0].City.Name,
+                ProvName: that.ProjData[0].Prov.Name
+              });
             }
           } else {
             that.$message({

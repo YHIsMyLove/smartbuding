@@ -47,6 +47,30 @@ const routes = [
                 name: '文件管理',
                 meta: { redirectAuth: true }
             },
+            {
+                path: '/UserManager',
+                component: resolve => require(['./components/business/UserManager.vue'], resolve),
+                name: '用户管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/SystemUserProjManager',
+                component: resolve => require(['./components/business/SystemUserProjManager.vue'], resolve),
+                name: '用户项目管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/YSDeviceManager',
+                component: resolve => require(['./components/business/YSDeviceManager.vue'], resolve),
+                name: '萤石设备管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/DoorDeviceManager',
+                component: resolve => require(['./components/business/DoorDeviceManager.vue'], resolve),
+                name: '门禁设备管理',
+                meta: { redirectAuth: true }
+            },
         ],
         meta: { redirectAuth: true }
     },
@@ -56,12 +80,6 @@ const routes = [
         name: '用户管理',
         iconCls: 'fa fa-id-card-o',
         children: [
-            {
-                path: '/UserManager',
-                component: resolve => require(['./components/business/UserManager.vue'], resolve),
-                name: '用户管理',
-                meta: { redirectAuth: true }
-            },
             {
                 path: '/UserProjManager',
                 component: resolve => require(['./components/business/UserProjManager.vue'], resolve),
@@ -93,18 +111,6 @@ const routes = [
                 path: '/DeviceManager',
                 component: resolve => require(['./components/business/DeviceManager.vue'], resolve),
                 name: '系统设备管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/YSDeviceManager',
-                component: resolve => require(['./components/business/YSDeviceManager.vue'], resolve),
-                name: '萤石设备管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/DoorDeviceManager',
-                component: resolve => require(['./components/business/DoorDeviceManager.vue'], resolve),
-                name: '门禁设备管理',
                 meta: { redirectAuth: true }
             },
         ],
@@ -140,7 +146,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.redirectAuth) {
         NProgress.start();
-        var Usersession = sessionStorage.getItem('UserSession')
+        var Usersession = sessionStorage.getItem('Session')
         if (store.state.User.SessionID || Usersession) {
             next()
         } else {

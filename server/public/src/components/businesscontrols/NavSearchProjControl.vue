@@ -36,7 +36,15 @@ export default {
     ProjMenu
   },
   computed: {
-    ...mapGetters(["getProj"])
+    ...mapGetters(["getProj"]),
+    CurrentProj() {
+      return this.$store.state.Proj;
+    }
+  },
+  watch: {
+    CurrentProj(val) {
+      console.log(val);
+    }
   },
   data() {
     return {
@@ -56,11 +64,16 @@ export default {
   methods: {
     //更新项目的ID
     SelectProjChange(proj) {
-      this.SelectProj = `${proj.ProvName}|${proj.CityName}「${proj.ProjName}」`;
+      if (this.getProj) {
+        this.SelectProj = `${this.getProj.ProvName}|${this.getProj.CityName}「${
+          this.getProj.ProjName
+        }」`;
+      }
       this.isOpenDialog = false;
     },
     ChangeCity(val) {
       this.SelectCityID = val;
+      this.setCity(val);
     },
     Logout() {
       var _this = this;

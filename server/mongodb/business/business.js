@@ -122,6 +122,8 @@ exports.InsertOrDelUserProj = async (req, res) => {
             res.send(msg.genMsg('保存成功'))
         } else {
             await UserProj.findOne(query).remove()
+            await UserDept.findOne(query).remove()
+            await UserRole.findOne(query).remove()
             res.send(msg.genMsg('删除成功'))
         }
     } catch (err) {
@@ -178,6 +180,7 @@ exports.GetDeptTreeByProjID = async (req, res) => {
         recursion(data, root)
 
         if (result.length == 0) return res.send(msg.genFailedMsg('没有获取到部门数据,请检查项目ID'))
+
         res.send(msg.genMsg("获取成功", "", realdata))
     } catch (error) {
         return res.send(msg.genFailedMsg('未知错误'))
@@ -413,21 +416,7 @@ exports.GetUserByDeptID = async (req, res) => {
                 .sort({ createdAt: -1 })
                 .exec()
 
-            // let q2 = result.map(i => {
-            //     i.DeptID
-            // })
-            //let depts = await SysTable.find({ _id: { $id: q2 } })
-            //console.log(depts)
-            // let result2 = []
-            // users.forEach(async i => {
-            //     let foritem = i
-            //     let _u = udept.filter(ditem => ditem.UserID == i._id)
-            //     let dinfo = await SysTable.findOne({ SysFieldID: 'dept', _id: _u.DeptID })
-            //     console.log(dinfo)
-            // })
-
             return res.send(msg.genSuccessMsg("查询成功", users, { count: count }))
-
 
         } catch (error) {
             return res.send(msg.genFailedMsg("查询失败"))
@@ -467,8 +456,6 @@ exports.GetProjByProvID = async (req, res) => {
                 Prov: prov_city.Prov
             })
             if (result2.length == projs.length) {
-                // console.log('*******************')
-                // console.log(result2)
                 return res.send(msg.genSuccessMsg('查询成功', result2))
             }
         })
@@ -483,11 +470,12 @@ exports.GetProjByProvID = async (req, res) => {
 /**用户角色管理*******************************************************/
 /****************************************************************** */
 //获取角色资料
-exports.GetRoleByRoleID = async (req, res) => {
+exports.GetRole = async (req, res) => {
     let query = {
         SysFieldID: 'role',
         item2: req.query.ProjID
     }
+    console.log(query)
     try {
         let role = await SysTable.find(query)
         let result = role.map(i => {
@@ -496,6 +484,7 @@ exports.GetRoleByRoleID = async (req, res) => {
                 value: i._id,
             }
         })
+        console.log(result)
         res.send(msg.genSuccessMsg('获取成功', result))
     } catch (error) {
         res.send(msg.genFailedMsg("获取失败->" + error))
@@ -556,7 +545,6 @@ exports.GetUserByRoleID = async (req, res) => {
     //
     if (isEdit == 'false' && RoleID != -1) {
         console.log('非编辑模式且有角色ID')
-        console.log(ProjID + '**********' + RoleID)
         try {
             let result = await UserRole.find({ ProjID: ProjID, RoleID: RoleID }).select('UserID')
             let q = result.map(i => {
