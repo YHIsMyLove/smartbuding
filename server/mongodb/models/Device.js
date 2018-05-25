@@ -6,9 +6,7 @@ const deviceSchema = new Schema({
     DevID: String,
     DevName: String,
     DevStatus: Number,
-    DevType: String,
     DevDesc: String,
-    DevClass: String,
     DevIp: String,
     DevPort: Number,
     ProjID: String

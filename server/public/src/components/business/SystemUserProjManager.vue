@@ -11,6 +11,9 @@
               <el-form-item >
                  <el-button @click="changeEdit" type="primary" round>{{isEditText}}</el-button>
               </el-form-item>
+              <el-form-item >
+                 <el-checkbox v-show="isEdit" v-model="onlySelectNoProjPersons">仅拉取自由人</el-checkbox>
+              </el-form-item>
             </el-form>
           </el-col>
           <el-col :span="8">
@@ -68,6 +71,7 @@ export default {
   },
   data() {
     return {
+      onlySelectNoProjPersons: true,
       curCityID: -1,
       curProjID: -1,
       isEdit: true,

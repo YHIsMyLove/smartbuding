@@ -213,10 +213,6 @@ exports.GetDeptByProjID = async (req, res) => {
     }
 }
 
-exports.GetDeptListByProjID = async (req, res) => {
-
-}
-
 //设置用户部门表
 exports.InsertOrDelUserDept = async (req, res) => {
     let insertOrDel = req.body.insertOrDel
@@ -712,25 +708,11 @@ exports.InsertOrUpdateMeetingContent = async (req, res) => {
         } else {
             console.log(req.body)
             await MeetingMinutes.updateOne({ _id: req.body._id }, req.body).exec()
-
         }
         res.send(msg.genSuccessMsg('保存成功'))
     } catch (error) {
         res.send(msg.genFailedMsg('保存失败->' + error))
     }
-    // try {
-    //     if (req.body._id == undefined) {
-    //         let meeting = new Meeting(req.body)
-    //         await meeting.updateAndSave();
-    //     } else {
-    //         let meeting = req.meeting
-    //         meeting = Object.assign(Meeting, req.body);
-    //         await meeting.updateAndSave();
-    //     }
-    //     res.send(msg.genSuccessMsg('保存成功'))
-    // } catch (error) {
-    //     res.send(msg.genFailedMsg('保存失败->' + error))
-    // }
 }
 
 //删除会议内容

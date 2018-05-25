@@ -18,7 +18,6 @@ exports.checkID = async (req, res) => {
     if (!result) {
         return res.send(msg.genSuccessMsg('允许创建'))
     }
-    console.log(req.query)
     res.send(msg.genFailedMsg('UserID重复!'))
 }
 

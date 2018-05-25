@@ -9,14 +9,15 @@ import NProgress from 'nprogress'//页面顶部进度条
 import 'nprogress/nprogress.css'
 
 import Login from './components/Login.vue'
-import Home from './components/Home.vue'
+import Home from './components/layout/Home.vue'
 import Main from './components/Main.vue'
+import axios from 'axios';
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
-const routes = [
+var routes = [
     {
         path: '/login',
         component: Login,
@@ -32,31 +33,20 @@ const routes = [
                 path: '/',
                 component: Main,
                 name: '主页',
-                meta: { redirectAuth: true }
+                meta: { redirectAuth: true },
+                hidden: true
             },
             {
                 path: '/SysFieldManager',
                 component: resolve =>
                     require(['./components/business/SysFieldManager.vue'], resolve),
                 name: '系统管理',
-                meta: { redirectAuth: true }
+                meta: { redirectAuth: true },
             },
             {
                 path: '/FileManager',
                 component: resolve => require(['./components/business/FileManager.vue'], resolve),
                 name: '文件管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/UserManager',
-                component: resolve => require(['./components/business/UserManager.vue'], resolve),
-                name: '用户管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/SystemUserProjManager',
-                component: resolve => require(['./components/business/SystemUserProjManager.vue'], resolve),
-                name: '用户项目管理',
                 meta: { redirectAuth: true }
             },
             {
@@ -80,6 +70,18 @@ const routes = [
         name: '用户管理',
         iconCls: 'fa fa-id-card-o',
         children: [
+            {
+                path: '/UserManager',
+                component: resolve => require(['./components/business/UserManager.vue'], resolve),
+                name: '用户管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/SystemUserProjManager',
+                component: resolve => require(['./components/business/SystemUserProjManager.vue'], resolve),
+                name: '用户项目管理',
+                meta: { redirectAuth: true }
+            },
             {
                 path: '/UserProjManager',
                 component: resolve => require(['./components/business/UserProjManager.vue'], resolve),
@@ -114,7 +116,7 @@ const routes = [
                 meta: { redirectAuth: true }
             },
         ],
-        meta: { redirectAuth: true }
+        meta: { redirectAuth: true },
     },
     {
         path: '/',
@@ -129,7 +131,7 @@ const routes = [
                 meta: { redirectAuth: true }
             },
         ],
-        meta: { redirectAuth: true }
+        meta: { redirectAuth: true },
     },
     {
         path: '*',

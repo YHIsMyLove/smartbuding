@@ -1,6 +1,6 @@
 <template>
     <el-tabs style="width:100%;">
-        <el-tab-pane label="萤石设备管理">
+        <el-tab-pane label="门禁设备管理">
             <section>
                 <el-col :span="24" class="toolbar">
                     <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -214,5 +214,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
