@@ -7,8 +7,10 @@ import NotFoundPage from './pages/not-found.vue';
 import PanelLeftPage from './pages/panel-left.vue';
 import PanelRightPage from './pages/panel-right.vue';
 import ProjectMain from './pages/project/main.vue';
+import ProjectList from './pages/project/list.vue';
 import AccountMain from './pages/account/main.vue';
 import DoorsMain from './pages/doors/main.vue';
+import WorkersMain from './pages/workers/main.vue'
 
 export default [
   {
@@ -40,12 +42,20 @@ export default [
     component: ProjectMain,
   },
   {
+    path: '/project/list/',
+    component: ProjectList,
+  },
+  {
     path: '/account/main/',
     component: AccountMain,
   },
   {
     path: '/doors/main/',
     component: DoorsMain,
+  },
+  {
+    path: '/workers/main/',
+    component: WorkersMain,
   },
   {
     path: '(.*)',
