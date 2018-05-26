@@ -13,11 +13,11 @@ import Home from './components/layout/Home.vue'
 import Main from './components/Main.vue'
 import axios from 'axios';
 
-import ECharts from 'vue-echarts/components/ECharts'
-import 'echarts/lib/chart/bar'
-import 'echarts/lib/chart/line'
-import 'echarts/lib/component/tooltip'
-Vue.component('chart', ECharts)
+// import ECharts from 'vue-echarts/components/ECharts'
+// import 'echarts/lib/chart/bar'
+// import 'echarts/lib/chart/line'
+// import 'echarts/lib/component/tooltip'
+// Vue.component('chart', ECharts)
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
