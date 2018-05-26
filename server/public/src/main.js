@@ -13,6 +13,12 @@ import Home from './components/layout/Home.vue'
 import Main from './components/Main.vue'
 import axios from 'axios';
 
+import ECharts from 'vue-echarts/components/ECharts'
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/component/tooltip'
+Vue.component('chart', ECharts)
+
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
@@ -34,7 +40,6 @@ var routes = [
                 component: Main,
                 name: '主页',
                 meta: { redirectAuth: true },
-                hidden: true
             },
             {
                 path: '/SysFieldManager',
@@ -47,18 +52,6 @@ var routes = [
                 path: '/FileManager',
                 component: resolve => require(['./components/business/FileManager.vue'], resolve),
                 name: '文件管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/YSDeviceManager',
-                component: resolve => require(['./components/business/YSDeviceManager.vue'], resolve),
-                name: '萤石设备管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/DoorDeviceManager',
-                component: resolve => require(['./components/business/DoorDeviceManager.vue'], resolve),
-                name: '门禁设备管理',
                 meta: { redirectAuth: true }
             },
         ],
@@ -76,12 +69,12 @@ var routes = [
                 name: '用户管理',
                 meta: { redirectAuth: true }
             },
-            {
-                path: '/SystemUserProjManager',
-                component: resolve => require(['./components/business/SystemUserProjManager.vue'], resolve),
-                name: '用户项目管理',
-                meta: { redirectAuth: true }
-            },
+            // {
+            //     path: '/SystemUserProjManager',
+            //     component: resolve => require(['./components/business/SystemUserProjManager.vue'], resolve),
+            //     name: '用户项目管理',
+            //     meta: { redirectAuth: true }
+            // },
             {
                 path: '/UserProjManager',
                 component: resolve => require(['./components/business/UserProjManager.vue'], resolve),
@@ -113,6 +106,18 @@ var routes = [
                 path: '/DeviceManager',
                 component: resolve => require(['./components/business/DeviceManager.vue'], resolve),
                 name: '系统设备管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/YSDeviceManager',
+                component: resolve => require(['./components/business/YSDeviceManager.vue'], resolve),
+                name: '萤石设备管理',
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/DoorDeviceManager',
+                component: resolve => require(['./components/business/DoorDeviceManager.vue'], resolve),
+                name: '门禁设备管理',
                 meta: { redirectAuth: true }
             },
         ],

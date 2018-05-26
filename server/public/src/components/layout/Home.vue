@@ -219,7 +219,7 @@ export default {
 }
 
 .panel-c-c2 {
-  background: #f1f2f7;
+  background: #fff;
   position: absolute;
   right: 0px;
   top: 0px;
@@ -247,8 +247,9 @@ export default {
   }
 }
 
+
 .panel-c-c {
-  background: #f1f2f7;
+  background: #fff;
   position: absolute;
   right: 0px;
   top: 0px;
