@@ -62,6 +62,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setCity"]),
     //更新项目的ID
     SelectProjChange(proj) {
       if (this.getProj) {
