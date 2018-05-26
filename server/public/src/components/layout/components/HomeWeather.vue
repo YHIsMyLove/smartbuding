@@ -9,13 +9,13 @@
     </el-card>  
 </template>
 <script>
-import ECharts from "vue-echarts/components/ECharts";
-import _echarts from "echarts";
+// import ECharts from "vue-echarts/components/ECharts";
+// import _echarts from "echarts";
 export default {
-  components: {
-    ECharts,
-    _echarts
-  },
+  // components: {
+  //   ECharts,
+  //   _echarts
+  // },
   data() {
     return {
       WeatherOpetion2: {
@@ -56,9 +56,9 @@ export default {
           type: "value",
           show: false
         },
-        legend: {
-          data: ["PM2.5", "PM10", "温度", "湿度"]
-        },
+        // legend: {
+        //   data: ["PM2.5", "PM10", "温度", "湿度"]
+        // },
         series: [
           {
             name: "PM2.5",

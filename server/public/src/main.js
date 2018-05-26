@@ -19,6 +19,15 @@ import axios from 'axios';
 // import 'echarts/lib/component/tooltip'
 // Vue.component('chart', ECharts)
 
+import ECharts from 'vue-echarts/components/ECharts'
+// import ECharts modules manually to reduce bundle size
+import "echarts";
+// import 'echarts/lib/chart/bar'
+// import 'echarts/lib/chart/line'
+// import 'echarts/lib/component/tooltip'
+// register component to use
+Vue.component('ECharts', ECharts)
+
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
