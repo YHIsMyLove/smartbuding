@@ -10,15 +10,11 @@
 </template>
 <script>
 import ECharts from "vue-echarts/components/ECharts";
-import bar from "echarts/lib/chart/bar";
-import line from "echarts/lib/chart/line";
-import tooltip from "echarts/lib/component/tooltip";
+import _echarts from "echarts";
 export default {
   components: {
     ECharts,
-    tooltip,
-    bar,
-    line
+    _echarts
   },
   data() {
     return {
