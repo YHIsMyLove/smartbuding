@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import ECharts from "vue-echarts/components/ECharts";
-import _echarts from "echarts";
+// import ECharts from "vue-echarts/components/ECharts";
+// import _echarts from "echarts";
 export default {
-  components: {
-    ECharts,
-    _echarts
-  },
+//   components: {
+//     ECharts,
+//     _echarts
+//   },
   data() {
     return {
       RankingListData: {
