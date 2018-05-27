@@ -22,6 +22,11 @@ import axios from 'axios';
 import ECharts from 'vue-echarts/components/ECharts'
 // import ECharts modules manually to reduce bundle size
 import echarts from 'echarts';
+// 引入基本模板
+let echarts = require('echarts/lib/echarts')
+require('echarts/lib/chart/bar')
+require('echarts/lib/component/tooltip')
+require('echarts/lib/component/title')
 // import 'echarts/lib/chart/bar'
 // import 'echarts/lib/chart/line'
 // import 'echarts/lib/component/tooltip'
