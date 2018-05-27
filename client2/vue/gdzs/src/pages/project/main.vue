@@ -45,13 +45,13 @@
                 </f7-link>
             </f7-col>
             <f7-col width="33">
-                <f7-link href="/cameras/main/">
+                <f7-link href="/meetings/list/">
                     <img src="static/imgs/日历事件.png" alt="">
                     <p>日历事件</p>
                 </f7-link>
             </f7-col>
             <f7-col width="33">
-                <f7-link href="/cameras/main/">
+                <f7-link href="/ranking/main/">
                     <img src="static/imgs/排行.png" alt="">
                     <p>排行榜</p>
                 </f7-link>
@@ -59,7 +59,7 @@
         </f7-row>
         <f7-row>
             <f7-col width="33">
-                <f7-link href="/cameras/main/">
+                <f7-link href="/especially_task/main/">
                     <img src="static/imgs/特种作业.png" alt="">
                     <p>特种作业审批</p>
                 </f7-link>
@@ -89,7 +89,7 @@ export default {};
   top: 56px;
   left: 0;
   right: 0;
-  height: 150px;
+  height: 100px;
   background-color: #2196f3;
   color: #fff;
   z-index: 500;
@@ -103,7 +103,7 @@ export default {};
 
 .content {
   position: absolute;
-  top: 238px;
+  top: 188px;
   bottom: 56px;
   left: 0;
   right: 0;

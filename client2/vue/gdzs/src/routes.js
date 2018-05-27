@@ -10,7 +10,13 @@ import ProjectMain from './pages/project/main.vue';
 import ProjectList from './pages/project/list.vue';
 import AccountMain from './pages/account/main.vue';
 import DoorsMain from './pages/doors/main.vue';
-import WorkersMain from './pages/workers/main.vue'
+import DoorsStatistics from './pages/doors/statistics.vue';
+import WorkersMain from './pages/workers/main.vue';
+import WorkersDetail from './pages/workers/detail.vue';
+import MeetingList from './pages/meetings/list.vue';
+import MeetingDetail from './pages/meetings/detail.vue';
+import RankingMain from './pages/ranking/main.vue';
+import EspeciallyTaskMain from './pages/especially_task/main.vue';
 
 export default [
   {
@@ -54,8 +60,32 @@ export default [
     component: DoorsMain,
   },
   {
+    path: '/doors/statistics/',
+    component: DoorsStatistics,
+  },
+  {
     path: '/workers/main/',
     component: WorkersMain,
+  },
+  {
+    path: '/workers/detail/',
+    component: WorkersDetail,
+  },
+  {
+    path: '/meetings/list/',
+    component: MeetingList,
+  },
+  {
+    path: '/meetings/detail',
+    component: MeetingDetail,
+  },
+  {
+    path: '/ranking/main',
+    component: RankingMain,
+  },
+  {
+    path: '/especially_task/main',
+    component: EspeciallyTaskMain,
   },
   {
     path: '(.*)',

@@ -13,13 +13,11 @@
             </f7-subnavbar>
         </f7-navbar>
         <div class="filter-area"></div>
-        <div class="content">
-            <f7-list>
-                <f7-list-item :key="index" v-for="(project,index) in projects" :title="project.name" link @click="onItemClick(project, $event)">
-                    <img slot="after" src="static/imgs/项目定位30x30.png" alt="">
-                </f7-list-item>
-            </f7-list>
-        </div>
+        <f7-list>
+            <f7-list-item :key="index" v-for="(project,index) in projects" :title="project.name" link @click="onItemClick(project, $event)">
+                <img slot="after" src="static/imgs/项目定位30x30.png" alt="">
+            </f7-list-item>
+        </f7-list>
     </f7-page>
 </template>
 <script>
