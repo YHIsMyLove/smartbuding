@@ -8,7 +8,7 @@
 </template>
 
 <script>
-let echarts = require("echarts/lib/echarts");
+let echarts = require("echarts");
 require("echarts/lib/chart/bar");
 require("echarts/lib/component/tooltip");
 require("echarts/lib/component/title");
