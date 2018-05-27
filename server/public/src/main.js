@@ -21,7 +21,7 @@ import axios from 'axios';
 
 import ECharts from 'vue-echarts/components/ECharts'
 // import ECharts modules manually to reduce bundle size
-import "echarts";
+import echarts from 'echarts';
 // import 'echarts/lib/chart/bar'
 // import 'echarts/lib/chart/line'
 // import 'echarts/lib/component/tooltip'
