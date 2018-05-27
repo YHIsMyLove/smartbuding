@@ -9,6 +9,10 @@
     </el-card>  
 </template>
 <script>
+let echarts = require("echarts/lib/echarts");
+require("echarts/lib/chart/bar");
+require("echarts/lib/component/tooltip");
+require("echarts/lib/component/title");
 // import ECharts from "vue-echarts/components/ECharts";
 // import _echarts from "echarts";
 export default {
