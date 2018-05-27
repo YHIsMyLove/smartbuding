@@ -23,7 +23,8 @@
         <HomeActions/>
       </el-col>
       <el-col :span="10">
-        <HomeWeather/>
+        <!-- <HomeWeather/> -->
+        <test/>
       </el-col>
     </el-row>
   </section>
@@ -36,6 +37,7 @@ import HomeApprove from "./layout/components/HomeApprove.vue";
 import HomeActions from "./layout/components/HomeActions.vue";
 import HomeWeather from "./layout/components/HomeWeather.vue";
 import HomeRankingList from "./layout/components/HomeRankingList.vue";
+import test from "./layout/components/test.vue";
 export default {
   components: {
     HomeRoutesLink,
@@ -43,7 +45,8 @@ export default {
     HomeApprove,
     HomeActions,
     HomeWeather,
-    HomeRankingList
+    HomeRankingList,
+    test
   },
   data() {
     return {};
