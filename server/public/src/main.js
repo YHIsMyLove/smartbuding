@@ -19,9 +19,9 @@ import axios from 'axios';
 // import 'echarts/lib/component/tooltip'
 // Vue.component('chart', ECharts)
 
-import ECharts from 'vue-echarts/components/ECharts'
-import echarts from 'echarts';
-Vue.component('ECharts', ECharts)
+// import ECharts from 'vue-echarts/components/ECharts'
+// import echarts from 'echarts';
+// Vue.component('ECharts', ECharts)
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
