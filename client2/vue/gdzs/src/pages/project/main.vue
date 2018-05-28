@@ -8,9 +8,9 @@
             <f7-link icon-if-ios="f7:menu" icon-if-md="material:crop_free"></f7-link>
         </f7-nav-right>
     </f7-navbar>
-    <div class="head display-flex padding" slot="fixed">
+    <div class="head display-flex" slot="fixed">
         <div>
-            <span class="app-name">项目助手</span><span>v1.0</span>
+            <span class="app-name">工地项目助手</span><span>v1.0</span>
         </div>
         <div class="project-name">
             <f7-link href="/project/list/">柳州项目</f7-link>
@@ -36,8 +36,6 @@
                     <p>环境监测</p>
                 </f7-link>
             </f7-col>
-        </f7-row>
-        <f7-row>
             <f7-col width="33">
                 <f7-link href="/cameras/main/">
                     <img src="static/imgs/机械设施监控.png" alt="">
@@ -56,8 +54,6 @@
                     <p>排行榜</p>
                 </f7-link>
             </f7-col>
-        </f7-row>
-        <f7-row>
             <f7-col width="33">
                 <f7-link href="/especially_task/main/">
                     <img src="static/imgs/特种作业.png" alt="">
@@ -90,6 +86,7 @@ export default {};
   left: 0;
   right: 0;
   height: 100px;
+  padding: 16px;
   background-color: #2196f3;
   color: #fff;
   z-index: 500;
@@ -97,16 +94,8 @@ export default {};
   justify-content:flex-end;
 }
 
-.head-content {
-  height: 100%;
-}
-
 .content {
-  position: absolute;
-  top: 188px;
-  bottom: 56px;
-  left: 0;
-  right: 0;
+  padding: 132px 0 56px 0;
   text-align: center;
 }
 

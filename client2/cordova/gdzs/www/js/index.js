@@ -40,6 +40,11 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+
+        if ('deviceready == id')
+        {
+            navigator.splashscreen.show();
+        }
     }
 };
 
