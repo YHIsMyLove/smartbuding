@@ -17,6 +17,7 @@ import MeetingList from './pages/meetings/list.vue';
 import MeetingDetail from './pages/meetings/detail.vue';
 import RankingMain from './pages/ranking/main.vue';
 import EspeciallyTaskMain from './pages/especially_task/main.vue';
+import EspeciallyTaskDhzy from './pages/especially_task/dhzy.vue';
 
 export default [
   {
@@ -86,6 +87,10 @@ export default [
   {
     path: '/especially_task/main',
     component: EspeciallyTaskMain,
+  },
+  {
+    path: '/especially_task/dhzy/',
+    component: EspeciallyTaskDhzy,
   },
   {
     path: '(.*)',
