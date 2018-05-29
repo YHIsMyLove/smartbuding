@@ -5,7 +5,7 @@
             <f7-link icon-if-ios="f7:menu" icon-if-md="material:menu" panel-open="left"></f7-link>
         </f7-nav-left>
         <f7-nav-right>
-            <f7-link icon-if-ios="f7:menu" icon-if-md="material:crop_free" @click="scan()"></f7-link>
+            <f7-link icon-if-ios="f7:menu" icon-if-md="material:crop_free"></f7-link>
         </f7-nav-right>
     </f7-navbar>
     <div class="head display-flex" slot="fixed">
@@ -55,7 +55,7 @@
                 </f7-link>
             </f7-col>
             <f7-col width="33">
-                <f7-link href="/especially_task/main/">
+                <f7-link href="/especially-task/main/">
                     <img src="static/imgs/特种作业.png" alt="">
                     <p>特种作业审批</p>
                 </f7-link>

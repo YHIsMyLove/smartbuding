@@ -12,7 +12,7 @@
         </f7-navbar>
         <f7-page-content id="create-by-me" tab tab-active>
             <f7-list media-list>
-                <f7-list-item link="#">
+                <f7-list-item link="/especially-task/check-dhzy/">
                     <div slot="inner">
                         <div class="my-divider" style="margin:8px 0;"></div>
                         <div class="display-flex justify-content-flex-start align-items-center">
@@ -160,7 +160,7 @@ export default {
   data() {
     return {
       buttons: [
-        { text: "申请动火作业审批", url: "/especially_task/dhzy/" },
+        { text: "申请动火作业审批", url: "/especially-task/create-dhzy/" },
         { text: "申请受限作业审批", url: "#" },
         { text: "申请起重吊装作业审批", url: "#" },
         { text: "申请高处作业审批", url: "#" },
@@ -180,7 +180,7 @@ export default {
 a[class*="button"] {
   text-align: left;
   color: #000;
-  border-top: 1px solid #ccc;
+  /* border-top: 1px solid #ccc; */
 }
 </style>
 
