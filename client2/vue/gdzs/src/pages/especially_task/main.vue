@@ -5,7 +5,7 @@
                 <f7-link icon-if-ios="f7:menu" icon-if-md="material:add" popover-open="#popover"></f7-link>
                 <f7-popover id="popover">
                     <f7-list>
-                        <f7-button :key="index" v-for="(text, index) in buttons" :text="text" :popover-close="true" href=“/especially_task/dhzy/”></f7-button>
+                        <f7-button :key="index" v-for="(btn, index) in buttons" :text="btn.text" :popover-close="true" :href="btn.url"></f7-button>
                     </f7-list>
                 </f7-popover>
             </f7-nav-right>
@@ -157,28 +157,30 @@
 </template>
 <script>
 export default {
-    data(){
-        return {
-            buttons:[
-                "申请动火作业审批", "申请受限作业审批", "申请起重吊装作业审批", "申请高处作业审批", "申请脚手架拆卸作业审批", "申请安全防护拆除作业审批"
-            ]
-        }
-    },
-    methods:
-    {
-        onBtnClick(text)
-        {
-            console.log(text);
-        }
+  data() {
+    return {
+      buttons: [
+        { text: "申请动火作业审批", url: "/especially_task/dhzy/" },
+        { text: "申请受限作业审批", url: "#" },
+        { text: "申请起重吊装作业审批", url: "#" },
+        { text: "申请高处作业审批", url: "#" },
+        { text: "申请脚手架拆卸作业审批", url: "#" },
+        { text: "申请安全防护拆除作业审批", url: "#" }
+      ]
+    };
+  },
+  methods: {
+    onBtnClick(text) {
+      console.log(text);
     }
-}
+  }
+};
 </script>
 <style scoped>
-a[class*="button"]
-{
-    text-align: left;
-    color: #000;
-    border-top: 1px solid #ccc;
+a[class*="button"] {
+  text-align: left;
+  color: #000;
+  border-top: 1px solid #ccc;
 }
 </style>
 

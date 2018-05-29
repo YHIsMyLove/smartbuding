@@ -14,5 +14,37 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "com.manateeworks.barcodescanner": {
+    "source": {
+      "type": "registry",
+      "id": "com.manateeworks.barcodescanner"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-dialogs": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-dialogs"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-device": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-device"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "call-number": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/Rohfosho/CordovaCallNumberPlugin.git"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

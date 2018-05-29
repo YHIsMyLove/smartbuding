@@ -12,7 +12,17 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "cn.yooling.app.gdzs"
+    },
+    "com.manateeworks.barcodescanner": {
+      "PACKAGE_NAME": "cn.yooling.app.gdzs"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "cn.yooling.app.gdzs"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "cn.yooling.app.gdzs"
+    }
+  }
 }

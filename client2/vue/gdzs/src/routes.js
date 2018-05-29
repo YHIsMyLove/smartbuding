@@ -77,15 +77,15 @@ export default [
     component: MeetingList,
   },
   {
-    path: '/meetings/detail',
+    path: '/meetings/detail/',
     component: MeetingDetail,
   },
   {
-    path: '/ranking/main',
+    path: '/ranking/main/',
     component: RankingMain,
   },
   {
-    path: '/especially_task/main',
+    path: '/especially_task/main/',
     component: EspeciallyTaskMain,
   },
   {
