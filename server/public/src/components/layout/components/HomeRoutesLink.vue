@@ -31,6 +31,9 @@ export default {
 };
 </script>
 <style scoped>
+.main {
+  margin-top: 15px;
+}
 .badgeItem {
   width: 80px;
   height: 60px;

@@ -3,7 +3,7 @@
         <div slot="header" class="clearfix">
             <span>当月红黑榜</span>
         </div>
-        <ECharts class="chart1" :options='RankingListData' />
+        <ECharts class="chart1" :options='RankingListData' auto-resize/>
     </el-card>
 </template>
 

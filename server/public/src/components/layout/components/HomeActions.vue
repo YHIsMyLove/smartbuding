@@ -17,7 +17,7 @@
             </el-menu-item>
         </el-menu>
         <div class="bottom clearfix">
-            <el-button type="text" class="button" style="float:right;color:black">更多</el-button>
+            <el-button @click="link2Actions" type="text" class="button" style="float:right;color:black">更多</el-button>
         </div>
     </el-card>    
 </template>
@@ -54,6 +54,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    link2Actions() {
+      this.$router.push({ path: "/Meeting" });
+    }
   }
 };
 </script>

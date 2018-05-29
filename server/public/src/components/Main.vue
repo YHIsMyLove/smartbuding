@@ -1,32 +1,34 @@
 <template>
   <section class="main">
-    <el-row>
+    <div class="left-body">
       <el-col :span="24">
-        <HomeRoutesLink/>
+          <HomeRoutesLink/>
       </el-col>
-    </el-row>
-    <el-row>
       <el-col :span="24">
-        <HomeStatistical/>
+          <HomeStatistical/>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="12">
-        <HomeApprove/>
-      </el-col>
-      <el-col :span="12" >
-        <HomeRankingList/>
-      </el-col>
-    </el-row>
-    <el-row>
       <el-col :span="14">
-        <HomeActions/>
+          <HomeApprove/>
       </el-col>
       <el-col :span="10">
-        <!-- <HomeWeather/> -->
-        <test/>
+          <HomeRankingList/>
       </el-col>
-    </el-row>
+      <el-col :span="16">
+          <HomeActions/>
+      </el-col>
+      <el-col :span="8">
+          <HomeWeather/>
+      </el-col>
+    </div>
+    <div class="right-body">
+      <el-col :span="24">
+        <HomeDefult/>
+      </el-col>
+      <el-col :span="24">
+        <HomeDefult/>
+      </el-col>
+    </div>
+    
   </section>
 </template>
 
@@ -37,7 +39,7 @@ import HomeApprove from "./layout/components/HomeApprove.vue";
 import HomeActions from "./layout/components/HomeActions.vue";
 import HomeWeather from "./layout/components/HomeWeather.vue";
 import HomeRankingList from "./layout/components/HomeRankingList.vue";
-import test from "./layout/components/test.vue";
+import HomeDefult from "./layout/components/HomeDefult.vue";
 export default {
   components: {
     HomeRoutesLink,
@@ -46,7 +48,7 @@ export default {
     HomeActions,
     HomeWeather,
     HomeRankingList,
-    test
+    HomeDefult
   },
   data() {
     return {};
@@ -54,3 +56,13 @@ export default {
   created() {}
 };
 </script>
+<style scoped>
+.left-body {
+  width: 70%;
+  float: left;
+}
+.right-body {
+  width: 30%;
+  float: right;
+}
+</style>
