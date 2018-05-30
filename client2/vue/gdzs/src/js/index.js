@@ -28,12 +28,13 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
-        this.receivedEvent('deviceready');
+        console.log('device ready');
     },
 
     onBackPressed: function()
     {
-        this.receivedEvent('backbutton');
+        console.log('back pressed');
+        this.$f7.views.main.router.back();
     },
 
     // Update DOM on a Received Event

@@ -60,6 +60,30 @@
 
 <script>
 export default {
+  onDeviceReady: function()
+  {
+    console.log('device ready');
+  },
+  onBackPressed: function()
+  {
+    console.log('back pressed');
+    if (this.$f7.views.main.history.length > 1)
+      this.$f7.views.main.router.back();
+  },
+  mounted() {
+    if (true) {
+      document.addEventListener(
+        "deviceready",
+        this.onDeviceReady,
+        false
+      );
+      document.addEventListener(
+        "backbutton",
+        this.onBackPressed,
+        false
+      );
+    }
+  },
   computed: {
     isiOS() {
       return this.$theme.ios;
@@ -72,5 +96,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>

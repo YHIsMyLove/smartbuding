@@ -56,8 +56,8 @@ module.exports.metadata =
   "cordova-plugin-dialogs": "2.0.1",
   "cordova-plugin-device": "2.0.2",
   "com.manateeworks.barcodescanner": "1.8.1",
-  "cordova-plugin-whitelist": "1.3.3",
-  "cordova-plugin-splashscreen": "5.0.2"
+  "cordova-plugin-splashscreen": "5.0.2",
+  "cordova-plugin-whitelist": "1.3.3"
 };
 // BOTTOM OF METADATA
 });
