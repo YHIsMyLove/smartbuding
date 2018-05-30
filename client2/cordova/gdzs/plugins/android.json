@@ -7,13 +7,16 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-splashscreen": {
+    "call-number": {
+      "PACKAGE_NAME": "cn.yooling.app.gdzs"
+    },
+    "com.manateeworks.barcodescanner": {
       "PACKAGE_NAME": "cn.yooling.app.gdzs"
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "cn.yooling.app.gdzs"
     },
-    "com.manateeworks.barcodescanner": {
+    "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "cn.yooling.app.gdzs"
     }
   },

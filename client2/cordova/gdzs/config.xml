@@ -40,6 +40,7 @@
     <preference name="AutoHideSplashScreen" value="true" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <engine name="browser" spec="^5.0.3" />
-    <engine name="android" spec="^7.0.0" />
+    <engine name="android" spec="^6.4.0" />
 </widget>

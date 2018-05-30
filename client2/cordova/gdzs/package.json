@@ -12,7 +12,7 @@
     "dependencies": {
         "call-number": "git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git",
         "com.manateeworks.barcodescanner": "^1.8.1",
-        "cordova-android": "^7.0.0",
+        "cordova-android": "^6.4.0",
         "cordova-browser": "^5.0.3",
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-dialogs": "^2.0.1",
@@ -21,7 +21,8 @@
     },
     "cordova": {
         "plugins": {
-            "cordova-plugin-whitelist": {}
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-splashscreen": {}
         },
         "platforms": [
             "browser",

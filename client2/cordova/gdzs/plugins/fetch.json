@@ -7,14 +7,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-splashscreen": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-splashscreen@5.0.2"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "com.manateeworks.barcodescanner": {
     "source": {
       "type": "registry",
@@ -43,6 +35,14 @@
     "source": {
       "type": "registry",
       "id": "https://github.com/Rohfosho/CordovaCallNumberPlugin.git"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-splashscreen": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-splashscreen@5.0.2"
     },
     "is_top_level": true,
     "variables": {}
