@@ -1,0 +1,7 @@
+{
+    "UserID*": "String",
+    "RankingListTitle*": "String",
+    "RankingListContent": "String",
+    "RankingListScore": "Number",
+    "ProjID*": "String"
+}

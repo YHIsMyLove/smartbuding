@@ -25,7 +25,7 @@
         <HomeDefult/>
       </el-col>
       <el-col :span="24">
-        <HomeDefult/>
+        <MenuUser/>
       </el-col>
     </div>
     
@@ -40,6 +40,7 @@ import HomeActions from "./layout/components/HomeActions.vue";
 import HomeWeather from "./layout/components/HomeWeather.vue";
 import HomeRankingList from "./layout/components/HomeRankingList.vue";
 import HomeDefult from "./layout/components/HomeDefult.vue";
+import MenuUser from "./businesscontrols/MenuUser.vue";
 export default {
   components: {
     HomeRoutesLink,
@@ -48,7 +49,7 @@ export default {
     HomeActions,
     HomeWeather,
     HomeRankingList,
-    HomeDefult
+    HomeDefult,MenuUser
   },
   data() {
     return {};

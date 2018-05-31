@@ -1,0 +1,14 @@
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const TemplateName = require('../mongodb/business/TemplateNameBusiness')
+
+router.get('/GetTemplateNameByID', TemplateName.GetTemplateNameByID);
+router.get('/DelTemplateNameByID', TemplateName.DelTemplateNameByID);
+router.get('/ListTemplateName', TemplateName.ListTemplateName);
+router.post('/CreateTemplateName', TemplateName.CreateOrUpdateTemplateName);
+router.post('/UpdateTemplateName', TemplateName.CreateOrUpdateTemplateName);
+router.post('/CreateOrUpdateTemplateName', TemplateName.CreateOrUpdateTemplateName);
+/*******************************************************************************/
+/**client***********************************************************************/
+/*******************************************************************************/

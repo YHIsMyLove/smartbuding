@@ -5,115 +5,7 @@
     </el-col>
     <el-col :span="24" class="panel-center">
         <aside class="left-aside">
-            <div class="panel-User">
-            <el-col :span="8">
-            <div class="user-img">
-            <img style="border-radius: 50%;vertical-align: middle;widht:32px;height:32px" src="../../assets/user.png" alt="user">
-            </div>
-            </el-col>
-            <el-col :span="8">
-            <div style="margin-top:12px">
-            <span style="font-size:15px">
-            <b>用户1</b></span>
-            <br>
-            <span style="font-size:10px;color:#C0C4CC">经理</span>
-            </div>
-            </el-col>
-            <el-col :span="8">
-            <div style="margin-top:12px">
-            <el-tag type="info"> 工程师</el-tag>
-            </div>
-            </el-col>
-            <el-col :span="24">
-            <hr style="height:.5px;border:none;border-top:1px solid #ffff;" />
-            </el-col>
-            </div>
-            <el-menu :collapse='iscollapse' :default-active="$route.path" :default-openeds="openedArr" collapse-transition class="aside-menu" theme="dark" unique-opened router>
-            <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-            <el-submenu
-            :key="index"
-            :index="index+''"
-            v-if="!item.leaf"
-            >
-            <template slot="title">
-            <i :class="item.iconCls"></i>{{item.name}}
-            </template>
-
-            <el-menu-item
-            :key="child.path"
-            v-for="child in item.children"
-            v-if="!child.hidden"
-            :index="child.path"
-            >
-            {{child.name}}
-            </el-menu-item>
-            </el-submenu>
-            <el-menu-item
-            :key="item.children[0].path"
-            v-if="item.leaf&&item.children.length>0"
-            :index="item.children[0].path"
-            >
-            <i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
-            </template>
-
-            </el-menu>
-        </aside>
-        <section :class="contentStyle">
-            <div class="grid-content bg-purple-light">
-            <el-col
-            :span="24"
-            class="panel-inner-top"
-            >
-            <strong>{{$route.name}}</strong>
-            <el-breadcrumb
-            separator="/"
-            class="bread-crumb"
-            >
-            <el-breadcrumb-item
-              :to="{ path: '/' }"
-              v-if="$route.path!='/'"
-              >首页
-            </el-breadcrumb-item>
-            <el-breadcrumb-item v-if="$route.path!='/'">
-              {{$route.matched[0].name}}
-            </el-breadcrumb-item>
-            <el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
-            </el-breadcrumb>
-            </el-col>
-            <el-col
-            :span="24"
-            class="panel-inner-bottom"
-            >
-            <router-view></router-view>
-            </el-col>
-            </div>
-        </section>
-    </el-col>
-    <el-col :span="24" class="panel-center">
-        <aside class="left-aside">
-            <div class="panel-User">
-            <el-col :span="8">
-            <div class="user-img">
-            <img style="border-radius: 50%;vertical-align: middle;widht:32px;height:32px" src="../../assets/user.png" alt="user">
-            </div>
-            </el-col>
-            <el-col :span="8">
-            <div style="margin-top:12px">
-            <span style="font-size:15px">
-            <b>用户1</b></span>
-            <br>
-            <span style="font-size:10px;color:#C0C4CC">经理</span>
-            </div>
-            </el-col>
-            <el-col :span="8">
-            <div style="margin-top:12px">
-            <el-tag type="info"> 工程师</el-tag>
-            </div>
-            </el-col>
-            <el-col :span="24">
-            <hr style="height:.5px;border:none;border-top:1px solid #ffff;" />
-            </el-col>
-            </div>
+            <MenuUser/>
             <el-menu :collapse='iscollapse' :default-active="$route.path" :default-openeds="openedArr" collapse-transition class="aside-menu"  theme="dark" unique-opened router>
             <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
             <el-submenu :key="index" :index="index+''" v-if="!item.leaf">
@@ -148,22 +40,22 @@
                 >
                 <strong>{{$route.name}}</strong>
                 <el-breadcrumb
-                separator="/"
-                class="bread-crumb"
-                >
-                <el-breadcrumb-item
-                :to="{ path: '/' }"
-                v-if="$route.path!='/'"
-                >首页</el-breadcrumb-item>
-                <el-breadcrumb-item v-if="$route.path!='/'">{{$route.matched[0].name}}</el-breadcrumb-item>
-                <el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
+                  separator="/"
+                  class="bread-crumb"
+                  >
+                  <el-breadcrumb-item
+                  :to="{ path: '/' }"
+                  v-if="$route.path!='/'"
+                  >首页</el-breadcrumb-item>
+                  <el-breadcrumb-item v-if="$route.path!='/'">{{$route.matched[0].name}}</el-breadcrumb-item>
+                  <el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
                 </el-breadcrumb>
                 </el-col>
                 <el-col
-                :span="24"
-                class="panel-inner-bottom"
+                  :span="24"
+                  class="panel-inner-bottom"
                 >
-                <router-view></router-view>
+                  <router-view></router-view>
                 </el-col>
             </div>
         </section>
@@ -173,9 +65,11 @@
 
 <script>
 import NavBar from "../businesscontrols/NavBar.vue";
+import MenuUser from "../businesscontrols/MenuUser.vue";
 export default {
   components: {
-    NavBar
+    NavBar,
+    MenuUser
   },
   data() {
     return {
@@ -246,7 +140,6 @@ export default {
     padding: 15px;
   }
 }
-
 
 .panel-c-c {
   background: #fff;

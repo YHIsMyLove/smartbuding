@@ -27,7 +27,7 @@
 <script>
 import SelectCity from "./SelectCity.vue";
 import SelectProv from "./SelectProv.vue";
-import ProjMenu from "./ProjMenu.vue";
+import ProjMenu from "./ProjMenu.vue"; 
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {

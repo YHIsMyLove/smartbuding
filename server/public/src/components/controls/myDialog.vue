@@ -1,7 +1,7 @@
 <template >
     <el-dialog :title="title" v-model="myvisible" :close-on-click-modal="true">
         <el-form :model="editForm" label-width="150px" ref="editForm">
-            <el-form-item :label="editForm[item].label" :prop="editForm[item].prop" v-for="item in Object.keys(editForm)" >
+            <el-form-item :label="editForm[item].label" :prop="editForm[item].prop" v-for="(item,index) in Object.keys(editForm)" :key="index" >
                 <el-input v-if="editForm[item].type == 'String'" v-model="editForm[item].data"></el-input>
                 <el-switch v-else-if="editForm[item].type == 'Bool'" v-model="editForm[item].data"></el-switch>
                 <el-date-picker v-else-if="editForm[item].type == 'Data'" v-model="editForm[item].data" type="date" placeholder="选择日期"></el-date-picker>

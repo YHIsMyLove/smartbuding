@@ -1,0 +1,78 @@
+<template>
+    <el-tab class="main">
+        <el-tab-pane :label="PageInfo.title">
+            <el-col :span=24>
+                <el-form :inline="true" :model="pageData" class="demo-form-inline">
+                    <el-form-item>
+                        <el-input v-model="pageData.user" placeholder="姓名"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button @click='updateData'>查询</el-button>
+                        <el-button type="primary" round @click="newdata">新增</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+            <el-table border fit stripe 
+                     :data="TemplateNameData.tabledata"
+                     v-loading="TemplateNameData.loading">
+                <el-table-column type="index" label="编号" width="85">
+                </el-table-column>
+                TemplateDataColumn
+                <el-table-column label="操作" width="150">
+                    <template scope="scope">
+                        <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-col :span="24" class="toolbar" style="padding-bottom:10px;">
+                <el-pagination @size-change="handleSizeChange" 
+                               @current-change="handleCurrentChange" 
+                               :current-page="PageInfo.currentPage" 
+                               :page-size="PageInfo.currentPageSize" 
+                               :total="PageInfo.tableDataLength"
+                               :page-sizes="[10, 20, 30, 40]"
+                               layout="total, sizes, prev, pager, next, jumper" 
+                               style="float:right">
+                </el-pagination>
+            </el-col>
+        </el-tab-pane>
+    </el-tab>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      PageInfo: {
+        title: "APIBuilder生成",
+        pageData: {},
+        currentPage,
+        currentPageSize,
+        tableDataLength
+      },
+      TemplateNameData: {
+        tabledata: [],
+        loading: false
+      }
+    };
+  },
+  created() {
+    this.updateData();
+  },
+  methods: {
+    handleEdit(row) {},
+    handleDel(row) {},
+    updateData() {},
+    handleSizeChange() {},
+    newdata() {}
+  }
+};
+</script>
+
+<style scoped>
+.main {
+  width: 100%;
+}
+</style>
+
+

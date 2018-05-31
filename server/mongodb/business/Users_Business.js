@@ -100,8 +100,10 @@ exports.Login = async (req, res) => {
             let ys_result = await YS.getaccessToken()
             let ystoken = ys_result.data.code == '200' ? ys_result.data.data.accessToken : ''
 
+            console.log(_user)
             return res.send(msg.genSuccessMsg('登录成功', {
                 UserID: _user._id,
+                UserName:_user.UserName,
                 SessionID: sessionid,
                 YSToken: ystoken
             }))

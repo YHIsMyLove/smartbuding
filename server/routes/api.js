@@ -28,5 +28,4 @@ router.post('/SysTable/update', SysTable.update)
 router.post('/SysTable/create', SysTable.create)
 router.post('/SysTable/delete', SysTable.delete)
 
-/******************************************/
 module.exports = router;
