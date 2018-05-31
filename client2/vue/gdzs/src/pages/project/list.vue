@@ -2,17 +2,23 @@
     <f7-page>
         <f7-navbar title="项目列表" back-link="Back">
             <f7-subnavbar>
-                <f7-row>
-                    <f7-col width="50">
-                        <input type="text" placeholder="选择省" readonly="readonly" id="select-province"/>
-                    </f7-col>
-                    <f7-col width="50">
-                        <input type="text" placeholder="选择市" readonly="readonly" id="select-province"/>
-                    </f7-col>
-                </f7-row>
+              <f7-input type="select" placeholder="选择省">
+                <option value="湖北省">湖北省</option>
+                <option value="湖南省">湖南省</option>
+              </f7-input>
+              <f7-icon f7="down"></f7-icon>
+              <f7-input type="select" placeholder="选择市">
+                <option value="武汉市">武汉市</option>
+                <option value="黄石市">黄石市</option>
+              </f7-input>
+              <f7-icon f7="down"></f7-icon>
+              <f7-searchbar
+                disable-link-text="Cancel"
+                placeholder="Search in items"
+                :clear-button="true"
+              ></f7-searchbar>
             </f7-subnavbar>
         </f7-navbar>
-        <div class="filter-area"></div>
         <f7-list>
             <f7-list-item :key="index" v-for="(project,index) in projects" :title="project.name" link @click="onItemClick(project, $event)">
                 <img slot="after" src="static/imgs/项目定位30x30.png" alt="">
@@ -101,21 +107,19 @@ export default {
 };
 </script>
 <style scoped>
-.filter-area {
-  position: absolute;
-  top: 56px;
-  left: 0;
-  right: 0;
-}
-.content {
-  padding-bottom: 56px;
-}
 .subnavbar .row {
   width: 100%;
 }
 .subnavbar {
   background-color: #fff;
   color: #000;
+}
+#searchbar {
+  flex: auto;
+}
+select
+{
+  /* margin-top: 20px; */
 }
 </style>
 

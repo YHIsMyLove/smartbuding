@@ -75,6 +75,7 @@ export default {
           console.log("back pressed");
           if (this.$f7.views.main.history.length > 1)
             this.$f7.views.main.router.back();
+          else navigator.app.exitApp();
         },
         false
       );
@@ -97,8 +98,7 @@ export default {
       console.log("back pressed");
       if (this.$f7.views.main.history.length > 1)
         this.$f7.views.main.router.back();
-        else
-        this.$f7.exitApp();
+      else this.$f7.exitApp();
     }
   }
   // directive: {

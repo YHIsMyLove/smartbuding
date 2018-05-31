@@ -68,7 +68,6 @@
             </f7-col>
             <f7-col width="33">
                 <f7-link href="/cameras/main/">
-                    <!-- <img id="img-add" src="static/imgs/创建70x70.png" alt=""> -->
                     <f7-icon f7="add" size="64" color="gray"></f7-icon>
                 </f7-link>
             </f7-col>
@@ -131,7 +130,7 @@ export default {
 }
 
 .content {
-  padding: 132px 0 56px 0;
+  padding: 132px 0 0 0;
   text-align: center;
 }
 
