@@ -60,26 +60,22 @@
 
 <script>
 export default {
-  onDeviceReady: function()
-  {
-    console.log('device ready');
-  },
-  onBackPressed: function()
-  {
-    console.log('back pressed');
-    if (this.$f7.views.main.history.length > 1)
-      this.$f7.views.main.router.back();
-  },
   mounted() {
-    if (true) {
+    if (this.$device.cordova) {
       document.addEventListener(
         "deviceready",
-        this.onDeviceReady,
+        () => {
+          console.log("device ready");
+        },
         false
       );
       document.addEventListener(
         "backbutton",
-        this.onBackPressed,
+        () => {
+          console.log("back pressed");
+          if (this.$f7.views.main.history.length > 1)
+            this.$f7.views.main.router.back();
+        },
         false
       );
     }
@@ -92,7 +88,45 @@ export default {
     isMaterial() {
       return this.$theme.md;
     }
+  },
+  methods: {
+    onDeviceReady() {
+      console.log("device ready");
+    },
+    onBackPressed() {
+      console.log("back pressed");
+      if (this.$f7.views.main.history.length > 1)
+        this.$f7.views.main.router.back();
+        else
+        this.$f7.exitApp();
+    }
   }
+  // directive: {
+  //   onDeviceReady: {
+  //     bind(el) {
+  //       document.addEventListener(
+  //         "deviceready",
+  //         () => {
+  //           console.log("device ready");
+  //         },
+  //         false
+  //       );
+  //     }
+  //   },
+  //   onBackPressed: {
+  //     bind(el) {
+  //       document.addEventListener(
+  //         "backbutton",
+  //         () => {
+  //           console.log("back pressed");
+  //           if (this.$f7.views.main.history.length > 1)
+  //             this.$f7.views.main.router.back();
+  //         },
+  //         false
+  //       );
+  //     }
+  //   }
+  // }
 };
 </script>
 <style scoped>
