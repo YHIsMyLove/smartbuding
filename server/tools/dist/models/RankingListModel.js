@@ -8,7 +8,7 @@ const RankingListSchema = new Schema({
 	RankingListContent:String,
 	RankingListScore:Number,
 	ProjID:String,
-
+	RankingListTime:{ type: Date , default: Date.now }
 })
 
 RankingListSchema.pre('save', function (next) {
