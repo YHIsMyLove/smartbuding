@@ -1,0 +1,8 @@
+{
+    "UserID*": "用户ID String  ",
+    "RankingListTitle*": "标题 String  ",
+    "RankingListContent": "内容 String  ",
+    "RankingListScore": "分数 Number  ",
+    "ProjID*-": "项目ID String  ",
+    "RankingListTime": "发生时间 Date Date.now "
+}

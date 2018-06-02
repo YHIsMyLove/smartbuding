@@ -1,7 +1,7 @@
 /*******************************************************************************/
 /**server***********************************************************************/
 /*******************************************************************************/
-const TemplateName = require('../mongodb/business/TemplateNameBusiness')
+const TemplateName = require('../mongodb/APIBuilder/TemplateNameBusiness')
 
 router.get('/GetTemplateNameByID', TemplateName.GetTemplateNameByID);
 router.get('/DelTemplateNameByID', TemplateName.DelTemplateNameByID);
@@ -12,3 +12,9 @@ router.post('/CreateOrUpdateTemplateName', TemplateName.CreateOrUpdateTemplateNa
 /*******************************************************************************/
 /**client***********************************************************************/
 /*******************************************************************************/
+{
+    path: '/TemplateNameElement',
+    component: resolve => require(['./components/APIBuilder/TemplateNameElement.vue'], resolve),
+    name: 'TemplateCName管理',
+    meta: { redirectAuth: true }
+},

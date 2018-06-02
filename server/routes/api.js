@@ -28,4 +28,31 @@ router.post('/SysTable/update', SysTable.update)
 router.post('/SysTable/create', SysTable.create)
 router.post('/SysTable/delete', SysTable.delete)
 
+
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const RankingList = require('../mongodb/APIBuilder/RankingListBusiness')
+
+router.get('/GetRankingListByID', RankingList.GetRankingListByID);
+router.get('/DelRankingListByID', RankingList.DelRankingListByID);
+router.get('/ListRankingList', RankingList.ListRankingList);
+router.post('/CreateRankingList', RankingList.CreateOrUpdateRankingList);
+router.post('/UpdateRankingList', RankingList.CreateOrUpdateRankingList);
+router.post('/CreateOrUpdateRankingList', RankingList.CreateOrUpdateRankingList);
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const Devices = require('../mongodb/APIBuilder/DevicesBusiness')
+
+router.get('/GetDevicesByID', Devices.GetDevicesByID);
+router.get('/DelDevicesByID', Devices.DelDevicesByID);
+router.get('/ListDevices', Devices.ListDevices);
+router.post('/CreateDevices', Devices.CreateOrUpdateDevices);
+router.post('/UpdateDevices', Devices.CreateOrUpdateDevices);
+router.post('/CreateOrUpdateDevices', Devices.CreateOrUpdateDevices);
+/*******************************************************************************/
+/**client***********************************************************************/
+/*******************************************************************************/
+
 module.exports = router;

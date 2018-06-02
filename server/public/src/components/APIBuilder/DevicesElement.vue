@@ -13,11 +13,26 @@
                 </el-form>
             </el-col>
             <el-table border fit stripe 
-                     :data="TemplateNameData.tabledata"
-                     v-loading="TemplateNameData.loading">
+                     :data="DevicesData.tabledata"
+                     v-loading="DevicesData.loading">
                 <el-table-column type="index" label="编号" width="85">
                 </el-table-column>
-                TemplateDataColumn
+                
+								<el-table-column prop="DevID" label="设备ID" >
+                </el-table-column>
+								<el-table-column prop="DevName" label="设备名称" >
+                </el-table-column>
+								<el-table-column prop="DevDesc" label="设备描述" >
+                </el-table-column>
+								<el-table-column prop="DevIP" label="设备IP" >
+                </el-table-column>
+								<el-table-column prop="DevPort" label="设备端口" >
+                </el-table-column>
+								<el-table-column prop="DevState$" label="设备状态" >
+                </el-table-column>
+								<el-table-column prop="DevClass" label="设备类型" >
+                </el-table-column>
+								
                 <el-table-column label="操作" width="150">
                     <template scope="scope">
                         <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
@@ -36,17 +51,32 @@
                                style="float:right">
                 </el-pagination>
             </el-col>
-            <el-dialog :title="TemplateNameDialog.title" 
+            <el-dialog :title="DevicesDialog.title" 
                        :close-on-click-modal="true"
-                        v-model="TemplateNameDialog.visible">
+                        v-model="DevicesDialog.visible">
                 <el-form :model="CurrentData.data"  
                          :rules="CurrentData.rules" 
                           label-width="80px" ref="editForm">
-                        TemplateDataDialog
+                        
+												<el-form-item label="设备ID" prop="DevID">
+                        		<el-input  v-model="CurrentData.data.DevID" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备名称" prop="DevName">
+                        		<el-input  v-model="CurrentData.data.DevName" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备描述" prop="DevDesc">
+                        		<el-input  v-model="CurrentData.data.DevDesc" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备IP" prop="DevIP">
+                        		<el-input  v-model="CurrentData.data.DevIP" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备端口" prop="DevPort">
+                        		<el-input  v-model="CurrentData.data.DevPort" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备状态" prop="DevState$">
+                        		<el-input  disabled  v-model="CurrentData.data.DevState$" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备类型" prop="DevClass">
+                        		<el-input  v-model="CurrentData.data.DevClass" auto-complete="off"></el-input>
+                        </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="TemplateNameDialog.visible = false">取 消</el-button>
-                    <el-button type="primary" @click="submit" :loading="TemplateNameDialog.loading">提交</el-button>
+                    <el-button @click="DevicesDialog.visible = false">取 消</el-button>
+                    <el-button type="primary" @click="submit" :loading="DevicesDialog.loading">提交</el-button>
                 </div>
             </el-dialog>
         </el-tab-pane>
@@ -56,23 +86,23 @@
 import util from "../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
-TempVuexImport
+import { mapGetters, mapActions } from 'vuex';
 export default {
-  TempVuexComputed
+  computed: {...mapGetters(['getProj'])},
   data() {
     return {
       pageData: {},
       PageInfo: {
-        title: "APIBuilder生成",
+        title: "设备管理",
         currentPage:1,
         currentPageSize:10,
         tableDataLength:10
       },
-      TemplateNameData: {
+      DevicesData: {
         tabledata: [],
         loading: false
       },
-      TemplateNameDialog: {
+      DevicesDialog: {
         title: "",
         visible: false,
         loading: false
@@ -95,17 +125,17 @@ export default {
         page: that.$data.PageInfo.currentPage
       };
       NProgress.start();
-      that.TemplateNameData.loading = true;
+      that.DevicesData.loading = true;
       axios
-        .get(`/api/ListTemplateName`, { params: params })
+        .get(`/api/ListDevices`, { params: params })
         .then(res => {
           if (res.data.success) {
-            that.$data.TemplateNameData.tabledata = res.data.data;
+            that.$data.DevicesData.tabledata = res.data.data;
             that.$data.PageInfo.tableDataLength = res.data.meta.count;
           }
         })
         .catch(err => {});
-      that.TemplateNameData.loading = false;
+      that.DevicesData.loading = false;
       NProgress.done();
     },
     handleCurrentChange(val) {
@@ -119,25 +149,43 @@ export default {
     /***********************************/
     newdata() {
       this.CurrentData.data = {
-        TemplateDialogNewData
+        
+				DevID : '',
+				DevName : '',
+				DevDesc : '',
+				DevIP : '192.168.1.1',
+				DevPort : '8888',
+				DevState$ : '在线',
+				DevClass : '',
+				ProjID : this.getProj.ProjID,
+				
       };
-      this.TemplateNameDialog.visible = true;
+      this.DevicesDialog.visible = true;
     },
     handleEdit(row) {
       this.CurrentData.data = {
         _id : row._id,
-        TemplateDialogEditData
+        
+				DevID : row.DevID,
+				DevName : row.DevName,
+				DevDesc : row.DevDesc,
+				DevIP : row.DevIP,
+				DevPort : row.DevPort,
+				DevState$ : row.DevState$,
+				DevClass : row.DevClass,
+				ProjID : this.getProj.ProjID,
+				
       };
-      this.TemplateNameDialog.visible = true;
+      this.DevicesDialog.visible = true;
     },
     submit() {
       var that = this;
       that.$refs.editForm.validate(valid => {
         if (!valid) return;
         that.$confirm("确定提交吗?", "提示", {}).then(() => {
-          that.TemplateNameDialog.loading = true;
+          that.DevicesDialog.loading = true;
           axios
-            .post(`/api/createOrUpdateTemplateName`, that.CurrentData.data)
+            .post(`/api/createOrUpdateDevices`, that.CurrentData.data)
             .then(res => {
               if (res.data.success) {
                 //success
@@ -145,8 +193,8 @@ export default {
               } else {
                 //error
               }
-              that.TemplateNameDialog.loading = false;
-              this.TemplateNameDialog.visible = false;
+              that.DevicesDialog.loading = false;
+              this.DevicesDialog.visible = false;
             })
             .catch(err => {});
         });
@@ -160,7 +208,7 @@ export default {
         })
         .then(() => {
           axios
-            .get(`/api/DelTemplateNameByID?id=${row._id}`)
+            .get(`/api/DelDevicesByID?id=${row._id}`)
             .then(res => {
               if (res.data.success) {
                 //success

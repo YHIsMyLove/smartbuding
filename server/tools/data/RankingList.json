@@ -1,8 +1,0 @@
-{
-    "UserID*": "用户ID String  ",
-    "RankingListTitle*": "红黑榜标题 String  ",
-    "RankingListContent": "红黑榜内容 String  ",
-    "RankingListScore": "红黑榜分数 Number  ",
-    "ProjID*": "项目ID String  ",
-    "RankingListTime": "红黑榜时间 Date Date.now "
-}

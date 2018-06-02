@@ -50,6 +50,12 @@ var routes = [
                 name: '文件管理',
                 meta: { redirectAuth: true }
             },
+            {
+                path: '/RankingListElement',
+                component: resolve => require(['./components/APIBuilder/RankingListElement.vue'], resolve),
+                name: '红黑榜管理',
+                meta: { redirectAuth: true }
+            },
         ],
         meta: { redirectAuth: true }
     },
@@ -99,9 +105,9 @@ var routes = [
         iconCls: 'fa fa-id-card-o',
         children: [
             {
-                path: '/DeviceManager',
-                component: resolve => require(['./components/business/DeviceManager.vue'], resolve),
-                name: '系统设备管理',
+                path: '/DevicesElement',
+                component: resolve => require(['./components/APIBuilder/DevicesElement.vue'], resolve),
+                name: '设备管理管理',
                 meta: { redirectAuth: true }
             },
             {

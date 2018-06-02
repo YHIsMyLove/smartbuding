@@ -16,8 +16,10 @@ var eachDatas = (path, callback) => {
                         rej(err3)
                     } else {
                         var item = JSON.parse(res3)
+                        var names = i.substr(0, i.indexOf('.')).split('-')
                         callback({
-                            name: i.substr(0, i.indexOf('.')),
+                            name: names[1],
+                            cname: names[0],
                             value: item
                         })
                     }
@@ -26,30 +28,17 @@ var eachDatas = (path, callback) => {
         }
     })
 }
-var buildRoutes = (Name) => {
-    fs.readFile('./template/routes.temp', 'utf8', (err, res) => {
-        if (err) console.log(err)
-        else {
-            var result = res.replaceAll('TemplateName', Name)
-            fs.exists('./dist/routes', (exists) => {
-                if (!exists) {
-                    fs.mkdirSync('./dist/routes')
-                }
-                fs.writeFile(`./dist/routes/${Name}.js`, result, (err) => {
-                    if (err) console.log('写入失败')
-                })
-            })
-        }
-    })
-}
+
 var main = async () => {
     eachDatas('./data', (item) => {
         var ModelName = item.name
+        var ModelCName = item.cname
         var ModelStruct = API.GetStruct(item.value)
-        console.log(ModelStruct)
+        //console.log(ModelStruct)
         API.BuildModels(ModelName, ModelStruct)
-        //API.BuildAPI(ModelName, ModelStruct.filter(i => i.must))
-        //buildRoutes(ModelName)
+        API.BuildElementTemp(ModelName, ModelStruct, ModelCName)
+        API.BuildAPI(ModelName, ModelStruct.filter(i => i.must))
+        API.BuildRoutes(ModelName, ModelCName)
         console.log(`${item.name} -> Build Over!`)
     })
 }

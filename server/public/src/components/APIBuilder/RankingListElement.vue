@@ -13,11 +13,22 @@
                 </el-form>
             </el-col>
             <el-table border fit stripe 
-                     :data="TemplateNameData.tabledata"
-                     v-loading="TemplateNameData.loading">
+                     :data="RankingListData.tabledata"
+                     v-loading="RankingListData.loading">
                 <el-table-column type="index" label="编号" width="85">
                 </el-table-column>
-                TemplateDataColumn
+                
+								<el-table-column prop="UserID" label="用户ID" >
+                </el-table-column>
+								<el-table-column prop="RankingListTitle" label="标题" >
+                </el-table-column>
+								<el-table-column prop="RankingListContent" label="内容" >
+                </el-table-column>
+								<el-table-column prop="RankingListScore" label="分数" >
+                </el-table-column>
+								<el-table-column prop="RankingListTime" label="发生时间" >
+                </el-table-column>
+								
                 <el-table-column label="操作" width="150">
                     <template scope="scope">
                         <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
@@ -36,17 +47,29 @@
                                style="float:right">
                 </el-pagination>
             </el-col>
-            <el-dialog :title="TemplateNameDialog.title" 
+            <el-dialog :title="RankingListDialog.title" 
                        :close-on-click-modal="true"
-                        v-model="TemplateNameDialog.visible">
+                        v-model="RankingListDialog.visible">
                 <el-form :model="CurrentData.data"  
                          :rules="CurrentData.rules" 
                           label-width="80px" ref="editForm">
-                        TemplateDataDialog
+                        
+												<el-form-item label="用户ID" prop="UserID">
+                        		<el-input  v-model="CurrentData.data.UserID" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="标题" prop="RankingListTitle">
+                        		<el-input  v-model="CurrentData.data.RankingListTitle" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="内容" prop="RankingListContent">
+                        		<el-input  v-model="CurrentData.data.RankingListContent" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="分数" prop="RankingListScore">
+                        		<el-input  v-model="CurrentData.data.RankingListScore" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="发生时间" prop="RankingListTime">
+                        		<el-date-picker   style="width:100%" placeholder="选择日期时间" 
+                        		type="datetime" v-model="CurrentData.data.RankingListTime"></el-date-picker>
+                        </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="TemplateNameDialog.visible = false">取 消</el-button>
-                    <el-button type="primary" @click="submit" :loading="TemplateNameDialog.loading">提交</el-button>
+                    <el-button @click="RankingListDialog.visible = false">取 消</el-button>
+                    <el-button type="primary" @click="submit" :loading="RankingListDialog.loading">提交</el-button>
                 </div>
             </el-dialog>
         </el-tab-pane>
@@ -56,23 +79,23 @@
 import util from "../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
-TempVuexImport
+import { mapGetters, mapActions } from 'vuex';
 export default {
-  TempVuexComputed
+  computed: {...mapGetters(['getProj'])},
   data() {
     return {
       pageData: {},
       PageInfo: {
-        title: "APIBuilder生成",
+        title: "红黑榜",
         currentPage:1,
         currentPageSize:10,
         tableDataLength:10
       },
-      TemplateNameData: {
+      RankingListData: {
         tabledata: [],
         loading: false
       },
-      TemplateNameDialog: {
+      RankingListDialog: {
         title: "",
         visible: false,
         loading: false
@@ -95,17 +118,17 @@ export default {
         page: that.$data.PageInfo.currentPage
       };
       NProgress.start();
-      that.TemplateNameData.loading = true;
+      that.RankingListData.loading = true;
       axios
-        .get(`/api/ListTemplateName`, { params: params })
+        .get(`/api/ListRankingList`, { params: params })
         .then(res => {
           if (res.data.success) {
-            that.$data.TemplateNameData.tabledata = res.data.data;
+            that.$data.RankingListData.tabledata = res.data.data;
             that.$data.PageInfo.tableDataLength = res.data.meta.count;
           }
         })
         .catch(err => {});
-      that.TemplateNameData.loading = false;
+      that.RankingListData.loading = false;
       NProgress.done();
     },
     handleCurrentChange(val) {
@@ -119,25 +142,39 @@ export default {
     /***********************************/
     newdata() {
       this.CurrentData.data = {
-        TemplateDialogNewData
+        
+				UserID : '',
+				RankingListTitle : '',
+				RankingListContent : '',
+				RankingListScore : '',
+				ProjID : this.getProj.ProjID,
+				RankingListTime : '',
+				
       };
-      this.TemplateNameDialog.visible = true;
+      this.RankingListDialog.visible = true;
     },
     handleEdit(row) {
       this.CurrentData.data = {
         _id : row._id,
-        TemplateDialogEditData
+        
+				UserID : row.UserID,
+				RankingListTitle : row.RankingListTitle,
+				RankingListContent : row.RankingListContent,
+				RankingListScore : row.RankingListScore,
+				ProjID : this.getProj.ProjID,
+				RankingListTime : row.RankingListTime,
+				
       };
-      this.TemplateNameDialog.visible = true;
+      this.RankingListDialog.visible = true;
     },
     submit() {
       var that = this;
       that.$refs.editForm.validate(valid => {
         if (!valid) return;
         that.$confirm("确定提交吗?", "提示", {}).then(() => {
-          that.TemplateNameDialog.loading = true;
+          that.RankingListDialog.loading = true;
           axios
-            .post(`/api/createOrUpdateTemplateName`, that.CurrentData.data)
+            .post(`/api/createOrUpdateRankingList`, that.CurrentData.data)
             .then(res => {
               if (res.data.success) {
                 //success
@@ -145,8 +182,8 @@ export default {
               } else {
                 //error
               }
-              that.TemplateNameDialog.loading = false;
-              this.TemplateNameDialog.visible = false;
+              that.RankingListDialog.loading = false;
+              this.RankingListDialog.visible = false;
             })
             .catch(err => {});
         });
@@ -160,7 +197,7 @@ export default {
         })
         .then(() => {
           axios
-            .get(`/api/DelTemplateNameByID?id=${row._id}`)
+            .get(`/api/DelRankingListByID?id=${row._id}`)
             .then(res => {
               if (res.data.success) {
                 //success

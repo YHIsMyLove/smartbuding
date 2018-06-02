@@ -1,0 +1,11 @@
+{
+    "ApprovingSponsorID*$": "发起人ID String  ",
+    "ApproverID*$": "审批人ID String  ",
+    "ProjID*-$": "项目ID String  ",
+    "ApproveTitle*$": "标题 String  ",
+    "ApproveContentID*-": "内容ID String  ",
+    "ApproveClass*$": "审批类型 String  ",
+    "ApproveState*": "审批状态 String 待处理 ",
+    "ApproveTime*": "审批时间 Date Date.now ",
+    "StartTime*$": "发起时间 Date  "
+}
