@@ -49,12 +49,8 @@ export default {
     //获取部门资料
     getDepts(callback) {
       let that = this;
-      let params = {
-        item2: that.getProj
-      };
-      consolle.log(that.getProj);
       axios
-        .get(`/api/GetDeptByProjID?ProjID=${that.getProj}`)
+        .get(`/api/GetDeptByProjID?ProjID=${that.getProj.ProjID}`)
         .then(res => {
           if (res.data.success) {
             that.Depts = res.data.data;

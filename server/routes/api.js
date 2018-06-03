@@ -28,5 +28,50 @@ router.post('/SysTable/update', SysTable.update)
 router.post('/SysTable/create', SysTable.create)
 router.post('/SysTable/delete', SysTable.delete)
 
-/******************************************/
+
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const RankingList = require('../mongodb/APIBuilder/RankingListBusiness')
+
+router.get('/GetRankingListByID', RankingList.GetRankingListByID);
+router.get('/DelRankingListByID', RankingList.DelRankingListByID);
+router.get('/ListRankingList', RankingList.ListRankingList);
+router.post('/CreateRankingList', RankingList.CreateOrUpdateRankingList);
+router.post('/UpdateRankingList', RankingList.CreateOrUpdateRankingList);
+router.post('/CreateOrUpdateRankingList', RankingList.CreateOrUpdateRankingList);
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const Devices = require('../mongodb/APIBuilder/DevicesBusiness')
+
+router.get('/GetDevicesByID', Devices.GetDevicesByID);
+router.get('/DelDevicesByID', Devices.DelDevicesByID);
+router.get('/ListDevices', Devices.ListDevices);
+router.post('/CreateDevices', Devices.CreateOrUpdateDevices);
+router.post('/UpdateDevices', Devices.CreateOrUpdateDevices);
+router.post('/CreateOrUpdateDevices', Devices.CreateOrUpdateDevices);
+/*******************************************************************************/
+/**client***********************************************************************/
+/*******************************************************************************/
+const MenuAuth = require('../mongodb/APIBuilder/MenuAuthBusiness')
+
+router.get('/GetMenuAuthByID', MenuAuth.GetMenuAuthByID);
+router.get('/DelMenuAuthByID', MenuAuth.DelMenuAuthByID);
+router.get('/ListMenuAuth', MenuAuth.ListMenuAuth);
+router.post('/CreateMenuAuth', MenuAuth.CreateOrUpdateMenuAuth);
+router.post('/UpdateMenuAuth', MenuAuth.CreateOrUpdateMenuAuth);
+router.post('/CreateOrUpdateMenuAuth', MenuAuth.CreateOrUpdateMenuAuth);
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const MenuLink = require('../mongodb/APIBuilder/MenuLinkBusiness')
+
+router.get('/GetMenuLinkByID', MenuLink.GetMenuLinkByID);
+router.get('/DelMenuLinkByID', MenuLink.DelMenuLinkByID);
+router.get('/ListMenuLink', MenuLink.ListMenuLink);
+router.post('/CreateMenuLink', MenuLink.CreateOrUpdateMenuLink);
+router.post('/UpdateMenuLink', MenuLink.CreateOrUpdateMenuLink);
+router.post('/CreateOrUpdateMenuLink', MenuLink.CreateOrUpdateMenuLink);
+
 module.exports = router;

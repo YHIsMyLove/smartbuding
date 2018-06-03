@@ -13,6 +13,8 @@ router.post("/CreateUser", USER_BUSINESS.create)
 router.get("/GetUser", USER_BUSINESS.getUserInfo)
 router.get("/GetProvByUser", USER_BUSINESS.GetProvByUser)
 router.get("/GetProjByUser", USER_BUSINESS.GetProjByUser)
+router.get('/GetUsersByDeptID', USER_BUSINESS.GetUsersByDeptID)
+
 /***************************************************************************************/
 /*会议相关业务***************************************************************************/
 /***************************************************************************************/

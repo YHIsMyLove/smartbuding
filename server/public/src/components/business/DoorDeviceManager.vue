@@ -133,7 +133,6 @@ export default {
      * 加入/删除系统库
      */
     changeDev(row) {
-      console.log(JSON.stringify(row));
     },
     //显示编辑界面
     handleEdit: function(row) {

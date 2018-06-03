@@ -2,7 +2,7 @@
 <div id='main'>
   <el-table border fit stripe :data="TableData" highlight-current-row v-loading="listLoading" style="width: 100%; height:100%">
     <el-table-column type="index" label="编号" width="85" /> 
-    <el-table-column :prop="item.prop" :label="item.label" v-for="item in TabelField" />
+    <el-table-column :prop="item.prop" :label="item.label" :key="index" v-for="(item,index) in TabelField" />
     <el-table-column label="操作" width="100">
         <template scope="scope">
             <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>

@@ -107,7 +107,6 @@ import moment from "moment";
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    // 使用对象展开运算符将 getters 混入 computed 对象中
     ...mapGetters([
       "getProj"
       // ...
@@ -249,7 +248,6 @@ export default {
         });
       });
     },
-
     //性别显示转换
     formatSex: function(row, column) {
       return row.UserSex == 1 ? "男" : row.UserSex == 0 ? "女" : "未知";

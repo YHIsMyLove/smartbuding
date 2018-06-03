@@ -100,8 +100,10 @@ exports.Login = async (req, res) => {
             let ys_result = await YS.getaccessToken()
             let ystoken = ys_result.data.code == '200' ? ys_result.data.data.accessToken : ''
 
+            console.log(_user)
             return res.send(msg.genSuccessMsg('登录成功', {
                 UserID: _user._id,
+                UserName: _user.UserName,
                 SessionID: sessionid,
                 YSToken: ystoken
             }))
@@ -229,11 +231,11 @@ exports.GetProvByUser = async (req, res) => {
     }
     //1. 取得项目ID
     let proj = await UserProj.find(query).select('ProjID').exec()
-    let projids = proj.map(i => i.ProjID) 
+    let projids = proj.map(i => i.ProjID)
     //2. 取得所有市区
     console.log(proj)
     let cityids = await SysTable.find({ _id: { $in: projids } }).select('item1')
-    
+
     let ids = cityids.map(i => i.item1)
     let cityinfos = await SysTable.find({ SysFieldID: 'city', _id: { $in: ids } })
     let provids = cityinfos.map(i => i.item1)
@@ -279,4 +281,22 @@ exports.GetProjByUser = async (req, res) => {
             return res.send(msg.genSuccessMsg('查询成功', result2))
         }
     })
+}
+
+//根据部门获取用户信息
+exports.GetUsersByDeptID = async (req, res) => {
+    var query = {
+        DeptID: req.query.DeptID
+    }
+    if (!query.DeptID) {
+        return res.send(msg.genFailedMsg('Dept is null'))
+    }
+    try {
+        let ids = await UserDept.find(query).select('UserID').exec()
+        ids = ids.map(i => i.UserID)
+        let result = await User.find({ _id: { $in: ids } }).exec()
+        res.send(msg.genSuccessMsg('获取成功', result))
+    } catch (error) {
+        res.send(msg.genFailedMsg('获取失败' + error))
+    }
 }

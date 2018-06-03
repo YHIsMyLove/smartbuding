@@ -213,6 +213,7 @@ exports.GetDeptByProjID = async (req, res) => {
     }
 }
 
+
 //设置用户部门表
 exports.InsertOrDelUserDept = async (req, res) => {
     let insertOrDel = req.body.insertOrDel
@@ -316,13 +317,21 @@ var getProvAndCity_byProj = async (ProjID) => {
 }
 //根据城市获取项目信息
 exports.GetProjByCityID = async (req, res) => {
-    let query = {
-        item1: req.query.CityID,
-        SysFieldID: "proj"
+
+    let query = {}
+    if (req.query.CityID != 'undefined') {
+        query = {
+            item1: req.query.CityID,
+            SysFieldID: "proj"
+        }
+    } else {
+        query = {
+            SysFieldID: "proj"
+        }
     }
-    if (query.item1 == undefined) return res.send(msg.genFailedMsg('请输入城市ID'))
+    //if (query.item1 == undefined) return res.send(msg.genFailedMsg('请输入城市ID'))
     try {
-        let projs = await SysTable.find({ SysFieldID: "proj", item1: query.item1 })
+        let projs = await SysTable.find(query)
 
         if (projs.length == 0) {
             return res.send(msg.genSuccessMsg('查询成功'))
@@ -848,7 +857,7 @@ exports.UploadFile = (req, res) => {
                         if (err) {
                             return res.send(msg.genFailedMsg('上传失败', err))
                         }
-                        res.send(msg.genSuccessMsg('上传成功', qcospath))
+                        res.send(msg.genSuccessMsg('上传成功', `http://${qcospath}`))
 
                         //2. 删除本地
                         fs.unlinkSync(resizeimg_result.data)

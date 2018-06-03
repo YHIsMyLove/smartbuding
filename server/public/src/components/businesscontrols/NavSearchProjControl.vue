@@ -16,7 +16,7 @@
                     <el-col :span=8>
                     </el-col>
                     <el-col :span="24">
-                      <ProjMenu :CityID="SelectCityID" @SelectProjChange="SelectProjChange"/>
+                      <ProjMenu :SetVuex="true" :CityID="SelectCityID" @SelectProjChange="SelectProjChange"/>
                     </el-col>
                 </div>
             </div>
@@ -62,6 +62,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setCity"]),
     //更新项目的ID
     SelectProjChange(proj) {
       if (this.getProj) {

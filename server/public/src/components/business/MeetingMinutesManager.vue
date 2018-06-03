@@ -114,7 +114,6 @@ export default {
         .get(`/api/GetMeetings?ProjID=${that.getProj}`)
         .then(res => {
           if (res.data.success) {
-            console.log(res.data.data);
             that.Meeting_Options = res.data.data;
             if (that.Meeting_Options.length > 0) {
               that.CurMeeting = that.Meeting_Options[0]._id;

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as actions from './actions'
 import * as getters from './getters'
-import axios from 'axios'
+// import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -11,6 +12,7 @@ const state = {
     //用户
     User: {
         UserID: '',
+        UserName: '',
         SessionID: '',
         YSToken: ''
     },
@@ -22,7 +24,7 @@ const state = {
         CityName: '',
         ProvID: '',
         ProvName: ''
-    },
+    }
 }
 
 // 定义所需的 mutations
@@ -34,21 +36,17 @@ const mutations = {
         state.User.YSToken = LOGINSTATE.YSToken
         state.User.UserID = LOGINSTATE.UserID
         state.User.SessionID = LOGINSTATE.SessionID
-        sessionStorage.setItem("UserSession", JSON.stringify(state.User))
-        //sessionStorage.setItem("Proj", JSON.stringify(state.Proj))
-        console.log(JSON.stringify(state.Proj))
-        state.User = JSON.parse(sessionStorage.getItem("UserSession"))
-        //state.Proj = JSON.parse(sessionStorage.getItem("Proj"))
+        state.User.UserName = LOGINSTATE.UserName
     },
     GETUSER(state) {
-        state.User = state.User || JSON.parse(sessionStorage.getItem("UserSession"))
+        state.User = state.User
         state.User
     },
     /********************************************************************** */
     /**项目相关************************************************************* */
     /********************************************************************** */
     GETPROJ(state) {
-        state.Proj = state.Proj || JSON.parse(sessionStorage.getItem("UserSession"))
+        state.Proj = state.Proj
         state.Proj
     },
     SETPROJ(state, newproj) {
@@ -56,24 +54,17 @@ const mutations = {
         state.Proj.ProjName = newproj.ProjName
         state.Proj.CityName = newproj.CityName
         state.Proj.ProvName = newproj.ProvName
-        sessionStorage.setItem('UserSession', JSON.stringify(state.Proj))
-        state.Proj = JSON.parse(sessionStorage.getItem("UserSession"))
-        console.log(`设置项目后:${sessionStorage.getItem("UserSession")}`)
     },
     SETCITY(state, city) {
-        state.Proj = state.Proj || JSON.parse(sessionStorage.getItem("UserSession"))
+        state.Proj = state.Proj
         state.Proj.CityID = city
-        sessionStorage.setItem('UserSession', JSON.stringify(state.Proj))
-        state.Proj = JSON.parse(sessionStorage.getItem("UserSession"))
     },
     SETPROV(state, prov) {
-        state.Proj = state.Proj || JSON.parse(sessionStorage.getItem("UserSession"))
+        state.Proj = state.Proj
         state.Proj.ProvID = prov
-        sessionStorage.setItem('UserSession', JSON.stringify(state.Proj))
-        state.Proj = JSON.parse(sessionStorage.getItem("UserSession"))
-    },
+    }
     /********************************************************************** */
-    /********************************************************************** */
+    /**权限相关************************************************************* */
     /********************************************************************** */
 }
 
@@ -82,5 +73,6 @@ export default new Vuex.Store({
     actions,
     getters,
     state,
-    mutations
+    mutations,
+    plugins: [createPersistedState()]
 })

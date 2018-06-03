@@ -8,7 +8,6 @@ const SysTable = mongoose.model('SysTable')
 const User = mongoose.model('User')
 const UserDept = mongoose.model('UserDept')
 const UserProj = mongoose.model('UserProj')
-const UserRole = mongoose.model('UserRole')
 const Device = mongoose.model('Device')
 
 /**

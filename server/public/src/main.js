@@ -9,13 +9,19 @@ import NProgress from 'nprogress'//页面顶部进度条
 import 'nprogress/nprogress.css'
 
 import Login from './components/Login.vue'
-import Home from './components/layout/Home.vue'
 import Main from './components/Main.vue'
+import Home from './components/layout/Home.vue'
 import axios from 'axios';
 
+import VCharts from 'v-charts'
+Vue.use(VCharts)
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
+
+//全局引用图片上传组件
+import UploadImage from "./components/businesscontrols/UploadImage.vue";
+Vue.component("UploadImage", UploadImage)
 
 var routes = [
     {
@@ -34,7 +40,6 @@ var routes = [
                 component: Main,
                 name: '主页',
                 meta: { redirectAuth: true },
-                hidden: true
             },
             {
                 path: '/SysFieldManager',
@@ -47,92 +52,107 @@ var routes = [
                 path: '/FileManager',
                 component: resolve => require(['./components/business/FileManager.vue'], resolve),
                 name: '文件管理',
+                hidden: true,
                 meta: { redirectAuth: true }
             },
             {
-                path: '/YSDeviceManager',
-                component: resolve => require(['./components/business/YSDeviceManager.vue'], resolve),
-                name: '萤石设备管理',
+                path: '/MenuLinkElement',
+                component: resolve => require(['./components/APIBuilder/MenuLinkElement.vue'], resolve),
+                name: '路由表管理',
                 meta: { redirectAuth: true }
             },
             {
-                path: '/DoorDeviceManager',
-                component: resolve => require(['./components/business/DoorDeviceManager.vue'], resolve),
-                name: '门禁设备管理',
+                path: '/RankingListElement',
+                component: resolve => require(['./components/APIBuilder/RankingListElement.vue'], resolve),
+                name: '红黑榜管理',
+                hidden: true,
+                meta: { redirectAuth: true }
+            },
+            {
+                path: '/MenuAuthElement',
+                component: resolve => require(['./components/APIBuilder/MenuAuthElement.vue'], resolve),
+                name: '路由权限表管理',
                 meta: { redirectAuth: true }
             },
         ],
         meta: { redirectAuth: true }
     },
-    {
-        path: '/',
-        component: Home,
-        name: '用户管理',
-        iconCls: 'fa fa-id-card-o',
-        children: [
-            {
-                path: '/UserManager',
-                component: resolve => require(['./components/business/UserManager.vue'], resolve),
-                name: '用户管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/SystemUserProjManager',
-                component: resolve => require(['./components/business/SystemUserProjManager.vue'], resolve),
-                name: '用户项目管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/UserProjManager',
-                component: resolve => require(['./components/business/UserProjManager.vue'], resolve),
-                name: '用户项目管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/UserDeptManager',
-                component: resolve => require(['./components/business/UserDeptManager.vue'], resolve),
-                name: '用户部门管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/UserRoleManager',
-                component: resolve => require(['./components/business/UserRoleManager.vue'], resolve),
-                name: '用户角色管理',
-                meta: { redirectAuth: true }
-            },
-        ],
-        meta: { redirectAuth: true }
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '设备管理',
-        iconCls: 'fa fa-id-card-o',
-        children: [
-            {
-                path: '/DeviceManager',
-                component: resolve => require(['./components/business/DeviceManager.vue'], resolve),
-                name: '系统设备管理',
-                meta: { redirectAuth: true }
-            },
-        ],
-        meta: { redirectAuth: true },
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '会议管理',
-        iconCls: 'fa fa-id-card-o',
-        children: [
-            {
-                path: '/Meeting',
-                component: resolve => require(['./components/business/Meeting.vue'], resolve),
-                name: '会议管理',
-                meta: { redirectAuth: true }
-            },
-        ],
-        meta: { redirectAuth: true },
-    },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '用户管理',
+    //     iconCls: 'fa fa-id-card-o',
+    //     children: [
+    //         {
+    //             path: '/UserManager',
+    //             component: resolve => require(['./components/business/UserManager.vue'], resolve),
+    //             name: '用户管理',
+    //             hidden: true,
+    //             meta: { redirectAuth: true }
+    //         },
+    //         {
+    //             path: '/UserProjManager',
+    //             component: resolve => require(['./components/business/UserProjManager.vue'], resolve),
+    //             name: '用户项目管理',
+    //             meta: { redirectAuth: true }
+    //         },
+    //         {
+    //             path: '/UserDeptManager',
+    //             component: resolve => require(['./components/business/UserDeptManager.vue'], resolve),
+    //             name: '用户部门管理',
+    //             meta: { redirectAuth: true }
+    //         },
+    //         {
+    //             path: '/UserRoleManager',
+    //             component: resolve => require(['./components/business/UserRoleManager.vue'], resolve),
+    //             name: '用户角色管理',
+    //             meta: { redirectAuth: true }
+    //         },
+    //     ],
+    //     meta: { redirectAuth: true }
+    // },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '设备管理',
+    //     iconCls: 'fa fa-id-card-o',
+    //     children: [
+    //         {
+    //             path: '/DevicesElement',
+    //             component: resolve => require(['./components/APIBuilder/DevicesElement.vue'], resolve),
+    //             name: '设备管理管理',
+    //             meta: { redirectAuth: true }
+    //         },
+    //         {
+    //             path: '/YSDeviceManager',
+    //             component: resolve => require(['./components/business/YSDeviceManager.vue'], resolve),
+    //             name: '萤石设备管理',
+    //             meta: { redirectAuth: true }
+    //         },
+    //         {
+    //             path: '/DoorDeviceManager',
+    //             component: resolve => require(['./components/business/DoorDeviceManager.vue'], resolve),
+    //             name: '门禁设备管理',
+    //             meta: { redirectAuth: true }
+    //         },
+    //     ],
+    //     meta: { redirectAuth: true },
+    // },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '会议管理',
+    //     iconCls: 'fa fa-id-card-o',
+    //     children: [
+    //         {
+    //             path: '/Meeting',
+    //             component: resolve => require(['./components/business/Meeting.vue'], resolve),
+    //             name: '会议管理',
+    //             meta: { redirectAuth: true }
+    //         },
+    //     ],
+    //     meta: { redirectAuth: true },
+    // },
     {
         path: '*',
         redirect: '/',
@@ -148,12 +168,16 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.redirectAuth) {
         NProgress.start();
-        var Usersession = sessionStorage.getItem('Session')
-        if (store.state.User.SessionID || Usersession) {
+        if (store.state.User.UserID) {
             next()
         } else {
             next({ path: '/login' })
         }
+        // if (!store.state.Proj.ProjID) {
+        //     next({ path: '/' })
+        // } else {
+        //     next()
+        // }
     } else {
         NProgress.start();
         next()

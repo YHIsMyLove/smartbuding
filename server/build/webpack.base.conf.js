@@ -76,7 +76,8 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel',
         include: [
-          path.join(projectRoot, 'public/src')
+          path.join(projectRoot, 'public/src'),
+          //resolve('node_modules/vue-echarts'),
         ],
         exclude: /node_modules/
       },

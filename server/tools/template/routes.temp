@@ -1,0 +1,20 @@
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const TemplateName = require('../mongodb/APIBuilder/TemplateNameBusiness')
+
+router.get('/GetTemplateNameByID', TemplateName.GetTemplateNameByID);
+router.get('/DelTemplateNameByID', TemplateName.DelTemplateNameByID);
+router.get('/ListTemplateName', TemplateName.ListTemplateName);
+router.post('/CreateTemplateName', TemplateName.CreateOrUpdateTemplateName);
+router.post('/UpdateTemplateName', TemplateName.CreateOrUpdateTemplateName);
+router.post('/CreateOrUpdateTemplateName', TemplateName.CreateOrUpdateTemplateName);
+/*******************************************************************************/
+/**client***********************************************************************/
+/*******************************************************************************/
+{
+    path: '/TemplateNameElement',
+    component: resolve => require(['./components/APIBuilder/TemplateNameElement.vue'], resolve),
+    name: 'TemplateCName管理',
+    meta: { redirectAuth: true }
+},

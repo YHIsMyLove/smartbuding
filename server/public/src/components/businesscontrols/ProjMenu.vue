@@ -1,8 +1,8 @@
 <template>
     <el-card class="main">
-        <!-- <div slot="header" class="clearfix">
-            <span>选择项目</span>
-        </div> -->
+        <div v-if="IsShowTitle"  slot="header" class="clearfix">
+          <span >项目列表</span>
+        </div>
         <el-menu :default-active='activeProj' @select="SelectProjChange">
             <el-menu-item v-for="item in ProjData" :index="item._id" :key="item._id">{{item.label}}</el-menu-item>
         </el-menu>
@@ -14,15 +14,20 @@ import util from "../../common/util";
 import NProgress from "nprogress";
 import { mapActions } from "vuex";
 export default {
-  props: ["CityID"],
+  props: ["CityID", "ShowTitle", "SetVuex"],
   computed: {
     CurrentCityID() {
       return this.CityID;
+    },
+    IsShowTitle() {
+      return this.ShowTitle || false;
+    },
+    IsSetVuex() {
+      return this.SetVuex || false;
     }
   },
   watch: {
     CurrentCityID(val) {
-      console.log("检测到城市发生改变");
       this.getProj();
     }
   },
@@ -32,21 +37,27 @@ export default {
       activeProj: "0"
     };
   },
+  created() {
+    this.getProj();
+  },
   methods: {
     ...mapActions(["setProj"]),
     SelectProjChange(index) {
       var proj = this.ProjData.filter(i => i._id == index)[0];
       this.$emit("SelectProjChange", {
-        ProjName: proj.Name,
-        CityName: proj.City.Name,
-        ProvName: proj.Prov.Name
-      });
-      this.setProj({
         ProjID: proj._id,
         ProjName: proj.Name,
         CityName: proj.City.Name,
         ProvName: proj.Prov.Name
       });
+      if (this.IsSetVuex) {
+        this.setProj({
+          ProjID: proj._id,
+          ProjName: proj.Name,
+          CityName: proj.City.Name,
+          ProvName: proj.Prov.Name
+        });
+      }
     },
     getProj() {
       let that = this;
@@ -56,12 +67,14 @@ export default {
           if (res.data.success) {
             that.ProjData = res.data.data;
             if (that.ProjData.length > 0) {
-              this.setProj({
-                ProjID: that.ProjData[0]._id,
-                ProjName: that.ProjData[0].Name,
-                CityName: that.ProjData[0].City.Name,
-                ProvName: that.ProjData[0].Prov.Name
-              });
+              if (that.CityID && that.IsSetVuex) {
+                this.setProj({
+                  ProjID: that.ProjData[0]._id,
+                  ProjName: that.ProjData[0].Name,
+                  CityName: that.ProjData[0].City.Name,
+                  ProvName: that.ProjData[0].Prov.Name
+                });
+              }
             }
           } else {
             that.$message({

@@ -93,7 +93,6 @@ export default {
     //设置用户项目
     changeUserProj(row) {
       let that = this;
-      console.log(row._id);
       let query = {
         UserID: row._id,
         ProjID: that.curProjID,
@@ -108,7 +107,6 @@ export default {
               type: "success"
             });
           } else {
-            console.log(res.data);
           }
         })
         .catch(err => console.log(err));

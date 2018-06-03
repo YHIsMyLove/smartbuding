@@ -1,75 +1,94 @@
 <template>
   <section class="main">
-    <el-row>
+    <div class="left-body">
       <el-col :span="24">
-        <div class="head">
-        </div>
+          <HomeRoutesLink/>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="12">
-        <div class="approve"></div>
+      <el-col :span="24">
+          <HomeStatistical/>
       </el-col>
-      <el-col :span="12">
-        <div class="normal"></div>
+      <el-col :span="14">
+          <HomeApprove/>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="18">
-        <div class="action"></div>
+      <el-col :span="10">
+          <HomeRankingList/>
       </el-col>
-      <el-col :span="6">
-        <div class="weather"></div>
+      <el-col :span="16">
+          <HomeActions/>
       </el-col>
-    </el-row>
+      <el-col :span="8">
+          <HomeWeather/>
+      </el-col>
+    </div>
+    <div class="right-body">
+      <el-col :span="24">
+        <HomeDefult/>
+      </el-col>
+      <el-col :span="24">
+        <MenuUser/>
+        <UploadImage :width=64
+                      v-model="tmpImage" 
+                      :circle="true" @UpLoadOver="UpLoadOver"/>
+        <SelectUser @SelectedUser="SelectedUser"/>
+        <ProjMenu :ShowTitle="true" @SelectProjChange="SelectProjChange"/>
+      </el-col>
+    </div>
+    
   </section>
 </template>
 
 <script>
-import echarts from "echarts";
+import HomeRoutesLink from "./layout/components/HomeRoutesLink.vue";
+import HomeStatistical from "./layout/components/HomeStatistical.vue";
+import HomeApprove from "./layout/components/HomeApprove.vue";
+import HomeActions from "./layout/components/HomeActions.vue";
+import HomeWeather from "./layout/components/HomeWeather.vue";
+import HomeRankingList from "./layout/components/HomeRankingList.vue";
+import HomeDefult from "./layout/components/HomeDefult.vue";
+import MenuUser from "./businesscontrols/MenuUser.vue";
+import SelectUser from "./businesscontrols/SelectUser.vue";
+import ProjMenu from "./businesscontrols/ProjMenu.vue";
 export default {
+  components: {
+    HomeRoutesLink,
+    HomeStatistical,
+    HomeApprove,
+    HomeActions,
+    HomeWeather,
+    HomeRankingList,
+    HomeDefult,
+    MenuUser,
+    // UploadImage,
+    SelectUser,
+    ProjMenu
+  },
   data() {
     return {
-      showList: [
-        // { id: "chartColumn", label: "柱状图", checked: false },
-      ],
-      currentDate: new Date()
+      tmpImage:""
+        // "http://justtest-1251712170.file.myqcloud.com/static/xiejie_N_x150.png"
     };
   },
-  mounted: function() {
-    // var _this = this;
-    // //基于准备好的dom，初始化echarts实例
-    // this.chartColumn = echarts.init(document.getElementById("chartColumn"));
-  }
+  methods: {
+    SelectedUser(user) {
+      console.log(user);
+    },
+    UpLoadOver(url) {
+      console.log(url);
+    },
+    SelectProjChange(val) {
+      console.log(val);
+    }
+  },
+  created() {}
 };
 </script>
-
 <style scoped>
-.main {
+.left-body {
+  width: 70%;
+  float: left;
 }
-.head {
-  background: #e6a23c;
-  height: 100px;
-  margin: 5px;
-}
-.approve {
-  background: #67c23a;
-  height: 380px;
-  margin: 5px;
-}
-.normal {
-  background: #f56c6c;
-  height: 380px;
-  margin: 5px;
-}
-.action {
-  background: #ebeef5;
-  height: 280px;
-  margin: 5px;
-}
-.weather {
-  background: #909399;
-  height: 280px;
-  margin: 5px;
+.right-body {
+  width: 30%;
+  float: right;
 }
 </style>

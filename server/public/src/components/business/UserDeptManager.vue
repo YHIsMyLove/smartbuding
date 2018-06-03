@@ -112,7 +112,6 @@ export default {
               type: "success"
             });
           } else {
-            console.log(res.data);
           }
         })
         .catch(err => console.log(err));
@@ -172,8 +171,6 @@ export default {
           NProgress.done();
         })
         .catch(err => {
-          console.log(err);
-
           that.listLoading = false;
           NProgress.done();
         });

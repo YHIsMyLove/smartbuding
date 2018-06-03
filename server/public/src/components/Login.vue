@@ -20,6 +20,7 @@ import axios from "axios";
 import util from "../common/util";
 import NProgress from "nprogress";
 import moment from "moment";
+import Home from "./layout/Home.vue";
 export default {
   data() {
     var checkLogin = (rule, value, callback) => {};
@@ -66,8 +67,30 @@ export default {
           return false;
         }
         _this.setLogin(res.data.data);
-        _this.$router.replace("/table");
+        _this.$router.replace("/");
+        _this.addRoutes();
       });
+    },
+    addRoutes() {
+      var menudata = [
+        {
+          path: "/",
+          component: Home,
+          name: "动态路由",
+          iconCls: "fa fa-id-card-o",
+          children: [
+            {
+              path: "/UserProjManager",
+              component: resolve =>
+                require(["./business/UserProjManager.vue"], resolve),
+              name: "主页",
+              meta: { redirectAuth: true }
+            }
+          ]
+        }
+      ];
+      console.log("加载动态路由");
+      this.$router.addRoutes(menudata);
     }
   }
 };
