@@ -56,42 +56,9 @@ var routes = [
                 meta: { redirectAuth: true }
             },
             {
-<<<<<<< HEAD
                 path: '/MenuLinkElement',
                 component: resolve => require(['./components/APIBuilder/MenuLinkElement.vue'], resolve),
                 name: '路由表管理',
-=======
-                path: '/RankingListElement',
-                component: resolve => require(['./components/APIBuilder/RankingListElement.vue'], resolve),
-                name: '红黑榜管理',
-                meta: { redirectAuth: true }
-            },
-        ],
-        meta: { redirectAuth: true }
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '用户管理',
-        iconCls: 'fa fa-id-card-o',
-        children: [
-            {
-                path: '/UserManager',
-                component: resolve => require(['./components/business/UserManager.vue'], resolve),
-                name: '用户管理',
-                meta: { redirectAuth: true }
-            },
-            // {
-            //     path: '/SystemUserProjManager',
-            //     component: resolve => require(['./components/business/SystemUserProjManager.vue'], resolve),
-            //     name: '用户项目管理',
-            //     meta: { redirectAuth: true }
-            // },
-            {
-                path: '/UserProjManager',
-                component: resolve => require(['./components/business/UserProjManager.vue'], resolve),
-                name: '用户项目管理',
->>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
                 meta: { redirectAuth: true }
             },
             {
@@ -110,7 +77,6 @@ var routes = [
         ],
         meta: { redirectAuth: true }
     },
-<<<<<<< HEAD
     // {
     //     path: '/',
     //     component: Home,
@@ -187,50 +153,6 @@ var routes = [
     //     ],
     //     meta: { redirectAuth: true },
     // },
-=======
-    {
-        path: '/',
-        component: Home,
-        name: '设备管理',
-        iconCls: 'fa fa-id-card-o',
-        children: [
-            {
-                path: '/DevicesElement',
-                component: resolve => require(['./components/APIBuilder/DevicesElement.vue'], resolve),
-                name: '设备管理管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/YSDeviceManager',
-                component: resolve => require(['./components/business/YSDeviceManager.vue'], resolve),
-                name: '萤石设备管理',
-                meta: { redirectAuth: true }
-            },
-            {
-                path: '/DoorDeviceManager',
-                component: resolve => require(['./components/business/DoorDeviceManager.vue'], resolve),
-                name: '门禁设备管理',
-                meta: { redirectAuth: true }
-            },
-        ],
-        meta: { redirectAuth: true },
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '会议管理',
-        iconCls: 'fa fa-id-card-o',
-        children: [
-            {
-                path: '/Meeting',
-                component: resolve => require(['./components/business/Meeting.vue'], resolve),
-                name: '会议管理',
-                meta: { redirectAuth: true }
-            },
-        ],
-        meta: { redirectAuth: true },
-    },
->>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
     {
         path: '*',
         redirect: '/',

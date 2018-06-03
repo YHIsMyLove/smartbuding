@@ -23,7 +23,6 @@
 </template>
 <script>
 import moment from "moment";
-<<<<<<< HEAD
 import util from "../../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
@@ -62,43 +61,6 @@ export default {
           }
         })
         .catch(err => console.log(err));
-=======
-export default {
-  data() {
-    return {
-      Actions: [
-        {
-          User: "张三",
-          Title: "XXXX会议",
-          Time: moment().format("YYYY-MM-DD hh:mm")
-        },
-        {
-          User: "张三",
-          Title: "XXXX会议",
-          Time: moment().format("YYYY-MM-DD hh:mm")
-        },
-        {
-          User: "张三",
-          Title: "XXXX会议",
-          Time: moment().format("YYYY-MM-DD hh:mm")
-        },
-        {
-          User: "张三",
-          Title: "XXXX会议",
-          Time: moment().format("YYYY-MM-DD hh:mm")
-        },
-        {
-          User: "张三",
-          Title: "XXXX会议",
-          Time: moment().format("YYYY-MM-DD hh:mm")
-        }
-      ]
-    };
-  },
-  methods: {
-    link2Actions() {
-      this.$router.push({ path: "/Meeting" });
->>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
     }
   }
 };

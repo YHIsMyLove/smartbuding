@@ -4,40 +4,10 @@
         <NavBar :iscollapse='iscollapse' @ChangeCollapse='changeMenu' />
     </el-col>
     <el-col :span="24" class="panel-center">
-<<<<<<< HEAD
 
         <aside class="left-aside">
             <MenuUser/>
             <RouterMenu :iscollapse="iscollapse"/>
-=======
-        <aside class="left-aside">
-            <MenuUser/>
-            <el-menu :collapse='iscollapse' :default-active="$route.path" :default-openeds="openedArr" collapse-transition class="aside-menu"  theme="dark" unique-opened router>
-            <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-            <el-submenu :key="index" :index="index+''" v-if="!item.leaf">
-              <template slot="title">
-              <i :class="item.iconCls"></i>{{item.name}}
-              </template>
-
-              <el-menu-item
-              :key="child.path"
-              v-for="child in item.children"
-              v-if="!child.hidden"
-              :index="child.path"
-              >
-              {{child.name}}
-              </el-menu-item>
-            </el-submenu>
-            <el-menu-item
-              :key="item.children[0].path"
-              v-if="item.leaf&&item.children.length>0"
-              :index="item.children[0].path"
-            >
-            <i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
-            </template>
-
-            </el-menu>
->>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
         </aside>
 
         <section :class="contentStyle">
@@ -48,7 +18,6 @@
                 <strong>{{$route.name}}</strong>
                 <el-breadcrumb
                   separator="/"
-<<<<<<< HEAD
                   class="bread-crumb" >
                   <el-breadcrumb-item
                     :to="{ path: '/' }"
@@ -61,26 +30,11 @@
                   <el-breadcrumb-item>
                     {{$route.name}}
                   </el-breadcrumb-item>
-=======
-                  class="bread-crumb"
-                  >
-                  <el-breadcrumb-item
-                  :to="{ path: '/' }"
-                  v-if="$route.path!='/'"
-                  >首页</el-breadcrumb-item>
-                  <el-breadcrumb-item v-if="$route.path!='/'">{{$route.matched[0].name}}</el-breadcrumb-item>
-                  <el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
->>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
                 </el-breadcrumb>
                 </el-col>
                 <el-col
                   :span="24"
-<<<<<<< HEAD
                   class="panel-inner-bottom">
-=======
-                  class="panel-inner-bottom"
-                >
->>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
                   <router-view></router-view>
                 </el-col>
             </div>
@@ -92,19 +46,12 @@
 <script>
 import NavBar from "../businesscontrols/NavBar.vue";
 import MenuUser from "../businesscontrols/MenuUser.vue";
-<<<<<<< HEAD
 import RouterMenu from "../businesscontrols/RouterMenu.vue";
 export default {
   components: {
     NavBar,
     MenuUser,
     RouterMenu
-=======
-export default {
-  components: {
-    NavBar,
-    MenuUser
->>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
   },
   data() {
     return {
