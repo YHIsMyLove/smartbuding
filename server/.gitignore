@@ -28,6 +28,7 @@ build/Release
 
 # Dependency directories
 node_modules
+
 jspm_packages
 
 # Optional npm cache directory
@@ -48,3 +49,5 @@ jspm_packages
 /db
 
 /DataBaseInfo
+
+public/dist

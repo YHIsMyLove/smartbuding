@@ -19,6 +19,7 @@
                 </el-table-column>
                 
 								<el-table-column prop="UserID" label="用户ID" >
+<<<<<<< HEAD
                     </el-table-column>
 								<el-table-column prop="RankingListTitle" label="标题" >
                     </el-table-column>
@@ -28,6 +29,17 @@
                     </el-table-column>
 								<el-table-column prop="RankingListTime" label="发生时间" >
                     </el-table-column>
+=======
+                </el-table-column>
+								<el-table-column prop="RankingListTitle" label="标题" >
+                </el-table-column>
+								<el-table-column prop="RankingListContent" label="内容" >
+                </el-table-column>
+								<el-table-column prop="RankingListScore" label="分数" >
+                </el-table-column>
+								<el-table-column prop="RankingListTime" label="发生时间" >
+                </el-table-column>
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
 								
                 <el-table-column label="操作" width="150">
                     <template scope="scope">
@@ -55,6 +67,7 @@
                           label-width="80px" ref="editForm">
                         
 												<el-form-item label="用户ID" prop="UserID">
+<<<<<<< HEAD
                             		<el-input  v-model="CurrentData.data.UserID" auto-complete="off"></el-input>
                             </el-form-item><el-form-item label="标题" prop="RankingListTitle">
                             		<el-input  v-model="CurrentData.data.RankingListTitle" auto-complete="off"></el-input>
@@ -66,6 +79,19 @@
                             		<el-date-picker   style="width:100%" placeholder="选择日期时间" 
                             		type="datetime" v-model="CurrentData.data.RankingListTime"></el-date-picker>
                             </el-form-item>
+=======
+                        		<el-input  v-model="CurrentData.data.UserID" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="标题" prop="RankingListTitle">
+                        		<el-input  v-model="CurrentData.data.RankingListTitle" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="内容" prop="RankingListContent">
+                        		<el-input  v-model="CurrentData.data.RankingListContent" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="分数" prop="RankingListScore">
+                        		<el-input  v-model="CurrentData.data.RankingListScore" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="发生时间" prop="RankingListTime">
+                        		<el-date-picker   style="width:100%" placeholder="选择日期时间" 
+                        		type="datetime" v-model="CurrentData.data.RankingListTime"></el-date-picker>
+                        </el-form-item>
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="RankingListDialog.visible = false">取 消</el-button>

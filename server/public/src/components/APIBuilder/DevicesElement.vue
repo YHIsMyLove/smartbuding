@@ -19,6 +19,7 @@
                 </el-table-column>
                 
 								<el-table-column prop="DevID" label="设备ID" >
+<<<<<<< HEAD
                     </el-table-column>
 								<el-table-column prop="DevName" label="设备名称" >
                     </el-table-column>
@@ -32,6 +33,21 @@
                     </el-table-column>
 								<el-table-column prop="DevClass" label="设备类型" >
                     </el-table-column>
+=======
+                </el-table-column>
+								<el-table-column prop="DevName" label="设备名称" >
+                </el-table-column>
+								<el-table-column prop="DevDesc" label="设备描述" >
+                </el-table-column>
+								<el-table-column prop="DevIP" label="设备IP" >
+                </el-table-column>
+								<el-table-column prop="DevPort" label="设备端口" >
+                </el-table-column>
+								<el-table-column prop="DevState$" label="设备状态" >
+                </el-table-column>
+								<el-table-column prop="DevClass" label="设备类型" >
+                </el-table-column>
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
 								
                 <el-table-column label="操作" width="150">
                     <template scope="scope">
@@ -59,6 +75,7 @@
                           label-width="80px" ref="editForm">
                         
 												<el-form-item label="设备ID" prop="DevID">
+<<<<<<< HEAD
                             		<el-input  v-model="CurrentData.data.DevID" auto-complete="off"></el-input>
                             </el-form-item><el-form-item label="设备名称" prop="DevName">
                             		<el-input  v-model="CurrentData.data.DevName" auto-complete="off"></el-input>
@@ -73,6 +90,22 @@
                             </el-form-item><el-form-item label="设备类型" prop="DevClass">
                             		<el-input  v-model="CurrentData.data.DevClass" auto-complete="off"></el-input>
                             </el-form-item>
+=======
+                        		<el-input  v-model="CurrentData.data.DevID" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备名称" prop="DevName">
+                        		<el-input  v-model="CurrentData.data.DevName" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备描述" prop="DevDesc">
+                        		<el-input  v-model="CurrentData.data.DevDesc" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备IP" prop="DevIP">
+                        		<el-input  v-model="CurrentData.data.DevIP" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备端口" prop="DevPort">
+                        		<el-input  v-model="CurrentData.data.DevPort" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备状态" prop="DevState$">
+                        		<el-input  disabled  v-model="CurrentData.data.DevState$" auto-complete="off"></el-input>
+                        </el-form-item><el-form-item label="设备类型" prop="DevClass">
+                        		<el-input  v-model="CurrentData.data.DevClass" auto-complete="off"></el-input>
+                        </el-form-item>
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="DevicesDialog.visible = false">取 消</el-button>

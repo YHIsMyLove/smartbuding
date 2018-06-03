@@ -54,6 +54,7 @@ router.post('/CreateOrUpdateDevices', Devices.CreateOrUpdateDevices);
 /*******************************************************************************/
 /**client***********************************************************************/
 /*******************************************************************************/
+<<<<<<< HEAD
 const MenuAuth = require('../mongodb/APIBuilder/MenuAuthBusiness')
 
 router.get('/GetMenuAuthByID', MenuAuth.GetMenuAuthByID);
@@ -73,5 +74,7 @@ router.get('/ListMenuLink', MenuLink.ListMenuLink);
 router.post('/CreateMenuLink', MenuLink.CreateOrUpdateMenuLink);
 router.post('/UpdateMenuLink', MenuLink.CreateOrUpdateMenuLink);
 router.post('/CreateOrUpdateMenuLink', MenuLink.CreateOrUpdateMenuLink);
+=======
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
 
 module.exports = router;

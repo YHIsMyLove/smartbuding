@@ -9,6 +9,7 @@
       </el-col>
       <el-col :span="14">
           <HomeApprove/>
+<<<<<<< HEAD
       </el-col>
       <el-col :span="10">
           <HomeRankingList/>
@@ -19,10 +20,23 @@
       <el-col :span="8">
           <HomeWeather/>
       </el-col>
+=======
+      </el-col>
+      <el-col :span="10">
+          <HomeRankingList/>
+      </el-col>
+      <el-col :span="16">
+          <HomeActions/>
+      </el-col>
+      <el-col :span="8">
+          <HomeWeather/>
+      </el-col>
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
     </div>
     <div class="right-body">
       <el-col :span="24">
         <HomeDefult/>
+<<<<<<< HEAD
       </el-col>
       <el-col :span="24">
         <MenuUser/>
@@ -32,6 +46,12 @@
         <SelectUser @SelectedUser="SelectedUser"/>
         <ProjMenu :ShowTitle="true" @SelectProjChange="SelectProjChange"/>
       </el-col>
+=======
+      </el-col>
+      <el-col :span="24">
+        <MenuUser/>
+      </el-col>
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
     </div>
     
   </section>
@@ -46,8 +66,11 @@ import HomeWeather from "./layout/components/HomeWeather.vue";
 import HomeRankingList from "./layout/components/HomeRankingList.vue";
 import HomeDefult from "./layout/components/HomeDefult.vue";
 import MenuUser from "./businesscontrols/MenuUser.vue";
+<<<<<<< HEAD
 import SelectUser from "./businesscontrols/SelectUser.vue";
 import ProjMenu from "./businesscontrols/ProjMenu.vue";
+=======
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
 export default {
   components: {
     HomeRoutesLink,
@@ -56,6 +79,7 @@ export default {
     HomeActions,
     HomeWeather,
     HomeRankingList,
+<<<<<<< HEAD
     HomeDefult,
     MenuUser,
     // UploadImage,
@@ -79,6 +103,13 @@ export default {
       console.log(val);
     }
   },
+=======
+    HomeDefult,MenuUser
+  },
+  data() {
+    return {};
+  },
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
   created() {}
 };
 </script>

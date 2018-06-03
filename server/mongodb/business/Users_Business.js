@@ -103,7 +103,11 @@ exports.Login = async (req, res) => {
             console.log(_user)
             return res.send(msg.genSuccessMsg('登录成功', {
                 UserID: _user._id,
+<<<<<<< HEAD
                 UserName: _user.UserName,
+=======
+                UserName:_user.UserName,
+>>>>>>> 72bef902ba622ae0f489c5b3a7807f336d63243e
                 SessionID: sessionid,
                 YSToken: ystoken
             }))
