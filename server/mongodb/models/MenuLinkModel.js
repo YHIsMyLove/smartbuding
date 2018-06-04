@@ -6,6 +6,7 @@ const MenuLinkSchema = new Schema({
     	MenuIcon:String,
 	MenuName:String,
 	MenuPath:String,
+	MenuParent:String,
 
 })
 

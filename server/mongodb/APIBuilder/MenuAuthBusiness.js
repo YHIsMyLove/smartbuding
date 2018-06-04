@@ -24,6 +24,9 @@ var createOrUpdateMenuAuth = async (req, res) => {
 	if(!req.body.RoleID){
 		return res.send(msg.genFailedMsg('err-> RoleID is not found'))
 	}
+	if(!req.body.ProjID){
+		return res.send(msg.genFailedMsg('err-> ProjID is not found'))
+	}
 	
 
     try {

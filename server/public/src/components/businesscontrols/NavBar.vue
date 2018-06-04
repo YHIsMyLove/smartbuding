@@ -4,10 +4,11 @@
             <div class="Logo">
                 <img src="../../assets/helmet.png" alt="helmet">
             </div>
+            <span v-if="!iscollapse" class="logo-txt">		<b>项目助手</b>后台管理系统    	</span>
         </div>
         <div class="ProjName">
             <i @click="changeMenu" :class="MenuIcon"></i>
-            <span class="logo-txt">		<b>项目助手</b>后台管理系统    	</span>
+            <span v-if="iscollapse">		<b>项目助手</b>后台管理系统    	</span>
         </div>
         <div class="SearchBar">
             <NavSearchProjControl/>
@@ -32,7 +33,7 @@ export default {
   },
   computed: {
     MenuIcon() {
-      return this.iscollapse ? "el-icon-menu" : "el-icon-minus";
+      return this.iscollapse ? "iconfont icon-indent" : "iconfont icon-outdent";
     },
     LoggBoxStyle() {
       return this.iscollapse ? "LogoBox" : "LogoBox-big";
@@ -47,6 +48,11 @@ export default {
   width: 100%;
   background: #324057;
   color: #c0ccda;
+}
+.logo-txt {
+  position: absolute;
+  top:18px;
+  left: 60px;
 }
 .LogoBox {
   width: 60px;

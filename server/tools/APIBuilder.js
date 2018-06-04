@@ -4,7 +4,7 @@ const config = require('./config')
 const vuexdata = require('./template/vuex')
 
 /**
- * 规则 带*为必须值,-为隐藏,$为不可写
+ * 规则 带*为必须值,-为隐藏,$为不可写,#为图片,@为Icon,
  * value 由 title,type,default,format组成 空格分割
  */
 var getStruct = (item) => {
@@ -15,7 +15,6 @@ var getStruct = (item) => {
         //是否必须
         var must = false
         if ((index = i.indexOf('*')) > 0) {
-            tmpname = i.substr(0, index)
             must = true
         }
         var hide = false
@@ -30,7 +29,12 @@ var getStruct = (item) => {
         if ((index = i.indexOf('#')) > 0) {
             img = true
         }
-
+        var icon = false
+        if ((index = i.indexOf('@')) > 0) {
+            icon = true
+        }
+        var re = /\w*/
+        tmpname = re.exec(tmpname)
         var values = item[i].split(' ')
         result.push({
             name: tmpname,
@@ -41,7 +45,8 @@ var getStruct = (item) => {
             must: must,
             hide: hide,
             disabled: disabled,
-            img: img
+            img: img,
+            icon: icon
         })
     })
     return result
@@ -55,7 +60,14 @@ var buildElementTemp = (Name, lst, CName = 'APIBuilder生成') => {
             var tmpDataColumnStr = '\n\t\t\t\t\t\t\t\t'
             lst.forEach(i => {
                 if (!i.hide) {
-                    if (i.img) {
+                    if (i.icon) {
+                        tmpDataColumnStr += `<el-table-column width='64' label="${i.title}" >
+                        <template slot-scope="scope">
+                            <i :class="scope.row.${i.name}" />
+                        </template>
+                    </el-table-column>\n\t\t\t\t\t\t\t\t`
+                    }
+                    else if (i.img) {
                         tmpDataColumnStr += `<el-table-column width='64' label="${i.title}" >
                         <template slot-scope="scope">
                             <img :src="scope.row.${i.name}" style="width:100%;height:100%;">
@@ -69,9 +81,36 @@ var buildElementTemp = (Name, lst, CName = 'APIBuilder生成') => {
             });
             //2. TemplateDataDialog
             var tmpDataDialogStr = "\n\t\t\t\t\t\t\t\t\t\t\t\t"
+            var tmpUserControlStr = ''
             lst.forEach(i => {
                 var disabledStr = i.disabled ? ' disabled ' : ''
-                if (i.img) {                    
+                if(i.format == 'UserID'){
+                    tmpDataDialogStr += `<el-form-item label="${i.title}" prop="${i.name}">
+                    <SelectUser @SelectedUser="SelectedUser"/>                
+                    </el-form-item>`
+                    tmpUserControlStr = `SelectedUser(val){
+                        this.CurrentData.data.${i.name}=val[1].label
+                    },`
+                }
+                else if (i.format) {
+                    tmpDataDialogStr += `<el-form-item label="${i.title}" prop="${i.name}">
+                    \t\t<el-input disabled v-model="CurrentData.data.${i.name}" auto-complete="off" style="width:83%"/>
+                    <${i.format} v-model="show" @GetValue="GetValue" style="float:right" />                    
+                    </el-form-item>`
+                    tmpUserControlStr = `GetValue(val){
+                        this.CurrentData.data.${i.name}=val
+                    },`
+                }
+                else if (i.icon) {
+                    tmpDataDialogStr += `<el-form-item label="${i.title}" prop="${i.name}">
+                    \t\t<el-input disabled v-model="CurrentData.data.${i.name}" auto-complete="off" style="width:83%"/>
+                    <SelectIcon v-model="show" @GetValue="GetValue" style="float:right" />
+                    </el-form-item>`
+                    tmpUserControlStr = `GetValue(val){
+                        this.CurrentData.data.${i.name}=val
+                    },`
+                }
+                else if (i.img) {
                     tmpDataDialogStr += `<el-form-item label="${i.title}" prop="${i.name}">
                     \t\t<UploadImage :width=64 v-model="CurrentData.data.${i.name}" />
                     </el-form-item>`
@@ -131,6 +170,7 @@ var buildElementTemp = (Name, lst, CName = 'APIBuilder生成') => {
                 .replaceAll('APIBuilder生成', CName)
                 .replaceAll('TempVuexImport', TempVuexImportStr)
                 .replaceAll('TempVuexComputed', TempVuexComputedStr)
+                .replaceAll('tmpUserControlStr', tmpUserControlStr)
             fs.exists(config.ElementTempDist, (exists) => {
                 if (!exists) {
                     fs.mkdirSync(config.ElementTempDist)

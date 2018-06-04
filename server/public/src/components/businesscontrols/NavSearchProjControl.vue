@@ -1,9 +1,11 @@
 <template>
     <div>
-        <el-input placeholder="请选择项目" suffix-icon="el-icon-search" class="searchProj" v-model="SelectProj" disabled>
+        <el-input placeholder="请选择项目" 
+          suffix-icon="el-icon-search" 
+          class="searchProj" 
+          v-model="SelectProj" disabled>
             <el-button @click="OpenDialog" slot="append" icon="el-icon-search"></el-button>
         </el-input>
-        <!-- <el-button class="LogoutStyle" @click="Logout" type="danger" icon="el-icon-delete"></el-button> -->
         <i class="LogoutStyle iconfont icon-poweroff" @click="Logout"/>
         <el-dialog close="dialog" title="请选择项目" v-model="isOpenDialog">
             <div class="nav">
@@ -94,15 +96,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .searchProj {
   width: calc(100% - 66px);
 }
+
 .LogoutStyle {
   border-radius: 50%;
   float: right;
   margin-right: 30px;
   color: #f56c6c;
+  font-size: 36px;
 }
 
 .el-input-group__append {

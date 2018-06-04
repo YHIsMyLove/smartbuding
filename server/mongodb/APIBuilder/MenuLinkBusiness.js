@@ -18,10 +18,7 @@ var getMenuLinkByID = async (req, res) => {
 
 var createOrUpdateMenuLink = async (req, res) => {
 
-    if(!req.body.MenuIcon){
-		return res.send(msg.genFailedMsg('err-> MenuIcon is not found'))
-	}
-	if(!req.body.MenuName){
+    if(!req.body.MenuName){
 		return res.send(msg.genFailedMsg('err-> MenuName is not found'))
 	}
 	if(!req.body.MenuPath){

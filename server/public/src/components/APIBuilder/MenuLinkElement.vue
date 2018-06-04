@@ -20,12 +20,14 @@
                 
 								<el-table-column width='64' label="图标" >
                         <template slot-scope="scope">
-                            <img :src="scope.row.MenuIcon" style="width:100%;height:100%;">
+                            <i :class="scope.row.MenuIcon" />
                         </template>
                     </el-table-column>
 								<el-table-column prop="MenuName" label="路由名称" >
                     </el-table-column>
 								<el-table-column prop="MenuPath" label="路由地址" >
+                    </el-table-column>
+								<el-table-column prop="MenuParent" label="父节点" >
                     </el-table-column>
 								
                 <el-table-column label="操作" width="150">
@@ -54,11 +56,14 @@
                           label-width="80px" ref="editForm">
                         
 												<el-form-item label="图标" prop="MenuIcon">
-                    		<UploadImage :width=64 v-model="CurrentData.data.MenuIcon" />
+                    		<el-input disabled v-model="CurrentData.data.MenuIcon" auto-complete="off" style="width:83%"/>
+                    <SelectIcon v-model="show" @GetValue="GetValue" style="float:right" />
                     </el-form-item><el-form-item label="路由名称" prop="MenuName">
                             		<el-input  v-model="CurrentData.data.MenuName" auto-complete="off"></el-input>
                             </el-form-item><el-form-item label="路由地址" prop="MenuPath">
                             		<el-input  v-model="CurrentData.data.MenuPath" auto-complete="off"></el-input>
+                            </el-form-item><el-form-item label="父节点" prop="MenuParent">
+                            		<el-input  v-model="CurrentData.data.MenuParent" auto-complete="off"></el-input>
                             </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -78,6 +83,7 @@ export default {
   
   data() {
     return {
+      show:false,
       pageData: {},
       PageInfo: {
         title: "路由表",
@@ -104,6 +110,9 @@ export default {
     this.updateData();
   },
   methods: {
+    GetValue(val){
+                        this.CurrentData.data.MenuIcon=val
+                    },
     /***********************************/
     updateData() {
       let that = this;
@@ -140,6 +149,7 @@ export default {
 				MenuIcon : '',
 				MenuName : '',
 				MenuPath : '',
+				MenuParent : '',
 				
       };
       this.MenuLinkDialog.visible = true;
@@ -151,6 +161,7 @@ export default {
 				MenuIcon : row.MenuIcon,
 				MenuName : row.MenuName,
 				MenuPath : row.MenuPath,
+				MenuParent : row.MenuParent,
 				
       };
       this.MenuLinkDialog.visible = true;
@@ -169,6 +180,10 @@ export default {
                 that.updateData();
               } else {
                 //error
+                that.$message({
+                  message: "提交失败:" + res.data.msg,
+                  type: "error"
+                });
               }
               that.MenuLinkDialog.loading = false;
               this.MenuLinkDialog.visible = false;

@@ -49,10 +49,9 @@
                           label-width="80px" ref="editForm">
                         
 												<el-form-item label="路由ID" prop="MenuID">
-                            		<el-input  v-model="CurrentData.data.MenuID" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="角色ID" prop="RoleID">
-                            		<el-input  v-model="CurrentData.data.RoleID" auto-complete="off"></el-input>
-                            </el-form-item>
+                    		<el-input disabled v-model="CurrentData.data.MenuID" auto-complete="off" style="width:83%"/>
+                    <SelectMenuLink v-model="show" @GetValue="GetValue" style="float:right" />                    
+                    </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="MenuAuthDialog.visible = false">取 消</el-button>
@@ -66,17 +65,18 @@
 import util from "../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
-
+import { mapGetters, mapActions } from "vuex";
 export default {
-  
+  computed: { ...mapGetters(["getProj"]) },
   data() {
     return {
+      show: false,
       pageData: {},
       PageInfo: {
         title: "路由权限表",
-        currentPage:1,
-        currentPageSize:10,
-        tableDataLength:10
+        currentPage: 1,
+        currentPageSize: 10,
+        tableDataLength: 10
       },
       MenuAuthData: {
         tabledata: [],
@@ -97,6 +97,9 @@ export default {
     this.updateData();
   },
   methods: {
+    GetValue(val) {
+      this.CurrentData.data.MenuID = val;
+    },
     /***********************************/
     updateData() {
       let that = this;
@@ -129,20 +132,19 @@ export default {
     /***********************************/
     newdata() {
       this.CurrentData.data = {
-        
-				MenuID : '',
-				RoleID : '',
-				
+        MenuID: "",
+        RoleID: "",
+        ProjID: this.getProj.ProjID
       };
       this.MenuAuthDialog.visible = true;
     },
     handleEdit(row) {
       this.CurrentData.data = {
-        _id : row._id,
-        
-				MenuID : row.MenuID,
-				RoleID : row.RoleID,
-				
+        _id: row._id,
+
+        MenuID: row.MenuID,
+        RoleID: row.RoleID,
+        ProjID: this.getProj.ProjID
       };
       this.MenuAuthDialog.visible = true;
     },
@@ -160,6 +162,10 @@ export default {
                 that.updateData();
               } else {
                 //error
+                that.$message({
+                  message: "提交失败:" + res.data.msg,
+                  type: "error"
+                });
               }
               that.MenuAuthDialog.loading = false;
               this.MenuAuthDialog.visible = false;
@@ -185,7 +191,9 @@ export default {
                 //error
               }
             })
-            .catch(err => {console.log(err)});
+            .catch(err => {
+              console.log(err);
+            });
         })
         .catch(err => {});
     }

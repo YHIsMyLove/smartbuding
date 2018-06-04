@@ -8,7 +8,7 @@ const DevicesSchema = new Schema({
 	DevDesc:String,
 	DevIP:{ type: String , default: '192.168.1.1' },
 	DevPort:{ type: Number , default: 8888 },
-	DevState$:{ type: String , default: '在线' },
+	DevState:{ type: String , default: '在线' },
 	DevClass:String,
 	ProjID:String,
 

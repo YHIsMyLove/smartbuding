@@ -28,7 +28,7 @@
                     </el-table-column>
 								<el-table-column prop="DevPort" label="设备端口" >
                     </el-table-column>
-								<el-table-column prop="DevState$" label="设备状态" >
+								<el-table-column prop="DevState" label="设备状态" >
                     </el-table-column>
 								<el-table-column prop="DevClass" label="设备类型" >
                     </el-table-column>
@@ -63,13 +63,14 @@
                             </el-form-item><el-form-item label="设备名称" prop="DevName">
                             		<el-input  v-model="CurrentData.data.DevName" auto-complete="off"></el-input>
                             </el-form-item><el-form-item label="设备描述" prop="DevDesc">
-                            		<el-input  v-model="CurrentData.data.DevDesc" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备IP" prop="DevIP">
+                    		<el-input disabled v-model="CurrentData.data.DevDesc" auto-complete="off" style="width:83%"/>
+                    <设备介绍 v-model="show" @GetValue="GetValue" style="float:right" />                    
+                    </el-form-item><el-form-item label="设备IP" prop="DevIP">
                             		<el-input  v-model="CurrentData.data.DevIP" auto-complete="off"></el-input>
                             </el-form-item><el-form-item label="设备端口" prop="DevPort">
                             		<el-input  v-model="CurrentData.data.DevPort" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备状态" prop="DevState$">
-                            		<el-input  disabled  v-model="CurrentData.data.DevState$" auto-complete="off"></el-input>
+                            </el-form-item><el-form-item label="设备状态" prop="DevState">
+                            		<el-input  disabled  v-model="CurrentData.data.DevState" auto-complete="off"></el-input>
                             </el-form-item><el-form-item label="设备类型" prop="DevClass">
                             		<el-input  v-model="CurrentData.data.DevClass" auto-complete="off"></el-input>
                             </el-form-item>
@@ -91,6 +92,7 @@ export default {
   computed: {...mapGetters(['getProj'])},
   data() {
     return {
+      show:false,
       pageData: {},
       PageInfo: {
         title: "设备管理",
@@ -117,6 +119,9 @@ export default {
     this.updateData();
   },
   methods: {
+    GetValue(val){
+                        this.CurrentData.data.DevDesc=val
+                    },
     /***********************************/
     updateData() {
       let that = this;
@@ -155,7 +160,7 @@ export default {
 				DevDesc : '',
 				DevIP : '192.168.1.1',
 				DevPort : '8888',
-				DevState$ : '在线',
+				DevState : '在线',
 				DevClass : '',
 				ProjID : this.getProj.ProjID,
 				
@@ -171,7 +176,7 @@ export default {
 				DevDesc : row.DevDesc,
 				DevIP : row.DevIP,
 				DevPort : row.DevPort,
-				DevState$ : row.DevState$,
+				DevState : row.DevState,
 				DevClass : row.DevClass,
 				ProjID : this.getProj.ProjID,
 				
@@ -192,6 +197,10 @@ export default {
                 that.updateData();
               } else {
                 //error
+                that.$message({
+                  message: "提交失败:" + res.data.msg,
+                  type: "error"
+                });
               }
               that.DevicesDialog.loading = false;
               this.DevicesDialog.visible = false;

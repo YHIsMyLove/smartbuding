@@ -3,7 +3,8 @@
         <el-cascader :options="depts" 
                      @active-item-change="handleItemChange"
                      @change = "SelectUser"
-                      placeholder="请选择用户">
+                      placeholder="请选择用户"
+                      v-model="CurrentValue">
         </el-cascader>
     </div>
 </template>
@@ -14,6 +15,7 @@ import util from "../../common/util";
 import NProgress from "nprogress";
 import { mapGetters, mapActions } from "vuex";
 export default {
+  props: ["value"],
   computed: {
     ...mapGetters(["getProj"]),
     CurrentProj() {
@@ -22,6 +24,7 @@ export default {
   },
   data() {
     return {
+      CurrentValue: [],
       depts: [],
       users: [],
       CurrentDept: {},
@@ -36,7 +39,11 @@ export default {
   },
   methods: {
     SelectUser(val) {
-      if (val.length == 2) this.$emit("SelectedUser", val[1]);
+      if (val.length == 2) {
+        this.$emit("SelectedUser", val[1]);
+        this.$emit("input", val);
+        console.log(val)
+      }
     },
     handleItemChange(val) {
       this.CurrentDept = this.depts.filter(i => i._id == val[0].id)[0];

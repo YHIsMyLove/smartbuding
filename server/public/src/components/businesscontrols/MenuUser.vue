@@ -52,7 +52,7 @@ export default {
 .headimg {
   border-radius: 50%;
   width: 36px;
-  height: 36px; 
+  height: 36px;
   margin-left: 9px;
   margin-top: 9px;
 }

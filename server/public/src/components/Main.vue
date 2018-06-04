@@ -22,15 +22,18 @@
     </div>
     <div class="right-body">
       <el-col :span="24">
-        <HomeDefult/>
-      </el-col>
-      <el-col :span="24">
         <MenuUser/>
         <UploadImage :width=64
                       v-model="tmpImage" 
                       :circle="true" @UpLoadOver="UpLoadOver"/>
         <SelectUser @SelectedUser="SelectedUser"/>
-        <ProjMenu :ShowTitle="true" @SelectProjChange="SelectProjChange"/>
+        <!-- <ProjMenu :ShowTitle="true" @SelectProjChange="SelectProjChange"/> -->
+        <SelectIcon @GetValue="GetIcon"/>
+        <SelectMenuLink />
+      </el-col>
+      
+      <el-col :span="24">
+        <HomeDefult/>
       </el-col>
     </div>
     
@@ -48,6 +51,7 @@ import HomeDefult from "./layout/components/HomeDefult.vue";
 import MenuUser from "./businesscontrols/MenuUser.vue";
 import SelectUser from "./businesscontrols/SelectUser.vue";
 import ProjMenu from "./businesscontrols/ProjMenu.vue";
+import SelectMenuLink from "./businesscontrols/SelectMenuLink.vue";
 export default {
   components: {
     HomeRoutesLink,
@@ -58,17 +62,21 @@ export default {
     HomeRankingList,
     HomeDefult,
     MenuUser,
-    // UploadImage,
     SelectUser,
-    ProjMenu
+    ProjMenu,
+    SelectMenuLink
   },
   data() {
     return {
-      tmpImage:""
-        // "http://justtest-1251712170.file.myqcloud.com/static/xiejie_N_x150.png"
+      tmpImage: ""
+      // "http://justtest-1251712170.file.myqcloud.com/static/xiejie_N_x150.png"
     };
   },
   methods: {
+    GetIcon(icon) {
+      console.log(icon);
+      this.btnName = icon;
+    },
     SelectedUser(user) {
       console.log(user);
     },

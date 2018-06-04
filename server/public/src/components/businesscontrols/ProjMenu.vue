@@ -4,7 +4,9 @@
           <span >项目列表</span>
         </div>
         <el-menu :default-active='activeProj' @select="SelectProjChange">
-            <el-menu-item v-for="item in ProjData" :index="item._id" :key="item._id">{{item.label}}</el-menu-item>
+            <el-menu-item v-for="item in ProjData" :index="item._id" :key="item._id">
+              {{item.label}}
+            </el-menu-item>
         </el-menu>
     </el-card>
 </template>

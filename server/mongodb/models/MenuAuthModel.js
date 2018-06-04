@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const MenuAuthSchema = new Schema({
     	MenuID:String,
 	RoleID:String,
+	ProjID:String,
 
 })
 

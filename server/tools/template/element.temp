@@ -61,6 +61,7 @@ export default {
   TempVuexComputed
   data() {
     return {
+      show:false,
       pageData: {},
       PageInfo: {
         title: "APIBuilder生成",
@@ -87,6 +88,7 @@ export default {
     this.updateData();
   },
   methods: {
+    tmpUserControlStr
     /***********************************/
     updateData() {
       let that = this;
@@ -144,6 +146,10 @@ export default {
                 that.updateData();
               } else {
                 //error
+                that.$message({
+                  message: "提交失败:" + res.data.msg,
+                  type: "error"
+                });
               }
               that.TemplateNameDialog.loading = false;
               this.TemplateNameDialog.visible = false;

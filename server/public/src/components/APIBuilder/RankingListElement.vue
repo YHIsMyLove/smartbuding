@@ -84,6 +84,7 @@ export default {
   computed: {...mapGetters(['getProj'])},
   data() {
     return {
+      show:false,
       pageData: {},
       PageInfo: {
         title: "红黑榜",
@@ -110,6 +111,7 @@ export default {
     this.updateData();
   },
   methods: {
+    
     /***********************************/
     updateData() {
       let that = this;
@@ -181,6 +183,10 @@ export default {
                 that.updateData();
               } else {
                 //error
+                that.$message({
+                  message: "提交失败:" + res.data.msg,
+                  type: "error"
+                });
               }
               that.RankingListDialog.loading = false;
               this.RankingListDialog.visible = false;

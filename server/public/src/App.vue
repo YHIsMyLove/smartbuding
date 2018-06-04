@@ -18,7 +18,7 @@ export default {
 @import "../../node_modules/flex.css/dist/flex.css";
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 36px;
+  font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
