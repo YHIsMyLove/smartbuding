@@ -324,7 +324,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .toolbar .el-form-item {
   margin-bottom: 10px;
 }

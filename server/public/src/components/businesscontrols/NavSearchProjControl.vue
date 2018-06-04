@@ -3,7 +3,8 @@
         <el-input placeholder="请选择项目" suffix-icon="el-icon-search" class="searchProj" v-model="SelectProj" disabled>
             <el-button @click="OpenDialog" slot="append" icon="el-icon-search"></el-button>
         </el-input>
-        <el-button class="LogoutStyle" @click="Logout" type="danger" icon="el-icon-delete"></el-button>
+        <!-- <el-button class="LogoutStyle" @click="Logout" type="danger" icon="el-icon-delete"></el-button> -->
+        <i class="LogoutStyle iconfont icon-poweroff" @click="Logout"/>
         <el-dialog close="dialog" title="请选择项目" v-model="isOpenDialog">
             <div class="nav">
                 <div class="center">
@@ -27,7 +28,7 @@
 <script>
 import SelectCity from "./SelectCity.vue";
 import SelectProv from "./SelectProv.vue";
-import ProjMenu from "./ProjMenu.vue"; 
+import ProjMenu from "./ProjMenu.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
@@ -101,6 +102,7 @@ export default {
   border-radius: 50%;
   float: right;
   margin-right: 30px;
+  color: #f56c6c;
 }
 
 .el-input-group__append {

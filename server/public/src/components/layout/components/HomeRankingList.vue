@@ -3,80 +3,76 @@
         <div slot="header" class="clearfix">
             <span>当月红黑榜</span>
         </div>
-        <ECharts class="chart1" :options='RankingListData' auto-resize/>
+        <div id="chart1"></div>
     </el-card>
 </template>
 
 <script>
-import ECharts from "vue-echarts/components/ECharts";
-import "echarts";
-// import ECharts from "vue-echarts/components/ECharts";
-// import _echarts from "echarts";
 export default {
-  components: {
-    ECharts
-  },
-  data() {
-    return {
-      RankingListData: {
-        grid: {
-          left: 20,
-          top: 20
-        },
-        xAxis: {
-          type: "value",
-          min: 0,
-          max: 6
-        },
-        yAxis: {
-          type: "value",
-          min: -10,
-          max: 10
-        },
-        series: [
-          {
-            data: [
-              [1, 8, "张三"],
-              [2, 7, "李四"],
-              [3, 6, "王五"],
-              [4, 4, "刘六"],
-              [5, 1, "杨七"]
-            ],
-            type: "bar",
-            label: {
-              normal: {
-                formatter: p => {
-                  return p.value[2];
-                },
-                color: "#909399",
-                show: true,
-                position: "top"
-              }
-            }
-          },
-          {
-            data: [
-              [1, -8, "张三"],
-              [2, -7, "李四"],
-              [3, -6, "王五"],
-              [4, -4, "刘六"],
-              [5, -1, "杨七"]
-            ],
-            type: "bar",
-            label: {
-              normal: {
-                formatter: p => {
-                  return p.value[2];
-                },
-                color: "#909399",
-                show: true,
-                position: "bottom"
-              }
+  mounted() {
+    let charts = this.$echarts.init(document.getElementById("chart1"));
+    charts.setOption({
+      grid: {
+        left: 20,
+        top: 20
+      },
+      xAxis: {
+        type: "value",
+        min: 0,
+        max: 6,
+        show: false
+      },
+      yAxis: {
+        type: "value",
+        min: -10,
+        max: 10
+      },
+      series: [
+        {
+          data: [
+            [1, 8, "张三"],
+            [2, 7, "李四"],
+            [3, 6, "王五"],
+            [4, 4, "刘六"],
+            [5, 1, "杨七"]
+          ],
+          type: "bar",
+          label: {
+            normal: {
+              formatter: p => {
+                return p.value[2];
+              },
+              color: "#909399",
+              show: true,
+              position: "top"
             }
           }
-        ]
-      }
-    };
+        },
+        {
+          data: [
+            [1, -8, "张三"],
+            [2, -7, "李四"],
+            [3, -6, "王五"],
+            [4, -4, "刘六"],
+            [5, -1, "杨七"]
+          ],
+          type: "bar",
+          label: {
+            normal: {
+              formatter: p => {
+                return p.value[2];
+              },
+              color: "#909399",
+              show: true,
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    });
+  },
+  data() {
+    return {};
   }
 };
 </script>
@@ -87,9 +83,9 @@ export default {
   margin-left: 5px;
   height: 400px;
 }
-.chart1 {
+#chart1 {
   width: 100%;
-  height: 350px;
+  height: 300px;
 }
 </style>
 

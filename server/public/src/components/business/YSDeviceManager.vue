@@ -88,9 +88,7 @@ import moment from "moment";
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters([
-      "getUser",
-    ])
+    ...mapGetters(["getUser"])
   },
   data() {
     return {
@@ -217,7 +215,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .toolbar .el-form-item {
   margin-bottom: 10px;
 }

@@ -37,7 +37,6 @@ export default {
   },
   watch: {
     iscollapse(nval, oval) {
-      console.log(nval);
       this.iscollapse2 = nval;
     }
   },

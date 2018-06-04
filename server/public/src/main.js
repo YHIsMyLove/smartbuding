@@ -19,6 +19,9 @@ Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts 
+
 //全局引用图片上传组件
 import UploadImage from "./components/businesscontrols/UploadImage.vue";
 Vue.component("UploadImage", UploadImage)
