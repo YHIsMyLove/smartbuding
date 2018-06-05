@@ -480,16 +480,15 @@ exports.GetRole = async (req, res) => {
         SysFieldID: 'role',
         item2: req.query.ProjID
     }
-    console.log(query)
     try {
         let role = await SysTable.find(query)
         let result = role.map(i => {
             return {
                 label: i.item0,
                 value: i._id,
+                desc:i.item1
             }
         })
-        console.log(result)
         res.send(msg.genSuccessMsg('获取成功', result))
     } catch (error) {
         res.send(msg.genFailedMsg("获取失败->" + error))

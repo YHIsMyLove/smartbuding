@@ -26,9 +26,10 @@
         <UploadImage :width=64
                       v-model="tmpImage" 
                       :circle="true" @UpLoadOver="UpLoadOver"/>
-        <SelectUser @SelectedUser="SelectedUser"/>
+        <!-- <SelectUser @SelectedUser="SelectedUser"/> -->
         <!-- <ProjMenu :ShowTitle="true" @SelectProjChange="SelectProjChange"/> -->
-        <SelectIcon @GetValue="GetIcon"/>
+        <!-- <SelectIcon @GetValue="GetIcon"/> -->
+        <SelectRole :ShowTitle="RoleTitle"/>
         <SelectMenuLink />
       </el-col>
       
@@ -68,6 +69,7 @@ export default {
   },
   data() {
     return {
+      RoleTitle: "选择角色",
       tmpImage: ""
       // "http://justtest-1251712170.file.myqcloud.com/static/xiejie_N_x150.png"
     };

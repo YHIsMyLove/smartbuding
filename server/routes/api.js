@@ -59,9 +59,11 @@ const MenuAuth = require('../mongodb/APIBuilder/MenuAuthBusiness')
 router.get('/GetMenuAuthByID', MenuAuth.GetMenuAuthByID);
 router.get('/DelMenuAuthByID', MenuAuth.DelMenuAuthByID);
 router.get('/ListMenuAuth', MenuAuth.ListMenuAuth);
+router.get('/GetRolebyMenuAuth', MenuAuth.GetRolebyMenuAuth);
 router.post('/CreateMenuAuth', MenuAuth.CreateOrUpdateMenuAuth);
 router.post('/UpdateMenuAuth', MenuAuth.CreateOrUpdateMenuAuth);
 router.post('/CreateOrUpdateMenuAuth', MenuAuth.CreateOrUpdateMenuAuth);
+router.post('/UpdateOrDelbyMenuAuth', MenuAuth.UpdateOrDelbyMenuAuth);
 /*******************************************************************************/
 /**server***********************************************************************/
 /*******************************************************************************/

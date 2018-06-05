@@ -37,6 +37,9 @@ Vue.component("SelectMenuLink", SelectMenuLink)
 //全局引用选择用户组件
 import SelectUser from "./components/businesscontrols/SelectUser.vue";
 Vue.component("SelectUser", SelectUser)
+//全局引用选择用户角色
+import SelectRole from "./components/businesscontrols/SelectRole.vue";
+Vue.component("SelectRole", SelectRole)
 /*************************************************************************** */
 /*************************************************************************** */
 /*************************************************************************** */

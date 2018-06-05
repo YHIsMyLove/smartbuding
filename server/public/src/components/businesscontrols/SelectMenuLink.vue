@@ -5,30 +5,17 @@
     width="400"
     trigger="click"
     @hide="close">
-    <div class="main">
-        <el-menu @close="close" @select="GetSelectMenuLink">
-            <el-menu-item   v-for="(item,index) in MenuLinks"
-                            :key="index" :index="index.toString()">
-                <template>
-                    <i style="float: left" :class="item.MenuIcon"/>
-                    <span style="float: left">{{ item.MenuName }}</span>
-                    <span style="float: right; color: #8492a6; font-size: 13px">{{ item.MenuPath }}</span>
-                </template>
-            </el-menu-item>
-        </el-menu>
-    </div>
+    <SelectMenuLinkMenu @GetMenuLink="GetMenuLink"/>
     <el-button slot="reference">选择路由</el-button>
   </el-popover>
 </template>
 <script>
-import axios from "axios";
-import util from "../../common/util";
-import NProgress from "nprogress";
+import SelectMenuLinkMenu from "./SelectMenuLinkMenu.vue";
 export default {
+  components: { SelectMenuLinkMenu },
   data() {
     return {
-      showMenuLink: this.value,
-      MenuLinks: []
+      showMenuLink: this.value
     };
   },
   watch: {
@@ -37,30 +24,13 @@ export default {
     }
   },
   props: ["value"],
-  created() {
-    this.GetMenuLink();
-  },
   methods: {
     close() {
       this.$emit("input", false);
     },
-    GetMenuLink() {
-      let that = this;
-      NProgress.start();
-      axios
-        .get(`/api/ListMenuLink`)
-        .then(res => {
-          if (res.data.success) {
-            let data = res.data.data;
-            that.MenuLinks = data;
-          }
-        })
-        .catch(err => {});
-      NProgress.done();
-    },
-    GetSelectMenuLink(val) {
-      this.$emit("GetMenuLink", this.MenuLinks[val]);
-      this.$emit("GetValue", this.MenuLinks[val].MenuName);
+    GetMenuLink(val) {
+      this.$emit("GetMenuLink", val);
+      this.$emit("GetValue", val.MenuName);
       this.showMenuLink = false;
     }
   }

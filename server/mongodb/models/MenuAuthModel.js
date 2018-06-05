@@ -3,10 +3,9 @@ const Schema = mongoose.Schema;
 
 //用户表
 const MenuAuthSchema = new Schema({
-    	MenuID:String,
+    MenuID:String,
 	RoleID:String,
 	ProjID:String,
-
 })
 
 MenuAuthSchema.pre('save', function (next) {

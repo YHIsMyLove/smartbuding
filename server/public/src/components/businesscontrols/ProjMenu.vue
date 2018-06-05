@@ -3,7 +3,7 @@
         <div v-if="IsShowTitle"  slot="header" class="clearfix">
           <span >项目列表</span>
         </div>
-        <el-menu :default-active='activeProj' @select="SelectProjChange">
+        <el-menu @select="SelectProjChange">
             <el-menu-item v-for="item in ProjData" :index="item._id" :key="item._id">
               {{item.label}}
             </el-menu-item>
@@ -36,7 +36,6 @@ export default {
   data() {
     return {
       ProjData: [],
-      activeProj: "0"
     };
   },
   created() {

@@ -12,64 +12,39 @@
                     </el-form-item>
                 </el-form>
             </el-col>
-            <el-table border fit stripe 
-                     :data="MenuAuthData.tabledata"
-                     v-loading="MenuAuthData.loading">
-                <el-table-column type="index" label="编号" width="85">
-                </el-table-column>
-                
-								<el-table-column prop="MenuID" label="路由ID" >
-                    </el-table-column>
-								<el-table-column prop="RoleID" label="角色ID" >
-                    </el-table-column>
-								
-                <el-table-column label="操作" width="150">
-                    <template scope="scope">
-                        <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <el-col :span="24" class="toolbar" style="padding-bottom:10px;">
-                <el-pagination @size-change="handleSizeChange" 
-                               @current-change="handleCurrentChange" 
-                               :current-page="PageInfo.currentPage" 
-                               :page-size="PageInfo.currentPageSize" 
-                               :total="PageInfo.tableDataLength"
-                               :page-sizes="[10, 20, 30, 40]"
-                               layout="total, sizes, prev, pager, next, jumper" 
-                               style="float:right">
-                </el-pagination>
-            </el-col>
-            <el-dialog :title="MenuAuthDialog.title" 
-                       :close-on-click-modal="true"
-                        v-model="MenuAuthDialog.visible">
-                <el-form :model="CurrentData.data"  
-                         :rules="CurrentData.rules" 
-                          label-width="80px" ref="editForm">
-                        
-												<el-form-item label="路由ID" prop="MenuID">
-                    		<el-input disabled v-model="CurrentData.data.MenuID" auto-complete="off" style="width:83%"/>
-                    <SelectMenuLink v-model="show" @GetValue="GetValue" style="float:right" />                    
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="MenuAuthDialog.visible = false">取 消</el-button>
-                    <el-button type="primary" @click="submit" :loading="MenuAuthDialog.loading">提交</el-button>
+
+            <el-col :span="8">
+              <el-card>
+                <div slot="header" class="clearfix">
+                  <span>选择路由</span>
                 </div>
-            </el-dialog>
+                <SelectMenuLinkMenu @GetMenuLink="GetMenuLink"/>
+              </el-card>
+            </el-col>
+            
+            <el-col :span="16">
+                <SelectRole RefashBy="MenuAuth" 
+                           :Refash="RefashRole" 
+                           :ShowTitle="RoleTitle" 
+                           :ShowSwitch="true"/>
+            </el-col>
+
         </el-tab-pane>
     </el-tabs>
 </template>
 <script>
+import SelectMenuLinkMenu from "../businesscontrols/SelectMenuLinkMenu.vue";
 import util from "../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
 export default {
+  components: { SelectMenuLinkMenu },
   computed: { ...mapGetters(["getProj"]) },
   data() {
     return {
+      RefashRole: false,
+      RoleTitle: "选择角色",
       show: false,
       pageData: {},
       PageInfo: {
@@ -94,9 +69,12 @@ export default {
     };
   },
   created() {
-    this.updateData();
+    //this.updateData();
   },
   methods: {
+    GetMenuLink(menu) {
+      this.RefashRole = menu._id;
+    },
     GetValue(val) {
       this.CurrentData.data.MenuID = val;
     },
@@ -122,12 +100,12 @@ export default {
       NProgress.done();
     },
     handleCurrentChange(val) {
-      this.$data.currentPage = val;
-      this.updateData();
+      // this.$data.currentPage = val;
+      // this.updateData();
     },
     handleSizeChange(val) {
-      this.$data.currentPageSize = val;
-      this.updateData();
+      // this.$data.currentPageSize = val;
+      // this.updateData();
     },
     /***********************************/
     newdata() {
