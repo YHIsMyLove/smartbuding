@@ -13,24 +13,16 @@
                 </el-form>
             </el-col>
             <el-table border fit stripe 
-                     :data="DevicesData.tabledata"
-                     v-loading="DevicesData.loading">
+                     :data="DoorIOData.tabledata"
+                     v-loading="DoorIOData.loading">
                 <el-table-column type="index" label="编号" width="85">
                 </el-table-column>
                 
-								<el-table-column prop="DevID" label="设备ID" >
+								<el-table-column prop="IOTime" label="进出时间" >
                     </el-table-column>
-								<el-table-column prop="DevName" label="设备名称" >
+								<el-table-column prop="IOType" label="进出" >
                     </el-table-column>
-								<el-table-column prop="DevDesc" label="设备描述" >
-                    </el-table-column>
-								<el-table-column prop="DevIP" label="设备IP" >
-                    </el-table-column>
-								<el-table-column prop="DevPort" label="设备端口" >
-                    </el-table-column>
-								<el-table-column prop="DevState" label="设备状态" >
-                    </el-table-column>
-								<el-table-column prop="DevClass" label="设备类型" >
+								<el-table-column prop="UserID" label="用户ID" >
                     </el-table-column>
 								
                 <el-table-column label="操作" width="150">
@@ -51,32 +43,25 @@
                                style="float:right">
                 </el-pagination>
             </el-col>
-            <el-dialog :title="DevicesDialog.title" 
+            <el-dialog :title="DoorIODialog.title" 
                        :close-on-click-modal="true"
-                        v-model="DevicesDialog.visible">
+                        v-model="DoorIODialog.visible">
                 <el-form :model="CurrentData.data"  
                          :rules="CurrentData.rules" 
                           label-width="80px" ref="editForm">
                         
-												<el-form-item label="设备ID" prop="DevID">
-                            		<el-input  v-model="CurrentData.data.DevID" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备名称" prop="DevName">
-                            		<el-input  v-model="CurrentData.data.DevName" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备描述" prop="DevDesc">
-                            		<el-input  v-model="CurrentData.data.DevDesc" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备IP" prop="DevIP">
-                            		<el-input  v-model="CurrentData.data.DevIP" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备端口" prop="DevPort">
-                            		<el-input  v-model="CurrentData.data.DevPort" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备状态" prop="DevState">
-                            		<el-input  disabled  v-model="CurrentData.data.DevState" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备类型" prop="DevClass">
-                            		<el-input  v-model="CurrentData.data.DevClass" auto-complete="off"></el-input>
+												<el-form-item label="进出时间" prop="IOTime">
+                            		<el-date-picker   style="width:100%" placeholder="选择日期时间" 
+                            		type="datetime" v-model="CurrentData.data.IOTime"></el-date-picker>
+                            </el-form-item><el-form-item label="进出" prop="IOType">
+                            		<el-input  v-model="CurrentData.data.IOType" auto-complete="off"></el-input>
+                            </el-form-item><el-form-item label="用户ID" prop="UserID">
+                            		<el-input  v-model="CurrentData.data.UserID" auto-complete="off"></el-input>
                             </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="DevicesDialog.visible = false">取 消</el-button>
-                    <el-button type="primary" @click="submit" :loading="DevicesDialog.loading">提交</el-button>
+                    <el-button @click="DoorIODialog.visible = false">取 消</el-button>
+                    <el-button type="primary" @click="submit" :loading="DoorIODialog.loading">提交</el-button>
                 </div>
             </el-dialog>
         </el-tab-pane>
@@ -94,16 +79,16 @@ export default {
       show:false,
       pageData: {},
       PageInfo: {
-        title: "设备管理",
+        title: "进出记录",
         currentPage:1,
         currentPageSize:10,
         tableDataLength:10
       },
-      DevicesData: {
+      DoorIOData: {
         tabledata: [],
         loading: false
       },
-      DevicesDialog: {
+      DoorIODialog: {
         title: "",
         visible: false,
         loading: false
@@ -127,17 +112,17 @@ export default {
         page: that.$data.PageInfo.currentPage
       };
       NProgress.start();
-      that.DevicesData.loading = true;
+      that.DoorIOData.loading = true;
       axios
-        .get(`/api/ListDevices`, { params: params })
+        .get(`/api/ListDoorIO`, { params: params })
         .then(res => {
           if (res.data.success) {
-            that.$data.DevicesData.tabledata = res.data.data;
+            that.$data.DoorIOData.tabledata = res.data.data;
             that.$data.PageInfo.tableDataLength = res.data.meta.count;
           }
         })
         .catch(err => {});
-      that.DevicesData.loading = false;
+      that.DoorIOData.loading = false;
       NProgress.done();
     },
     handleCurrentChange(val) {
@@ -152,42 +137,34 @@ export default {
     newdata() {
       this.CurrentData.data = {
         
-				DevID : '',
-				DevName : '',
-				DevDesc : '设备介绍',
-				DevIP : '192.168.1.1',
-				DevPort : '8888',
-				DevState : '在线',
-				DevClass : '',
+				IOTime : '',
+				IOType : '进',
+				UserID : '',
 				ProjID : this.getProj.ProjID,
 				
       };
-      this.DevicesDialog.visible = true;
+      this.DoorIODialog.visible = true;
     },
     handleEdit(row) {
       this.CurrentData.data = {
         _id : row._id,
         
-				DevID : row.DevID,
-				DevName : row.DevName,
-				DevDesc : row.DevDesc,
-				DevIP : row.DevIP,
-				DevPort : row.DevPort,
-				DevState : row.DevState,
-				DevClass : row.DevClass,
+				IOTime : row.IOTime,
+				IOType : row.IOType,
+				UserID : row.UserID,
 				ProjID : this.getProj.ProjID,
 				
       };
-      this.DevicesDialog.visible = true;
+      this.DoorIODialog.visible = true;
     },
     submit() {
       var that = this;
       that.$refs.editForm.validate(valid => {
         if (!valid) return;
         that.$confirm("确定提交吗?", "提示", {}).then(() => {
-          that.DevicesDialog.loading = true;
+          that.DoorIODialog.loading = true;
           axios
-            .post(`/api/createOrUpdateDevices`, that.CurrentData.data)
+            .post(`/api/createOrUpdateDoorIO`, that.CurrentData.data)
             .then(res => {
               if (res.data.success) {
                 //success
@@ -199,8 +176,8 @@ export default {
                   type: "error"
                 });
               }
-              that.DevicesDialog.loading = false;
-              this.DevicesDialog.visible = false;
+              that.DoorIODialog.loading = false;
+              this.DoorIODialog.visible = false;
             })
             .catch(err => {});
         });
@@ -214,7 +191,7 @@ export default {
         })
         .then(() => {
           axios
-            .get(`/api/DelDevicesByID?id=${row._id}`)
+            .get(`/api/DelDoorIOByID?id=${row._id}`)
             .then(res => {
               if (res.data.success) {
                 //success

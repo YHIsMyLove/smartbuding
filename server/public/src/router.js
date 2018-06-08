@@ -113,11 +113,23 @@ export default new Router({
                     meta: { redirectAuth: true },
                 },
                 {
-                    path: '/DoorDeviceManager',
-                    component: resolve => require(['./components/business/DoorDeviceManager.vue'], resolve),
-                    name: '门禁设备管理',
-                    meta: { redirectAuth: true },
+                    path: '/MechanicalElement',
+                    component: resolve => require(['./components/APIBuilder/MechanicalElement.vue'], resolve),
+                    name: '机械设备检测管理',
+                    meta: { redirectAuth: true }
                 },
+                {
+                    path: '/DoorIOElement',
+                    component: resolve => require(['./components/APIBuilder/DoorIOElement.vue'], resolve),
+                    name: '进出记录管理',
+                    meta: { redirectAuth: true }
+                },
+                // {
+                //     path: '/DoorDeviceManager',
+                //     component: resolve => require(['./components/business/DoorDeviceManager.vue'], resolve),
+                //     name: '门禁设备管理',
+                //     meta: { redirectAuth: true },
+                // },
             ],
             meta: { redirectAuth: true },
         },
@@ -133,9 +145,16 @@ export default new Router({
                     name: '会议管理',
                     meta: { redirectAuth: true },
                 },
+                {
+                    path: '/BigNewsElement',
+                    component: resolve => require(['./components/APIBuilder/BigNewsElement.vue'], resolve),
+                    name: '大事件管理',
+                    meta: { redirectAuth: true }
+                },
             ],
             meta: { redirectAuth: true },
         },
+
         {
             path: '*',
             redirect: '/',

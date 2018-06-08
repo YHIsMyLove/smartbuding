@@ -13,24 +13,23 @@
                 </el-form>
             </el-col>
             <el-table border fit stripe 
-                     :data="DevicesData.tabledata"
-                     v-loading="DevicesData.loading">
+                     :data="MechanicalData.tabledata"
+                     v-loading="MechanicalData.loading">
                 <el-table-column type="index" label="编号" width="85">
                 </el-table-column>
                 
-								<el-table-column prop="DevID" label="设备ID" >
+								<el-table-column width='64' label="图片" >
+                        <template slot-scope="scope">
+                            <img :src="scope.row.mechanicalImg" style="width:100%;height:100%;">
+                        </template>
                     </el-table-column>
-								<el-table-column prop="DevName" label="设备名称" >
+								<el-table-column prop="mechanicalName" label="机器名" >
                     </el-table-column>
-								<el-table-column prop="DevDesc" label="设备描述" >
+								<el-table-column prop="mechanicalState" label="机器状态" >
                     </el-table-column>
-								<el-table-column prop="DevIP" label="设备IP" >
+								<el-table-column prop="mechanicalUser" label="管理员" >
                     </el-table-column>
-								<el-table-column prop="DevPort" label="设备端口" >
-                    </el-table-column>
-								<el-table-column prop="DevState" label="设备状态" >
-                    </el-table-column>
-								<el-table-column prop="DevClass" label="设备类型" >
+								<el-table-column prop="mechanicalUserPhone" label="管理员电话" >
                     </el-table-column>
 								
                 <el-table-column label="操作" width="150">
@@ -51,32 +50,28 @@
                                style="float:right">
                 </el-pagination>
             </el-col>
-            <el-dialog :title="DevicesDialog.title" 
+            <el-dialog :title="MechanicalDialog.title" 
                        :close-on-click-modal="true"
-                        v-model="DevicesDialog.visible">
+                        v-model="MechanicalDialog.visible">
                 <el-form :model="CurrentData.data"  
                          :rules="CurrentData.rules" 
                           label-width="80px" ref="editForm">
                         
-												<el-form-item label="设备ID" prop="DevID">
-                            		<el-input  v-model="CurrentData.data.DevID" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备名称" prop="DevName">
-                            		<el-input  v-model="CurrentData.data.DevName" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备描述" prop="DevDesc">
-                            		<el-input  v-model="CurrentData.data.DevDesc" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备IP" prop="DevIP">
-                            		<el-input  v-model="CurrentData.data.DevIP" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备端口" prop="DevPort">
-                            		<el-input  v-model="CurrentData.data.DevPort" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备状态" prop="DevState">
-                            		<el-input  disabled  v-model="CurrentData.data.DevState" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备类型" prop="DevClass">
-                            		<el-input  v-model="CurrentData.data.DevClass" auto-complete="off"></el-input>
+												<el-form-item label="图片" prop="mechanicalImg">
+                    		<UploadImage :width=64 v-model="CurrentData.data.mechanicalImg" />
+                    </el-form-item><el-form-item label="机器名" prop="mechanicalName">
+                            		<el-input  v-model="CurrentData.data.mechanicalName" auto-complete="off"></el-input>
+                            </el-form-item><el-form-item label="机器状态" prop="mechanicalState">
+                            		<el-input  v-model="CurrentData.data.mechanicalState" auto-complete="off"></el-input>
+                            </el-form-item><el-form-item label="管理员" prop="mechanicalUser">
+                            		<el-input  v-model="CurrentData.data.mechanicalUser" auto-complete="off"></el-input>
+                            </el-form-item><el-form-item label="管理员电话" prop="mechanicalUserPhone">
+                            		<el-input  v-model="CurrentData.data.mechanicalUserPhone" auto-complete="off"></el-input>
                             </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="DevicesDialog.visible = false">取 消</el-button>
-                    <el-button type="primary" @click="submit" :loading="DevicesDialog.loading">提交</el-button>
+                    <el-button @click="MechanicalDialog.visible = false">取 消</el-button>
+                    <el-button type="primary" @click="submit" :loading="MechanicalDialog.loading">提交</el-button>
                 </div>
             </el-dialog>
         </el-tab-pane>
@@ -86,24 +81,24 @@
 import util from "../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
-import { mapGetters, mapActions } from 'vuex';
+
 export default {
-  computed: {...mapGetters(['getProj'])},
+  
   data() {
     return {
       show:false,
       pageData: {},
       PageInfo: {
-        title: "设备管理",
+        title: "机械设备检测",
         currentPage:1,
         currentPageSize:10,
         tableDataLength:10
       },
-      DevicesData: {
+      MechanicalData: {
         tabledata: [],
         loading: false
       },
-      DevicesDialog: {
+      MechanicalDialog: {
         title: "",
         visible: false,
         loading: false
@@ -127,17 +122,17 @@ export default {
         page: that.$data.PageInfo.currentPage
       };
       NProgress.start();
-      that.DevicesData.loading = true;
+      that.MechanicalData.loading = true;
       axios
-        .get(`/api/ListDevices`, { params: params })
+        .get(`/api/ListMechanical`, { params: params })
         .then(res => {
           if (res.data.success) {
-            that.$data.DevicesData.tabledata = res.data.data;
+            that.$data.MechanicalData.tabledata = res.data.data;
             that.$data.PageInfo.tableDataLength = res.data.meta.count;
           }
         })
         .catch(err => {});
-      that.DevicesData.loading = false;
+      that.MechanicalData.loading = false;
       NProgress.done();
     },
     handleCurrentChange(val) {
@@ -152,42 +147,36 @@ export default {
     newdata() {
       this.CurrentData.data = {
         
-				DevID : '',
-				DevName : '',
-				DevDesc : '设备介绍',
-				DevIP : '192.168.1.1',
-				DevPort : '8888',
-				DevState : '在线',
-				DevClass : '',
-				ProjID : this.getProj.ProjID,
+				mechanicalImg : '',
+				mechanicalName : '',
+				mechanicalState : '正常',
+				mechanicalUser : '',
+				mechanicalUserPhone : '',
 				
       };
-      this.DevicesDialog.visible = true;
+      this.MechanicalDialog.visible = true;
     },
     handleEdit(row) {
       this.CurrentData.data = {
         _id : row._id,
         
-				DevID : row.DevID,
-				DevName : row.DevName,
-				DevDesc : row.DevDesc,
-				DevIP : row.DevIP,
-				DevPort : row.DevPort,
-				DevState : row.DevState,
-				DevClass : row.DevClass,
-				ProjID : this.getProj.ProjID,
+				mechanicalImg : row.mechanicalImg,
+				mechanicalName : row.mechanicalName,
+				mechanicalState : row.mechanicalState,
+				mechanicalUser : row.mechanicalUser,
+				mechanicalUserPhone : row.mechanicalUserPhone,
 				
       };
-      this.DevicesDialog.visible = true;
+      this.MechanicalDialog.visible = true;
     },
     submit() {
       var that = this;
       that.$refs.editForm.validate(valid => {
         if (!valid) return;
         that.$confirm("确定提交吗?", "提示", {}).then(() => {
-          that.DevicesDialog.loading = true;
+          that.MechanicalDialog.loading = true;
           axios
-            .post(`/api/createOrUpdateDevices`, that.CurrentData.data)
+            .post(`/api/createOrUpdateMechanical`, that.CurrentData.data)
             .then(res => {
               if (res.data.success) {
                 //success
@@ -199,8 +188,8 @@ export default {
                   type: "error"
                 });
               }
-              that.DevicesDialog.loading = false;
-              this.DevicesDialog.visible = false;
+              that.MechanicalDialog.loading = false;
+              this.MechanicalDialog.visible = false;
             })
             .catch(err => {});
         });
@@ -214,7 +203,7 @@ export default {
         })
         .then(() => {
           axios
-            .get(`/api/DelDevicesByID?id=${row._id}`)
+            .get(`/api/DelMechanicalByID?id=${row._id}`)
             .then(res => {
               if (res.data.success) {
                 //success

@@ -1,0 +1,6 @@
+{
+    "BgiNewsImg#*": "照片 String  ",
+    "BgiNewsTitle*": "大事件标题 String  ",
+    "BgiNewsContent*": "大事件内容 String  ",
+    "ProjID*-": "项目ID String  "
+}

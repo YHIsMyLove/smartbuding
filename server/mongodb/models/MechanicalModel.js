@@ -2,27 +2,24 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 //用户表
-const DevicesSchema = new Schema({
-    	DevID:String,
-	DevName:String,
-	DevDesc:{ type: String , default: '设备介绍' },
-	DevIP:{ type: String , default: '192.168.1.1' },
-	DevPort:{ type: Number , default: 8888 },
-	DevState:{ type: String , default: '在线' },
-	DevClass:String,
-	ProjID:String,
+const MechanicalSchema = new Schema({
+    	mechanicalImg:String,
+	mechanicalName:String,
+	mechanicalState:{ type: String , default: '正常' },
+	mechanicalUser:String,
+	mechanicalUserPhone:String,
 
 })
 
-DevicesSchema.pre('save', function (next) {
+MechanicalSchema.pre('save', function (next) {
     next()
 })
-DevicesSchema.methods = {
+MechanicalSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-DevicesSchema.statics = {
+MechanicalSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -39,4 +36,4 @@ DevicesSchema.statics = {
             .exec();
     }
 }
-mongoose.model('DevicesModel', DevicesSchema);
+mongoose.model('MechanicalModel', MechanicalSchema);

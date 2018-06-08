@@ -1,7 +1,7 @@
 {
     "DevID*": "设备ID String  ",
     "DevName*": "设备名称 String  ",
-    "DevDesc": "设备描述 String  设备介绍",
+    "DevDesc": "设备描述 String 设备介绍 ",
     "DevIP": "设备IP String 192.168.1.1 ",
     "DevPort": "设备端口 Number 8888 ",
     "DevState$": "设备状态 String 在线 ",

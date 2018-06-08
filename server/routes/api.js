@@ -76,5 +76,38 @@ router.get('/ListMenuLink', MenuLink.ListMenuLink);
 router.post('/CreateMenuLink', MenuLink.CreateOrUpdateMenuLink);
 router.post('/UpdateMenuLink', MenuLink.CreateOrUpdateMenuLink);
 router.post('/CreateOrUpdateMenuLink', MenuLink.CreateOrUpdateMenuLink);
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const Mechanical = require('../mongodb/APIBuilder/MechanicalBusiness')
+
+router.get('/GetMechanicalByID', Mechanical.GetMechanicalByID);
+router.get('/DelMechanicalByID', Mechanical.DelMechanicalByID);
+router.get('/ListMechanical', Mechanical.ListMechanical);
+router.post('/CreateMechanical', Mechanical.CreateOrUpdateMechanical);
+router.post('/UpdateMechanical', Mechanical.CreateOrUpdateMechanical);
+router.post('/CreateOrUpdateMechanical', Mechanical.CreateOrUpdateMechanical);
+/*******************************************************************************/
+/**client***********************************************************************/
+/*******************************************************************************/
+const DoorIO = require('../mongodb/APIBuilder/DoorIOBusiness')
+
+router.get('/GetDoorIOByID', DoorIO.GetDoorIOByID);
+router.get('/DelDoorIOByID', DoorIO.DelDoorIOByID);
+router.get('/ListDoorIO', DoorIO.ListDoorIO);
+router.post('/CreateDoorIO', DoorIO.CreateOrUpdateDoorIO);
+router.post('/UpdateDoorIO', DoorIO.CreateOrUpdateDoorIO);
+router.post('/CreateOrUpdateDoorIO', DoorIO.CreateOrUpdateDoorIO);
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const BigNews = require('../mongodb/APIBuilder/BigNewsBusiness')
+
+router.get('/GetBigNewsByID', BigNews.GetBigNewsByID);
+router.get('/DelBigNewsByID', BigNews.DelBigNewsByID);
+router.get('/ListBigNews', BigNews.ListBigNews);
+router.post('/CreateBigNews', BigNews.CreateOrUpdateBigNews);
+router.post('/UpdateBigNews', BigNews.CreateOrUpdateBigNews);
+router.post('/CreateOrUpdateBigNews', BigNews.CreateOrUpdateBigNews);
 
 module.exports = router;

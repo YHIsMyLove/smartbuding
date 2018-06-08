@@ -13,24 +13,19 @@
                 </el-form>
             </el-col>
             <el-table border fit stripe 
-                     :data="DevicesData.tabledata"
-                     v-loading="DevicesData.loading">
+                     :data="BigNewsData.tabledata"
+                     v-loading="BigNewsData.loading">
                 <el-table-column type="index" label="编号" width="85">
                 </el-table-column>
                 
-								<el-table-column prop="DevID" label="设备ID" >
+								<el-table-column width='64' label="照片" >
+                        <template slot-scope="scope">
+                            <img :src="scope.row.BgiNewsImg" style="width:100%;height:100%;">
+                        </template>
                     </el-table-column>
-								<el-table-column prop="DevName" label="设备名称" >
+								<el-table-column prop="BgiNewsTitle" label="大事件标题" >
                     </el-table-column>
-								<el-table-column prop="DevDesc" label="设备描述" >
-                    </el-table-column>
-								<el-table-column prop="DevIP" label="设备IP" >
-                    </el-table-column>
-								<el-table-column prop="DevPort" label="设备端口" >
-                    </el-table-column>
-								<el-table-column prop="DevState" label="设备状态" >
-                    </el-table-column>
-								<el-table-column prop="DevClass" label="设备类型" >
+								<el-table-column prop="BgiNewsContent" label="大事件内容" >
                     </el-table-column>
 								
                 <el-table-column label="操作" width="150">
@@ -51,32 +46,24 @@
                                style="float:right">
                 </el-pagination>
             </el-col>
-            <el-dialog :title="DevicesDialog.title" 
+            <el-dialog :title="BigNewsDialog.title" 
                        :close-on-click-modal="true"
-                        v-model="DevicesDialog.visible">
+                        v-model="BigNewsDialog.visible">
                 <el-form :model="CurrentData.data"  
                          :rules="CurrentData.rules" 
                           label-width="80px" ref="editForm">
                         
-												<el-form-item label="设备ID" prop="DevID">
-                            		<el-input  v-model="CurrentData.data.DevID" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备名称" prop="DevName">
-                            		<el-input  v-model="CurrentData.data.DevName" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备描述" prop="DevDesc">
-                            		<el-input  v-model="CurrentData.data.DevDesc" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备IP" prop="DevIP">
-                            		<el-input  v-model="CurrentData.data.DevIP" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备端口" prop="DevPort">
-                            		<el-input  v-model="CurrentData.data.DevPort" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备状态" prop="DevState">
-                            		<el-input  disabled  v-model="CurrentData.data.DevState" auto-complete="off"></el-input>
-                            </el-form-item><el-form-item label="设备类型" prop="DevClass">
-                            		<el-input  v-model="CurrentData.data.DevClass" auto-complete="off"></el-input>
+												<el-form-item label="照片" prop="BgiNewsImg">
+                    		<UploadImage :width=64 v-model="CurrentData.data.BgiNewsImg" />
+                    </el-form-item><el-form-item label="大事件标题" prop="BgiNewsTitle">
+                            		<el-input  v-model="CurrentData.data.BgiNewsTitle" auto-complete="off"></el-input>
+                            </el-form-item><el-form-item label="大事件内容" prop="BgiNewsContent">
+                            		<el-input  v-model="CurrentData.data.BgiNewsContent" auto-complete="off"></el-input>
                             </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="DevicesDialog.visible = false">取 消</el-button>
-                    <el-button type="primary" @click="submit" :loading="DevicesDialog.loading">提交</el-button>
+                    <el-button @click="BigNewsDialog.visible = false">取 消</el-button>
+                    <el-button type="primary" @click="submit" :loading="BigNewsDialog.loading">提交</el-button>
                 </div>
             </el-dialog>
         </el-tab-pane>
@@ -94,16 +81,16 @@ export default {
       show:false,
       pageData: {},
       PageInfo: {
-        title: "设备管理",
+        title: "大事件",
         currentPage:1,
         currentPageSize:10,
         tableDataLength:10
       },
-      DevicesData: {
+      BigNewsData: {
         tabledata: [],
         loading: false
       },
-      DevicesDialog: {
+      BigNewsDialog: {
         title: "",
         visible: false,
         loading: false
@@ -127,17 +114,17 @@ export default {
         page: that.$data.PageInfo.currentPage
       };
       NProgress.start();
-      that.DevicesData.loading = true;
+      that.BigNewsData.loading = true;
       axios
-        .get(`/api/ListDevices`, { params: params })
+        .get(`/api/ListBigNews`, { params: params })
         .then(res => {
           if (res.data.success) {
-            that.$data.DevicesData.tabledata = res.data.data;
+            that.$data.BigNewsData.tabledata = res.data.data;
             that.$data.PageInfo.tableDataLength = res.data.meta.count;
           }
         })
         .catch(err => {});
-      that.DevicesData.loading = false;
+      that.BigNewsData.loading = false;
       NProgress.done();
     },
     handleCurrentChange(val) {
@@ -152,42 +139,34 @@ export default {
     newdata() {
       this.CurrentData.data = {
         
-				DevID : '',
-				DevName : '',
-				DevDesc : '设备介绍',
-				DevIP : '192.168.1.1',
-				DevPort : '8888',
-				DevState : '在线',
-				DevClass : '',
+				BgiNewsImg : '',
+				BgiNewsTitle : '',
+				BgiNewsContent : '',
 				ProjID : this.getProj.ProjID,
 				
       };
-      this.DevicesDialog.visible = true;
+      this.BigNewsDialog.visible = true;
     },
     handleEdit(row) {
       this.CurrentData.data = {
         _id : row._id,
         
-				DevID : row.DevID,
-				DevName : row.DevName,
-				DevDesc : row.DevDesc,
-				DevIP : row.DevIP,
-				DevPort : row.DevPort,
-				DevState : row.DevState,
-				DevClass : row.DevClass,
+				BgiNewsImg : row.BgiNewsImg,
+				BgiNewsTitle : row.BgiNewsTitle,
+				BgiNewsContent : row.BgiNewsContent,
 				ProjID : this.getProj.ProjID,
 				
       };
-      this.DevicesDialog.visible = true;
+      this.BigNewsDialog.visible = true;
     },
     submit() {
       var that = this;
       that.$refs.editForm.validate(valid => {
         if (!valid) return;
         that.$confirm("确定提交吗?", "提示", {}).then(() => {
-          that.DevicesDialog.loading = true;
+          that.BigNewsDialog.loading = true;
           axios
-            .post(`/api/createOrUpdateDevices`, that.CurrentData.data)
+            .post(`/api/createOrUpdateBigNews`, that.CurrentData.data)
             .then(res => {
               if (res.data.success) {
                 //success
@@ -199,8 +178,8 @@ export default {
                   type: "error"
                 });
               }
-              that.DevicesDialog.loading = false;
-              this.DevicesDialog.visible = false;
+              that.BigNewsDialog.loading = false;
+              this.BigNewsDialog.visible = false;
             })
             .catch(err => {});
         });
@@ -214,7 +193,7 @@ export default {
         })
         .then(() => {
           axios
-            .get(`/api/DelDevicesByID?id=${row._id}`)
+            .get(`/api/DelBigNewsByID?id=${row._id}`)
             .then(res => {
               if (res.data.success) {
                 //success

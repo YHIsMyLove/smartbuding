@@ -1,0 +1,6 @@
+{
+    "IOTime*": "进出时间 Date Date.now ",
+    "IOType*": "进出 String 进 ",
+    "UserID*": "用户ID String  ",
+    "ProjID*-": "项目ID String  "
+}

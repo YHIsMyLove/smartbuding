@@ -1,0 +1,7 @@
+{
+    "mechanicalImg#*": "图片 String  ",
+    "mechanicalName*": "机器名 String  ",
+    "mechanicalState*": "机器状态 String 正常 ",
+    "mechanicalUser*": "管理员 String  ",
+    "mechanicalUserPhone*": "管理员电话 String  "
+}
