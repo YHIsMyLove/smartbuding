@@ -15,13 +15,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import axios from "axios";
 import util from "../common/util";
 import NProgress from "nprogress";
 import moment from "moment";
 import Home from "./layout/Home.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
+  computed: {
+    ...mapGetters(["getProj", "getUser"])
+  },
   data() {
     var checkLogin = (rule, value, callback) => {};
     return {
@@ -67,30 +70,31 @@ export default {
           return false;
         }
         _this.setLogin(res.data.data);
-        _this.$router.replace("/");
-        _this.addRoutes();
+        //_this.$router.replace("/");
+        _this.getMenuInfo();
       });
     },
-    addRoutes() {
-      var menudata = [
-        {
-          path: "/",
-          component: Home,
-          name: "动态路由",
-          iconCls: "fa fa-id-card-o",
-          children: [
-            {
-              path: "/UserProjManager",
-              component: resolve =>
-                require(["./business/UserProjManager.vue"], resolve),
-              name: "主页",
-              meta: { redirectAuth: true }
-            }
-          ]
-        }
-      ];
-      console.log("加载动态路由");
-      this.$router.addRoutes(menudata);
+    getMenuInfo() {
+      let that = this;
+      axios
+        .get(
+          `/api/GetMenuByUser?ProjID=${that.getProj.ProjID}&UserID=${
+            that.getUser.UserID
+          }`
+        )
+        .then(res => {
+          if (res.data.success) {
+            let data = res.data.data;
+            //存储路由结构
+            MenuUtils(routers, data);
+            console.log(routers);
+            // console.log(JSON.stringify(result));
+            // sessionStorage.setItem("MenuInfo", JSON.stringify(result));
+            // that.$router.addRoutes(result);
+            that.$router.replace("/");
+          }
+        })
+        .catch(err => {});
     }
   }
 };

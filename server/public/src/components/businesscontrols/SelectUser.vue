@@ -40,9 +40,14 @@ export default {
   methods: {
     SelectUser(val) {
       if (val.length == 2) {
-        this.$emit("SelectedUser", val[1]);
-        this.$emit("input", val);
-        console.log(val)
+        let cuser = this.users.filter(i => i._id == val[1]).map(i => {
+          return {
+            UserName: i.UserName,
+            _id: i._id
+          };
+        })[0];
+        this.$emit("input", cuser);
+        this.$emit("SelectUser", cuser);
       }
     },
     handleItemChange(val) {
@@ -56,6 +61,7 @@ export default {
         .get(`/api/GetUsersByDeptID?DeptID=${that.CurrentDept._id}`)
         .then(res => {
           if (res.data.success) {
+            that.users = res.data.data;
             var data = res.data.data.map(i => {
               return {
                 label: i.UserName,

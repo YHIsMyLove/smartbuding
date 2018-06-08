@@ -3,6 +3,8 @@ const msg = require("../../utils/message")
 const SystemConfig = require('../../config/config')
 const MenuAuth = mongoose.model('MenuAuthModel')
 const SysTable = mongoose.model('SysTable')
+const UserRole = mongoose.model('UserRole')
+const MenuLink = mongoose.model('MenuLinkModel')
 
 var getMenuAuthByID = async (req, res) => {
     var query = {
@@ -94,7 +96,6 @@ var getRolebyMenuAuth = async (req, res) => {
         let menuauth = await MenuAuth.find({
             MenuID: req.query.MenuID
         })
-        console.log(menuauth)
         role = role.map(i => {
             if (menuauth.map(i => i.RoleID).filter(item => item == i.value).length > 0) {
                 i.selected = true
@@ -129,6 +130,46 @@ var updateOrDelbyMenuAuth = async (req, res) => {
         res.send(msg.genFailedMsg("获取失败->" + error))
     }
 }
+
+var getMenuByUser = async (req, res) => {
+    try {
+        let UserID = req.query.UserID
+        let ProjID = req.query.ProjID
+        let tmpuserroles = await UserRole.find({ UserID: UserID, ProjID: ProjID }).select('RoleID')
+        let userroles = tmpuserroles.map(i => i.RoleID)
+        let tmpmenuAuths = await MenuAuth.find({ ProjID: ProjID, RoleID: { $in: userroles } }).select('MenuID')
+        let query = {
+            _id: tmpmenuAuths.map(i => i.MenuID)
+        }
+        var tmplist = await MenuLink.find(query);
+
+        let parentMenus = tmplist.filter(i => !i.MenuParent);
+        let list = parentMenus.map(menu => {
+            var itemdata = tmplist
+                .filter(i => i.MenuParent == menu.MenuName)
+                .map(childMenu => {
+                    return {
+                        name: childMenu.MenuName,
+                        path: childMenu.MenuPath,
+                        iconCls: childMenu.MenuIcon,
+                        component: childMenu.MenuComponent
+                    };
+                });
+            return {
+                name: menu.MenuName,
+                path: menu.MenuPath,
+                iconCls: menu.MenuIcon,
+                children: itemdata
+            };
+        });
+
+
+        res.send(msg.genSuccessMsg('success', list))
+
+    } catch (error) {
+        res.send(msg.genFailedMsg('err->' + error))
+    }
+}
 /********************************************************* */
 /********************************************************* */
 /********************************************************* */
@@ -139,4 +180,5 @@ exports.ListMenuAuth = listMenuAuth
 exports.DelMenuAuthByID = delMenuAuthByID
 exports.GetRolebyMenuAuth = getRolebyMenuAuth
 exports.UpdateOrDelbyMenuAuth = updateOrDelbyMenuAuth
+exports.GetMenuByUser = getMenuByUser
 

@@ -144,11 +144,11 @@ export default {
       NProgress.done();
     },
     handleCurrentChange(val) {
-      this.$data.currentPage = val;
+      this.$data.PageInfo.currentPage = val;
       this.updateData();
     },
     handleSizeChange(val) {
-      this.$data.currentPageSize = val;
+      this.$data.PageInfo.currentPageSize = val;
       this.updateData();
     },
     /***********************************/

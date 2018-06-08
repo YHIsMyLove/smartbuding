@@ -85,6 +85,8 @@ export default {
         type: "warning"
       })
         .then(() => {
+          //调用api logout
+          //sessionStorage.setItem("UserIsLogin", "no");
           _this.$router.replace("/login");
         })
         .catch(() => {});

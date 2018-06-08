@@ -2,5 +2,6 @@
     "MenuIcon@": "图标 String  ",
     "MenuName*": "路由名称 String  ",
     "MenuPath*": "路由地址 String  ",
+    "MenuComponent": "懒加载地址 String  ",
     "MenuParent": "父节点 String  "
 }

@@ -1,5 +1,5 @@
 {
-    "UserID*": "用户ID String  ",
+    "UserID*": "用户ID String  SelectUser",
     "RankingListTitle*": "标题 String  ",
     "RankingListContent": "内容 String  ",
     "RankingListScore": "分数 Number  ",

@@ -27,6 +27,8 @@
                     </el-table-column>
 								<el-table-column prop="MenuPath" label="路由地址" >
                     </el-table-column>
+								<el-table-column prop="MenuComponent" label="懒加载地址" >
+                    </el-table-column>
 								<el-table-column prop="MenuParent" label="父节点" >
                     </el-table-column>
 								
@@ -62,6 +64,8 @@
                             		<el-input  v-model="CurrentData.data.MenuName" auto-complete="off"></el-input>
                             </el-form-item><el-form-item label="路由地址" prop="MenuPath">
                             		<el-input  v-model="CurrentData.data.MenuPath" auto-complete="off"></el-input>
+                            </el-form-item><el-form-item label="懒加载地址" prop="MenuComponent">
+                            		<el-input  v-model="CurrentData.data.MenuComponent" auto-complete="off"></el-input>
                             </el-form-item><el-form-item label="父节点" prop="MenuParent">
                             		<el-input  v-model="CurrentData.data.MenuParent" auto-complete="off"></el-input>
                             </el-form-item>
@@ -135,11 +139,11 @@ export default {
       NProgress.done();
     },
     handleCurrentChange(val) {
-      this.$data.currentPage = val;
+      this.$data.PageInfo.currentPage = val;
       this.updateData();
     },
     handleSizeChange(val) {
-      this.$data.currentPageSize = val;
+      this.$data.PageInfo.currentPageSize = val;
       this.updateData();
     },
     /***********************************/
@@ -149,6 +153,7 @@ export default {
 				MenuIcon : '',
 				MenuName : '',
 				MenuPath : '',
+				MenuComponent : '',
 				MenuParent : '',
 				
       };
@@ -161,6 +166,7 @@ export default {
 				MenuIcon : row.MenuIcon,
 				MenuName : row.MenuName,
 				MenuPath : row.MenuPath,
+				MenuComponent : row.MenuComponent,
 				MenuParent : row.MenuParent,
 				
       };

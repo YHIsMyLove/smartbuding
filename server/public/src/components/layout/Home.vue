@@ -18,7 +18,7 @@
 <script>
 import NavBar from "../businesscontrols/NavBar.vue";
 import MenuUser from "../businesscontrols/MenuUser.vue";
-import RouterMenu from "../businesscontrols/RouterMenu.vue";
+import RouterMenu from "../../RouterMenu.vue";
 import HomeContent from "../businesscontrols/HomeContent.vue";
 export default {
   components: {

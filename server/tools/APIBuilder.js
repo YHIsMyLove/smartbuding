@@ -73,7 +73,11 @@ var buildElementTemp = (Name, lst, CName = 'APIBuilder生成') => {
                             <img :src="scope.row.${i.name}" style="width:100%;height:100%;">
                         </template>
                     </el-table-column>\n\t\t\t\t\t\t\t\t`
-                    } else {
+                    } else if (i.format == "SelectUser") {
+                        tmpDataColumnStr += `<el-table-column prop="${i.name}_Name" label="${i.title}" >
+                    </el-table-column>\n\t\t\t\t\t\t\t\t`
+                    }
+                    else {
                         tmpDataColumnStr += `<el-table-column prop="${i.name}" label="${i.title}" >
                     </el-table-column>\n\t\t\t\t\t\t\t\t`
                     }
@@ -84,12 +88,14 @@ var buildElementTemp = (Name, lst, CName = 'APIBuilder生成') => {
             var tmpUserControlStr = ''
             lst.forEach(i => {
                 var disabledStr = i.disabled ? ' disabled ' : ''
-                if(i.format == 'UserID'){
+                if (i.format == 'UserID' || i.format == 'SelectUser') {
                     tmpDataDialogStr += `<el-form-item label="${i.title}" prop="${i.name}">
-                    <SelectUser @SelectedUser="SelectedUser"/>                
+                        <SelectUser @SelectUser="SelectUser"/>                
                     </el-form-item>`
-                    tmpUserControlStr = `SelectedUser(val){
-                        this.CurrentData.data.${i.name}=val[1].label
+                    tmpUserControlStr = `SelectUser(val){                        
+                        this.CurrentData.data.${i.name}=val._id
+                        this.CurrentData.data.${i.name}_Name=val.UserName
+                        console.log(val)
                     },`
                 }
                 else if (i.format) {
@@ -144,6 +150,11 @@ var buildElementTemp = (Name, lst, CName = 'APIBuilder生成') => {
             //4. TemplateDialogEditData
             var tmpdialogEditDataStr = '\n\t\t\t\t'
             lst.forEach(i => {
+
+                if (i.format == "SelectUser") {
+                    tmpdialogEditDataStr += `${i.name}_Name : row.${i.name}_Name,\n\t\t\t\t`
+                }
+
                 if (i.name != 'ProjID')
                     tmpdialogEditDataStr += `${i.name} : row.${i.name},\n\t\t\t\t`
                 else {
@@ -153,6 +164,11 @@ var buildElementTemp = (Name, lst, CName = 'APIBuilder生成') => {
             //5. TemplateDialogNewData
             var tmpdialogNewDataStr = '\n\t\t\t\t'
             lst.forEach(i => {
+
+                if (i.format == "SelectUser") {
+                    tmpdialogNewDataStr += `${i.name}_Name : '',\n\t\t\t\t`
+                }
+
                 if (i.name != 'ProjID') {
                     var _default = i.type == 'String' || i.type == 'Number' ? i.default : '';
                     tmpdialogNewDataStr += `${i.name} : '${_default}',\n\t\t\t\t`

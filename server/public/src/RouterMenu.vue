@@ -28,13 +28,24 @@
 </template>
 
 <script>
+import axios from "axios";
+import util from "./common/util";
+import NProgress from "nprogress";
+import { mapGetters, mapActions } from "vuex";
 export default {
+  computed: {
+    ...mapGetters(["getProj", "getUser", "getMenu"])
+  },
   props: ["iscollapse"],
   data() {
     return {
       iscollapse2: this.iscollapse,
-      openedArr: []
+      openedArr: [],
+      Menus: this.$router.options.routes
     };
+  },
+  methods: {
+    ...mapActions(["setLoadMenu"])
   },
   watch: {
     iscollapse(nval, oval) {
@@ -43,16 +54,13 @@ export default {
   },
   created() {
     //这里判断权限
-    this.$router.options.routes.forEach(element => {
-      if (element.children) {
-        element.hidden = false;
-        element.children.forEach(i => {
-          i.hidden = false;
-        });
-      }
-    });
-  },
-  methods: {}
+    // let isLoadNodes = sessionStorage.getItem("isLoadNodes");
+    // if (!isLoadNodes) {
+    //   let data = JSON.parse(window.sessionStorage.getItem("MenuInfo"));
+    //   this.Menus.push(...data);
+    //   sessionStorage.setItem("isLoadNodes", "true");
+    // }
+  }
 };
 </script>
 

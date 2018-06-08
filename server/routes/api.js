@@ -60,6 +60,7 @@ router.get('/GetMenuAuthByID', MenuAuth.GetMenuAuthByID);
 router.get('/DelMenuAuthByID', MenuAuth.DelMenuAuthByID);
 router.get('/ListMenuAuth', MenuAuth.ListMenuAuth);
 router.get('/GetRolebyMenuAuth', MenuAuth.GetRolebyMenuAuth);
+router.get('/GetMenuByUser', MenuAuth.GetMenuByUser);
 router.post('/CreateMenuAuth', MenuAuth.CreateOrUpdateMenuAuth);
 router.post('/UpdateMenuAuth', MenuAuth.CreateOrUpdateMenuAuth);
 router.post('/CreateOrUpdateMenuAuth', MenuAuth.CreateOrUpdateMenuAuth);
