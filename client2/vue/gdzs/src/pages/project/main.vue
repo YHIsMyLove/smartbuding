@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar>
+    <f7-navbar :no-shadow="true">
         <f7-nav-left>
             <f7-link icon-if-ios="f7:menu" icon-if-md="material:menu" panel-open="left"></f7-link>
         </f7-nav-left>
@@ -19,7 +19,7 @@
     <div class="content">
         <f7-row>
             <f7-col width="33">
-                <f7-link href="/cameras/main/">
+                <f7-link href="/camera/list/">
                     <img src="static/imgs/现场监管.png" alt="">
                     <p>现场管理</p>
                 </f7-link>
@@ -31,13 +31,13 @@
                 </f7-link>
             </f7-col>
             <f7-col width="33">
-                <f7-link href="/cameras/main/">
+                <f7-link href="/env/main/">
                     <img src="static/imgs/环境监测.png" alt="">
                     <p>环境监测</p>
                 </f7-link>
             </f7-col>
             <f7-col width="33">
-                <f7-link href="/cameras/main/">
+                <f7-link href="/device/main/">
                     <img src="static/imgs/机械设施监控.png" alt="">
                     <p>机械设备监测</p>
                 </f7-link>
@@ -76,8 +76,49 @@
   </f7-page>
 </template>
 <script>
+import context from "../../service-context.js";
 export default {
+  mounted() {
+    // this.checkLogin();
+  },
+  on: {
+    pageInit(event, pageData) {
+      alert("page init");
+    },
+    pageAfterIn(event, pageData) {
+      this.checkLogin();
+    },
+    pageAfterOut(event, pageData) {
+      alert("page after out");
+    }
+  },
   methods: {
+    checkLogin() {
+      if (context.isLogin) this.initData();
+      else this.checkSession();
+    },
+    initData() {
+      alert("h");
+    },
+    checkSession() {
+      if (context.sessionID == "") {
+        this.$f7.loginScreen.open("#login-screen", true);
+      } else {
+        var preloader = this.$f7.dialog.preloader("请稍后。。。");
+        var url = context.urls.getUserInfoUrl.format(context.sessionID);
+        console.log("request '{0}'".format(url));
+        this.$f7.request.get(
+          url,
+          function(data) {
+            console.log(data);
+            preloader.close(true);
+          },
+          function(xhr, status) {
+            preloader.close(true);
+          }
+        );
+      }
+    },
     scan() {
       cordova.plugins.barcodeScanner.scan(
         function(result) {

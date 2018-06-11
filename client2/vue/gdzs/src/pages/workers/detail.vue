@@ -8,7 +8,7 @@
                         <img id="head-img" src="static/imgs/个人信息头像180x180.png" alt="">
                     </f7-col>
                     <f7-col width="100">
-                        <span>陈小春</span>
+                        <span>{{contact.UserName}}</span>
                     </f7-col>
                     <f7-col width="100">
                         <span>四川省羽玲建筑劳务有限公司</span>
@@ -55,12 +55,12 @@
                 <div class="my-divider"></div>
                 <f7-row>
                     <f7-col width="50">
-                        <div>省份证</div>
+                        <div>身份证</div>
                         <div>420223199009129878</div>
                     </f7-col>
                     <f7-col width="50">
                         <div>手机</div>
-                        <div>13338900976</div>
+                        <div>{{contact.UserPhoneNum}}</div>
                     </f7-col>
                 </f7-row>
                 <div class="my-divider"></div>
@@ -99,22 +99,28 @@
                     <div class="">单位：四川羽灵建筑劳务有限公司</div>
                     <div class="">工号：007</div>
                 </div>
-                <div class="display-flex justify-content-space-between align-items-center">
-                    <div class="">班组：打桩队 工种：电焊工</div>
+                <div class="display-flex justify-content-space-between">
+                    <div class="">
+                        <div>班组：打桩队</div>
+                        <div>工种：电焊工</div>
+                    </div>
                     <div class="">共记时长：600（分钟）</div>
                 </div>
             </div>
             <div>
-                <f7-list>
-                    <f7-list-item :key="key" v-for="(item, key) in dailyList">
-                        <f7-list-item-cell>
-                            <f7-list-item-row>
-                                <f7-list-item-cell><f7-label>{{item.date}}</f7-label></f7-list-item-cell>
-                                <f7-list-item-cell><f7-label>进场时间：{{item.timeIn}}</f7-label></f7-list-item-cell>
-                                <f7-list-item-cell><f7-label>出场时间：{{item.timeOut}}</f7-label></f7-list-item-cell>
-                                <f7-list-item-cell><f7-label>时长：{{item.time}}（分钟）</f7-label></f7-list-item-cell>
-                            </f7-list-item-row>
-                        </f7-list-item-cell>
+                <f7-list media-list>
+                    <f7-list-item :key="key" v-for="(item, key) in dailyList" :title="item.date">
+                        <div slot="after">时长：{{item.time}}（分钟）</div>
+                        <div slot="footer">
+                            <f7-row>
+                                <f7-col width="50">
+                                    <div>进场时间：{{item.timeIn}}</div>
+                                </f7-col>
+                                <f7-col width="50">
+                                    <div class="text-align-right">出场时间：{{item.timeOut}}</div>
+                                </f7-col>
+                            </f7-row>
+                        </div>
                     </f7-list-item>
                 </f7-list>
             </div>
@@ -126,9 +132,24 @@
     </f7-page>
 </template>
 <script>
+import context from "../../service-context.js";
 export default {
+  on: {
+    pageInit(event, pageData) {
+      console.log("contact detail page init");
+      console.log("contact: " + context.currentContact);
+      this.contact = context.currentContact;
+    },
+    pageAfterIn(event, pageData) {
+      console.log("contact detail page after in");
+    },
+    pageAfterOut(event, pageData) {
+      //alert("page after out");
+    }
+  },
   data() {
     return {
+      contact: {},
       dailyList: [
         { date: "2018/05/25", timeIn: "08:23", timeOut: "15:30", time: 202 },
         { date: "2018/05/25", timeIn: "08:23", timeOut: "15:30", time: 202 },

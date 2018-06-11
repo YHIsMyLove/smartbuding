@@ -7,25 +7,15 @@
     "files": {}
   },
   "installed_plugins": {
-    "call-number": {
-      "PACKAGE_NAME": "cn.yooling.app.gdzs"
-    },
-    "com.manateeworks.barcodescanner": {
+    "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "cn.yooling.app.gdzs"
     },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "cn.yooling.app.gdzs"
     },
-    "cordova-plugin-whitelist": {
+    "gdzs-plugin-cameraController": {
       "PACKAGE_NAME": "cn.yooling.app.gdzs"
     }
   },
-  "dependent_plugins": {
-    "cordova-plugin-dialogs": {
-      "PACKAGE_NAME": "cn.yooling.app.gdzs"
-    },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "cn.yooling.app.gdzs"
-    }
-  }
+  "dependent_plugins": {}
 }

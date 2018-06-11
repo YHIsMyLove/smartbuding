@@ -19,10 +19,10 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-splashscreen/-/cordova-plugin-splashscreen-5.0.2.tgz",
+  "_resolved": "http://registry.npm.taobao.org/cordova-plugin-splashscreen/download/cordova-plugin-splashscreen-5.0.2.tgz",
   "_shasum": "747e74f56e201cd585bc62d14bca19f6867ff1ed",
   "_spec": "cordova-plugin-splashscreen@5.0.2",
-  "_where": "G:\\lbgongfu\\Project\\smartbuding\\client2\\cordova\\gdzs",
+  "_where": "/Users/gf/Projects/smartbuding/client2/cordova/gdzs",
   "author": {
     "name": "Apache Software Foundation"
   },

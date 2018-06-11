@@ -19,8 +19,9 @@ module.exports = {
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
-
-
+    proxyTable: {
+      '/api': 'http://118.89.237.172:3000/api'
+    },
     /**
      * Source Maps
      */

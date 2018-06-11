@@ -1,0 +1,23 @@
+{
+  "name": "gdzs-plugin-cameraController",
+  "version": "1.0.0",
+  "description": "",
+  "cordova": {
+    "id": "gdzs-plugin-cameraController",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "",
+  "license": "ISC"
+}

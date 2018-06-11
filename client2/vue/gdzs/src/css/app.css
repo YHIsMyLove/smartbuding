@@ -27,7 +27,7 @@
 }
 .font-middle
 {
-    font-size: 1em;
+    font-size: 1.4em;
 }
 .font-little
 {
@@ -74,4 +74,21 @@
     border-radius: 10px;
     padding: 2px 8px;
     color: #2196f3;
+    font-size: 0.8em;
+}
+
+select
+{
+    padding-right: 36px;
+    background: url("arrow_down.png") no-repeat scroll right center transparent;
+    font-size: 14px;
+}
+
+#inputUsername{
+    background: url("outline_person_white_18dp.png") no-repeat scroll left center transparent;
+    background-position-x: 16px;
+}
+#inputPwd{
+    background: url("outline_lock_white_18dp.png") no-repeat scroll left center transparent;
+    background-position-x: 16px;
 }

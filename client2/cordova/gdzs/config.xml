@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="cn.yooling.app.gdzs" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>gdzs</name>
+    <name>工地项目助手</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
@@ -22,10 +22,10 @@
         <splash density="land-ldpi" src="res/screen/android/screen-ldpi-landscape.png" />
         <splash density="land-mdpi" src="res/screen/android/screen-mdpi-landscape.png" />
         <splash density="land-xhdpi" src="res/screen/android/screen-xhdpi-landscape.png" />
-        <splash density="port-hdpi" src="res/screen/android/screen-hdpi-portrait.png" />
-        <splash density="port-ldpi" src="res/screen/android/screen-ldpi-portrait.png" />
-        <splash density="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png" />
-        <splash density="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png" />
+        <splash density="port-hdpi" src="res/screen/android/splash.jpg" />
+        <splash density="port-ldpi" src="res/screen/android/splash.jpg" />
+        <splash density="port-mdpi" src="res/screen/android/splash.jpg" />
+        <splash density="port-xhdpi" src="res/screen/android/splash.jpg" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -37,10 +37,10 @@
         <splash src="res/screen/ios/Default@3x~universal~anycom.png" />
         <splash src="res/screen/ios/Default@3x~universal~comany.png" />
     </platform>
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
+    <plugin name="gdzs-plugin-cameraController" spec="../plugins/CameraController" />
     <preference name="AutoHideSplashScreen" value="true" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
-    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
-    <engine name="android" spec="^6.4.0" />
-    <engine name="browser" spec="^5.0.3" />
+    <engine name="android" spec="git+https://github.com/apache/cordova-android.git#6.4.0" />
 </widget>

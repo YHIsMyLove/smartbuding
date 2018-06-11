@@ -6,7 +6,7 @@
     <f7-statusbar></f7-statusbar>
     <!-- Left Panel -->
     <f7-panel left reveal>
-      <f7-view url="/account/main/"></f7-view>
+      <f7-view id="userMain" url="/account/main/"></f7-view>
     </f7-panel>
     <!-- Main View -->
     <f7-view id="main-view" url="/" main></f7-view>
@@ -35,23 +35,14 @@
     <f7-login-screen id="login-screen">
       <f7-view>
         <f7-page login-screen>
-          <f7-login-screen-title>登录</f7-login-screen-title>
-          <f7-list form>
-            <f7-list-item>
-              <f7-label>用户名</f7-label>
-              <f7-input name="username" placeholder="Username" type="text"></f7-input>
-            </f7-list-item>
-            <f7-list-item>
-              <f7-label>密码</f7-label>
-              <f7-input name="password" type="password" placeholder="Password"></f7-input>
-            </f7-list-item>
-          </f7-list>
-          <f7-list>
-            <f7-list-button title="登录" login-screen-close></f7-list-button>
-            <f7-block-footer>
-              <p>Click Sign In to close Login Screen</p>
-            </f7-block-footer>
-          </f7-list>
+          <div class="display-flex justify-content-center content padding">
+            <div class="text-align-center margin-top margin-bottom">
+              <img style="position:relative;top:-56px" class="img-big" src="static/imgs/LOGO240x240.png" alt="">
+            </div>
+            <input id="inputUsername" class="bordered-input margin-bottom" name="username" placeholder="请输入用户名" type="text" value="lbgongfu">
+            <input id="inputPwd" class="bordered-input margin-bottom" name="username" placeholder="请输入用户名" type="password" value="lbgongfu">
+            <f7-button round big fill color="white" @click="login" text-color="blue" text="登陆"></f7-button>
+          </div>
         </f7-page>
       </f7-view>
     </f7-login-screen>
@@ -59,6 +50,7 @@
 </template>
 
 <script>
+import context from "./service-context.js";
 export default {
   mounted() {
     if (this.$device.cordova) {
@@ -81,6 +73,12 @@ export default {
       );
     }
   },
+  data() {
+    return {
+      username: "lbgongfu",
+      password: "123456"
+    };
+  },
   computed: {
     isiOS() {
       return this.$theme.ios;
@@ -99,35 +97,62 @@ export default {
       if (this.$f7.views.main.history.length > 1)
         this.$f7.views.main.router.back();
       else this.$f7.exitApp();
+    },
+    login() {
+      var preloader = this.$f7.dialog.preloader("请稍后。。。");
+      var url = context.urls.loginUrl;
+      var params = { UserID: this.username, UserPwd: this.password };
+      console.log(`request url: ${url}, params: ${params}`);
+      var that = this;
+      this.$f7.request.post(
+        url,
+        params,
+        function(data) {
+          console.log(`response: ${data}`);
+          preloader.close(true);
+          if (data.success)
+          {
+            that.$f7.loginScreen.close("#login-screen", true);
+            context.isLogin = true;
+            context.accessToken = data.data.YSToken;
+            context.sessionID = data.data.SessionID;
+            that.$f7.views.main.router.refreshPage();
+          }
+          else
+          {
+            console.error(data.msg);
+            that.$f7.dialog.alert(data.msg, "错误");
+          }
+        },
+        function(xhr, status) {
+          console.error(`error status: ${status}`)
+          preloader.close(true);
+          that.$f7.dialog.alert(`网络忙，请稍后重试！[status: ${status}]`);
+        },
+        "json"
+      );
     }
   }
-  // directive: {
-  //   onDeviceReady: {
-  //     bind(el) {
-  //       document.addEventListener(
-  //         "deviceready",
-  //         () => {
-  //           console.log("device ready");
-  //         },
-  //         false
-  //       );
-  //     }
-  //   },
-  //   onBackPressed: {
-  //     bind(el) {
-  //       document.addEventListener(
-  //         "backbutton",
-  //         () => {
-  //           console.log("back pressed");
-  //           if (this.$f7.views.main.history.length > 1)
-  //             this.$f7.views.main.router.back();
-  //         },
-  //         false
-  //       );
-  //     }
-  //   }
-  // }
 };
 </script>
 <style scoped>
+.page-content .login-screen-content{
+  background-color: #2196f3;
+}
+.content{
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #2196f3;
+}
+.bordered-input{
+  border:1px solid white;
+  border-radius: 50px;
+  color: white;
+  padding: 12px 12px 12px 60px;
+  font-size: 1.5em;
+}
 </style>

@@ -31,6 +31,29 @@ import WorkersLocation from './pages/workers/location.vue'
 import DatePicker from './pages/f7-date-picker.vue'
 import DataPicker from './pages/f7-data-picker.vue'
 
+String.prototype.format = function(args) {
+  var result = this;
+  if (arguments.length > 0) {
+      if (arguments.length == 1 && typeof (args) == "object") {
+          for (var key in args) {
+              if(args[key]!=undefined){
+                  var reg = new RegExp("({" + key + "})", "g");
+                  result = result.replace(reg, args[key]);
+              }
+          }
+      }
+      else {
+          for (var i = 0; i < arguments.length; i++) {
+              if (arguments[i] != undefined) {
+                  var reg= new RegExp("({)" + i + "(})", "g");
+                  result = result.replace(reg, arguments[i]);
+              }
+          }
+      }
+  }
+  return result;
+}
+
 // Init F7 Vue Plugin
 Vue.use(Framework7Vue, Framework7)
 // muse ui
@@ -54,6 +77,13 @@ new Vue({
     theme: 'auto', // Automatic theme detection
     // App routes
     routes: Routes,
+    dialog: {
+      // set default title for all dialog shortcuts
+      title: '提示',
+      // change default "OK" button text
+      buttonOk: '确定',
+      buttonCancel: '取消'
+    }
   },
   // Register App Component
   components: {

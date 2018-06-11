@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="gdzs-plugin-cameraController" version="1.0.0" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>CameraController</name>
+    <engines>
+            <engine name="cordova" version=">=3.0.0" />
+    </engines>
+    <js-module name="CameraController" src="www/CameraController.js">
+        <clobbers target="cordova.plugins.CameraController" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="CameraController">
+                <param name="android-package" value="cn.yooling.app.gdzs.plugin.CameraController" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/CameraController.java" target-dir="src/cn/yooling/app/gdzs/plugin" />
+        <framework src="src/android/cameracontroller.gradle" custom="true" type="gradleReference"/>
+        <resource-file src="src/android/cameras-debug.aar" target="libs/cameras-debug.aar"/>
+    </platform>
+</plugin>
