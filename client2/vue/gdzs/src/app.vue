@@ -136,6 +136,9 @@ export default {
 };
 </script>
 <style scoped>
+#app{
+  font-size: 12px;
+}
 .page-content .login-screen-content{
   background-color: #2196f3;
 }

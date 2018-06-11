@@ -66,7 +66,7 @@
                 </f7-link>
             </f7-col>
             <f7-col width="33">
-                <f7-link href="/cameras/main/">
+                <f7-link href="/events/main/">
                     <img src="static/imgs/大事件.png" alt="">
                     <div>大事件</div>
                 </f7-link>

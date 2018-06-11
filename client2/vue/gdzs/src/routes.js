@@ -26,6 +26,7 @@ import EnvironmentMain from './pages/environment/main.vue';
 import DeviceMain from './pages/device/main.vue';
 import DeviceDetail from './pages/device/detail.vue';
 import CameraList from './pages/cameras/list.vue';
+import EventsMain from './pages/events/main.vue';
 
 export default [
   {
@@ -127,6 +128,10 @@ export default [
   {
     path: '/camera/list/',
     component: CameraList,
+  },
+  {
+    path: '/events/main',
+    component: EventsMain,
   },
   {
     path: '/login/',
