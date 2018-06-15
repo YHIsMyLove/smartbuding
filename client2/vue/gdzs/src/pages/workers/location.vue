@@ -1,14 +1,15 @@
 <template>
     <f7-page>
-        <f7-navbar title="人员定位" back-link="Back"></f7-navbar>
-        <div id="allmap"></div>
+        <f7-navbar title="人员定位" back-link="Back" :no-shadow="true"></f7-navbar>
+        <div id="map"></div>
     </f7-page>
 </template>
 <script>
 export default {
   mounted() {
+    console.log("location page mounted");
     // 百度地图API功能
-    var map = new BMap.Map("allmap"); // 创建Map实例
+    var map = new BMap.Map("map"); // 创建Map实例
     map.centerAndZoom(new BMap.Point(116.404, 39.915), 11); // 初始化地图,设置中心点坐标和地图级别
     //添加地图类型控件
     // map.addControl(
@@ -39,41 +40,33 @@ export default {
     // marker.addEventListener("click", this.openSheet);
     map.addOverlay(marker); // 将标注添加到地图中
   },
-  methods:
-  {
-      
-  }
+  methods: {}
 };
 </script>
 <style scoped>
-#allmap {
+#map {
   width: 100%;
   height: 100%;
   overflow: hidden;
   margin: 0;
   font-family: "微软雅黑";
 }
-#sheet
-{
-    background-color: #fafafa;
-    height: 380px;
+#sheet {
+  background-color: #fafafa;
+  height: 380px;
 }
-.block
-{
-    background-color: white;
+.block {
+  background-color: white;
 }
-.block a
-{
-    margin-left: 16px;
+.block a {
+  margin-left: 16px;
 }
-#top
-{
-    margin-top: 0px;
-    margin-bottom: 0px;
+#top {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
-#bottom
-{
-    margin-top: 16px;
-    margin-bottom: 16px;
+#bottom {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 </style>

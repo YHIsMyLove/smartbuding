@@ -1,94 +1,184 @@
 /* Your app styles here */
-.normal-buttons img
-{
+
+.normal-buttons img {
     width: 32px;
 }
 
-.my-buttons a[class*="link"]
-{
+.my-buttons a[class*="link"] {
     display: block;
 }
 
-.my-divider
-{
+.my-divider {
     height: 1px;
-    background-color: #ccc;
+    background-color: rgba(0, 0, 0, 0.12);
 }
 
-.my-info-item
-{
+.my-info-item {
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
 
-.font-big
-{
+.font-big {
     font-size: 1.8em;
 }
-.font-middle
-{
-    font-size: 1.4em;
+
+.font-middle {
+    font-size: 1.3em;
 }
-.font-little
-{
-    font-size: 0.8em;
+
+.font-little {
+    font-size: 0.6em;
 }
-.img-big
-{
+
+.img-big {
     width: 96px;
     height: 96px;
 }
-.img-middle
-{
+
+.img-middle {
     width: 64px;
     height: 64px;
 }
-.img-little
-{
+
+.img-little {
     width: 32px;
     height: 32px;
 }
 
-
-.align-right
-{
+.align-right {
     text-align: right;
 }
 
-.page-data-filter
-{
-  position: absolute;
-  background-color: #fff;
-  top: 56px;
-  left: 0;
-  right: 0;
-  height: 48px;
-  z-index: 500;
-  border-bottom: 1px solid #ccc;
-  padding: 0 16px;
+.page-data-filter {
+    position: absolute;
+    background-color: #fff;
+    top: 56px;
+    left: 0;
+    right: 0;
+    height: 48px;
+    z-index: 500;
+    border-bottom: 1px solid #ccc;
+    padding: 0 16px;
 }
 
-.my-tag
-{
+.wmp {
+    width: 100%;
+}
+
+.hmp {
+    height: 100%;
+}
+
+.mp {
+    width: 100%;
+    height: 100%;
+}
+
+.my-tag {
     border: 1px solid #2196f3;
-    border-radius: 10px;
-    padding: 2px 8px;
+    border-radius: 100px;
+    padding: 0 8px;
     color: #2196f3;
-    font-size: 0.8em;
 }
 
-select
-{
+select {
     padding-right: 36px;
     background: url("arrow_down.png") no-repeat scroll right center transparent;
     font-size: 14px;
 }
 
-#inputUsername{
+#inputUsername {
     background: url("outline_person_white_18dp.png") no-repeat scroll left center transparent;
     background-position-x: 16px;
 }
-#inputPwd{
+
+#inputPwd {
     background: url("outline_lock_white_18dp.png") no-repeat scroll left center transparent;
     background-position-x: 16px;
+}
+
+.md .subnavbar {
+    background-color: #fff;
+    color: #000;
+    z-index: 90;
+}
+
+.md .subnavbar:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 100%;
+    top: 100%;
+    bottom: auto;
+    height: 1px;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.link-project {
+    width: 24px;
+    height: 24px;
+    background-image: url('project.png')
+}
+
+.link-project-highlight {
+    width: 24px;
+    height: 24px;
+    background-image: url('project_highlight.png')
+}
+
+.link-doors {
+    width: 24px;
+    height: 24px;
+    background-image: url('doors.png')
+}
+
+.link-doors-highlight {
+    width: 24px;
+    height: 24px;
+    background-image: url('doors_highlight.png')
+}
+
+.link-contacts {
+    width: 24px;
+    height: 24px;
+    background-image: url('call.png')
+}
+
+.link-contacts-highlight {
+    width: 24px;
+    height: 24px;
+    background-image: url('call_highlight.png')
+}
+
+.link-location {
+    width: 24px;
+    height: 24px;
+    background-image: url('location.png')
+}
+
+.link-location-highlight {
+    width: 24px;
+    height: 24px;
+    background-image: url('location_highlight.png')
+}
+
+input[type=date] {
+    background-image: url('input_date_bg.png');
+    background-repeat: no-repeat;
+    width: 173px;
+    height: 30px;
+    padding: 0 30px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.md .list {
+    margin: 8px 0;
+}
+
+.link-project-info {
+    width: 16px;
+    height: 16px;
+    background-image: url('mark.png');
 }

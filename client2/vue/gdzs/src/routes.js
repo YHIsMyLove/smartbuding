@@ -14,6 +14,8 @@ import DoorsMain from './pages/doors/main.vue';
 import DoorsStatistics from './pages/doors/statistics.vue';
 import WorkersMain from './pages/workers/main.vue';
 import WorkersDetail from './pages/workers/detail.vue';
+import WorkersAttendance from './pages/workers/attendance.vue';
+import WorkersLocation from './pages/workers/location.vue'
 import MeetingList from './pages/meetings/list.vue';
 import MeetingDetail from './pages/meetings/detail.vue';
 import RankingMain from './pages/ranking/main.vue';
@@ -28,117 +30,123 @@ import DeviceDetail from './pages/device/detail.vue';
 import CameraList from './pages/cameras/list.vue';
 import EventsMain from './pages/events/main.vue';
 
-export default [
-  {
-    path: '/',
-    component: HomePage,
-  },
-  {
-    path: '/panel-left/',
-    component: PanelLeftPage,
-  },
-  {
-    path: '/panel-right/',
-    component: PanelRightPage,
-  },
-  {
-    path: '/about/',
-    component: AboutPage,
-  },
-  {
-    path: '/form/',
-    component: FormPage,
-  },
-  {
-    path: '/dynamic-route/blog/:blogId/post/:postId/',
-    component: DynamicRoutePage,
-  },
-  {
-    path: '/project/main/',
-    component: ProjectMain,
-  },
-  {
-    path: '/project/list/',
-    component: ProjectList,
-  },
-  {
-    path: '/account/main/',
-    component: AccountMain,
-  },
-  {
-    path: '/doors/main/',
-    component: DoorsMain,
-  },
-  {
-    path: '/doors/statistics/',
-    component: DoorsStatistics,
-  },
-  {
-    path: '/workers/main/',
-    component: WorkersMain,
-  },
-  {
-    path: '/workers/detail/',
-    component: WorkersDetail,
-  },
-  {
-    path: '/meetings/list/',
-    component: MeetingList,
-  },
-  {
-    path: '/meetings/detail/',
-    component: MeetingDetail,
-  },
-  {
-    path: '/ranking/main/',
-    component: RankingMain,
-  },
-  {
-    path: '/especially-task/main/',
-    component: EspeciallyTaskMain,
-  },
-  {
-    path: '/especially-task/create-dhzy/',
-    component: EspeciallyTaskCreateDhzy,
-  },
-  {
-    path: '/especially-task/check-dhzy/',
-    component: EspeciallyTaskCheckDhzy,
-  },
-  {
-    path: '/especially-task/commit-endorse/',
-    component: EspeciallyTaskEndorseCommit,
-  },
-  {
-    path: '/especially-task/commit-refuse/',
-    component: EspeciallyTaskRefuseCommit,
-  },
-  {
-    path: '/env/main/',
-    component: EnvironmentMain,
-  },
-  {
-    path: '/device/main',
-    component: DeviceMain,
-  },
-  {
-    path: '/device/detail',
-    component: DeviceDetail,
-  },
-  {
-    path: '/camera/list/',
-    component: CameraList,
-  },
-  {
-    path: '/events/main',
-    component: EventsMain,
-  },
-  {
-    path: '/login/',
-    component: AccountLogin,
-  },
-  {
-    path: '(.*)',
-    component: NotFoundPage,
-  }
+export default [{
+        path: '/',
+        component: HomePage,
+    },
+    {
+        path: '/panel-left/',
+        component: PanelLeftPage,
+    },
+    {
+        path: '/panel-right/',
+        component: PanelRightPage,
+    },
+    {
+        path: '/about/',
+        component: AboutPage,
+    },
+    {
+        path: '/form/',
+        component: FormPage,
+    },
+    {
+        path: '/dynamic-route/blog/:blogId/post/:postId/',
+        component: DynamicRoutePage,
+    },
+    {
+        path: '/project/main/',
+        component: ProjectMain,
+    },
+    {
+        path: '/project/list/',
+        component: ProjectList,
+    },
+    {
+        path: '/account/main/',
+        component: AccountMain,
+    },
+    {
+        path: '/doors/main/',
+        component: DoorsMain,
+    },
+    {
+        path: '/doors/statistics/',
+        component: DoorsStatistics,
+    },
+    {
+        path: '/workers/',
+        component: WorkersMain,
+        routes: [{
+            path: 'detail/',
+            component: WorkersDetail,
+            routes: [{
+                path: 'attendance/',
+                component: WorkersAttendance,
+            }]
+        }, {
+            path: 'location/',
+            component: WorkersLocation,
+        }]
+    },
+    {
+        path: '/meetings/list/',
+        component: MeetingList,
+    },
+    {
+        path: '/meetings/detail/',
+        component: MeetingDetail,
+    },
+    {
+        path: '/ranking/main/',
+        component: RankingMain,
+    },
+    {
+        path: '/especially-task/main/',
+        component: EspeciallyTaskMain,
+    },
+    {
+        path: '/especially-task/create-dhzy/',
+        component: EspeciallyTaskCreateDhzy,
+    },
+    {
+        path: '/especially-task/check-dhzy/',
+        component: EspeciallyTaskCheckDhzy,
+    },
+    {
+        path: '/especially-task/commit-endorse/',
+        component: EspeciallyTaskEndorseCommit,
+    },
+    {
+        path: '/especially-task/commit-refuse/',
+        component: EspeciallyTaskRefuseCommit,
+    },
+    {
+        path: '/env/main/',
+        component: EnvironmentMain,
+    },
+    {
+        path: '/device/main',
+        component: DeviceMain,
+    },
+    {
+        path: '/device/detail',
+        component: DeviceDetail,
+    },
+    {
+        path: '/camera/list/',
+        component: CameraList,
+    },
+    {
+        path: '/events/main',
+        component: EventsMain,
+    },
+    {
+        path: '/login/',
+        component: AccountLogin,
+    },
+    {
+        path: '(.*)',
+        component: NotFoundPage,
+    }
 ];

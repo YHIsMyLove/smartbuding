@@ -1,30 +1,68 @@
 <template>
-    <f7-page tabs :page-content="false">
-        <f7-navbar title="通讯录" back-link="Back"></f7-navbar>
-        <f7-page-content id="page-contacts" tab tab-active>
-            <!-- <workers-contacts></workers-contacts> -->
-            <!-- <f7-list contacts-list>
-                <f7-list-group :key="key1" v-for="(group, key1) in contacts">
-                    <f7-list-item :title="key1" group-title></f7-list-item>
-                    <f7-list-item :key="key2" v-for="(name, key2) in group" :title="name" link="/workers/detail/"></f7-list-item>
-                </f7-list-group>
-            </f7-list> -->
-            <f7-list>
-                <f7-list-item v-for="(contact, key) in contacts" :key="key" :title="contact.UserName" link @click="showDetail(contact, $event)"></f7-list-item>
-            </f7-list>
-        </f7-page-content>
-        <f7-page-content id="page-location" tab>
-            <workers-location></workers-location>
-        </f7-page-content>
-        <f7-toolbar tabbar labels bottom-md>
-            <f7-link icon-if-ios="f7:menu" icon-if-md="material:menu" text="通讯录" tab-link="#page-contacts"></f7-link>
-            <f7-link icon-if-ios="f7:menu" icon-if-md="material:menu" text="人员定位" tab-link="#page-location"></f7-link>
-        </f7-toolbar>
+    <f7-page>
+      <f7-navbar :title="navbarTitle" back-link="Back" :no-shadow="true"></f7-navbar>
+      <f7-tabs>
+        <f7-tab id="page-contacts" tab-active @tab:show="onTabContactsShow" @tab:hide="onTabContactsHide">
+          <f7-toolbar>
+            <select name="" id="">
+              <option value="设计部">设计部</option>
+              <option value="施工部">施工部</option>
+            </select>
+            <select>
+              <option value="打桩组">打桩组</option>
+              <option value="电焊组">电焊组</option>
+            </select>
+          </f7-toolbar>
+          <f7-list>
+            <f7-list-item v-for="(contact, key) in contacts" :key="key" :title="contact.UserName" link @click="showDetail(contact, $event)"></f7-list-item>
+          </f7-list>
+        </f7-tab>
+        <f7-tab id="page-location" @tab:show="onTabLocationShow" @tab:hide="onTabLocationHide">
+          <div id="allmap"></div>
+        </f7-tab>
+      </f7-tabs>
+      <f7-toolbar tabbar labels bottom-md>
+        <f7-link :icon="linkContactsClass" text="通讯录" tab-link="#page-contacts"></f7-link>
+        <f7-link :icon="linkLocationClass" text="人员定位" tab-link="#page-location"></f7-link>
+      </f7-toolbar>
     </f7-page>
 </template>
 <script>
 import context from "../../service-context.js";
 export default {
+  mounted() {
+    // 百度地图API功能
+    var map = new BMap.Map("allmap"); // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11); // 初始化地图,设置中心点坐标和地图级别
+    //添加地图类型控件
+    // map.addControl(
+    //   new BMap.MapTypeControl({
+    //     mapTypes: [BMAP_NORMAL_MAP]
+    //   })
+    // );
+    map.setCurrentCity("北京"); // 设置地图显示的城市 此项是必须设置的
+    // map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+
+    var pt = new BMap.Point(116.417, 39.909);
+    var myIcon = new BMap.Icon(
+      "static/imgs/人员定位地图图标70x70.png",
+      new BMap.Size(70, 70)
+    );
+    myIcon.setImageSize(new BMap.Size(32, 32));
+    var marker = new BMap.Marker(pt, { icon: myIcon }); // 创建标注
+    // marker.addEventListener("click", this.openSheet);
+    map.addOverlay(marker); // 将标注添加到地图中
+
+    pt = new BMap.Point(116.517, 39.809);
+    myIcon = new BMap.Icon(
+      "static/imgs/人员定位地图图标70x70.png",
+      new BMap.Size(70, 70)
+    );
+    myIcon.setImageSize(new BMap.Size(32, 32));
+    marker = new BMap.Marker(pt, { icon: myIcon }); // 创建标注
+    // marker.addEventListener("click", this.openSheet);
+    map.addOverlay(marker); // 将标注添加到地图中
+  },
   on: {
     pageInit(event, pageData) {
       console.log("workers page init");
@@ -32,7 +70,6 @@ export default {
     },
     pageAfterIn(event, pageData) {
       console.log("workers page after in");
-      
     },
     pageAfterOut(event, pageData) {
       //alert("page after out");
@@ -63,7 +100,10 @@ export default {
       //     ],
       //     V: ["Vladimir", "Hehe"]
       //   }
-      contacts: []
+      contacts: [],
+      linkContactsClass: "link-contacts-highlight",
+      linkLocationClass: "link-location",
+      navbarTitle: '通讯录'
     };
   },
   methods: {
@@ -90,15 +130,57 @@ export default {
           console.error("error " + status);
           that.$f7.dialog.alert("网络忙，请稍后重试！");
         },
-        'json'
+        "json"
       );
     },
-    showDetail(contact, event)
-    {
-        console.log(contact);
-        context.currentContact = contact;
-        this.$f7.views.main.router.navigate('/workers/detail/');
+    showDetail(contact, event) {
+      console.log(contact);
+      context.currentContact = contact;
+      this.$f7.views.main.router.navigate("/workers/detail/");
+    },
+    onTabContactsShow() {
+      this.linkContactsClass = "link-contacts-highlight";
+      this.navbarTitle = '通讯录';
+    },
+    onTabContactsHide() {
+      this.linkContactsClass = "link-contacts";
+    },
+    onTabLocationShow() {
+      this.linkLocationClass = "link-location-highlight";
+      this.navbarTitle = "人员定位";
+    },
+    onTabLocationHide() {
+      this.linkLocationClass = "link-location";
     }
   }
 };
 </script>
+<style scoped>
+select {
+  margin: 0 16px;
+}
+.md .toolbar:after {
+  height: 1px;
+  background-color: #ccc;
+}
+
+.md .toolbar {
+  background-color: #fff;
+  color: rgba(0, 0, 0);
+}
+
+.md .tabbar a.tab-link.tab-link-active {
+  color: black;
+}
+
+.md .toolbar a {
+  color: rgba(0, 0, 0, 0.5);
+}
+#allmap {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 56px;
+}
+</style>

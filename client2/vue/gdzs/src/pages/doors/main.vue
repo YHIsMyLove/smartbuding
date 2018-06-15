@@ -15,25 +15,27 @@
           <f7-col width="30">
             <div style="border-left:1px solid #ccc;border-right:1px solid #ccc;">
               <f7-row>
-                <f7-col width="100">950</f7-col>
-                <f7-col width="100">进场次数</f7-col>
+                <f7-col width="100">
+                  <f7-link text="950"></f7-link>
+                </f7-col>
+                <f7-col width="100">进场人次</f7-col>
                 <f7-col width="100">
                   <div style="height:32px;"></div>
                 </f7-col>
                 <f7-col width="100">453</f7-col>
-                <f7-col width="100">进场人数</f7-col>
+                <f7-col width="100">出场人次</f7-col>
               </f7-row>
             </div>
           </f7-col>
           <f7-col width="30">
             <f7-row>
               <f7-col width="100">950</f7-col>
-              <f7-col width="100">进场次数</f7-col>
+              <f7-col width="100">进场人数</f7-col>
               <f7-col width="100">
                 <div style="height:32px;"></div>
               </f7-col>
               <f7-col width="100">453</f7-col>
-              <f7-col width="100">进场人数</f7-col>
+              <f7-col width="100">现场人数</f7-col>
             </f7-row>
           </f7-col>
         </f7-row>

@@ -5,10 +5,7 @@
         <f7-list inline-labels no-hairlines-md>
             <f7-list-item>
                 <f7-label>申请单位</f7-label>
-                <f7-input type="select" placeholder="请选择">
-                    <option value="1">单位一</option>
-                    <option value="2">单位二</option>
-                </f7-input>
+                <f7-input type="text" placeholder="请输入"></f7-input>
             </f7-list-item>
 
             <f7-list-item>

@@ -1,11 +1,11 @@
 <template>
   <f7-page>
     <div class="display-flex align-items-center" style="padding: 56px 16px 16px 16px" slot="fixed">
-      <img src="static/imgs/个人信息80x80.png">
+      <img class="img-middle" src="static/imgs/个人信息头像180x180.png">
       <div class="display-flex justify-content-center" style="flex-direction:column;padding-left:8px">
         <div class="display-flex align-items-center">
           <span class="font-big">{{user.UserName}}</span>
-          <span class="my-tag">工程部</span>
+          <div class="my-tag font-little" style="margin-left: 8px;">工程部</div>
         </div>
         <div class="display-flex align-items-center">
           <span class="font-middle">经理</span>
@@ -26,8 +26,6 @@
         <f7-icon f7="help_fill" slot="media"></f7-icon>
       </f7-list-item>
     </f7-list>
-    <f7-list media-list>
-</f7-list>
   </f7-page>
 </template>
 <script>
