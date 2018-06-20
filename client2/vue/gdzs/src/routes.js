@@ -30,6 +30,8 @@ import DeviceDetail from './pages/device/detail.vue';
 import CameraList from './pages/cameras/list.vue';
 import EventsMain from './pages/events/main.vue';
 
+import TestParam from './pages/especially_task/testParams.vue'
+
 export default [{
         path: '/',
         component: HomePage,
@@ -120,6 +122,10 @@ export default [{
     {
         path: '/especially-task/commit-refuse/',
         component: EspeciallyTaskRefuseCommit,
+    },
+    {
+        path: '/especially-task/test-params/',
+        component: TestParam,
     },
     {
         path: '/env/main/',

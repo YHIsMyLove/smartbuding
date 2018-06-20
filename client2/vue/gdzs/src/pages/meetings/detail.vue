@@ -110,5 +110,9 @@ export default {
 #cell-depart {
   text-align: right;
 }
+.md .toolbar:after {
+  height: 1px;
+  background-color: #ccc;
+}
 </style>
 

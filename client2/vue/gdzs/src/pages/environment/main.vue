@@ -2,28 +2,28 @@
     <f7-page>
         <f7-navbar title="环境监测" back-link="Back"></f7-navbar>
         <f7-tabs>
-            <f7-tab id="tab1" tab-active @show="refreshChartPm2_5()">
+            <f7-tab id="tab1" tab-active>
                 <div id="chart-pm-2-5" style="width:100%;height:100%;"></div>
             </f7-tab>
-            <f7-tab id="tab2" @show="refreshChartPm1_0()">
+            <f7-tab id="tab2" @tab:show="initChartPm1_0">
                 <div id="chart-pm-1-0" style="width:100%;height:100%;"></div>
             </f7-tab>
-            <f7-tab id="tab3">
+            <f7-tab id="tab3" @tab:show="initChartSd">
                 <div id="chart-sd" style="width:100%;height:100%;"></div>
             </f7-tab>
-            <f7-tab id="tab4">
+            <f7-tab id="tab4" @tab:show="initChartTemp">
                 <div id="chart-temp" style="width:100%;height:100%;"></div>
             </f7-tab>
-            <f7-tab id="tab5">
+            <f7-tab id="tab5" @tab:show="initChartNoise">
                 <div id="chart-noise" style="width:100%;height:100%;"></div>
             </f7-tab>
-            <f7-tab id="tab6">
+            <f7-tab id="tab6" @tab:show="initChartWindPower">
                 <div id="chart-wind-power" style="width:100%;height:100%;"></div>
             </f7-tab>
-            <f7-tab id="tab7">
+            <f7-tab id="tab7" @tab:show="initChartWindDir">
                 <div id="chart-wind-dir" style="width:100%;height:100%;"></div>
             </f7-tab>
-            <f7-tab id="tab8">
+            <f7-tab id="tab8" @tab:show="initChartWindSpeed">
                 <div id="chart-wind-speed" style="width:100%;height:100%;"></div>
             </f7-tab>
         </f7-tabs>
@@ -116,29 +116,24 @@ var chartWindSpeed;
 export default {
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      chartPm2_5Initialized: false,
+      chartPm1_0Initialized: false,
+      chartSdInitialized: false,
+      chartTempInitialized: false,
+      chartNoiseInitialized: false,
+      chartWindPowerInitialized: false,
+      chartWindDirInitialized: false,
+      chartWindSpeedInitialized: false,
     };
   },
   mounted() {
-    // 基于准备好的dom，初始化echarts实例
-    chartPm2_5 = echarts.init(document.getElementById("chart-pm-2-5"));
-    chartPm1_0 = echarts.init(document.getElementById("chart-pm-1-0"));
-    chartSd = echarts.init(document.getElementById("chart-sd"));
-    chartTemp = echarts.init(document.getElementById("chart-temp"));
-    chartNoise = echarts.init(document.getElementById("chart-noise"));
-    chartWindPower = echarts.init(
-      document.getElementById("chart-wind-power")
-    );
-    chartWindDir = echarts.init(document.getElementById("chart-wind-dir"));
-    chartWindSpeed = echarts.init(
-      document.getElementById("chart-wind-speed")
-    );
-    this.refreshChartPm2_5();
+    this.initChartPm2_5();
   },
   methods: {
-    refreshChartPm2_5() {
-      console.log("h");
-      // 绘制图表
+    initChartPm2_5() {
+      if (this.chartPm2_5Initialized) return;
+      this.chartPm2_5Initialized = true;
+      chartPm2_5 = echarts.init(document.getElementById("chart-pm-2-5"));
       chartPm2_5.setOption({
         title: { text: "PM2.5" },
         tooltip: {},
@@ -155,7 +150,10 @@ export default {
         ]
       });
     },
-    refreshChartPm1_0() {
+    initChartPm1_0() {
+      if (this.chartPm1_0Initialized) return;
+      this.chartPm1_0Initialized = true;
+      chartPm1_0 = echarts.init(document.getElementById("chart-pm-1-0"));
       chartPm1_0.setOption({
         title: { text: "PM10" },
         tooltip: {},
@@ -172,7 +170,10 @@ export default {
         ]
       }, true);
     },
-    refreshChartSd() {
+    initChartSd() {
+      if (this.chartSdInitialized) return;
+      this.chartSdInitialized = true;
+      chartSd = echarts.init(document.getElementById("chart-sd"));
       chartSd.setOption({
         title: { text: "湿度" },
         tooltip: {},
@@ -189,7 +190,10 @@ export default {
         ]
       });
     },
-    refreshChartTemp() {
+    initChartTemp() {
+      if (this.chartTempInitialized) return;
+      this.chartTempInitialized = true;
+      chartTemp = echarts.init(document.getElementById("chart-temp"));
       chartTemp.setOption({
         title: { text: "温度" },
         tooltip: {},
@@ -206,7 +210,10 @@ export default {
         ]
       });
     },
-    refreshChartNoise() {
+    initChartNoise() {
+      if (this.chartNoiseInitialized) return;
+      this.chartNoiseInitialized = true;
+      chartNoise = echarts.init(document.getElementById("chart-noise"));
       chartNoise.setOption({
         title: { text: "噪音" },
         tooltip: {},
@@ -223,7 +230,10 @@ export default {
         ]
       });
     },
-    refreshChartWindPower() {
+    initChartWindPower() {
+      if (this.chartWindPowerInitialized) return;
+      this.chartWindPowerInitialized = true;
+      chartWindPower = echarts.init(document.getElementById("chart-wind-power"));
       chartWindPower.setOption({
         title: { text: "风力" },
         tooltip: {},
@@ -240,7 +250,10 @@ export default {
         ]
       });
     },
-    refreshChartWindDir() {
+    initChartWindDir() {
+      if (this.chartWindDirInitialized) return;
+      this.chartWindDirInitialized = true;
+      chartWindDir = echarts.init(document.getElementById("chart-wind-dir"));
       chartWindDir.setOption({
         title: { text: "风向" },
         tooltip: {},
@@ -257,7 +270,10 @@ export default {
         ]
       });
     },
-    refreshChartWindSpeed() {
+    initChartWindSpeed() {
+      if (this.chartWindSpeedInitialized) return;
+      this.chartWindSpeedInitialized = true;
+      chartWindSpeed = echarts.init(document.getElementById("chart-wind-speed"));
       chartWindSpeed.setOption({
         title: { text: "风速" },
         tooltip: {},

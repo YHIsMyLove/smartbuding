@@ -1,8 +1,11 @@
 <template>
     <f7-page>
-        <f7-navbar title="11#号塔机" back-link="Back"></f7-navbar>
+        <f7-navbar title="11#号塔机" back-link="Back" :no-shadow="true"></f7-navbar>
         <f7-block>
-            <div class="text-align-center">设备租用时间：2017-01-01至2017-12-31</div>
+            <div class="display-flex align-items-center justify-content-center" style="padding: 8px 0">
+                <img src="static/imgs/机械设备租约信号灯30x30.png" alt="">
+                <div style="margin-left: 8px;">设备租用时间：2017-01-01至2017-12-31</div>
+            </div>
         </f7-block>
         <f7-block>
             <f7-row>

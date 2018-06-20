@@ -11,6 +11,9 @@
     <feature name="CameraController">
         <param name="android-package" value="cn.yooling.app.gdzs.plugin.CameraController" />
     </feature>
+    <feature name="PhoneCaller">
+        <param name="android-package" value="io.codebakery.phonecaller.PhoneCaller" />
+    </feature>
     <name>工地项目助手</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

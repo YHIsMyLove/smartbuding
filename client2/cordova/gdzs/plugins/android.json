@@ -15,6 +15,9 @@
     },
     "gdzs-plugin-cameraController": {
       "PACKAGE_NAME": "cn.yooling.app.gdzs"
+    },
+    "cordova-plugin-phonecaller": {
+      "PACKAGE_NAME": "cn.yooling.app.gdzs"
     }
   },
   "dependent_plugins": {}

@@ -42,5 +42,6 @@
     <preference name="AutoHideSplashScreen" value="true" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
+    <plugin name="cordova-plugin-phonecaller" spec="0.0.2" />
     <engine name="android" spec="git+https://github.com/apache/cordova-android.git#6.4.0" />
 </widget>

@@ -1,6 +1,6 @@
 <template>
     <f7-page tabs :page-content="false">
-        <f7-navbar title="特种作业审批" back-link="Back">
+        <f7-navbar title="特种作业审批" back-link="Back" :no-shadow="true">
             <f7-nav-right>
                 <f7-link icon-if-ios="f7:menu" icon-if-md="material:add" popover-open="#popover"></f7-link>
                 <f7-popover id="popover">
@@ -17,7 +17,7 @@
                         <div class="my-divider" style="margin:8px 0;"></div>
                         <div class="display-flex justify-content-flex-start align-items-center">
                             <img class="img-little" src="static/imgs/个人信息头像180x180.png" alt="">
-                            <span>张三</span>
+                            <div style="margin-left: 8px;">张三</div>
                             <div style="flex: auto;text-align:right">
                                 <span>申请时间：2018-05-23 08:32</span>
                             </div>
@@ -28,42 +28,38 @@
                     </div>
                     <div class="display-flex justify-content-start align-items-center" slot="before-title">
                         <img class="img-little" src="static/imgs/动火作业70x70.png" alt="">
-                        <div>
-                            <span>一级动火作业申请</span>
-                        </div>
+                        <div style="margin-left: 8px;">一级动火作业申请</div>
                     </div>
                 </f7-list-item>
-                <f7-list-item link="#">
+                <f7-list-item link="/especially-task/check-dhzy/">
                     <div slot="inner">
                         <div class="my-divider" style="margin:8px 0;"></div>
                         <div class="display-flex justify-content-flex-start align-items-center">
                             <img class="img-little" src="static/imgs/个人信息头像180x180.png" alt="">
-                            <span>张三</span>
+                            <div style="margin-left: 8px;">张三</div>
                             <div style="flex: auto;text-align:right">
                                 <span>申请时间：2018-05-23 08:32</span>
                             </div>
                         </div>
                     </div>
                     <div slot="after">
-                        <span style="color:#0f0a">已通过</span>
+                        <span style="color:#f00">已拒绝</span>
                     </div>
                     <div class="display-flex justify-content-start align-items-center" slot="before-title">
                         <img class="img-little" src="static/imgs/动火作业70x70.png" alt="">
-                        <div>
-                            <span>一级动火作业申请</span>
-                        </div>
+                        <div style="margin-left: 8px;">一级动火作业申请</div>
                     </div>
                 </f7-list-item>
             </f7-list>
         </f7-page-content>
         <f7-page-content id="check-by-me" tab>
             <f7-list media-list>
-                <f7-list-item link="#">
+                <f7-list-item link="/especially-task/check-dhzy/">
                     <div slot="inner">
                         <div class="my-divider" style="margin:8px 0;"></div>
                         <div class="display-flex justify-content-flex-start align-items-center">
                             <img class="img-little" src="static/imgs/个人信息头像180x180.png" alt="">
-                            <span>张三</span>
+                            <div style="margin-left: 8px;">张三</div>
                             <div style="flex: auto;text-align:right">
                                 <span>申请时间：2018-05-23 08:32</span>
                             </div>
@@ -74,42 +70,38 @@
                     </div>
                     <div class="display-flex justify-content-start align-items-center" slot="before-title">
                         <img class="img-little" src="static/imgs/动火作业70x70.png" alt="">
-                        <div>
-                            <span>一级动火作业申请</span>
-                        </div>
+                        <div style="margin-left: 8px;">一级动火作业申请</div>
                     </div>
                 </f7-list-item>
-                <f7-list-item link="#">
+                <f7-list-item link="/especially-task/check-dhzy/">
                     <div slot="inner">
                         <div class="my-divider" style="margin:8px 0;"></div>
                         <div class="display-flex justify-content-flex-start align-items-center">
                             <img class="img-little" src="static/imgs/个人信息头像180x180.png" alt="">
-                            <span>张三</span>
+                            <div style="margin-left: 8px;">张三</div>
                             <div style="flex: auto;text-align:right">
                                 <span>申请时间：2018-05-23 08:32</span>
                             </div>
                         </div>
                     </div>
                     <div slot="after">
-                        <span style="color:#0f0a">已通过</span>
+                        <span style="color:#f00">已拒绝</span>
                     </div>
                     <div class="display-flex justify-content-start align-items-center" slot="before-title">
                         <img class="img-little" src="static/imgs/动火作业70x70.png" alt="">
-                        <div>
-                            <span>一级动火作业申请</span>
-                        </div>
+                        <div style="margin-left: 8px;">一级动火作业申请</div>
                     </div>
                 </f7-list-item>
             </f7-list>
         </f7-page-content>
         <f7-page-content id="send-to-me" tab>
             <f7-list media-list>
-                <f7-list-item link="#">
+                <f7-list-item link="/especially-task/check-dhzy/">
                     <div slot="inner">
                         <div class="my-divider" style="margin:8px 0;"></div>
                         <div class="display-flex justify-content-flex-start align-items-center">
                             <img class="img-little" src="static/imgs/个人信息头像180x180.png" alt="">
-                            <span>张三</span>
+                            <div style="margin-left: 8px;">张三</div>
                             <div style="flex: auto;text-align:right">
                                 <span>申请时间：2018-05-23 08:32</span>
                             </div>
@@ -120,30 +112,26 @@
                     </div>
                     <div class="display-flex justify-content-start align-items-center" slot="before-title">
                         <img class="img-little" src="static/imgs/动火作业70x70.png" alt="">
-                        <div>
-                            <span>一级动火作业申请</span>
-                        </div>
+                        <div style="margin-left: 8px;">一级动火作业申请</div>
                     </div>
                 </f7-list-item>
-                <f7-list-item link="#">
+                <f7-list-item link="/especially-task/check-dhzy/">
                     <div slot="inner">
                         <div class="my-divider" style="margin:8px 0;"></div>
                         <div class="display-flex justify-content-flex-start align-items-center">
                             <img class="img-little" src="static/imgs/个人信息头像180x180.png" alt="">
-                            <span>张三</span>
+                            <div style="margin-left: 8px;">张三</div>
                             <div style="flex: auto;text-align:right">
                                 <span>申请时间：2018-05-23 08:32</span>
                             </div>
                         </div>
                     </div>
                     <div slot="after">
-                        <span style="color:#0f0a">已通过</span>
+                        <span style="color:#f00">已拒绝</span>
                     </div>
                     <div class="display-flex justify-content-start align-items-center" slot="before-title">
                         <img class="img-little" src="static/imgs/动火作业70x70.png" alt="">
-                        <div>
-                            <span>一级动火作业申请</span>
-                        </div>
+                        <div style="margin-left: 8px;">一级动火作业申请</div>
                     </div>
                 </f7-list-item>
             </f7-list>
@@ -181,6 +169,9 @@ a[class*="button"] {
   text-align: left;
   color: #000;
   /* border-top: 1px solid #ccc; */
+}
+.md .toolbar::after {
+    height: 0;
 }
 </style>
 

@@ -1,7 +1,7 @@
 // 申请动火作业审批页面
 <template>
     <f7-page>
-        <f7-navbar title="申请动火作业" back-link="Back"></f7-navbar>
+        <f7-navbar title="申请动火作业" back-link="Back" :no-shadow="true"></f7-navbar>
         <f7-list inline-labels no-hairlines-md>
             <f7-list-item>
                 <f7-label>申请单位</f7-label>
@@ -54,12 +54,12 @@
 
             <f7-list-item>
                 <f7-label>审批人</f7-label>
-                <f7-button icon-f7="add"></f7-button>
+                <f7-button icon-f7="add" href="/especially-task/test-params/"></f7-button>
             </f7-list-item>
 
             <f7-list-item>
                 <f7-label>监管人</f7-label>
-                <f7-button icon-f7="add"></f7-button>
+                <f7-button icon-f7="add" href="/workers/"></f7-button>
             </f7-list-item>
 
         </f7-list>
@@ -85,3 +85,21 @@
         </f7-toolbar>
     </f7-page>
 </template>
+<script>
+export default {
+    on: {
+        pageAfterIn(event, pageData) {
+            console.log(event);
+            console.log(pageData);
+            console.log("contact detail page after in");
+        },
+    }
+}
+</script>
+
+<style scoped>
+.md .toolbar::after {
+    height: 0;
+}
+</style>
+

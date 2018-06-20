@@ -1,39 +1,42 @@
 <template>
     <f7-page>
-        <f7-navbar title="机械设备监测" back-link="Back"></f7-navbar>
+        <f7-navbar title="机械设备监测" back-link="Back" :no-shadow="true"></f7-navbar>
         <div id="allmap"></div>
         <f7-sheet id="sheet">
             <f7-block id="top">
                 <div class="text-align-center" style="width:100%">
-                    <img src="static/imgs/机械设备监测地图图标70x70.png" alt="">
+                    <img class="img-middle" src="static/imgs/机械设备监测地图图标70x70.png" alt="">
                     <div>11#号塔机</div>
                 </div>
                 <div class="my-divider"></div>
                 <div class="text-align-center font-middle text-color-red">载重警报</div>
                 <div class="text-align-center">2017-4-28 20:47</div>
                 <div class="my-divider"></div>
-                <div class="display-flex align-items-center">
+                <div class="display-flex align-items-center" style="padding: 8px 0;">
                     <div style="flex: 1 1 0">责任人</div>
                     <f7-chip text="未查看" color="red"></f7-chip>
                     <f7-link icon-f7="phone_round"></f7-link>
                 </div>
                 <div class="my-divider"></div>
-                <div class="display-flex align-items-center">
+                <div class="display-flex align-items-center" style="padding: 8px 0;">
                     <div style="flex: 1 1 0">驾驶员</div>
                     <f7-chip text="已查看" color="green"></f7-chip>
                     <f7-link icon-f7="phone_round"></f7-link>
                 </div>
                 <div class="my-divider"></div>
-                <div class="display-flex align-items-center">
+                <div class="display-flex align-items-center" style="padding: 8px 0;">
                     <div style="flex: 1 1 0">指挥员</div>
                     <f7-chip text="已查看" color="green"></f7-chip>
                     <f7-link icon-f7="phone_round"></f7-link>
                 </div>
             </f7-block>
             <f7-block id="bottom">
-                <div class="text-align-center padding">设备租用时间：2017-01-01至2017-12-31</div>
+                <div class="display-flex align-items-center justify-content-center" style="padding: 8px 0">
+                    <img src="static/imgs/机械设备租约信号灯30x30.png" alt="">
+                    <div style="margin-left: 8px;">设备租用时间：2017-01-01至2017-12-31</div>
+                </div>
             </f7-block>
-            <f7-button fill color="red" href="/device/detail/" @click="closeSheet()">查看详情</f7-button>
+            <f7-button id="btn" fill color="red" big href="/device/detail/" @click="closeSheet()">查看详情</f7-button>
         </f7-sheet>
     </f7-page>
 </template>
@@ -115,6 +118,17 @@ export default {
 {
     margin-top: 16px;
     margin-bottom: 16px;
+}
+div.chip {
+    font-size: 12px;
+    height: 24px;
+}
+
+#btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 </style>
 

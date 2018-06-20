@@ -10,7 +10,7 @@
       </f7-nav-right>
     </f7-navbar>
     <f7-tabs>
-        <f7-tab id="page-project-main" @tab:show="onTabProjectShow" @tab:hide="onTabProjectHide">
+        <f7-tab id="page-project-main" tab-active @tab:show="onTabProjectShow" @tab:hide="onTabProjectHide">
           <div class="head display-flex">
               <div>
                   <span class="app-name">工地项目助手</span><span>v1.0</span>
@@ -79,7 +79,7 @@
             </f7-row>
           </div>
         </f7-tab>
-        <f7-tab id="page-doors-main" tab-active @tab:show="onTabDoorsShow" @tab:hide="onTabDoorsHide">
+        <f7-tab id="page-doors-main" @tab:show="onTabDoorsShow" @tab:hide="onTabDoorsHide">
           <f7-toolbar>
             <div class="display-flex justify-content-center align-items-center" style="width:100%">
               <input type="date" v-model="selectedDate"/>
@@ -158,62 +158,22 @@ require("echarts/lib/chart/pie");
 require("echarts/lib/component/tooltip");
 require("echarts/lib/component/title");
 export default {
-  mounted() {
-    // 基于准备好的dom，初始化echarts实例
-    var chart = echarts.init(document.getElementById("chart"));
-    var option = {
-      legend: {
-        orient: "vertical",
-        x: "left",
-        data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"]
-      },
-      series: [
-        {
-          name: "访问来源",
-          type: "pie",
-          radius: ["80%", "100%"],
-          avoidLabelOverlap: false,
-          label: {
-            normal: {
-              show: false,
-              position: "center"
-            },
-            emphasis: {
-              show: false,
-              textStyle: {
-                fontSize: "30",
-                fontWeight: "bold"
-              }
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: [
-            { value: 934, name: "出勤人数" },
-            { value: 16, name: "缺勤人数" }
-          ]
-        }
-      ]
-    };
-    chart.setOption(option);
-  },
+  mounted() {},
   data() {
     return {
       project: {},
       prov: {},
       city: {},
       doorStates: [
-        {doorNum: '1', who: '张三', time: "2018-06-10 08:30", desc: "进场"},
-        {doorNum: '2', who: '李四', time: "2018-06-10 08:31", desc: "进场"},
+        { doorNum: "1", who: "张三", time: "2018-06-10 08:30", desc: "进场" },
+        { doorNum: "2", who: "李四", time: "2018-06-10 08:31", desc: "进场" }
       ],
       linkProjectClass: "link-project-highlight",
       linkDoorsClass: "link-doors",
       selectedDate: "",
-      navbarTitle: '',
-      isTabProject: true
+      navbarTitle: "",
+      isTabProject: true,
+      chartInitialized: false,
     };
   },
   on: {
@@ -221,12 +181,10 @@ export default {
       console.log("home page init");
       var now = new Date();
       var year = now.getFullYear();
-      var month = (now.getMonth() + 1);
-      if (month < 10)
-        month = '0' + month;
+      var month = now.getMonth() + 1;
+      if (month < 10) month = "0" + month;
       var day = now.getDate();
-      if (day < 10)
-        day = '0' + month;
+      if (day < 10) day = "0" + month;
       this.selectedDate = `${year}-${month}-${day}`;
       console.log(this.selectedDate);
     },
@@ -309,7 +267,7 @@ export default {
     onTabProjectShow() {
       // console.log('on project tab show');
       this.linkProjectClass = "link-project-highlight";
-      this.navbarTitle = '';
+      this.navbarTitle = "";
       this.isTabProject = true;
     },
     onTabProjectHide() {
@@ -319,12 +277,58 @@ export default {
     onTabDoorsShow() {
       // console.log('on doors tab show');
       this.linkDoorsClass = "link-doors-highlight";
-      this.navbarTitle = '门禁记录'
+      this.navbarTitle = "门禁记录";
       this.isTabProject = false;
+      this.initChart();
     },
     onTabDoorsHide() {
       // console.log('on doors tab hide');
       this.linkDoorsClass = "link-doors";
+    },
+    initChart() {
+      // 基于准备好的dom，初始化echarts实例
+      if (this.chartInitialized) return;
+      this.chartInitialized = true;
+      console.log("chart: " + document.getElementById("chart"));
+      var chart = echarts.init(document.getElementById("chart"));
+      var option = {
+        legend: {
+          orient: "vertical",
+          x: "left",
+          data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"]
+        },
+        series: [
+          {
+            name: "访问来源",
+            type: "pie",
+            radius: ["80%", "100%"],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: "center"
+              },
+              emphasis: {
+                show: false,
+                textStyle: {
+                  fontSize: "30",
+                  fontWeight: "bold"
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: [
+              { value: 934, name: "出勤人数" },
+              { value: 16, name: "缺勤人数" }
+            ]
+          }
+        ]
+      };
+      chart.setOption(option);
     }
   }
 };

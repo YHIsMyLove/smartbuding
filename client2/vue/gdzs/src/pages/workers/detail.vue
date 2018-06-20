@@ -18,7 +18,7 @@
                     <img src="static/imgs/信息100x100.png" alt="">
                     <div>信息</div>
                 </f7-link>
-                <f7-link>
+                <f7-link @click="call">
                     <img src="static/imgs/通话100x100.png" alt="">
                     <div>呼叫</div>
                 </f7-link>
@@ -105,6 +105,11 @@ export default {
     return {
       contact: {},
     };
+  },
+  methods: {
+      call() {
+          cordova.plugins.PhoneCaller.call(this.contact.UserPhoneNum);
+      }
   }
 };
 </script>
