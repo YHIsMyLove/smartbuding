@@ -20,6 +20,7 @@ using SmartConstructionSite.Core.SpecificTask.Views;
 using SmartConstructionSite.Core.Rankings.Views;
 using SmartConstructionSite.Core.EnvMonitor.Views;
 using SmartConstructionSite.Core.MachineMonitor.Views;
+using ZXing.Net.Mobile.Forms;
 
 namespace SmartConstructionSite.Core.ProjectManagement.Views
 {
@@ -168,6 +169,28 @@ namespace SmartConstructionSite.Core.ProjectManagement.Views
             {
                 rollingBoard.HeightRequest = 0;
                 rollingBoard.IsVisible = false;
+            }
+        }
+
+        async void Button_Clicked(object sender, EventArgs args)
+        {
+            if (sender == btnScan)
+            {
+                var scanPage = new ZXingScannerPage(customOverlay: new ScannerOverlay()) { Title = "扫描" };
+
+                scanPage.OnScanResult += (result) => {
+                    // Stop scanning
+                    scanPage.IsScanning = false;
+
+                    // Pop the page and show the result
+                    Device.BeginInvokeOnMainThread(() => {
+                        Navigation.PopAsync();
+                        DisplayAlert("扫描结果", result.Text, "确定");
+                    });
+                };
+
+                // Navigate to our scanner page
+                await Navigation.PushAsync(scanPage);
             }
         }
 

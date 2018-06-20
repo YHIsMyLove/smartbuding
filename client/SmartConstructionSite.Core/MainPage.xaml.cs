@@ -15,18 +15,17 @@ namespace SmartConstructionSite.Core
 {
     public partial class MainPage : MasterDetailPage
     {
-        UserMainPage userMainPage;
-        HomePage homePage;
+        //UserMainPage userMainPage;
+        //HomePage homePage;
 
         public MainPage()
         {
             InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, false);
-            userMainPage = new UserMainPage();
+            //userMainPage = new UserMainPage();
             userMainPage.ListView.ItemSelected += OnItemSelected;
-            Master = userMainPage;
-            homePage = new HomePage();
-            Detail = new NavigationPage(homePage);
+            //Master = userMainPage;
+            //homePage = new HomePage();
+            //Detail = homePage;
             Appearing += MainPage_Appearing;
             ((UserMainViewModel)userMainPage.BindingContext).PropertyChanged += UserMainViewModel_PropertyChanged;
         }

@@ -9,12 +9,17 @@
         <ToolbarItem x:Name="barItemSearch" Icon="search.png"></ToolbarItem>
     </MasterDetailPage.ToolbarItems>-->
 
-    <!--<MasterDetailPage.Master>
-        <account:UserMainPage></account:UserMainPage>
+    <MasterDetailPage.Master>
+        <account:UserMainPage x:Name="userMainPage"></account:UserMainPage>
     </MasterDetailPage.Master>
 
     <MasterDetailPage.Detail>
-        <local:HomePage></local:HomePage>
-    </MasterDetailPage.Detail>-->
+        <local:HomePage x:Name="homePage"></local:HomePage>
+        <!--<NavigationPage>
+            <x:Arguments>
+                
+            </x:Arguments>
+        </NavigationPage>-->
+    </MasterDetailPage.Detail>
     
 </MasterDetailPage>

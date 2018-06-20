@@ -1,0 +1,24 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "cn.yooling.app.gdzs"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "cn.yooling.app.gdzs"
+    },
+    "gdzs-plugin-cameraController": {
+      "PACKAGE_NAME": "cn.yooling.app.gdzs"
+    },
+    "cordova-plugin-phonecaller": {
+      "PACKAGE_NAME": "cn.yooling.app.gdzs"
+    }
+  },
+  "dependent_plugins": {}
+}

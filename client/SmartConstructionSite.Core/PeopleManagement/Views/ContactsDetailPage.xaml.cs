@@ -14,7 +14,6 @@ namespace SmartConstructionSite.Core.PeopleManagement.Views
         public ContactsDetailPage()
         {
             InitializeComponent();
-            Image image;
         }
 
 		protected override void OnAppearing()
@@ -52,6 +51,10 @@ namespace SmartConstructionSite.Core.PeopleManagement.Views
                 contactsListPage.SelectContacts = true;
                 await Navigation.PushAsync(contactsListPage, true);
             }
+			else if (sender == btnLocation)
+			{
+				//todo
+			}
         }
     }
 }

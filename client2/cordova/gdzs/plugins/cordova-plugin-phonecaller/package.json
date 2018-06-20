@@ -1,0 +1,52 @@
+{
+  "_from": "cordova-plugin-phonecaller",
+  "_id": "cordova-plugin-phonecaller@0.0.2",
+  "_inBundle": false,
+  "_integrity": "sha1-b8M3ZTuWZx+cOVCeczCAEimZFtk=",
+  "_location": "/cordova-plugin-phonecaller",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-phonecaller",
+    "name": "cordova-plugin-phonecaller",
+    "escapedName": "cordova-plugin-phonecaller",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/cordova-plugin-phonecaller/download/cordova-plugin-phonecaller-0.0.2.tgz",
+  "_shasum": "6fc337653b96671f9c39509e73308012299916d9",
+  "_spec": "cordova-plugin-phonecaller",
+  "_where": "/Users/gf/Projects/smartbuding/client2/cordova/gdzs",
+  "author": {
+    "name": "CodeBakery"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-phonecaller",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "Call phone numbers from your app",
+  "issue": "https://github.com/codebakery/cordova-plugin-phonecaller/issues",
+  "keywords": [
+    "cordova",
+    "phonecaller",
+    "call",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "license": "Apache 2.0",
+  "name": "cordova-plugin-phonecaller",
+  "repo": "https://github.com/codebakery/cordova-plugin-phonecaller.git",
+  "version": "0.0.2"
+}

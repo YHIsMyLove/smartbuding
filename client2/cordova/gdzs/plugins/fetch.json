@@ -1,0 +1,34 @@
+{
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-whitelist@1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-splashscreen": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-splashscreen@5.0.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "gdzs-plugin-cameraController": {
+    "source": {
+      "type": "local",
+      "path": "/Users/gf/Projects/smartbuding/client2/cordova/gdzs/node_modules/gdzs-plugin-cameraController"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-phonecaller": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-phonecaller"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}

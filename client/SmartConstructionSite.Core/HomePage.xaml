@@ -6,10 +6,6 @@
             xmlns:xf="clr-namespace:BottomBar.XamarinForms;assembly=BottomBar.XamarinForms"
             x:Class="SmartConstructionSite.Core.HomePage">
 
-    <xf:BottomBarPage.ToolbarItems>
-        <ToolbarItem x:Name="btnScan" Icon="action_scan_2.png" Clicked="Button_Clicked"></ToolbarItem>
-    </xf:BottomBarPage.ToolbarItems>
-
     <projectManagement:ProjectManagementMainPage x:Name="projMgtPage" Title="项目管理" Icon="ic_points.png"></projectManagement:ProjectManagementMainPage>
 
     <doorMonitor:DoorMonitorRecordPage Title="门禁记录" Icon="ic_pepole_disable.png"></doorMonitor:DoorMonitorRecordPage>
