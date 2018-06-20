@@ -70,8 +70,8 @@ export default {
           return false;
         }
         _this.setLogin(res.data.data);
-        //_this.$router.replace("/");
-        _this.getMenuInfo();
+        _this.$router.replace("/");
+        //_this.getMenuInfo();
       });
     },
     getMenuInfo() {
