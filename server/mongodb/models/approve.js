@@ -6,6 +6,7 @@ const approveSchema = new Schema({
     ProjID: String,
     proposer: String,
     approver: String,
+    overseer: String,
     approveState: { type: Number, default: 0 },
     startTime: { type: Date, default: Date.now },
     approveContent: Schema.Types.Mixed,

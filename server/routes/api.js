@@ -115,5 +115,15 @@ router.get('/ListBigNews', BigNews.ListBigNews);
 router.post('/CreateBigNews', BigNews.CreateOrUpdateBigNews);
 router.post('/UpdateBigNews', BigNews.CreateOrUpdateBigNews);
 router.post('/CreateOrUpdateBigNews', BigNews.CreateOrUpdateBigNews);
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
+const Approve = require('../mongodb/business/Approve_Business')
 
+router.post('/CreateApprove', Approve.CreateApprove)
+router.post('/OptionApprove', Approve.OptionApprove)
+router.get('/ListApprove', Approve.ListApprove)
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
 module.exports = router;
