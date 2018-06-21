@@ -79,18 +79,18 @@
 import util from "../../common/util";
 import NProgress from "nprogress";
 import axios from "axios";
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
-  computed: {...mapGetters(['getProj'])},
+  computed: { ...mapGetters(["getProj"]) },
   data() {
     return {
-      show:false,
+      show: false,
       pageData: {},
       PageInfo: {
         title: "红黑榜",
-        currentPage:1,
-        currentPageSize:10,
-        tableDataLength:10
+        currentPage: 1,
+        currentPageSize: 10,
+        tableDataLength: 10
       },
       RankingListData: {
         tabledata: [],
@@ -111,7 +111,6 @@ export default {
     this.updateData();
   },
   methods: {
-    
     /***********************************/
     updateData() {
       let that = this;
@@ -144,28 +143,25 @@ export default {
     /***********************************/
     newdata() {
       this.CurrentData.data = {
-        
-				UserID : '',
-				RankingListTitle : '',
-				RankingListContent : '',
-				RankingListScore : '',
-				ProjID : this.getProj.ProjID,
-				RankingListTime : '',
-				
+        UserID: "",
+        RankingListTitle: "",
+        RankingListContent: "",
+        RankingListScore: "",
+        ProjID: this.getProj.ProjID,
+        RankingListTime: ""
       };
       this.RankingListDialog.visible = true;
     },
     handleEdit(row) {
       this.CurrentData.data = {
-        _id : row._id,
-        
-				UserID : row.UserID,
-				RankingListTitle : row.RankingListTitle,
-				RankingListContent : row.RankingListContent,
-				RankingListScore : row.RankingListScore,
-				ProjID : this.getProj.ProjID,
-				RankingListTime : row.RankingListTime,
-				
+        _id: row._id,
+
+        UserID: row.UserID,
+        RankingListTitle: row.RankingListTitle,
+        RankingListContent: row.RankingListContent,
+        RankingListScore: row.RankingListScore,
+        ProjID: this.getProj.ProjID,
+        RankingListTime: row.RankingListTime
       };
       this.RankingListDialog.visible = true;
     },
@@ -212,7 +208,9 @@ export default {
                 //error
               }
             })
-            .catch(err => {console.log(err)});
+            .catch(err => {
+              console.log(err);
+            });
         })
         .catch(err => {});
     }
