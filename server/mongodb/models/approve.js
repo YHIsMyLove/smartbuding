@@ -1,26 +1,25 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-//用户表
-const RankingListSchema = new Schema({
-    UserID: String,
-    RankingListTitle: String,
-    RankingListContent: String,
-    RankingListScore: Number,
+//审批表
+const approveSchema = new Schema({
     ProjID: String,
-    RankingListTime: { type: Date, default: Date.now },
-
+    proposer: String,
+    approver: String,
+    approveState: { type: Number, default: 0 },
+    startTime: { type: Date, default: Date.now },
+    approveContent: Schema.Types.Mixed,
 })
 
-RankingListSchema.pre('save', function (next) {
+approveSchema.pre('save', function (next) {
     next()
 })
-RankingListSchema.methods = {
+approveSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-RankingListSchema.statics = {
+approveSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -37,4 +36,4 @@ RankingListSchema.statics = {
             .exec();
     }
 }
-mongoose.model('RankingListModel', RankingListSchema);
+mongoose.model('Approve', approveSchema);

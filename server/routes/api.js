@@ -34,12 +34,18 @@ router.post('/SysTable/delete', SysTable.delete)
 /*******************************************************************************/
 const RankingList = require('../mongodb/APIBuilder/RankingListBusiness')
 
+const RankingListExt = require('../mongodb/APIBuilder_Ext/RankingListBusiness')
+
 router.get('/GetRankingListByID', RankingList.GetRankingListByID);
 router.get('/DelRankingListByID', RankingList.DelRankingListByID);
 router.get('/ListRankingList', RankingList.ListRankingList);
 router.post('/CreateRankingList', RankingList.CreateOrUpdateRankingList);
 router.post('/UpdateRankingList', RankingList.CreateOrUpdateRankingList);
 router.post('/CreateOrUpdateRankingList', RankingList.CreateOrUpdateRankingList);
+
+router.get('/GetRankingOrder', RankingListExt.GetRankingOrder);
+
+router.get('/GetRankingList', RankingListExt.GetRankingList);
 /*******************************************************************************/
 /**server***********************************************************************/
 /*******************************************************************************/

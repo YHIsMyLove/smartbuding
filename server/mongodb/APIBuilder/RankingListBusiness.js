@@ -70,6 +70,9 @@ var delRankingListByID = async (req,res)=>{
     }
 }
 
+
+
+
 exports.GetRankingListByID = getRankingListByID
 exports.CreateOrUpdateRankingList = createOrUpdateRankingList
 exports.ListRankingList = listRankingList
