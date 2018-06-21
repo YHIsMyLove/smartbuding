@@ -14,11 +14,12 @@ var createApprove = async (req, res) => {
 }
 
 var listApprove = async (req, res) => {
-    let query = {
-        projid: req.query.projid,
-        option: req.query.option
-    }
-    let result = await Approve.find({ ProjID: query.projid, approveState: query.option })
+    let query = {}
+    Object.keys(req.query).forEach(item => {
+        //console.log(req.query[item])
+        query[item] = req.query[item]
+    })
+    let result = await Approve.find(query)
     res.send(msg.genSuccessMsg('查询成功', result))
 }
 
