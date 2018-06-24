@@ -61,6 +61,7 @@ var listApprove = async (req, res) => {
                 },
                 approveContent: item.approves[0].approveContent,
                 startTime: moment(item.approves[0].startTime).format('YYYY-MM-DD hh:mm'),
+                _id: item.approves[0]._id
             }
         })
         res.send(msg.genSuccessMsg('查询成功', result))
