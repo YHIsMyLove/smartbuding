@@ -97,18 +97,18 @@ var optionApprove = async (req, res) => {
                 }
         var update = UserKind === 'proposer'
             ? {
-                'proposer.status': req.body.status,
+                'proposer.status': parseInt(req.body.status),
                 'proposer.content': req.body.content,
                 'proposer.time': Date.now()
             }
             : UserKind == 'approver'
                 ? {
-                    'approver.status': req.body.status,
+                    'approver.status': parseInt(req.body.status),
                     'approver.content': req.body.content,
                     'approver.time': Date.now()
                 }
                 : {
-                    'overseer.status': req.body.status,
+                    'overseer.status': parseInt(req.body.status),
                     'overseer.content': req.body.content,
                     'overseer.time': Date.now()
                 }
