@@ -1,26 +1,23 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-//审批表
-const approveSchema = new Schema({
-    ProjID: String,
-    proposer: String,
-    approver: String,
-    overseer: String,
-    //approveState: { type: Number, default: 0 },
-    startTime: { type: Date, default: Date.now },
-    approveContent: Schema.Types.Mixed,
+//审批记录表
+const approveLogSchema = new Schema({
+    _approveID: Schema.Types.ObjectId,
+    proposer: Schema.Types.Mixed,
+    approver: Schema.Types.Mixed,
+    overseer: Schema.Types.Mixed
 })
 
-approveSchema.pre('save', function (next) {
+approveLogSchema.pre('save', function (next) {
     next()
 })
-approveSchema.methods = {
+approveLogSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-approveSchema.statics = {
+approveLogSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -37,4 +34,4 @@ approveSchema.statics = {
             .exec();
     }
 }
-mongoose.model('Approve', approveSchema);
+mongoose.model('ApproveLog', approveLogSchema);

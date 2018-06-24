@@ -151,6 +151,12 @@ export default new Router({
                     name: '大事件管理',
                     meta: { redirectAuth: true }
                 },
+                {
+                    path: '/QualityAcceptanceElement',
+                    component: resolve => require(['./components/APIBuilder/QualityAcceptanceElement.vue'], resolve),
+                    name: '质量验收管理',
+                    meta: { redirectAuth: true }
+                },
             ],
             meta: { redirectAuth: true },
         },

@@ -118,6 +118,17 @@ router.post('/CreateOrUpdateBigNews', BigNews.CreateOrUpdateBigNews);
 /*******************************************************************************/
 /**server***********************************************************************/
 /*******************************************************************************/
+const QualityAcceptance = require('../mongodb/APIBuilder/QualityAcceptanceBusiness')
+
+router.get('/GetQualityAcceptanceByID', QualityAcceptance.GetQualityAcceptanceByID);
+router.get('/DelQualityAcceptanceByID', QualityAcceptance.DelQualityAcceptanceByID);
+router.get('/ListQualityAcceptance', QualityAcceptance.ListQualityAcceptance);
+router.post('/CreateQualityAcceptance', QualityAcceptance.CreateOrUpdateQualityAcceptance);
+router.post('/UpdateQualityAcceptance', QualityAcceptance.CreateOrUpdateQualityAcceptance);
+router.post('/CreateOrUpdateQualityAcceptance', QualityAcceptance.CreateOrUpdateQualityAcceptance);
+/*******************************************************************************/
+/**server***********************************************************************/
+/*******************************************************************************/
 const Approve = require('../mongodb/business/Approve_Business')
 
 router.post('/CreateApprove', Approve.CreateApprove)

@@ -1,26 +1,26 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-//审批表
-const approveSchema = new Schema({
-    ProjID: String,
-    proposer: String,
-    approver: String,
-    overseer: String,
-    //approveState: { type: Number, default: 0 },
-    startTime: { type: Date, default: Date.now },
-    approveContent: Schema.Types.Mixed,
+//用户表
+const QualityAcceptanceSchema = new Schema({
+    	QAImg:String,
+	QARecipient:String,
+	QATitle:String,
+	QAContent:String,
+	QATime:{ type: Date , default: Date.now },
+	QAState:{ type: Number , default: 0 },
+
 })
 
-approveSchema.pre('save', function (next) {
+QualityAcceptanceSchema.pre('save', function (next) {
     next()
 })
-approveSchema.methods = {
+QualityAcceptanceSchema.methods = {
     updateAndSave: function () {
         return this.save();
     }
 }
-approveSchema.statics = {
+QualityAcceptanceSchema.statics = {
     fetch: function () { },
     findById: function () { },
     load: function (id) {
@@ -37,4 +37,4 @@ approveSchema.statics = {
             .exec();
     }
 }
-mongoose.model('Approve', approveSchema);
+mongoose.model('QualityAcceptanceModel', QualityAcceptanceSchema);

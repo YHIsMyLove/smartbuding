@@ -486,7 +486,7 @@ exports.GetRole = async (req, res) => {
             return {
                 label: i.item0,
                 value: i._id,
-                desc:i.item1
+                desc: i.item1
             }
         })
         res.send(msg.genSuccessMsg('获取成功', result))
@@ -857,7 +857,6 @@ exports.UploadFile = (req, res) => {
                             return res.send(msg.genFailedMsg('上传失败', err))
                         }
                         res.send(msg.genSuccessMsg('上传成功', `http://${qcospath}`))
-
                         //2. 删除本地
                         fs.unlinkSync(resizeimg_result.data)
                         //3. 删除原图

@@ -1,0 +1,8 @@
+{
+    "QAImg#*": "图片 String  ",
+    "QARecipient*": "接收人 String  SelectUser",
+    "QATitle*": "标题 String  ",
+    "QAContent*": "内容 String  ",
+    "QATime*": "时间 Date Date.now ",
+    "QAState*": "状态 Number 0 "
+}

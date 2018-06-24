@@ -26,9 +26,9 @@
         <UploadImage :width=64
                       v-model="tmpImage" 
                       :circle="true" @UpLoadOver="UpLoadOver"/>
-        <!-- <SelectUser @SelectedUser="SelectedUser"/> -->
-        <!-- <ProjMenu :ShowTitle="true" @SelectProjChange="SelectProjChange"/> -->
-        <!-- <SelectIcon @GetValue="GetIcon"/> -->
+        <SelectUser @SelectedUser="SelectedUser"/>
+        <ProjMenu :ShowTitle="true" @SelectProjChange="SelectProjChange"/>
+        <SelectIcon @GetValue="GetIcon"/>
         <SelectRole :ShowTitle="RoleTitle"/>
         <SelectMenuLink />
       </el-col>
