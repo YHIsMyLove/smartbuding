@@ -95,12 +95,24 @@ var optionApprove = async (req, res) => {
                     _approveID: ApproveID,
                     'overseer.id': req.body.UserID
                 }
-        await ApproveLog.updateOne(query,
-            {
+        var update = UserKind === 'proposer'
+            ? {
                 'proposer.status': req.body.status,
                 'proposer.content': req.body.content,
                 'proposer.time': Date.now()
-            })
+            }
+            : UserKind == 'approver'
+                ? {
+                    'approver.status': req.body.status,
+                    'approver.content': req.body.content,
+                    'approver.time': Date.now()
+                }
+                : {
+                    'overseer.status': req.body.status,
+                    'overseer.content': req.body.content,
+                    'overseer.time': Date.now()
+                }
+        await ApproveLog.updateOne(query, update)
         let result = await ApproveLog.findOne(query)
         res.send(msg.genSuccessMsg('操作完成', result))
     } catch (error) {
