@@ -42,18 +42,21 @@ var listApprove = async (req, res) => {
                     _id: item.proposerInfo[0]._id,
                     UserName: item.proposerInfo[0].UserName,
                     status: item.proposer.status,
+                    content: item.proposer.content,
                     time: item.proposer.time
                 },
                 approver: {
                     _id: item.approverInfo[0]._id,
                     UserName: item.approverInfo[0].UserName,
                     status: item.approver.status,
+                    content: item.approver.content,
                     time: item.approver.time
                 },
                 overseer: {
                     _id: item.overseerInfo[0]._id,
                     UserName: item.overseerInfo[0].UserName,
                     status: item.overseer.status,
+                    content: item.overseer.content,
                     time: item.overseer.time
                 },
                 approveContent: item.approves[0].approveContent,
@@ -77,8 +80,6 @@ var listApprove = async (req, res) => {
 var optionApprove = async (req, res) => {
     var UserKind = req.body.UserKind
     var ApproveID = req.body.ApproveID
-    // status: req.body.status,
-    // content: req.body.content,
     var query = UserKind === 'proposer'
         ? {
             _approveID: ApproveID,
