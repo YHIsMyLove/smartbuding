@@ -3,7 +3,10 @@
         <div v-if="IsShowTitle" slot="header" class="clearfix">
             <span>{{ShowTitle}}</span>
         </div>
-        <el-table @row-click="GetSelectRole" :show-header="ShowTableHead || false" :data="Roles" style="width: 100%">
+        <el-table @row-click="GetSelectRole" 
+        :show-header="ShowTableHead || false" 
+        :data="Roles" 
+        style="width: 100%">
              <el-table-column prop="label" label="角色名"/>
              <el-table-column prop="desc" label="备注"/>
              <el-table-column v-if="ShowSwitch" label="操作">
