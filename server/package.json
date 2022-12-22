@@ -35,7 +35,7 @@
     "gm": "^1.23.1",
     "http-errors": "^1.6.2",
     "ipaddr": "^0.0.9",
-    "jsonwebtoken": "^8.1.0",
+    "jsonwebtoken": "^9.0.0",
     "later": "^1.2.0",
     "mock": "^0.1.1",
     "mockjs": "^1.0.1-beta3",
